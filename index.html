@@ -1,121 +1,609 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <meta name="theme-color" content="#123d2d" />
-  <meta name="description" content="Sherpa Caddie — a beginner-friendly golf companion that helps you plan, play, learn, and save rounds privately." />
-  <link rel="manifest" href="manifest.webmanifest" />
-  <link rel="icon" href="icons/favicon.png" type="image/png" />
-  <link rel="apple-touch-icon" href="icons/icon-192.png" />
-  <link rel="stylesheet" href="styles.css" />
-  <title>Sherpa Caddie</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#18311C">
+<meta name="description" content="Sherpa Caddie — one-shot-at-a-time golf guidance combining a caddie, coach and mentor.">
+<link rel="manifest" href="manifest.webmanifest?v=032">
+<link rel="icon" href="icons/favicon.png?v=032" type="image/png">
+<link rel="apple-touch-icon" href="icons/icon-192.png?v=032">
+<title>Sherpa Caddie v0.3.2</title>
+<style>
+:root{
+  --forest:#18311C;
+  --fairway:#436240;
+  --meadow:#869250;
+  --navy:#0B2033;
+  --sand:#EBD9C1;
+  --tan:#BA915B;
+  --stone:#6C6C6A;
+  --cream:#F8F3EA;
+  --white:#FFFFFF;
+  --line:#DDD6C8;
+  --soft:#F5F1E9;
+  --good:#E8F2E7;
+  --okay:#F4ECD9;
+  --poor:#F5E5E1;
+  --danger:#934739;
+  --shadow:0 6px 20px rgba(11,32,51,.07);
+}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;background:var(--cream);color:var(--navy);
+  font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif}
+button,input,select,textarea{font:inherit}
+button{cursor:pointer}
+.hidden{display:none!important}
+.app{min-height:100dvh}
+
+/* Larger brand, less wasted space than v0.3 */
+.topbar{
+  height:104px;display:flex;align-items:center;gap:16px;
+  padding:8px max(18px,calc((100vw - 1160px)/2));
+  background:var(--cream);border-bottom:1px solid var(--line)
+}
+.brand-logo{width:96px;height:92px;object-fit:contain;display:block}
+.brand-text h1{margin:0;font-family:Georgia,"Times New Roman",serif;color:var(--forest);font-size:1.7rem}
+.brand-text p{margin:3px 0 0;color:var(--stone);font-size:.88rem}
+.version{margin-left:auto;color:var(--stone);font-weight:800;font-size:.8rem}
+
+/* Earlier-version style navigation: 4 clear rectangular tabs, persistent */
+.tabs-wrap{position:sticky;top:0;z-index:25;background:var(--cream);padding:0 14px 8px}
+.tabs{
+  max-width:1160px;margin:0 auto;background:#fff;border:1px solid var(--line);
+  border-radius:14px;box-shadow:var(--shadow);
+  display:grid;grid-template-columns:repeat(4,1fr);overflow:hidden
+}
+.tab{
+  border:0;border-right:1px solid var(--line);border-radius:0;padding:13px 8px;
+  background:#fff;color:var(--stone);font-weight:850
+}
+.tab:last-child{border-right:0}
+.tab.active{background:var(--forest);color:#fff}
+
+main{width:min(1160px,calc(100% - 28px));margin:0 auto;padding-bottom:18px}
+.view{display:none}
+.view.active{display:block}
+.card{background:#fff;border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow)}
+.eyebrow{text-transform:uppercase;letter-spacing:.08em;font-size:.72rem;font-weight:900;color:var(--fairway);margin:0 0 5px}
+.muted{color:var(--stone)}
+.btn{border:1px solid transparent;border-radius:9px;padding:11px 14px;font-weight:850}
+.btn.primary{background:var(--forest);color:white}
+.btn.secondary{background:var(--sand);color:var(--forest);border-color:#DEC8A8}
+.btn.ghost{background:#fff;color:var(--forest);border-color:var(--line)}
+.btn.tan{background:var(--tan);color:var(--navy)}
+.btn.danger{background:#F7E8E4;color:var(--danger);border-color:#E7C7BF}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+
+/* HOME */
+.home{display:grid;grid-template-rows:auto auto auto;gap:13px}
+.hero{
+  padding:15px 18px;display:grid;grid-template-columns:1fr auto;gap:18px;align-items:center
+}
+.hero h2{font-family:Georgia,"Times New Roman",serif;color:var(--forest);
+  font-size:clamp(1.75rem,3vw,2.4rem);margin:0 0 5px;line-height:1.05}
+.hero p{margin:0;color:var(--stone)}
+.status{display:flex;align-items:center;gap:7px;background:var(--soft);padding:9px 11px;border-radius:9px;font-weight:800;color:var(--forest)}
+.status-dot{width:9px;height:9px;background:var(--meadow);border-radius:50%}
+
+.actions{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.action{
+  min-height:116px;text-align:left;background:#fff;border:1px solid var(--line);border-radius:16px;
+  padding:14px;box-shadow:var(--shadow)
+}
+.action .icon{font-size:1.35rem;display:block;margin-bottom:8px}
+.action strong{display:block;color:var(--forest);font-size:1.03rem;margin-bottom:5px}
+.action small{color:var(--stone);line-height:1.35}
+.ask{padding:14px 18px;display:grid;grid-template-columns:1fr;gap:8px}
+.ask-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
+.ask h3{margin:0;font-size:1.2rem}
+.ask-row{display:grid;grid-template-columns:1fr auto auto;gap:8px}
+.ask-row input{border:1px solid var(--line);border-radius:9px;padding:11px 12px}
+
+/* PLAY pre-round */
+.play-grid{display:grid;grid-template-columns:1.08fr .92fr;gap:13px}
+.course-card,.selected-card{padding:16px}
+.section-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;margin-bottom:10px}
+.section-head h2{margin:0;font-size:1.35rem}
+.big-action{width:100%;margin-bottom:10px}
+.divider{display:flex;align-items:center;gap:10px;color:var(--stone);font-size:.85rem;margin:7px 0}
+.divider:before,.divider:after{content:"";height:1px;background:var(--line);flex:1}
+.search-row{display:grid;grid-template-columns:1fr auto;gap:8px}
+.search-row input{border:1px solid var(--line);border-radius:9px;padding:11px}
+.results{display:grid;gap:6px;margin-top:9px;max-height:188px;overflow:auto}
+.course-result{
+  border:1px solid var(--line);border-radius:9px;padding:9px 10px;background:var(--soft);
+  display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center
+}
+.course-result strong{color:var(--forest)}
+.course-result small{display:block;color:var(--stone);margin-top:2px}
+.selected-name{font-family:Georgia,"Times New Roman",serif;color:var(--forest);font-size:1.5rem;margin:0 0 5px}
+.weather-box{background:var(--soft);border:1px solid var(--line);border-radius:11px;padding:11px;margin-top:10px}
+.weather-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:8px}
+.weather-stat{background:#fff;border:1px solid var(--line);border-radius:9px;padding:8px}
+.weather-stat span{display:block;color:var(--stone);font-size:.72rem;font-weight:800}
+.weather-stat strong{display:block;color:var(--navy);margin-top:3px}
+.start-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:11px}
+
+/* ONE-SHOT ROUND */
+.round-view{display:grid;gap:11px}
+.holebar{padding:11px 15px;display:grid;grid-template-columns:1fr auto auto auto;gap:15px;align-items:center}
+.holebar h2{margin:0;font-size:1.3rem}
+.hole-stat{text-align:right}
+.hole-stat span{display:block;color:var(--stone);font-size:.7rem;font-weight:850}
+.hole-stat strong{display:block;color:var(--forest);font-size:1.08rem}
+.plan{
+  padding:14px 16px;display:grid;grid-template-columns:.82fr 1fr 1.25fr;gap:12px
+}
+.plan-col{border-right:1px solid var(--line);padding-right:12px}
+.plan-col:last-child{border-right:0;padding-right:0}
+.plan h3{margin:2px 0 5px;color:var(--forest);font-size:1.28rem}
+.plan p{margin:0;color:var(--stone);font-size:.9rem;line-height:1.35}
+.mental{background:var(--sand);padding:10px 12px!important;border:0!important;border-radius:11px}
+.mental p{color:var(--navy);font-weight:850}
+
+.shot-panel{padding:13px 15px}
+.shot-grid{display:grid;grid-template-columns:1.05fr 1fr;gap:14px}
+.club-strip{display:flex;gap:6px;overflow-x:auto;padding-bottom:3px}
+.club-choice{border:1px solid var(--line);background:#fff;border-radius:8px;padding:8px 9px;white-space:nowrap;font-weight:800;color:var(--navy)}
+.club-choice.active{background:var(--forest);color:#fff;border-color:var(--forest)}
+.quality-row{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-top:5px}
+.quality{border:1px solid var(--line);border-radius:8px;padding:11px;font-weight:900}
+.quality.good{background:var(--good);color:var(--forest)}
+.quality.okay{background:var(--okay);color:#6E561B}
+.quality.poor{background:var(--poor);color:#833B2F}
+.direction-row{display:flex;gap:6px;flex-wrap:wrap;margin-top:7px}
+.dir{border:1px solid var(--line);background:#fff;color:var(--stone);border-radius:8px;padding:7px 9px;font-weight:800}
+.dir.active{background:#FFF7EB;border-color:var(--tan);color:var(--navy)}
+.reset-message{margin:10px 0 0;background:#EDF4EA;border-left:4px solid var(--fairway);padding:8px 10px;border-radius:5px;color:var(--forest);font-weight:900}
+.round-bottom{display:flex;justify-content:space-between;gap:8px;margin-top:10px}
+
+/* LEARN */
+.learn-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:11px}
+.lesson{padding:14px;min-height:145px}
+.lesson .symbol{font-size:1.2rem;margin-bottom:7px}
+.lesson h3{margin:0 0 7px;color:var(--forest);font-size:1.02rem}
+.lesson p{margin:0;color:var(--stone);font-size:.9rem;line-height:1.4}
+
+/* ROUNDS */
+.summary-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:11px;margin-bottom:12px}
+.summary{padding:13px}
+.summary h3{margin:3px 0 5px;color:var(--forest);font-size:1.03rem}
+.summary p{margin:0;color:var(--stone);font-size:.9rem;line-height:1.38}
+.rounds-card{padding:14px}
+.round-list{display:grid;gap:7px;max-height:270px;overflow:auto}
+.round-item{background:var(--soft);border:1px solid var(--line);border-radius:9px;padding:9px 10px;display:grid;grid-template-columns:1fr auto;gap:8px}
+.round-item h3{margin:0;color:var(--forest);font-size:.98rem}
+.round-item p{margin:2px 0 0;color:var(--stone);font-size:.82rem}
+.round-score{align-self:center;font-weight:900}
+
+/* Club setup modal rather than another top-level scrolling screen */
+.modal-backdrop{position:fixed;inset:0;background:rgba(11,32,51,.45);z-index:50;display:grid;place-items:center;padding:18px}
+.modal{width:min(850px,96vw);max-height:88dvh;overflow:auto;background:#fff;border-radius:16px;border:1px solid var(--line);box-shadow:0 24px 60px rgba(11,32,51,.25);padding:15px}
+.club-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.club-cell{display:grid;grid-template-columns:1fr 76px;gap:7px;align-items:center;background:var(--soft);border:1px solid var(--line);border-radius:9px;padding:8px}
+.club-cell label{font-size:.84rem;font-weight:850;color:var(--forest)}
+.club-cell input{width:100%;border:1px solid var(--line);border-radius:7px;padding:8px;text-align:center}
+.modal-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:11px}
+.modal-note{margin-right:auto;align-self:center;color:var(--stone);font-size:.82rem}
+
+/* Small footer keeps About/version out of the play navigation */
+.footer{display:flex;justify-content:center;gap:12px;color:var(--stone);font-size:.78rem;padding:7px 0 0}
+.footer button{border:0;background:transparent;color:var(--fairway);font-weight:850;padding:0}
+
+.toast{position:fixed;left:50%;bottom:18px;transform:translate(-50%,15px);background:var(--navy);color:#fff;padding:9px 13px;border-radius:8px;opacity:0;pointer-events:none;transition:.2s;z-index:70;font-weight:800}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+
+@media(max-width:850px){
+  .topbar{height:90px;padding:5px 14px}
+  .brand-logo{width:82px;height:78px}
+  .brand-text h1{font-size:1.45rem}
+  .brand-text p{font-size:.8rem}
+  .actions{grid-template-columns:repeat(2,1fr)}
+  .play-grid{grid-template-columns:1fr 1fr}
+  .plan{grid-template-columns:1fr 1fr}
+  .mental{grid-column:1/-1}
+  .club-grid{grid-template-columns:repeat(3,1fr)}
+}
+@media(max-width:620px){
+  .topbar{height:80px}
+  .brand-logo{width:70px;height:68px}
+  .brand-text h1{font-size:1.2rem}
+  .brand-text p,.version{display:none}
+  .tabs-wrap{padding:0}
+  .tabs{border-radius:0;width:100%;border-left:0;border-right:0}
+  main{width:calc(100% - 18px)}
+  .actions{grid-template-columns:1fr 1fr;gap:8px}
+  .action{min-height:100px;padding:10px}
+  .hero{grid-template-columns:1fr;padding:12px}
+  .status{display:none}
+  .ask-row{grid-template-columns:1fr auto}
+  #micBtn{display:none}
+  .play-grid,.plan,.shot-grid,.learn-grid,.summary-grid{grid-template-columns:1fr}
+  .holebar{grid-template-columns:1fr auto}
+  .hole-stat:nth-of-type(2),.hole-stat:nth-of-type(3){display:none}
+  .club-grid{grid-template-columns:repeat(2,1fr)}
+}
+</style>
 </head>
 <body>
-  <header class="topbar">
-    <div class="brand">
-      <img class="brand-logo" src="assets/sherpa-caddie-logo.jpg" alt="Sherpa Caddie" />
-    </div>
-    <button id="installBtn" class="ghost hidden">Install</button>
-  </header>
+<div class="app">
+<header class="topbar">
+  <img class="brand-logo" src="assets/sherpa-caddie-logo.png?v=032" alt="Sherpa Caddie">
+  <div class="brand-text">
+    <h1>Sherpa Caddie</h1>
+    <p>Your guide. Your game. Your best round.</p>
+  </div>
+  <div class="version">v0.3.2</div>
+</header>
 
-  <main>
-    <section class="welcome-card">
-      <img class="welcome-mark" src="assets/sherpa-caddie-logo.jpg" alt="" aria-hidden="true" />
+<div class="tabs-wrap">
+<nav class="tabs" aria-label="Main sections">
+  <button class="tab active" data-view="home">Home</button>
+  <button class="tab" data-view="play">Play</button>
+  <button class="tab" data-view="learn">Learn</button>
+  <button class="tab" data-view="rounds">My Rounds</button>
+</nav>
+</div>
+
+<main>
+<section id="home" class="view active">
+  <div class="home">
+    <article class="card hero">
       <div>
         <p class="eyebrow">Your golf guide, coach, and caddie</p>
-        <h1>Ready for your next round?</h1>
-        <p>Find a course, check conditions, keep score, and ask Sherpa for clear guidance along the way.</p>
-        <div class="app-status"><span class="status-dot"></span><span id="appStatus">Ready when you are</span></div>
+        <h2>Ready for your next round?</h2>
+        <p>Slow the game down, make a smart decision, and focus only on the shot in front of you.</p>
       </div>
-    </section>
+      <div class="status"><span class="status-dot"></span>One shot at a time</div>
+    </article>
 
-    <nav class="tabs" aria-label="Main sections">
-      <button class="tab active" data-view="home">Home</button>
-      <button class="tab" data-view="play">Play</button>
-      <button class="tab" data-view="learn">Learn</button>
-      <button class="tab" data-view="rounds">My Rounds</button>
-    </nav>
+    <div class="actions">
+      <button class="action" data-go="play"><span class="icon">🏌️</span><strong>Start or Plan a Round</strong><small>Find a course, check conditions, and begin.</small></button>
+      <button class="action" id="clubSetupBtn"><span class="icon">🏑</span><strong>Set My Clubs</strong><small>Teach Sherpa how far you normally carry each club.</small></button>
+      <button class="action" data-go="learn"><span class="icon">🧭</span><strong>First-Time Golfer Guide</strong><small>Targets, fundamentals, etiquette, and mental resets.</small></button>
+      <button class="action" data-go="rounds"><span class="icon">📒</span><strong>Review My Rounds</strong><small>See what worked and one thing to focus on next time.</small></button>
+    </div>
 
-    <section id="home" class="view active">
-      <div class="action-grid">
-        <button class="action-card" data-go="play">
-          <span class="action-icon">🏌️</span><strong>Start or Plan a Round</strong><small>Choose a course now or find one nearby.</small>
-        </button>
-        <button class="action-card" id="quickWeatherBtn">
-          <span class="action-icon">🌤️</span><strong>Check Conditions</strong><small>Temperature, wind, gusts, and rain chance.</small>
-        </button>
-        <button class="action-card" data-go="learn">
-          <span class="action-icon">🧭</span><strong>First-Time Golfer Guide</strong><small>Etiquette and rules explained in plain English.</small>
-        </button>
-        <button class="action-card" data-go="rounds">
-          <span class="action-icon">📒</span><strong>Review My Rounds</strong><small>Local history, summaries, export, and import.</small>
-        </button>
+    <article class="card ask">
+      <div class="ask-head">
+        <div><p class="eyebrow">Ask Sherpa</p><h3 id="answerTitle">What can I help with?</h3></div>
       </div>
+      <div id="answerText" class="muted">Try: “Should I take more club?”, “Where is the safe miss?”, or “How do I reset after a bad hole?”</div>
+      <div class="ask-row">
+        <input id="questionInput" placeholder="Ask a golf question…" autocomplete="off">
+        <button class="btn primary" id="askBtn">Ask</button>
+        <button class="btn secondary" id="micBtn" aria-label="Speak to Sherpa">🎙️</button>
+      </div>
+    </article>
+  </div>
+</section>
 
-      <article class="sherpa-panel">
-        <div class="sherpa-avatar"><img src="assets/sherpa-caddie-logo.jpg" alt="Sherpa guide icon" /></div>
-        <div class="sherpa-copy">
-          <span class="eyebrow">Ask Sherpa</span>
-          <h2 id="answerTitle">What can I help with?</h2>
-          <p id="answerText">Try: “What does par mean?”, “When is it my turn?”, or “Should I use one more club into the wind?”</p>
-          <div class="ask-row">
-            <input id="questionInput" type="text" placeholder="Ask a golf question…" autocomplete="off" />
-            <button id="askBtn" class="primary">Ask</button>
-            <button id="micBtn" class="mic" aria-label="Speak to Sherpa">🎙️</button>
-          </div>
-          <p id="voiceNote" class="fine-print">Push to talk. Speech support varies by browser.</p>
+<section id="play" class="view">
+  <div id="preRound">
+    <div class="play-grid">
+      <article class="card course-card">
+        <div class="section-head">
+          <div><p class="eyebrow">Plan your day</p><h2>Choose a golf course</h2></div>
+          <button class="btn ghost" id="openClubsFromPlay">My Clubs</button>
         </div>
-      </article>
-    </section>
-
-    <section id="play" class="view">
-      <div class="section-heading"><div><p class="eyebrow">Plan your day</p><h2>Choose a golf course</h2></div></div>
-      <div class="course-tools card">
-        <button id="nearMeBtn" class="primary">📍 Find Courses Near Me</button>
-        <div class="divider"><span>or</span></div>
-        <label for="courseSearch">Search before you arrive</label>
+        <button class="btn primary big-action" id="nearMeBtn">📍 Find Courses Near Me</button>
+        <div class="divider">or</div>
         <div class="search-row">
-          <input id="courseSearch" placeholder="Course, city, or state" />
-          <button id="searchCourseBtn" class="secondary">Search</button>
+          <input id="courseSearch" placeholder="Course, city, or state">
+          <button class="btn secondary" id="courseSearchBtn">Search</button>
         </div>
-        <p class="fine-print">Course information is requested from OpenGolfAPI. Search results depend on available community data.</p>
+        <div id="courseResults" class="results"></div>
+        <p class="muted" style="font-size:.78rem;margin:9px 0 0">If course data is unavailable, type a course name and use it manually.</p>
+        <div class="start-actions" style="justify-content:flex-start">
+          <button class="btn ghost" id="useTypedCourseBtn">Use Typed Course</button>
+        </div>
+      </article>
+
+      <article class="card selected-card">
+        <p class="eyebrow">Selected course</p>
+        <h2 class="selected-name" id="selectedCourseName">No course selected</h2>
+        <p class="muted" id="selectedCourseLocation">Choose a course on the left.</p>
+
+        <div class="weather-box">
+          <strong style="color:var(--forest)">Playing conditions</strong>
+          <div class="weather-grid">
+            <div class="weather-stat"><span>TEMP</span><strong id="tempStat">—</strong></div>
+            <div class="weather-stat"><span>WIND</span><strong id="windStat">—</strong></div>
+            <div class="weather-stat"><span>GUSTS</span><strong id="gustStat">—</strong></div>
+          </div>
+          <p class="muted" id="weatherNote" style="font-size:.82rem;margin:8px 0 0">Weather loads after a course/location is selected.</p>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px">
+          <label style="font-size:.8rem;font-weight:850;color:var(--forest)">Tee
+            <select id="teeChoice" style="display:block;width:100%;margin-top:4px;padding:9px;border:1px solid var(--line);border-radius:8px;background:#fff">
+              <option value="white">White</option><option value="gold">Gold</option><option value="red">Red</option>
+            </select>
+          </label>
+          <label style="font-size:.8rem;font-weight:850;color:var(--forest)">Goal
+            <select id="roundGoal" style="display:block;width:100%;margin-top:4px;padding:9px;border:1px solid var(--line);border-radius:8px;background:#fff">
+              <option value="score">Play for score</option><option value="practice">Practice & learn</option><option value="fun">Enjoy the round</option>
+            </select>
+          </label>
+        </div>
+        <div class="start-actions">
+          <button class="btn secondary" id="refreshWeatherBtn">Weather</button>
+          <button class="btn primary" id="startRoundBtn">Start Round</button>
+        </div>
+      </article>
+    </div>
+  </div>
+
+  <div id="roundMode" class="hidden round-view">
+    <article class="card holebar">
+      <div><p class="eyebrow" id="holeLabel">Hole 1</p><h2 id="holeInfo">Par 4 • 365 yards</h2></div>
+      <div class="hole-stat"><span>SHOT</span><strong id="shotStat">1</strong></div>
+      <div class="hole-stat"><span>REMAINING</span><strong id="remainStat">365</strong></div>
+      <div class="hole-stat"><span>TOTAL</span><strong id="totalStat">0</strong></div>
+    </article>
+
+    <article class="card plan">
+      <div class="plan-col"><p class="eyebrow">Club</p><h3 id="clubRec">Driver</h3><p id="clubWhy">Take enough club to make a comfortable swing.</p></div>
+      <div class="plan-col"><p class="eyebrow">Safe target</p><h3 id="targetRec">Wide part of fairway</h3><p id="targetWhy">Avoid the biggest trouble and set up the next shot.</p></div>
+      <div class="plan-col mental"><p class="eyebrow">One thought</p><p id="mentalCue">Pick the target, take one practice swing, and commit.</p></div>
+    </article>
+
+    <article class="card shot-panel">
+      <div class="shot-grid">
+        <div>
+          <p class="eyebrow">Club used</p>
+          <div class="club-strip" id="clubStrip"></div>
+        </div>
+        <div>
+          <p class="eyebrow">How did you hit it?</p>
+          <div class="quality-row">
+            <button class="quality good" data-quality="good">Good</button>
+            <button class="quality okay" data-quality="okay">Okay</button>
+            <button class="quality poor" data-quality="poor">Poor</button>
+          </div>
+          <div class="direction-row">
+            <button class="dir active" data-dir="center">Center</button>
+            <button class="dir" data-dir="left">Left</button>
+            <button class="dir" data-dir="right">Right</button>
+            <button class="dir" data-dir="short">Short</button>
+            <button class="dir" data-dir="long">Long</button>
+          </div>
+        </div>
       </div>
-      <div id="courseResults" class="results"></div>
-
-      <article id="selectedCourseCard" class="selected-course card hidden">
-        <div class="section-heading"><div><p class="eyebrow">Selected course</p><h2 id="selectedCourseName">Course</h2><p id="selectedCourseLocation"></p></div><button id="clearCourseBtn" class="ghost">Change</button></div>
-        <div id="weatherPanel" class="weather-grid"><div class="weather-loading">Select “Load weather” to check playing conditions.</div></div>
-        <div class="button-row"><button id="loadWeatherBtn" class="secondary">Load Weather</button><button id="startRoundBtn" class="primary">Start Round</button></div>
-      </article>
-
-      <article id="roundPanel" class="card hidden">
-        <div class="section-heading"><div><p class="eyebrow">Round in progress</p><h2 id="roundCourseName"></h2><p id="roundProgress">Hole 1 of 18</p></div><button id="endRoundBtn" class="danger">End Round</button></div>
-        <div class="scoreboard">
-          <button id="prevHoleBtn" class="circle">←</button>
-          <div><span>Hole</span><strong id="holeNumber">1</strong><small id="holePar">Par 4</small></div>
-          <div><span>Strokes</span><strong id="strokeCount">0</strong><small id="scoreToPar">Not scored</small></div>
-          <button id="nextHoleBtn" class="circle">→</button>
+      <div class="reset-message" id="resetMessage">Every shot is a new start.</div>
+      <div class="round-bottom">
+        <button class="btn danger" id="endRoundBtn">End Round</button>
+        <div style="display:flex;gap:7px">
+          <button class="btn ghost" id="finishHoleBtn">Finish Hole</button>
+          <button class="btn primary" id="nextHoleBtn" disabled>Next Hole</button>
         </div>
-        <div class="counter-row"><button id="minusStrokeBtn">− Stroke</button><button id="addStrokeBtn" class="primary">+ Stroke</button></div>
-        <label for="holeNote">Quick note</label><textarea id="holeNote" rows="2" placeholder="Example: Drive left, good recovery, two putts"></textarea>
-        <div class="button-row"><button id="saveHoleBtn" class="secondary">Save Hole</button><button id="voiceScoreBtn" class="ghost">🎙️ Record by Voice</button></div>
-      </article>
-    </section>
+      </div>
+    </article>
+  </div>
+</section>
 
-    <section id="learn" class="view">
-      <div class="section-heading"><div><p class="eyebrow">No jargon required</p><h2>Golf made understandable</h2></div></div>
-      <div class="lesson-grid" id="lessonGrid"></div>
-    </section>
+<section id="learn" class="view">
+  <div class="learn-grid">
+    <article class="card lesson"><div class="symbol">🎯</div><h3>Focus on this shot</h3><p>You are not playing the whole course in your head. You are only playing the shot in front of you.</p></article>
+    <article class="card lesson"><div class="symbol">🏑</div><h3>Take enough club</h3><p>Many poor shots come from trying to force too little club. A smoother swing with enough club is often smarter.</p></article>
+    <article class="card lesson"><div class="symbol">🧠</div><h3>Go back to fundamentals</h3><p>Pick the target. Choose the club. Take one practice swing. Commit.</p></article>
+    <article class="card lesson"><div class="symbol">🔄</div><h3>Bad holes happen</h3><p>Do not carry the last hole with you. The next shot is a new start.</p></article>
+    <article class="card lesson"><div class="symbol">🧭</div><h3>Read the safe miss</h3><p>Do not automatically attack the flag. Find the widest useful landing area and play away from major trouble.</p></article>
+    <article class="card lesson"><div class="symbol">💭</div><h3>Your last thought matters</h3><p>The final thought before the swing should describe what you want to do, not what you are afraid of doing.</p></article>
+  </div>
+</section>
 
-    <section id="rounds" class="view">
-      <div class="section-heading"><div><p class="eyebrow">Stored only on this device</p><h2>My rounds</h2></div><div class="button-row"><button id="importBtn" class="ghost">Import</button><button id="exportAllBtn" class="secondary">Export All</button></div></div>
-      <input type="file" id="importFile" class="hidden" accept="application/json,.json" />
-      <div id="roundList" class="round-list"></div>
-    </section>
-  </main>
+<section id="rounds" class="view">
+  <div class="summary-grid">
+    <article class="card summary"><p class="eyebrow">What worked</p><h3>Smarter targets</h3><p>Choosing the safer side helps keep the ball in play and the next shot manageable.</p></article>
+    <article class="card summary"><p class="eyebrow">What cost strokes</p><h3>Too little club</h3><p>Most poor shots happened when you selected too little club.</p></article>
+    <article class="card summary"><p class="eyebrow">Next-round focus</p><h3>Commit to the shot</h3><p>Pick the target, take one practice swing, and commit.</p></article>
+  </div>
+  <article class="card rounds-card">
+    <div class="section-head">
+      <div><p class="eyebrow">Stored only on this device</p><h2>My rounds</h2></div>
+      <div><button class="btn ghost" id="importBtn">Import</button> <button class="btn secondary" id="exportBtn">Export All</button></div>
+    </div>
+    <input id="importFile" type="file" accept="application/json,.json" hidden>
+    <div class="round-list" id="roundList"></div>
+  </article>
+</section>
 
-  <div id="toast" class="toast" role="status" aria-live="polite"></div>
-  <script src="app.js" defer></script>
+<div class="footer"><span>Sherpa Caddie v0.3.2</span><button id="aboutBtn">What’s in v0.3?</button></div>
+</main>
+</div>
+
+<div id="clubModal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="clubModalTitle">
+  <div class="modal">
+    <div class="section-head">
+      <div><p class="eyebrow">Personal club-distance setup</p><h2 id="clubModalTitle">How far do your clubs carry?</h2></div>
+      <button class="btn ghost" id="closeClubModal">Close</button>
+    </div>
+    <p class="muted" style="margin-top:0">These are starting estimates. Change them to your normal carry distance; Sherpa stores them only on this device.</p>
+    <div class="club-grid" id="clubGrid"></div>
+    <div class="modal-actions">
+      <span class="modal-note" id="clubNote">These distances drive Sherpa’s club recommendations.</span>
+      <button class="btn ghost" id="resetClubsBtn">Reset</button>
+      <button class="btn primary" id="saveClubsBtn">Save Distances</button>
+    </div>
+  </div>
+</div>
+
+<div id="aboutModal" class="modal-backdrop hidden" role="dialog" aria-modal="true">
+  <div class="modal" style="max-width:650px">
+    <div class="section-head"><div><p class="eyebrow">One-Shot Sherpa</p><h2>Version 0.3 additions</h2></div><button class="btn ghost" id="closeAboutModal">Close</button></div>
+    <ul style="color:var(--stone);line-height:1.7">
+      <li>Personal club-distance setup</li>
+      <li>Simplified in-round screen</li>
+      <li>Shot-quality buttons</li>
+      <li>Club and safe-target recommendation</li>
+      <li>One mental cue</li>
+      <li>New-shot reset message</li>
+      <li>Automatic scoring from recorded shots</li>
+      <li>Three-item post-round summary</li>
+    </ul>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+(()=>{"use strict";
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const CLUBS={"Driver":220,"3 Wood":205,"5 Wood":190,"4 Hybrid":180,"5 Iron":170,"6 Iron":160,"7 Iron":150,"8 Iron":140,"9 Iron":125,"Pitching Wedge":110,"Gap Wedge":95,"Sand Wedge":75,"Lob Wedge":55,"Putter":10};
+const FALLBACK_HOLES=[[4,365],[4,330],[3,155],[5,490],[4,385],[4,350],[3,145],[5,510],[4,375],[4,360],[3,165],[5,500],[4,340],[4,395],[3,150],[5,475],[4,370],[4,355]];
+const KEY={clubs:"sherpa.clubs.032",rounds:"sherpa.rounds.032",current:"sherpa.current.032"};
+const state={
+ clubs:JSON.parse(localStorage.getItem(KEY.clubs)||"null")||{...CLUBS},
+ rounds:JSON.parse(localStorage.getItem(KEY.rounds)||"[]"),
+ round:JSON.parse(localStorage.getItem(KEY.current)||"null"),
+ selectedCourse:null, coords:null, weather:null, selectedClub:null, direction:"center"
+};
+function save(){localStorage.setItem(KEY.clubs,JSON.stringify(state.clubs));localStorage.setItem(KEY.rounds,JSON.stringify(state.rounds));localStorage.setItem(KEY.current,JSON.stringify(state.round))}
+function toast(m){const t=$("#toast");t.textContent=m;t.classList.add("show");clearTimeout(toast.t);toast.t=setTimeout(()=>t.classList.remove("show"),1700)}
+function show(view){$$(".view").forEach(v=>v.classList.toggle("active",v.id===view));$$(".tab").forEach(t=>t.classList.toggle("active",t.dataset.view===view));window.scrollTo(0,0);if(view==="rounds")renderRounds();if(view==="play"&&state.round)showRoundMode()}
+$$(".tab").forEach(b=>b.onclick=()=>show(b.dataset.view));$$("[data-go]").forEach(b=>b.onclick=()=>show(b.dataset.go));
+
+/* Club setup */
+function renderClubs(){const g=$("#clubGrid");g.innerHTML="";Object.entries(CLUBS).forEach(([n,d])=>{const x=document.createElement("div");x.className="club-cell";x.innerHTML=`<label>${n}</label><input type="number" inputmode="numeric" min="0" max="400" value="${state.clubs[n]??d}" data-club="${n}">`;g.appendChild(x)})}
+function openClubs(){$("#clubModal").classList.remove("hidden");renderClubs()}
+function closeClubs(){$("#clubModal").classList.add("hidden")}
+$("#clubSetupBtn").onclick=openClubs;$("#openClubsFromPlay").onclick=openClubs;$("#closeClubModal").onclick=closeClubs;
+$("#clubModal").addEventListener("click",e=>{if(e.target.id==="clubModal")closeClubs()});
+$("#saveClubsBtn").onclick=()=>{$$("#clubGrid input").forEach(i=>state.clubs[i.dataset.club]=Number(i.value||0));save();$("#clubNote").textContent="Saved. Sherpa will use these distances.";toast("Club distances saved")};
+$("#resetClubsBtn").onclick=()=>{state.clubs={...CLUBS};renderClubs();save();toast("Club distances reset")};
+
+/* About */
+$("#aboutBtn").onclick=()=>$("#aboutModal").classList.remove("hidden");$("#closeAboutModal").onclick=()=>$("#aboutModal").classList.add("hidden");
+$("#aboutModal").addEventListener("click",e=>{if(e.target.id==="aboutModal")$("#aboutModal").classList.add("hidden")});
+
+/* Ask Sherpa */
+function answer(q){q=q.toLowerCase();
+ if(q.includes("bad")||q.includes("reset"))return["Reset the shot","That shot is finished. Breathe, choose the next target, and make the next shot a new start."];
+ if(q.includes("club")||q.includes("short")||q.includes("more"))return["Take enough club","Most recreational golfers are better served by a comfortable swing with enough club than by forcing a shorter club."];
+ if(q.includes("target")||q.includes("aim")||q.includes("miss"))return["Find the safe miss","Aim for the widest useful landing area and play away from the hazard that can turn one mistake into several strokes."];
+ if(q.includes("mind")||q.includes("focus")||q.includes("think"))return["One thought only","Pick the target, take one practice swing, and commit. Do not play the rest of the hole in your head."];
+ if(q.includes("par"))return["Par","Par is the expected number of strokes for the hole. A bogey is one over par; a birdie is one under."];
+ return["One-Shot Sherpa","Tell me about the shot in front of you — distance, lie, wind, target, or what is worrying you. Keep the question about this shot, not the whole round."]
+}
+function ask(){const q=$("#questionInput").value.trim();if(!q)return;const [t,a]=answer(q);$("#answerTitle").textContent=t;$("#answerText").textContent=a}
+$("#askBtn").onclick=ask;$("#questionInput").addEventListener("keydown",e=>{if(e.key==="Enter")ask()});
+$("#micBtn").onclick=()=>{const R=window.SpeechRecognition||window.webkitSpeechRecognition;if(!R){toast("Voice input is not supported in this browser.");return}const r=new R();r.lang="en-US";r.onresult=e=>{$("#questionInput").value=e.results[0][0].transcript;ask()};r.onerror=()=>toast("Voice input could not start");r.start()};
+
+/* Course API helpers */
+function normalizeCourse(c){
+ const loc=c.location||c.address||{};
+ const lat=Number(c.latitude??loc.latitude??loc.lat??c.lat);
+ const lon=Number(c.longitude??loc.longitude??loc.lng??loc.lon??c.lng);
+ return {raw:c,id:c.id??c.course_id??c.slug??null,name:c.name??c.course_name??c.club_name??"Golf Course",
+   city:c.city??loc.city??"",state:c.state??loc.state??"",lat:Number.isFinite(lat)?lat:null,lon:Number.isFinite(lon)?lon:null};
+}
+function coursesFromPayload(d){if(Array.isArray(d))return d;if(Array.isArray(d.courses))return d.courses;if(Array.isArray(d.results))return d.results;if(Array.isArray(d.data))return d.data;return[]}
+async function courseSearch(url){
+ const r=await fetch(url);if(!r.ok)throw new Error("course api");return coursesFromPayload(await r.json()).map(normalizeCourse)
+}
+function renderCourseResults(items){
+ const box=$("#courseResults");box.innerHTML="";
+ if(!items.length){box.innerHTML=`<div class="muted" style="font-size:.84rem">No course results found. You can still use the typed course name.</div>`;return}
+ items.slice(0,6).forEach(c=>{const el=document.createElement("div");el.className="course-result";el.innerHTML=`<div><strong>${c.name}</strong><small>${[c.city,c.state].filter(Boolean).join(", ")}</small></div><button class="btn ghost">Choose</button>`;el.querySelector("button").onclick=()=>selectCourse(c);box.appendChild(el)})
+}
+$("#courseSearchBtn").onclick=async()=>{const q=$("#courseSearch").value.trim();if(!q)return;$("#courseResults").innerHTML='<span class="muted">Searching…</span>';try{renderCourseResults(await courseSearch(`https://api.opengolfapi.org/v1/courses/search?q=${encodeURIComponent(q)}`))}catch{renderCourseResults([]);toast("Course search unavailable — manual course entry still works")}};
+$("#courseSearch").addEventListener("keydown",e=>{if(e.key==="Enter")$("#courseSearchBtn").click()});
+$("#useTypedCourseBtn").onclick=()=>{const q=$("#courseSearch").value.trim();if(!q){toast("Type a course name first");return}selectCourse({name:q,city:"",state:"",lat:state.coords?.lat??null,lon:state.coords?.lon??null,raw:null})};
+
+$("#nearMeBtn").onclick=()=>{
+ if(!navigator.geolocation){toast("Location is not supported in this browser.");return}
+ $("#courseResults").innerHTML='<span class="muted">Finding nearby courses…</span>';
+ navigator.geolocation.getCurrentPosition(async p=>{
+   state.coords={lat:p.coords.latitude,lon:p.coords.longitude};
+   try{
+     /* OpenGolfAPI search supports location-oriented search in the platform; if unavailable we keep location for weather and manual selection. */
+     const url=`https://api.opengolfapi.org/v1/courses/search?lat=${state.coords.lat}&lng=${state.coords.lon}&radius=25`;
+     const items=await courseSearch(url);renderCourseResults(items);
+     if(items[0])selectCourse(items[0],false);
+   }catch{
+     $("#courseResults").innerHTML='<div class="muted" style="font-size:.84rem">Location is ready. Nearby course lookup could not load, so search by name or use a typed course.</div>';
+   }
+ },()=>{$("#courseResults").innerHTML='<span class="muted">Location permission was not granted.</span>'})
+};
+
+function selectCourse(c,load=true){
+ state.selectedCourse=c;$("#selectedCourseName").textContent=c.name;$("#selectedCourseLocation").textContent=[c.city,c.state].filter(Boolean).join(", ")||"Course selected";
+ if(c.lat!=null&&c.lon!=null)state.coords={lat:c.lat,lon:c.lon};
+ if(load)loadWeather();else if(state.coords)loadWeather();
+}
+async function loadWeather(){
+ if(!state.coords){$("#weatherNote").textContent="No course coordinates available. You can still play and Sherpa will use calm conditions.";return}
+ $("#weatherNote").textContent="Loading conditions…";
+ try{
+  const u=`https://api.open-meteo.com/v1/forecast?latitude=${state.coords.lat}&longitude=${state.coords.lon}&current=temperature_2m,wind_speed_10m,wind_direction_10m,wind_gusts_10m,precipitation&temperature_unit=fahrenheit&wind_speed_unit=mph`;
+  const r=await fetch(u);if(!r.ok)throw 0;const d=await r.json();state.weather=d.current;
+  $("#tempStat").textContent=`${Math.round(d.current.temperature_2m)}°F`;$("#windStat").textContent=`${Math.round(d.current.wind_speed_10m)} mph`;$("#gustStat").textContent=`${Math.round(d.current.wind_gusts_10m)} mph`;
+  $("#weatherNote").textContent=d.current.precipitation>0?"Wet conditions — favor control and extra margin.":"Conditions loaded for the selected location.";
+ }catch{$("#weatherNote").textContent="Weather could not be loaded. Sherpa can still guide the round."}
+}
+$("#refreshWeatherBtn").onclick=loadWeather;
+
+/* Round */
+function windType(){const s=state.weather?.wind_speed_10m??0;if(s<5)return"calm";return"cross"}
+function teeAdj(){const t=$("#teeChoice").value;return t==="gold"?-15:t==="red"?-35:0}
+function extractHoles(course){
+ const c=course?.raw;if(!c)return null;
+ const sources=[c.holes,c.scorecard?.holes,c.scorecards?.[0]?.holes,c.tees?.[0]?.holes].filter(Array.isArray);
+ const h=sources[0];if(!h||h.length<9)return null;
+ const parsed=h.slice(0,18).map((x,i)=>({par:Number(x.par??x.par_value??4),yards:Number(x.yards??x.yardage??x.distance??0),n:i+1})).filter(x=>x.yards>0);
+ return parsed.length>=9?parsed:null
+}
+$("#startRoundBtn").onclick=()=>{
+ if(!state.selectedCourse){toast("Choose or type a course first");return}
+ const adj=teeAdj(), apiHoles=extractHoles(state.selectedCourse);
+ const holes=(apiHoles??FALLBACK_HOLES.map(([par,yards],i)=>({par,yards,n:i+1}))).map((h,i)=>({n:i+1,par:h.par,yards:Math.max(70,h.yards+adj),remaining:Math.max(70,h.yards+adj),strokes:0,finished:false,shots:[]}));
+ state.round={course:state.selectedCourse.name,tee:$("#teeChoice").value,goal:$("#roundGoal").value,wind:windType(),started:new Date().toISOString(),holeIndex:0,totalStrokes:0,holes};
+ state.selectedClub=null;state.direction="center";save();showRoundMode();toast("Round started")
+};
+function showRoundMode(){$("#preRound").classList.add("hidden");$("#roundMode").classList.remove("hidden");renderShot()}
+function hideRoundMode(){$("#preRound").classList.remove("hidden");$("#roundMode").classList.add("hidden")}
+function hole(){return state.round.holes[state.round.holeIndex]}
+function recClub(dist){
+ const multiplier=state.round.wind==="cross"?1.02:1;
+ const need=dist*multiplier, asc=Object.entries(state.clubs).filter(([n])=>n!=="Putter").sort((a,b)=>a[1]-b[1]);
+ let idx=asc.findIndex(([,d])=>d>=need);if(idx<0)idx=asc.length-1;
+ if(idx<asc.length-1&&asc[idx][1]-need<7)idx++;return asc[idx][0]
+}
+function target(dist){if(dist>190)return["Wide part of fairway","Play away from the biggest trouble and leave an easier next shot."];if(dist>70)return["Center / safe side","The middle of the green is usually smarter than chasing the flag."];return["Largest landing area","Choose the simplest target and give yourself room to miss."]}
+function cue(){const h=hole();if(h.strokes>=4)return"That shot is finished. Breathe, pick a target, and start fresh.";if(state.round.goal==="practice")return"Target. One practice swing. Commit.";return"Pick the target, take one practice swing, and commit."}
+function renderShot(){
+ const h=hole(), rec=recClub(h.remaining);if(!state.selectedClub)state.selectedClub=rec;const [tr,tw]=target(h.remaining);
+ $("#holeLabel").textContent=`Hole ${h.n}`;$("#holeInfo").textContent=`Par ${h.par} • ${h.yards} yards`;$("#shotStat").textContent=h.strokes+1;$("#remainStat").textContent=`${Math.round(h.remaining)} yds`;$("#totalStat").textContent=state.round.totalStrokes;
+ $("#clubRec").textContent=state.selectedClub;$("#clubWhy").textContent=(state.round.wind==="cross"?"Allow for the wind, but ":"")+"take enough club to make a comfortable swing — do not force too little club.";
+ $("#targetRec").textContent=tr;$("#targetWhy").textContent=tw;$("#mentalCue").textContent=cue();$("#nextHoleBtn").disabled=!h.finished;renderClubStrip()
+}
+function renderClubStrip(){
+ const order=Object.keys(CLUBS),s=$("#clubStrip");s.innerHTML="";order.forEach(n=>{const b=document.createElement("button");b.className="club-choice"+(n===state.selectedClub?" active":"");b.textContent=n;b.onclick=()=>{state.selectedClub=n;renderShot()};s.appendChild(b)})
+}
+$$(".dir").forEach(b=>b.onclick=()=>{state.direction=b.dataset.dir;$$(".dir").forEach(x=>x.classList.toggle("active",x===b))});
+$$(".quality").forEach(b=>b.onclick=()=>recordShot(b.dataset.quality));
+function recordShot(q){
+ const h=hole(),club=state.selectedClub||recClub(h.remaining),base=state.clubs[club]||50,f=q==="good"?1:q==="okay"?.82:.62;
+ let travel=Math.max(4,Math.round(base*f));if(state.direction==="short")travel=Math.max(4,travel-12);if(state.direction==="long")travel+=8;
+ h.strokes++;state.round.totalStrokes++;h.remaining=Math.max(0,h.remaining-travel);h.shots.push({club,quality:q,direction:state.direction,travel,at:new Date().toISOString()});
+ $("#resetMessage").textContent=q==="poor"?"Leave that shot behind. The next shot is a new start.":"Good reset. Focus only on the shot you are on.";
+ state.selectedClub=null;state.direction="center";$$(".dir").forEach(x=>x.classList.toggle("active",x.dataset.dir==="center"));save();renderShot()
+}
+$("#finishHoleBtn").onclick=()=>{const h=hole();if(h.finished)return;if(h.remaining>0){h.strokes++;state.round.totalStrokes++}h.remaining=0;h.finished=true;$("#resetMessage").textContent=(h.strokes>h.par?"Bad holes happen. Leave it here. ":"Hole complete. ")+"The next tee is a fresh start.";save();renderShot()};
+$("#nextHoleBtn").onclick=()=>{const h=hole();if(!h.finished)return;if(state.round.holeIndex<state.round.holes.length-1){state.round.holeIndex++;state.selectedClub=null;save();renderShot();$("#resetMessage").textContent="Every shot is a new start."}else finishRound()};
+$("#endRoundBtn").onclick=()=>{if(confirm("End this round and save what you have recorded?"))finishRound()};
+function finishRound(){state.round.finished=new Date().toISOString();state.rounds.unshift(state.round);state.round=null;save();hideRoundMode();renderRounds();show("rounds");toast("Round saved")}
+
+/* Rounds/export */
+function renderRounds(){const l=$("#roundList");l.innerHTML="";if(!state.rounds.length){l.innerHTML='<div class="round-item"><div><h3>No saved rounds yet.</h3><p>Finished rounds stay on this device until you export or clear browser data.</p></div></div>';return}state.rounds.forEach(r=>{const played=r.holes.filter(h=>h.finished||h.shots.length).length,par=r.holes.slice(0,played).reduce((s,h)=>s+h.par,0),diff=r.totalStrokes-par;const el=document.createElement("div");el.className="round-item";el.innerHTML=`<div><h3>${r.course}</h3><p>${new Date(r.started).toLocaleDateString()} • ${played} holes • ${r.tee} tees</p></div><div class="round-score">${r.totalStrokes}${played?` (${diff>=0?"+":""}${diff})`:""}</div>`;l.appendChild(el)})}
+$("#exportBtn").onclick=()=>{const b=new Blob([JSON.stringify({version:"0.3.2",clubs:state.clubs,rounds:state.rounds},null,2)],{type:"application/json"}),a=document.createElement("a");a.href=URL.createObjectURL(b);a.download=`sherpa-caddie-data-${new Date().toISOString().slice(0,10)}.json`;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),500)};
+$("#importBtn").onclick=()=>$("#importFile").click();$("#importFile").onchange=async e=>{const f=e.target.files[0];if(!f)return;try{const d=JSON.parse(await f.text());if(d.clubs)state.clubs=d.clubs;if(d.rounds)state.rounds=d.rounds;save();renderClubs();renderRounds();toast("Data imported")}catch{toast("Could not import that file")}e.target.value=""};
+
+if("serviceWorker"in navigator)window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js?v=032").catch(()=>{}));
+renderClubs();renderRounds();if(state.round){show("play");showRoundMode()}
+})();
+</script>
 </body>
 </html>
