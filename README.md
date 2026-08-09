@@ -1,5 +1,5 @@
 # Sherpa Caddie
-### Version 0.3.3
+### Version 0.3.4
 
 **PWA:**  
 https://davidfliesen.github.io/SherpaCaddy
@@ -116,3 +116,36 @@ Pick the target, take one practice swing, and commit.
 - Expanded the local Sherpa knowledge engine for club selection, safe targets, mental reset, wind, hazards, putting, scoring, etiquette, and beginner questions.
 - During an active round, Ask Sherpa now uses the current hole, remaining distance, personal club distances, current recommendation, safe target, and mental cue.
 - Ask Sherpa remains local and does not require a backend or API key. It is rule-based rather than a generative AI model.
+
+
+### v0.3.4 — Course Planning Maps
+
+Added an interactive course-planning map to the **Play** screen.
+
+#### Planning map features
+
+- New **Plan Course Map** button after a course is selected.
+- Interactive mobile/tablet-friendly map using Leaflet.
+- OpenStreetMap base map with required attribution.
+- OpenStreetMap/Overpass golf overlays where community mapping is available:
+  - course boundary
+  - hole paths
+  - fairways
+  - greens
+  - tees
+  - bunkers
+  - water
+  - pins
+- Course Overview control.
+- Hole 1–18 selector that zooms to numbered hole paths when available.
+- Tap anywhere on the map to place a temporary **planning target**.
+- Clear Target control.
+- Sherpa planning reminder to favor the widest useful landing area and avoid the trouble that can create a big number.
+- Graceful fallback to the base course map when detailed golf features are not mapped.
+- Course map remains a planning tool and is kept separate from the simplified in-round One-Shot Sherpa screen.
+
+#### Data and connectivity
+
+Course location/scorecard data continues to come from OpenGolfAPI when available. Current weather continues to use Open-Meteo. Detailed course geometry comes from OpenStreetMap through the Overpass API.
+
+Map tiles and detailed map data require an internet connection. They are intentionally not bulk-downloaded or prefetched into the PWA cache.

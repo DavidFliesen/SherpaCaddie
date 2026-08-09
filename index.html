@@ -5,10 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#18311C">
 <meta name="description" content="Sherpa Caddie — one-shot-at-a-time golf guidance combining a caddie, coach and mentor.">
-<link rel="manifest" href="manifest.webmanifest?v=033">
-<link rel="icon" href="icons/favicon.png?v=033" type="image/png">
-<link rel="apple-touch-icon" href="icons/icon-192.png?v=033">
-<title>Sherpa Caddie v0.3.3</title>
+<link rel="manifest" href="manifest.webmanifest?v=034">
+<link rel="icon" href="icons/favicon.png?v=034" type="image/png">
+<link rel="apple-touch-icon" href="icons/icon-192.png?v=034">
+<title>Sherpa Caddie v0.3.4</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+  crossorigin="">
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+  crossorigin=""></script>
 <style>
 :root{
   --forest:#18311C;
@@ -200,6 +204,45 @@ main{width:min(1160px,calc(100% - 28px));margin:0 auto;padding-bottom:18px}
 .footer{display:flex;justify-content:center;gap:12px;color:var(--stone);font-size:.78rem;padding:7px 0 0}
 .footer button{border:0;background:transparent;color:var(--fairway);font-weight:850;padding:0}
 
+
+/* COURSE PLANNING MAP */
+.map-modal{
+  width:min(1120px,97vw);height:min(790px,92dvh);
+  padding:14px;display:grid;grid-template-rows:auto auto 1fr auto;gap:9px;overflow:hidden
+}
+.map-toolbar{
+  display:grid;grid-template-columns:1fr auto auto auto;gap:8px;align-items:end
+}
+.map-toolbar .field{min-width:130px}
+.map-toolbar select{
+  width:100%;border:1px solid var(--line);border-radius:8px;padding:9px;background:#fff;color:var(--navy)
+}
+.map-status{
+  background:var(--soft);border:1px solid var(--line);border-radius:9px;padding:8px 10px;
+  color:var(--stone);font-size:.82rem
+}
+.course-map{
+  min-height:390px;width:100%;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#E8E3D8
+}
+.map-footer{
+  display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center
+}
+.map-tip{
+  background:var(--sand);border-left:4px solid var(--tan);border-radius:7px;
+  padding:9px 11px;color:var(--navy);font-weight:800;font-size:.87rem;line-height:1.35
+}
+.map-legend{display:flex;flex-wrap:wrap;gap:8px;justify-content:flex-end}
+.legend-item{display:flex;align-items:center;gap:5px;color:var(--stone);font-size:.75rem;font-weight:800}
+.legend-dot{width:13px;height:13px;border-radius:3px;border:1px solid rgba(11,32,51,.25)}
+.leaflet-container{font:inherit}
+@media(max-width:720px){
+  .map-modal{height:94dvh;padding:10px}
+  .map-toolbar{grid-template-columns:1fr 1fr}
+  .course-map{min-height:330px}
+  .map-footer{grid-template-columns:1fr}
+  .map-legend{justify-content:flex-start}
+}
+
 .toast{position:fixed;left:50%;bottom:18px;transform:translate(-50%,15px);background:var(--navy);color:#fff;padding:9px 13px;border-radius:8px;opacity:0;pointer-events:none;transition:.2s;z-index:70;font-weight:800}
 .toast.show{opacity:1;transform:translate(-50%,0)}
 
@@ -238,12 +281,12 @@ main{width:min(1160px,calc(100% - 28px));margin:0 auto;padding-bottom:18px}
 <body>
 <div class="app">
 <header class="topbar">
-  <img class="brand-logo" src="assets/sherpa-caddie-logo.png?v=033" alt="Sherpa Caddie">
+  <img class="brand-logo" src="assets/sherpa-caddie-logo.png?v=034" alt="Sherpa Caddie">
   <div class="brand-text">
     <h1>Sherpa Caddie</h1>
     <p>Your guide. Your game. Your best round.</p>
   </div>
-  <div class="version">v0.3.3</div>
+  <div class="version">v0.3.4</div>
 </header>
 
 <div class="tabs-wrap">
@@ -345,6 +388,7 @@ main{width:min(1160px,calc(100% - 28px));margin:0 auto;padding-bottom:18px}
           </label>
         </div>
         <div class="start-actions">
+          <button class="btn tan" id="planMapBtn">Plan Course Map</button>
           <button class="btn secondary" id="refreshWeatherBtn">Weather</button>
           <button class="btn primary" id="startRoundBtn">Start Round</button>
         </div>
@@ -427,7 +471,7 @@ main{width:min(1160px,calc(100% - 28px));margin:0 auto;padding-bottom:18px}
   </article>
 </section>
 
-<div class="footer"><span>Sherpa Caddie v0.3.3</span><button id="aboutBtn">What’s in v0.3?</button></div>
+<div class="footer"><span>Sherpa Caddie v0.3.4</span><button id="aboutBtn">What’s in v0.3?</button></div>
 </main>
 </div>
 
@@ -463,6 +507,51 @@ main{width:min(1160px,calc(100% - 28px));margin:0 auto;padding-bottom:18px}
   </div>
 </div>
 
+<div id="mapModal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="mapModalTitle">
+  <div class="modal map-modal">
+    <div class="section-head" style="margin-bottom:0">
+      <div>
+        <p class="eyebrow">Course planning</p>
+        <h2 id="mapModalTitle" style="margin:0;color:var(--forest)">Plan the course before you play</h2>
+        <p id="mapCourseName" class="muted" style="margin:3px 0 0">Select a course first.</p>
+      </div>
+      <button class="btn ghost" id="closeMapBtn">Close</button>
+    </div>
+
+    <div class="map-toolbar">
+      <div class="field">
+        <label for="mapHoleSelect">Focus hole</label>
+        <select id="mapHoleSelect">
+          <option value="all">Course Overview</option>
+          <option value="1">Hole 1</option><option value="2">Hole 2</option><option value="3">Hole 3</option>
+          <option value="4">Hole 4</option><option value="5">Hole 5</option><option value="6">Hole 6</option>
+          <option value="7">Hole 7</option><option value="8">Hole 8</option><option value="9">Hole 9</option>
+          <option value="10">Hole 10</option><option value="11">Hole 11</option><option value="12">Hole 12</option>
+          <option value="13">Hole 13</option><option value="14">Hole 14</option><option value="15">Hole 15</option>
+          <option value="16">Hole 16</option><option value="17">Hole 17</option><option value="18">Hole 18</option>
+        </select>
+      </div>
+      <button class="btn ghost" id="mapOverviewBtn">Overview</button>
+      <button class="btn secondary" id="clearTargetBtn">Clear Target</button>
+      <button class="btn primary" id="reloadMapDataBtn">Reload Details</button>
+    </div>
+
+    <div id="mapStatus" class="map-status">Choose a course with location data to load its map.</div>
+    <div id="courseMap" class="course-map" aria-label="Interactive golf course planning map"></div>
+
+    <div class="map-footer">
+      <div class="map-tip" id="mapTip">Sherpa planning: look for the widest useful landing area and the trouble that can turn one miss into a big number. Tap the map to mark a possible target.</div>
+      <div class="map-legend" aria-label="Map legend">
+        <span class="legend-item"><span class="legend-dot" style="background:#436240"></span>Fairway</span>
+        <span class="legend-item"><span class="legend-dot" style="background:#869250"></span>Green</span>
+        <span class="legend-item"><span class="legend-dot" style="background:#EBD9C1"></span>Bunker</span>
+        <span class="legend-item"><span class="legend-dot" style="background:#0B2033"></span>Water / Hole</span>
+        <span class="legend-item"><span class="legend-dot" style="background:#BA915B"></span>Your target</span>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="toast" id="toast"></div>
 
 <script>
@@ -470,12 +559,13 @@ main{width:min(1160px,calc(100% - 28px));margin:0 auto;padding-bottom:18px}
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 const CLUBS={"Driver":220,"3 Wood":205,"5 Wood":190,"4 Hybrid":180,"5 Iron":170,"6 Iron":160,"7 Iron":150,"8 Iron":140,"9 Iron":125,"Pitching Wedge":110,"Gap Wedge":95,"Sand Wedge":75,"Lob Wedge":55,"Putter":10};
 const FALLBACK_HOLES=[[4,365],[4,330],[3,155],[5,490],[4,385],[4,350],[3,145],[5,510],[4,375],[4,360],[3,165],[5,500],[4,340],[4,395],[3,150],[5,475],[4,370],[4,355]];
-const KEY={clubs:"sherpa.clubs.033",rounds:"sherpa.rounds.033",current:"sherpa.current.033"};
+const KEY={clubs:"sherpa.clubs.034",rounds:"sherpa.rounds.034",current:"sherpa.current.034"};
 const state={
  clubs:JSON.parse(localStorage.getItem(KEY.clubs)||"null")||{...CLUBS},
  rounds:JSON.parse(localStorage.getItem(KEY.rounds)||"[]"),
  round:JSON.parse(localStorage.getItem(KEY.current)||"null"),
- selectedCourse:null, coords:null, weather:null, selectedClub:null, direction:"center"
+ selectedCourse:null, coords:null, weather:null, selectedClub:null, direction:"center",
+ map:null, mapBase:null, mapFeatureGroup:null, mapHoleLayers:{}, mapTarget:null, mapCourseBounds:null
 };
 function save(){localStorage.setItem(KEY.clubs,JSON.stringify(state.clubs));localStorage.setItem(KEY.rounds,JSON.stringify(state.rounds));localStorage.setItem(KEY.current,JSON.stringify(state.round))}
 function toast(m){const t=$("#toast");t.textContent=m;t.classList.add("show");clearTimeout(toast.t);toast.t=setTimeout(()=>t.classList.remove("show"),1700)}
@@ -677,6 +767,204 @@ async function loadWeather(){
 }
 $("#refreshWeatherBtn").onclick=loadWeather;
 
+/* Course planning map — Leaflet + OpenStreetMap/Overpass */
+function courseMapCoords(){
+  const c=state.selectedCourse;
+  if(c && Number.isFinite(Number(c.lat)) && Number.isFinite(Number(c.lon))) {
+    return {lat:Number(c.lat),lon:Number(c.lon)};
+  }
+  if(state.coords && Number.isFinite(Number(state.coords.lat)) && Number.isFinite(Number(state.coords.lon))) {
+    return {lat:Number(state.coords.lat),lon:Number(state.coords.lon)};
+  }
+  return null;
+}
+function openCourseMap(){
+  if(!state.selectedCourse){toast("Choose a course first");return}
+  const coords=courseMapCoords();
+  $("#mapModal").classList.remove("hidden");
+  $("#mapCourseName").textContent=state.selectedCourse.name;
+  setTimeout(()=>{
+    if(!window.L){
+      $("#mapStatus").textContent="The map library could not load. Check your internet connection and try again.";
+      return;
+    }
+    if(!coords){
+      $("#mapStatus").textContent="This course does not currently have usable coordinates. Choose it from OpenGolfAPI/nearby results to use course planning.";
+      initEmptyMap();
+      return;
+    }
+    initCourseMap(coords);
+  },50);
+}
+function closeCourseMap(){
+  $("#mapModal").classList.add("hidden");
+}
+$("#planMapBtn").addEventListener("click",openCourseMap);
+$("#closeMapBtn").addEventListener("click",closeCourseMap);
+$("#mapModal").addEventListener("click",e=>{if(e.target.id==="mapModal")closeCourseMap()});
+
+function initEmptyMap(){
+  if(state.map){setTimeout(()=>state.map.invalidateSize(),50);return}
+  state.map=L.map("courseMap",{zoomControl:true,attributionControl:true}).setView([33.0,-80.0],7);
+  state.mapBase=L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png",{
+    maxZoom:19,
+    attribution:'&copy; OpenStreetMap contributors'
+  }).addTo(state.map);
+}
+function initCourseMap(coords){
+  if(!state.map){
+    state.map=L.map("courseMap",{zoomControl:true,attributionControl:true}).setView([coords.lat,coords.lon],16);
+    state.mapBase=L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png",{
+      maxZoom:19,
+      attribution:'&copy; OpenStreetMap contributors'
+    }).addTo(state.map);
+    state.map.on("click",e=>setPlanningTarget(e.latlng));
+  } else {
+    state.map.setView([coords.lat,coords.lon],16);
+  }
+  setTimeout(()=>state.map.invalidateSize(),50);
+  loadGolfMapDetails(coords);
+}
+function clearMapFeatures(){
+  if(state.mapFeatureGroup){state.map.removeLayer(state.mapFeatureGroup)}
+  state.mapFeatureGroup=L.featureGroup().addTo(state.map);
+  state.mapHoleLayers={};
+  state.mapCourseBounds=null;
+}
+function styleForTags(tags={}){
+  const golf=tags.golf;
+  if(golf==="fairway") return {color:"#436240",weight:2,fillColor:"#436240",fillOpacity:.18};
+  if(golf==="green") return {color:"#52753B",weight:2,fillColor:"#869250",fillOpacity:.38};
+  if(golf==="tee") return {color:"#BA915B",weight:2,fillColor:"#BA915B",fillOpacity:.30};
+  if(golf==="bunker") return {color:"#BA915B",weight:2,fillColor:"#EBD9C1",fillOpacity:.78};
+  if(golf==="water_hazard" || tags.natural==="water") return {color:"#0B2033",weight:2,fillColor:"#0B2033",fillOpacity:.25};
+  if(golf==="hole") return {color:"#0B2033",weight:4,opacity:.8};
+  if(tags.leisure==="golf_course") return {color:"#18311C",weight:3,fillOpacity:.02};
+  return {color:"#6C6C6A",weight:2,fillOpacity:.08};
+}
+function featureLabel(tags={}){
+  if(tags.golf==="hole") return `Hole ${tags.ref||tags.name||""}`.trim();
+  if(tags.golf==="fairway") return "Fairway";
+  if(tags.golf==="green") return "Green";
+  if(tags.golf==="tee") return tags.ref ? `Tee ${tags.ref}` : "Tee";
+  if(tags.golf==="bunker") return "Bunker";
+  if(tags.golf==="water_hazard" || tags.natural==="water") return "Water";
+  if(tags.leisure==="golf_course") return tags.name||"Golf course";
+  return tags.name||"Course feature";
+}
+function addGeometryLayer(el){
+  const tags=el.tags||{}, style=styleForTags(tags);
+  const label=featureLabel(tags);
+  let layer=null;
+
+  if(Array.isArray(el.geometry) && el.geometry.length>=2){
+    const latlngs=el.geometry.filter(p=>Number.isFinite(p.lat)&&Number.isFinite(p.lon)).map(p=>[p.lat,p.lon]);
+    if(latlngs.length<2) return;
+    const closed=latlngs.length>3 && latlngs[0][0]===latlngs[latlngs.length-1][0] && latlngs[0][1]===latlngs[latlngs.length-1][1];
+    const polygonTypes=["fairway","green","tee","bunker","water_hazard"];
+    if(closed || polygonTypes.includes(tags.golf) || tags.natural==="water" || tags.leisure==="golf_course"){
+      layer=L.polygon(latlngs,style);
+    } else {
+      layer=L.polyline(latlngs,style);
+    }
+  } else if(Number.isFinite(el.lat)&&Number.isFinite(el.lon)){
+    layer=L.circleMarker([el.lat,el.lon],{
+      radius:tags.golf==="pin"?5:4,
+      color:"#18311C",fillColor:tags.golf==="pin"?"#869250":"#BA915B",fillOpacity:.9,weight:2
+    });
+  }
+  if(!layer)return;
+  layer.bindPopup(label);
+  layer.addTo(state.mapFeatureGroup);
+
+  if(tags.golf==="hole"){
+    const n=parseInt(String(tags.ref||tags.name||"").match(/\d+/)?.[0]||"",10);
+    if(Number.isFinite(n)) state.mapHoleLayers[n]=layer;
+  }
+}
+function addRelationMemberGeometry(el){
+  if(!Array.isArray(el.members))return;
+  el.members.forEach(m=>{
+    if(!Array.isArray(m.geometry)||m.geometry.length<2)return;
+    addGeometryLayer({geometry:m.geometry,tags:el.tags||{}});
+  });
+}
+async function loadGolfMapDetails(coords){
+  clearMapFeatures();
+  $("#mapStatus").textContent="Loading mapped fairways, greens, tees, bunkers, water, and hole paths…";
+  const q=`[out:json][timeout:18];
+  (
+    nwr(around:1800,${coords.lat},${coords.lon})["leisure"="golf_course"];
+    nwr(around:1800,${coords.lat},${coords.lon})["golf"~"^(hole|fairway|green|tee|bunker|water_hazard|pin)$"];
+    nwr(around:1300,${coords.lat},${coords.lon})["natural"="water"];
+  );
+  out tags geom;`;
+  try{
+    const url="https://overpass-api.de/api/interpreter?data="+encodeURIComponent(q);
+    const r=await fetch(url);
+    if(!r.ok)throw new Error("Overpass");
+    const data=await r.json();
+    (data.elements||[]).forEach(el=>{
+      if(el.type==="relation") addRelationMemberGeometry(el);
+      else addGeometryLayer(el);
+    });
+
+    const layers=state.mapFeatureGroup.getLayers();
+    if(layers.length){
+      const bounds=state.mapFeatureGroup.getBounds();
+      if(bounds.isValid()){
+        state.mapCourseBounds=bounds;
+        state.map.fitBounds(bounds,{padding:[24,24],maxZoom:17});
+      }
+      const holeCount=Object.keys(state.mapHoleLayers).length;
+      $("#mapStatus").textContent=`Course map loaded. ${layers.length} mapped features found${holeCount?` including ${holeCount} numbered hole paths`:""}. Detailed coverage varies by course.`;
+    } else {
+      state.map.setView([coords.lat,coords.lon],16);
+      $("#mapStatus").textContent="The course map is available, but this course does not appear to have detailed golf features mapped in OpenStreetMap yet.";
+    }
+  }catch(e){
+    state.map.setView([coords.lat,coords.lon],16);
+    $("#mapStatus").textContent="The base course map is available. Detailed golf overlays could not be loaded right now.";
+  }
+}
+function setPlanningTarget(latlng){
+  if(!state.map)return;
+  if(state.mapTarget)state.map.removeLayer(state.mapTarget);
+  state.mapTarget=L.circleMarker(latlng,{
+    radius:9,color:"#0B2033",weight:2,fillColor:"#BA915B",fillOpacity:.95
+  }).addTo(state.map).bindPopup("Your planning target").openPopup();
+  $("#mapTip").textContent="Planning target marked. Ask: does this landing area avoid the biggest trouble and leave a comfortable next shot?";
+}
+$("#clearTargetBtn").addEventListener("click",()=>{
+  if(state.mapTarget&&state.map){state.map.removeLayer(state.mapTarget);state.mapTarget=null}
+  $("#mapTip").textContent="Sherpa planning: look for the widest useful landing area and the trouble that can turn one miss into a big number. Tap the map to mark a possible target.";
+});
+$("#mapOverviewBtn").addEventListener("click",()=>{
+  $("#mapHoleSelect").value="all";
+  Object.values(state.mapHoleLayers).forEach(l=>l.setStyle&&l.setStyle({color:"#0B2033",weight:4,opacity:.8}));
+  if(state.mapCourseBounds&&state.mapCourseBounds.isValid()) state.map.fitBounds(state.mapCourseBounds,{padding:[24,24],maxZoom:17});
+  else {const c=courseMapCoords();if(c)state.map.setView([c.lat,c.lon],16)}
+  $("#mapTip").textContent="Course overview: identify the trouble that should shape your plan before choosing aggressive targets.";
+});
+$("#mapHoleSelect").addEventListener("change",e=>{
+  const val=e.target.value;
+  Object.values(state.mapHoleLayers).forEach(l=>l.setStyle&&l.setStyle({color:"#0B2033",weight:4,opacity:.8}));
+  if(val==="all"){$("#mapOverviewBtn").click();return}
+  const n=Number(val),layer=state.mapHoleLayers[n];
+  if(layer){
+    layer.setStyle&&layer.setStyle({color:"#BA915B",weight:7,opacity:1});
+    const b=layer.getBounds?.();
+    if(b&&b.isValid())state.map.fitBounds(b,{padding:[45,45],maxZoom:18});
+    $("#mapTip").textContent=`Hole ${n}: study the full path first. Favor the widest landing area and plan backward from the safest next shot.`;
+  }else{
+    $("#mapStatus").textContent=`Hole ${n} does not have a numbered hole path in the available OpenStreetMap data. Use the course overview to plan it visually.`;
+  }
+});
+$("#reloadMapDataBtn").addEventListener("click",()=>{
+  const c=courseMapCoords();if(c)loadGolfMapDetails(c);else toast("This course has no usable map coordinates");
+});
+
+
 /* Round */
 function windType(){const s=state.weather?.wind_speed_10m??0;if(s<5)return"calm";return"cross"}
 function teeAdj(){const t=$("#teeChoice").value;return t==="gold"?-15:t==="red"?-35:0}
@@ -730,10 +1018,10 @@ function finishRound(){state.round.finished=new Date().toISOString();state.round
 
 /* Rounds/export */
 function renderRounds(){const l=$("#roundList");l.innerHTML="";if(!state.rounds.length){l.innerHTML='<div class="round-item"><div><h3>No saved rounds yet.</h3><p>Finished rounds stay on this device until you export or clear browser data.</p></div></div>';return}state.rounds.forEach(r=>{const played=r.holes.filter(h=>h.finished||h.shots.length).length,par=r.holes.slice(0,played).reduce((s,h)=>s+h.par,0),diff=r.totalStrokes-par;const el=document.createElement("div");el.className="round-item";el.innerHTML=`<div><h3>${r.course}</h3><p>${new Date(r.started).toLocaleDateString()} • ${played} holes • ${r.tee} tees</p></div><div class="round-score">${r.totalStrokes}${played?` (${diff>=0?"+":""}${diff})`:""}</div>`;l.appendChild(el)})}
-$("#exportBtn").onclick=()=>{const b=new Blob([JSON.stringify({version:"0.3.3",clubs:state.clubs,rounds:state.rounds},null,2)],{type:"application/json"}),a=document.createElement("a");a.href=URL.createObjectURL(b);a.download=`sherpa-caddie-data-${new Date().toISOString().slice(0,10)}.json`;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),500)};
+$("#exportBtn").onclick=()=>{const b=new Blob([JSON.stringify({version:"0.3.4",clubs:state.clubs,rounds:state.rounds},null,2)],{type:"application/json"}),a=document.createElement("a");a.href=URL.createObjectURL(b);a.download=`sherpa-caddie-data-${new Date().toISOString().slice(0,10)}.json`;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),500)};
 $("#importBtn").onclick=()=>$("#importFile").click();$("#importFile").onchange=async e=>{const f=e.target.files[0];if(!f)return;try{const d=JSON.parse(await f.text());if(d.clubs)state.clubs=d.clubs;if(d.rounds)state.rounds=d.rounds;save();renderClubs();renderRounds();toast("Data imported")}catch{toast("Could not import that file")}e.target.value=""};
 
-if("serviceWorker"in navigator)window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js?v=033").catch(()=>{}));
+if("serviceWorker"in navigator)window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js?v=034").catch(()=>{}));
 renderClubs();renderRounds();if(state.round){show("play");showRoundMode()}
 })();
 </script>
