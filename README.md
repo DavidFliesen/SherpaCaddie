@@ -1,5 +1,5 @@
 # Sherpa Caddie
-### Version 0.3.4
+### Version 0.4.0
 
 **PWA:**  
 https://davidfliesen.github.io/SherpaCaddy
@@ -149,3 +149,52 @@ Added an interactive course-planning map to the **Play** screen.
 Course location/scorecard data continues to come from OpenGolfAPI when available. Current weather continues to use Open-Meteo. Detailed course geometry comes from OpenStreetMap through the Overpass API.
 
 Map tiles and detailed map data require an internet connection. They are intentionally not bulk-downloaded or prefetched into the PWA cache.
+
+
+### v0.4.0 — Sherpa AI
+
+This release replaces the old helper with a **real on-device generative AI assistant** and a cleaner voice workflow.
+
+#### New Sherpa AI features
+
+- **WebLLM** integration for local generative answers running in the browser
+- Model selector with:
+  - **Fast 1B** model
+  - **Smarter 3B** model
+- Permanent Sherpa system prompt focused on:
+  - club choice
+  - safe targets
+  - course reading
+  - beginner-friendly explanation
+  - mental reset and focus
+- Sherpa AI automatically receives live app context:
+  - selected course
+  - current weather
+  - current hole and remaining distance
+  - lie
+  - current recommended club
+  - safe target and reasoning
+  - golfer's stored club distances
+  - planning-map context
+- **Improved voice flow**
+  - local Whisper speech-to-text through Transformers.js
+  - tap **Talk**, speak, tap again to stop, Sherpa transcribes and answers
+  - automatic spoken answer using browser speech synthesis
+- **On-device only** design:
+  - no backend
+  - no API key
+  - no per-message cost
+
+#### Important notes
+
+- First use downloads model files and caches them in the browser.
+- WebLLM requires a browser with **WebGPU** support.
+- The smaller 1B model is faster and lighter; the 3B model can give richer answers but takes more memory and time.
+- Deterministic app data such as scoring, yardages, saved club distances, and course/map facts remain ordinary app logic. The model interprets those facts rather than inventing them.
+
+#### Changed files in v0.4.0
+
+- `index.html`
+- `README.md`
+- `manifest.webmanifest`
+- `sw.js`
