@@ -3,291 +3,119 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <meta name="theme-color" content="#1B4D2E" />
-  <meta name="description" content="Sherpa Caddie — one-shot-at-a-time guidance for golfers who want smarter club choices, calmer minds, and simpler play." />
+  <meta name="theme-color" content="#123d2d" />
+  <meta name="description" content="Sherpa Caddie — a beginner-friendly golf companion that helps you plan, play, learn, and save rounds privately." />
   <link rel="manifest" href="manifest.webmanifest" />
   <link rel="icon" href="icons/favicon.png" type="image/png" />
   <link rel="apple-touch-icon" href="icons/icon-192.png" />
   <link rel="stylesheet" href="styles.css" />
-  <title>Sherpa Caddie v0.3</title>
+  <title>Sherpa Caddie</title>
 </head>
 <body>
   <header class="topbar">
-    <button class="ghost-button small" id="menuToggle" aria-label="Open menu">☰</button>
-    <div class="brandlock">
-      <img src="assets/sherpa-caddie-logo-clean.png" alt="Sherpa Caddie" class="brand-logo" />
-      <div class="brand-copy">
-        <h1>Sherpa Caddie</h1>
-        <p>Your guide. Your game. Your best round.</p>
-      </div>
+    <div class="brand">
+      <img class="brand-logo" src="assets/sherpa-caddie-logo.jpg" alt="Sherpa Caddie" />
     </div>
-    <button class="ghost-button small" id="installBtn" hidden>Install</button>
+    <button id="installBtn" class="ghost hidden">Install</button>
   </header>
 
-  <aside class="drawer" id="drawer" aria-hidden="true">
-    <nav class="drawer-nav">
-      <button class="drawer-link active" data-screen="home">Home</button>
-      <button class="drawer-link" data-screen="club-setup">Club Setup</button>
-      <button class="drawer-link" data-screen="play">Play Round</button>
-      <button class="drawer-link" data-screen="learn">Learn</button>
-      <button class="drawer-link" data-screen="rounds">My Rounds</button>
-      <button class="drawer-link" data-screen="about">About v0.3</button>
-    </nav>
-  </aside>
-  <div class="drawer-backdrop" id="drawerBackdrop" hidden></div>
-
-  <main class="app-shell">
-
-    <section class="screen active" id="screen-home">
-      <div class="card hero-card">
-        <div class="hero-copy">
-          <span class="eyebrow">One-Shot Sherpa</span>
-          <h2>Slow down. Choose smart. Commit to this shot.</h2>
-          <p>Sherpa Caddie guides you through club choice, safe targets, and one clear mental cue — one shot at a time.</p>
-        </div>
+  <main>
+    <section class="welcome-card">
+      <img class="welcome-mark" src="icons/icon-192.png" alt="" aria-hidden="true" />
+      <div>
+        <p class="eyebrow">Your golf guide, coach, and caddie</p>
+        <h1>Ready for your next round?</h1>
+        <p>Find a course, check conditions, keep score, and ask Sherpa for clear guidance along the way.</p>
+        <div class="app-status"><span class="status-dot"></span><span id="appStatus">Ready when you are</span></div>
       </div>
+    </section>
 
-      <div class="grid-2 action-grid">
-        <button class="action-card" data-go="club-setup">
-          <strong>Set My Clubs</strong>
-          <small>Save your carry distances so Sherpa can guide club selection.</small>
-        </button>
+    <nav class="tabs" aria-label="Main sections">
+      <button class="tab active" data-view="home">Home</button>
+      <button class="tab" data-view="play">Play</button>
+      <button class="tab" data-view="learn">Learn</button>
+      <button class="tab" data-view="rounds">My Rounds</button>
+    </nav>
+
+    <section id="home" class="view active">
+      <div class="action-grid">
         <button class="action-card" data-go="play">
-          <strong>Start a Round</strong>
-          <small>Use the simplified in-round screen built for actual play.</small>
+          <span class="action-icon">🏌️</span><strong>Start or Plan a Round</strong><small>Choose a course now or find one nearby.</small>
+        </button>
+        <button class="action-card" id="quickWeatherBtn">
+          <span class="action-icon">🌤️</span><strong>Check Conditions</strong><small>Temperature, wind, gusts, and rain chance.</small>
         </button>
         <button class="action-card" data-go="learn">
-          <strong>Learn the Basics</strong>
-          <small>Simple lessons on targets, safe misses, and calming your mind.</small>
+          <span class="action-icon">🧭</span><strong>First-Time Golfer Guide</strong><small>Etiquette and rules explained in plain English.</small>
         </button>
         <button class="action-card" data-go="rounds">
-          <strong>Post-Round Review</strong>
-          <small>See what worked, what cost you strokes, and your next-round focus.</small>
+          <span class="action-icon">📒</span><strong>Review My Rounds</strong><small>Local history, summaries, export, and import.</small>
         </button>
       </div>
 
-      <div class="card quick-summary">
-        <h3>What makes Sherpa Caddie different?</h3>
-        <ul class="bullet-list">
-          <li>A guide and mentor, not just a scorecard or GPS app.</li>
-          <li>Built for new golfers and golfers who want simpler, smarter decisions.</li>
-          <li>Teaches club selection, course reading, and mental reset while you play.</li>
-        </ul>
-      </div>
+      <article class="sherpa-panel">
+        <div class="sherpa-avatar"><img src="icons/icon-192.png" alt="Sherpa guide icon" /></div>
+        <div class="sherpa-copy">
+          <span class="eyebrow">Ask Sherpa</span>
+          <h2 id="answerTitle">What can I help with?</h2>
+          <p id="answerText">Try: “What does par mean?”, “When is it my turn?”, or “Should I use one more club into the wind?”</p>
+          <div class="ask-row">
+            <input id="questionInput" type="text" placeholder="Ask a golf question…" autocomplete="off" />
+            <button id="askBtn" class="primary">Ask</button>
+            <button id="micBtn" class="mic" aria-label="Speak to Sherpa">🎙️</button>
+          </div>
+          <p id="voiceNote" class="fine-print">Push to talk. Speech support varies by browser.</p>
+        </div>
+      </article>
     </section>
 
-    <section class="screen" id="screen-club-setup">
-      <div class="card">
-        <div class="section-header">
-          <div>
-            <span class="eyebrow">Personal setup</span>
-            <h2>My club distances</h2>
-          </div>
-          <button class="ghost-button" id="resetClubsBtn">Reset</button>
+    <section id="play" class="view">
+      <div class="section-heading"><div><p class="eyebrow">Plan your day</p><h2>Choose a golf course</h2></div></div>
+      <div class="course-tools card">
+        <button id="nearMeBtn" class="primary">📍 Find Courses Near Me</button>
+        <div class="divider"><span>or</span></div>
+        <label for="courseSearch">Search before you arrive</label>
+        <div class="search-row">
+          <input id="courseSearch" placeholder="Course, city, or state" />
+          <button id="searchCourseBtn" class="secondary">Search</button>
         </div>
-        <p class="muted">Enter your typical carry distance for each club. Sherpa uses these values to recommend one more club when the shot, wind, or hazards call for it.</p>
-        <div id="clubGrid" class="club-grid"></div>
-        <div class="button-row">
-          <button class="primary-button" id="saveClubsBtn">Save Distances</button>
-        </div>
+        <p class="fine-print">Course information is requested from OpenGolfAPI. Search results depend on available community data.</p>
       </div>
+      <div id="courseResults" class="results"></div>
+
+      <article id="selectedCourseCard" class="selected-course card hidden">
+        <div class="section-heading"><div><p class="eyebrow">Selected course</p><h2 id="selectedCourseName">Course</h2><p id="selectedCourseLocation"></p></div><button id="clearCourseBtn" class="ghost">Change</button></div>
+        <div id="weatherPanel" class="weather-grid"><div class="weather-loading">Select “Load weather” to check playing conditions.</div></div>
+        <div class="button-row"><button id="loadWeatherBtn" class="secondary">Load Weather</button><button id="startRoundBtn" class="primary">Start Round</button></div>
+      </article>
+
+      <article id="roundPanel" class="card hidden">
+        <div class="section-heading"><div><p class="eyebrow">Round in progress</p><h2 id="roundCourseName"></h2><p id="roundProgress">Hole 1 of 18</p></div><button id="endRoundBtn" class="danger">End Round</button></div>
+        <div class="scoreboard">
+          <button id="prevHoleBtn" class="circle">←</button>
+          <div><span>Hole</span><strong id="holeNumber">1</strong><small id="holePar">Par 4</small></div>
+          <div><span>Strokes</span><strong id="strokeCount">0</strong><small id="scoreToPar">Not scored</small></div>
+          <button id="nextHoleBtn" class="circle">→</button>
+        </div>
+        <div class="counter-row"><button id="minusStrokeBtn">− Stroke</button><button id="addStrokeBtn" class="primary">+ Stroke</button></div>
+        <label for="holeNote">Quick note</label><textarea id="holeNote" rows="2" placeholder="Example: Drive left, good recovery, two putts"></textarea>
+        <div class="button-row"><button id="saveHoleBtn" class="secondary">Save Hole</button><button id="voiceScoreBtn" class="ghost">🎙️ Record by Voice</button></div>
+      </article>
     </section>
 
-    <section class="screen" id="screen-play">
-      <div class="card">
-        <div class="section-header">
-          <div>
-            <span class="eyebrow">Pre-round</span>
-            <h2>Start a simple round</h2>
-          </div>
-        </div>
-        <div class="form-grid">
-          <label>
-            Course
-            <input id="courseName" type="text" value="Pine Forest Country Club" />
-          </label>
-          <label>
-            Tee
-            <select id="teeChoice">
-              <option value="white">White Tees</option>
-              <option value="gold">Gold Tees</option>
-              <option value="red">Red Tees</option>
-            </select>
-          </label>
-          <label>
-            Wind
-            <select id="windType">
-              <option value="calm">Calm</option>
-              <option value="helping">Helping wind</option>
-              <option value="cross">Crosswind</option>
-              <option value="into">Headwind</option>
-            </select>
-          </label>
-          <label>
-            Round goal
-            <select id="roundGoal">
-              <option value="score">Play for score</option>
-              <option value="practice">Practice and learn</option>
-              <option value="fun">Just enjoy the round</option>
-            </select>
-          </label>
-        </div>
-        <div class="button-row">
-          <button class="primary-button" id="startRoundBtn">Start Round</button>
-        </div>
-      </div>
-
-      <div class="card round-card" id="roundCard" hidden>
-        <div class="hole-top">
-          <div>
-            <span class="eyebrow" id="holeEyebrow">Hole 1</span>
-            <h2 id="holeTitle">Par 4 • 365 yards</h2>
-          </div>
-          <div class="score-pill" id="scorePill">Strokes: 0</div>
-        </div>
-
-        <div class="shot-state">
-          <div class="metric">
-            <span>Distance</span>
-            <strong id="distanceLabel">365 yds</strong>
-          </div>
-          <div class="metric">
-            <span>Lie</span>
-            <strong id="lieLabel">Tee</strong>
-          </div>
-          <div class="metric">
-            <span>Wind</span>
-            <strong id="windLabel">Calm</strong>
-          </div>
-        </div>
-
-        <div class="guidance-box">
-          <span class="eyebrow">Sherpa’s plan</span>
-          <div class="plan-grid">
-            <div>
-              <h3 id="clubRecommend">Driver</h3>
-              <p id="clubWhy" class="muted">Based on your distance and this hole, use your dependable club and favor the safest side.</p>
-            </div>
-            <div>
-              <h3 id="targetRecommend">Aim left-center</h3>
-              <p id="targetWhy" class="muted">Play away from the main trouble and set up an easier next shot.</p>
-            </div>
-          </div>
-          <div class="cue-box">
-            <span class="eyebrow">One thought</span>
-            <p id="mentalCue">Pick the target and make a smooth, committed swing.</p>
-          </div>
-        </div>
-
-        <div class="button-row club-quick-row" id="clubQuickRow"></div>
-
-        <div class="shot-actions">
-          <span class="eyebrow">How did you hit it?</span>
-          <div class="quality-row">
-            <button class="quality-button good" data-quality="good">Good</button>
-            <button class="quality-button okay" data-quality="okay">Okay</button>
-            <button class="quality-button poor" data-quality="poor">Poor</button>
-          </div>
-          <div class="direction-row">
-            <button class="chip-button" data-direction="left">Left</button>
-            <button class="chip-button" data-direction="center">Center</button>
-            <button class="chip-button" data-direction="right">Right</button>
-            <button class="chip-button" data-direction="short">Short</button>
-            <button class="chip-button" data-direction="long">Long</button>
-          </div>
-          <div class="button-row end-row">
-            <button class="ghost-button" id="puttedInBtn">Putted In / Finish Hole</button>
-            <button class="ghost-button" id="nextHoleBtn" disabled>Next Hole</button>
-          </div>
-          <p class="reset-message" id="resetMessage">Every shot is a new start.</p>
-        </div>
-      </div>
+    <section id="learn" class="view">
+      <div class="section-heading"><div><p class="eyebrow">No jargon required</p><h2>Golf made understandable</h2></div></div>
+      <div class="lesson-grid" id="lessonGrid"></div>
     </section>
 
-    <section class="screen" id="screen-learn">
-      <div class="card">
-        <span class="eyebrow">Simple guidance</span>
-        <h2>Basics Sherpa keeps teaching</h2>
-        <div class="learn-list">
-          <div class="learn-item">
-            <h3>Focus on the shot you are on</h3>
-            <p>You are not playing 18 holes at once. You are only playing this shot.</p>
-          </div>
-          <div class="learn-item">
-            <h3>Go back to the fundamentals</h3>
-            <p>Target. Club. One practice swing. Commit.</p>
-          </div>
-          <div class="learn-item">
-            <h3>Bad holes happen</h3>
-            <p>Leave the last shot where it happened. The next shot is a new start.</p>
-          </div>
-          <div class="learn-item">
-            <h3>The last thought matters</h3>
-            <p>Your last thought before the swing should be positive, clear, and simple.</p>
-          </div>
-        </div>
-      </div>
+    <section id="rounds" class="view">
+      <div class="section-heading"><div><p class="eyebrow">Stored only on this device</p><h2>My rounds</h2></div><div class="button-row"><button id="importBtn" class="ghost">Import</button><button id="exportAllBtn" class="secondary">Export All</button></div></div>
+      <input type="file" id="importFile" class="hidden" accept="application/json,.json" />
+      <div id="roundList" class="round-list"></div>
     </section>
-
-    <section class="screen" id="screen-rounds">
-      <div class="card" id="postRoundCard">
-        <span class="eyebrow">Three-item post-round summary</span>
-        <h2>Review my round</h2>
-        <div class="summary-grid">
-          <div class="summary-item">
-            <span class="eyebrow green">What worked</span>
-            <h3>Smarter targets</h3>
-            <p>Choosing a safer side of the hole helped keep you in play.</p>
-          </div>
-          <div class="summary-item">
-            <span class="eyebrow tan">What cost strokes</span>
-            <h3>Too little club</h3>
-            <p>Most poor shots happened when you selected too little club.</p>
-          </div>
-          <div class="summary-item">
-            <span class="eyebrow navy">Next-round focus</span>
-            <h3>Commit to the shot</h3>
-            <p>Pick the target, take one practice swing, and commit.</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="section-header">
-          <div>
-            <span class="eyebrow">Local history</span>
-            <h2>Saved rounds</h2>
-          </div>
-          <div class="button-row compact">
-            <button class="ghost-button" id="exportRoundsBtn">Export</button>
-            <label class="ghost-button file-label">Import<input id="importRoundsInput" type="file" accept="application/json" hidden /></label>
-          </div>
-        </div>
-        <div id="roundList" class="round-list"></div>
-      </div>
-    </section>
-
-    <section class="screen" id="screen-about">
-      <div class="card">
-        <span class="eyebrow">Recommended next development version</span>
-        <h2>Version 0.3 — One-Shot Sherpa</h2>
-        <p>This version concentrates entirely on the core experience that makes Sherpa Caddie different:</p>
-        <ul class="bullet-list">
-          <li>Personal club-distance setup</li>
-          <li>Simplified in-round screen</li>
-          <li>Shot-quality buttons</li>
-          <li>Club and safe-target recommendation</li>
-          <li>One mental cue</li>
-          <li>New-shot reset message</li>
-          <li>Automatic scoring from recorded shots</li>
-          <li>Three-item post-round summary</li>
-        </ul>
-        <p class="muted">That establishes the feature that makes Sherpa Caddie genuinely different before adding more course maps, analytics, or AI complexity.</p>
-      </div>
-    </section>
-
   </main>
 
-  <script src="app.js"></script>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script src="app.js" defer></script>
 </body>
 </html>
