@@ -1,5 +1,5 @@
 # Sherpa Caddie
-### Version 0.4.0
+### Version 0.4.1
 
 **PWA:**  
 https://davidfliesen.github.io/SherpaCaddy
@@ -193,6 +193,33 @@ This release replaces the old helper with a **real on-device generative AI assis
 - Deterministic app data such as scoring, yardages, saved club distances, and course/map facts remain ordinary app logic. The model interprets those facts rather than inventing them.
 
 #### Changed files in v0.4.0
+
+- `index.html`
+- `README.md`
+- `manifest.webmanifest`
+- `sw.js`
+
+
+### v0.4.1 — Sherpa AI Loading Fix
+
+This release fixes the first Sherpa AI implementation.
+
+#### Fixes
+
+- Replaced the non-official `esm.sh` WebLLM import with WebLLM's documented direct CDN import:
+  `https://esm.run/@mlc-ai/web-llm`
+- Switched engine creation to the documented `CreateMLCEngine()` factory.
+- Added a real WebGPU adapter test before model loading.
+- Changed the default AI to **SmolLM2 360M Instruct**, which is much lighter for iPad-class devices.
+- Added **Llama 3.2 1B Instruct** as the higher-quality option.
+- Sherpa automatically chooses an `f16` model variant when `shader-f16` is supported, otherwise it uses the compatible `f32` variant.
+- Added actual error details to the interface instead of only showing a generic "could not load" message.
+- Simplified voice input to one-tap live speech recognition where the browser supports it.
+- Voice now stops automatically after the golfer finishes speaking and submits the question.
+- Fixed the service worker so it never intercepts or replaces cross-origin AI/model/map requests with the app's `index.html`.
+- External AI model files remain online/download-on-first-use and are managed by the AI library/browser cache.
+
+#### Changed files in v0.4.1
 
 - `index.html`
 - `README.md`

@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#18311C">
 <meta name="description" content="Sherpa Caddie — one-shot-at-a-time golf guidance combining a caddie, coach and mentor.">
-<link rel="manifest" href="manifest.webmanifest?v=040">
-<link rel="icon" href="icons/favicon.png?v=040" type="image/png">
-<link rel="apple-touch-icon" href="icons/icon-192.png?v=040">
-<title>Sherpa Caddie v0.4.0</title>
+<link rel="manifest" href="manifest.webmanifest?v=041">
+<link rel="icon" href="icons/favicon.png?v=041" type="image/png">
+<link rel="apple-touch-icon" href="icons/icon-192.png?v=041">
+<title>Sherpa Caddie v0.4.1</title>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
   crossorigin="">
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
@@ -317,12 +317,12 @@ main{width:min(1160px,calc(100% - 28px));margin:0 auto;padding-bottom:18px}
 <body>
 <div class="app">
 <header class="topbar">
-  <img class="brand-logo" src="assets/sherpa-caddie-logo.png?v=040" alt="Sherpa Caddie">
+  <img class="brand-logo" src="assets/sherpa-caddie-logo.png?v=041" alt="Sherpa Caddie">
   <div class="brand-text">
     <h1>Sherpa Caddie</h1>
     <p>Your guide. Your game. Your best round.</p>
   </div>
-  <div class="version">v0.4.0</div>
+  <div class="version">v0.4.1</div>
 </header>
 
 <div class="tabs-wrap">
@@ -368,13 +368,13 @@ main{width:min(1160px,calc(100% - 28px));margin:0 auto;padding-bottom:18px}
           <div>
             <label for="modelSelect" class="note-line" style="margin-right:6px">Model</label>
             <select id="modelSelect" class="model-select" aria-label="Sherpa AI model">
-              <option value="Llama-3.2-1B-Instruct-q4f32_1-MLC">Fast 1B</option>
-              <option value="Llama-3.2-3B-Instruct-q4f32_1-MLC">Smarter 3B</option>
+              <option value="light">Lightweight — best for iPad</option>
+              <option value="better">Better answers — more memory</option>
             </select>
           </div>
         </div>
 
-        <div class="note-line">First use downloads the selected AI model and caches it in your browser. Smaller models start faster.</div>
+        <div class="note-line">First use downloads the selected AI model and caches it in your browser. Sherpa automatically chooses the most compatible quantization for this device.</div>
         <div class="progress-line" aria-hidden="true"><span id="aiProgressBar"></span></div>
 
         <div class="sherpa-controls">
@@ -531,7 +531,7 @@ main{width:min(1160px,calc(100% - 28px));margin:0 auto;padding-bottom:18px}
   </article>
 </section>
 
-<div class="footer"><span>Sherpa Caddie v0.4.0</span><button id="aboutBtn">What’s in v0.3?</button></div>
+<div class="footer"><span>Sherpa Caddie v0.4.1</span><button id="aboutBtn">What’s in v0.3?</button></div>
 </main>
 </div>
 
@@ -621,7 +621,7 @@ main{width:min(1160px,calc(100% - 28px));margin:0 auto;padding-bottom:18px}
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 const CLUBS={"Driver":220,"3 Wood":205,"5 Wood":190,"4 Hybrid":180,"5 Iron":170,"6 Iron":160,"7 Iron":150,"8 Iron":140,"9 Iron":125,"Pitching Wedge":110,"Gap Wedge":95,"Sand Wedge":75,"Lob Wedge":55,"Putter":10};
 const FALLBACK_HOLES=[[4,365],[4,330],[3,155],[5,490],[4,385],[4,350],[3,145],[5,510],[4,375],[4,360],[3,165],[5,500],[4,340],[4,395],[3,150],[5,475],[4,370],[4,355]];
-const KEY={clubs:"sherpa.clubs.040",rounds:"sherpa.rounds.040",current:"sherpa.current.040"};
+const KEY={clubs:"sherpa.clubs.041",rounds:"sherpa.rounds.041",current:"sherpa.current.041"};
 const state={
  clubs:JSON.parse(localStorage.getItem(KEY.clubs)||"null")||{...CLUBS},
  rounds:JSON.parse(localStorage.getItem(KEY.rounds)||"[]"),
@@ -647,32 +647,41 @@ $("#resetClubsBtn").onclick=()=>{state.clubs={...CLUBS};renderClubs();save();toa
 $("#aboutBtn").onclick=()=>$("#aboutModal").classList.remove("hidden");$("#closeAboutModal").onclick=()=>$("#aboutModal").classList.add("hidden");
 $("#aboutModal").addEventListener("click",e=>{if(e.target.id==="aboutModal")$("#aboutModal").classList.add("hidden")});
 
-/* Sherpa AI — local generative guidance with WebLLM and improved voice flow */
+/* Sherpa AI v0.4.1 — WebLLM using the official CDN path, lighter models, diagnostics, and simpler voice */
 const aiState = {
   engine: null,
   webllm: null,
-  sttPipeline: null,
-  sttReady: false,
   llmReady: false,
   loadingLLM: false,
-  loadingVoice: false,
   modelId: null,
   conversation: [],
   lastAnswer: "",
+  recognition: null,
   listening: false,
-  mediaRecorder: null,
-  audioChunks: []
+  adapter: null,
+  adapterFeatures: new Set()
 };
 const llmBadge = $("#llmBadge"), voiceBadge = $("#voiceBadge"), deviceBadge = $("#deviceBadge");
 const askStatus = $("#askStatus"), answerTitle = $("#answerTitle"), answerText = $("#answerText");
 const askBtn = $("#askBtn"), initAiBtn = $("#initAiBtn"), micBtn = $("#micBtn"), modelSelect = $("#modelSelect");
 const aiProgressBar = $("#aiProgressBar");
-function setBadge(el, text, kind=""){ if(!el) return; el.textContent = text; el.className = `ask-badge ${kind}`.trim(); }
-function setProgress(pct){ if(aiProgressBar) aiProgressBar.style.width = `${Math.max(0, Math.min(100, pct||0))}%`; }
+
+function setBadge(el, text, kind=""){
+  if(!el) return;
+  el.textContent = text;
+  el.className = `ask-badge ${kind}`.trim();
+}
+function setProgress(pct){
+  if(aiProgressBar) aiProgressBar.style.width = `${Math.max(0, Math.min(100, pct||0))}%`;
+}
 function setSherpaReply(title, text){
   answerTitle.textContent = title;
   answerText.textContent = text;
   aiState.lastAnswer = `${title}. ${text}`;
+}
+function shortError(err){
+  const raw = (err && (err.message || String(err))) || "Unknown error";
+  return raw.replace(/\s+/g," ").slice(0,220);
 }
 function currentShotContext(){
   if(!state.round) return null;
@@ -696,34 +705,30 @@ function currentShotContext(){
     goal: state.round.goal
   };
 }
-function clubDistancesText(){ return Object.entries(state.clubs).map(([k,v])=>`${k}: ${v} yds`).join(", "); }
+function clubDistancesText(){
+  return Object.entries(state.clubs).map(([k,v])=>`${k}: ${v} yds`).join(", ");
+}
 function mapPlanningContext(){
   const holeSel = $("#mapHoleSelect");
-  const focus = holeSel ? holeSel.value : "all";
   return {
     selectedCourse: state.selectedCourse?.name || "none",
-    holeFocus: focus,
+    holeFocus: holeSel ? holeSel.value : "all",
     mapTarget: state.mapTarget ? "A planning target has been marked on the course map." : "No planning target marked on the course map."
   };
 }
 function systemPrompt(){
-  return `You are Sherpa, an encouraging but matter-of-fact golf guide inside the Sherpa Caddie app.
-Your role combines:
-1. a caddie who helps with club selection and safe targets,
-2. a coach who teaches course reading and fundamentals,
-3. a mentor who helps the golfer slow down and focus on one shot at a time.
+  return `You are Sherpa, the golf guide inside Sherpa Caddie.
+You combine the practical help of a caddie, the instruction of a coach, and the calm perspective of a mentor.
 
-Rules:
-- Be concise. Usually answer in 2 to 5 short sentences.
-- Prioritize practical guidance.
-- Prefer safe, simple decisions for recreational golfers.
-- Emphasize that most poor shots happen from using too little club and forcing swings.
-- Focus on the current shot, not the whole round.
-- Never invent exact distances or scores if the app has not provided them.
-- If course-map detail is missing, say so plainly.
-- If the user asks what to think before the swing, give one simple mental cue.
-- Avoid long lists unless directly asked.
-- Use plain English, not tour-pro jargon.`;
+Keep answers concise: usually 2 to 5 short sentences.
+Use plain English for beginner and recreational golfers.
+Prioritize the current shot and the safest useful target.
+Explain club choices briefly.
+Never invent a yardage, score, hazard, weather condition, or map feature that the app did not provide.
+When a golfer is mentally rushing, bring them back to one shot and one thought.
+When club choice is close, favor enough club for a comfortable swing rather than forcing too little club.
+If detailed course-map information is unavailable, say so.
+Do not give long technical swing instruction during a round.`;
 }
 function buildUserPrompt(question){
   const shot = currentShotContext();
@@ -734,224 +739,273 @@ function buildUserPrompt(question){
   const course = state.selectedCourse
     ? `${state.selectedCourse.name}${state.selectedCourse.city ? ` in ${state.selectedCourse.city}, ${state.selectedCourse.state || ""}` : ""}`.trim()
     : `No course selected.`;
+
   return `APP FACTS
 Course: ${course}
 Club distances: ${clubDistancesText()}
 Weather: ${weather}
-Map planning: ${mapCtx.mapTarget} Hole focus: ${mapCtx.holeFocus}.
+Planning map: ${mapCtx.mapTarget}
+Map hole focus: ${mapCtx.holeFocus}
 
 CURRENT SHOT
-${shot ? `Hole: ${shot.hole}
-Par: ${shot.par}
-Total yardage: ${shot.totalYards}
-Remaining distance: ${shot.remaining}
-Lie: ${shot.lie}
-Current recommended club: ${shot.recommendedClub}
-Safe target: ${shot.safeTarget}
-Why that target: ${shot.safeWhy}
-Wind setting: ${shot.wind}
-Current goal: ${shot.goal}
-Current mental cue: ${shot.cue}
-Strokes on this hole so far: ${shot.strokesOnHole}
-Total strokes so far: ${shot.totalStrokes}` : `No active round. Give general guidance based on the selected course, planning map, and the player's saved club distances.`}
+${shot ? `Hole ${shot.hole}, par ${shot.par}.
+Hole yardage: ${shot.totalYards}.
+Remaining: ${shot.remaining} yards.
+Lie: ${shot.lie}.
+Recommended club from app logic: ${shot.recommendedClub}.
+Safe target from app logic: ${shot.safeTarget}.
+Why: ${shot.safeWhy}.
+Wind setting: ${shot.wind}.
+Round goal: ${shot.goal}.
+Current mental cue: ${shot.cue}.
+Strokes on this hole: ${shot.strokesOnHole}.
+Total strokes so far: ${shot.totalStrokes}.` : `No active round. Give general guidance using only the course, weather, map, and club-distance facts above.`}
 
-USER QUESTION
+QUESTION
 ${question}`.trim();
 }
+
+async function getWebGPUAdapter(){
+  if(!navigator.gpu) throw new Error("WebGPU is not exposed by this browser.");
+  const adapter = await navigator.gpu.requestAdapter({ powerPreference: "high-performance" });
+  if(!adapter) throw new Error("WebGPU exists, but no GPU adapter could be created.");
+  aiState.adapter = adapter;
+  aiState.adapterFeatures = new Set([...adapter.features]);
+  return adapter;
+}
+
+function chooseModelId(webllm){
+  const family = modelSelect.value || "light";
+  const hasF16 = aiState.adapterFeatures.has("shader-f16");
+  const candidates = family === "better"
+    ? (hasF16
+        ? ["Llama-3.2-1B-Instruct-q4f16_1-MLC","Llama-3.2-1B-Instruct-q4f32_1-MLC"]
+        : ["Llama-3.2-1B-Instruct-q4f32_1-MLC"])
+    : (hasF16
+        ? ["SmolLM2-360M-Instruct-q4f16_1-MLC","SmolLM2-360M-Instruct-q4f32_1-MLC"]
+        : ["SmolLM2-360M-Instruct-q4f32_1-MLC"]);
+
+  const available = new Set((webllm.prebuiltAppConfig?.model_list || []).map(m=>m.model_id));
+  return candidates.find(id=>available.has(id)) || candidates[candidates.length-1];
+}
+
 async function loadSherpaLLM(force=false){
   if(aiState.loadingLLM) return;
   if(aiState.llmReady && !force) return;
-  if(!("gpu" in navigator)){
-    setBadge(llmBadge, "WebGPU not available", "err");
-    askStatus.textContent = "This browser/device does not expose WebGPU, so the local LLM cannot run here.";
-    setSherpaReply("Sherpa AI cannot start", "This device or browser does not currently expose WebGPU. Safari 26 or a recent Chromium build with WebGPU is required for full local AI mode.");
-    return;
-  }
+
   aiState.loadingLLM = true;
-  setBadge(llmBadge, "Loading LLM…", "warn");
-  askStatus.textContent = "Downloading or preparing the Sherpa AI model. First run can take a while.";
-  setProgress(6);
+  aiState.llmReady = false;
+  setBadge(llmBadge, "Checking WebGPU…", "warn");
+  setProgress(3);
+  askStatus.textContent = "Checking this device for local AI compatibility.";
+
   try{
-    const webllmMod = await import("https://esm.sh/@mlc-ai/web-llm@0.2.79");
-    aiState.webllm = webllmMod;
-    const modelId = modelSelect.value || "Llama-3.2-1B-Instruct-q4f32_1-MLC";
+    await getWebGPUAdapter();
+    const hasF16 = aiState.adapterFeatures.has("shader-f16");
+    setBadge(deviceBadge, hasF16 ? "WebGPU + shader-f16" : "WebGPU ready", "ready");
+
+    // Official WebLLM docs specify esm.run for CDN delivery.
+    askStatus.textContent = "Loading the WebLLM library…";
+    const webllm = await import("https://esm.run/@mlc-ai/web-llm");
+    aiState.webllm = webllm;
+
+    const modelId = chooseModelId(webllm);
     aiState.modelId = modelId;
-    const engine = new webllmMod.MLCEngine({
+    const friendly = modelId.startsWith("SmolLM2") ? "Lightweight" : "1B";
+    setBadge(llmBadge, `Loading ${friendly} model…`, "warn");
+    askStatus.textContent = `Preparing ${modelId}. The first download may take several minutes.`;
+
+    if(aiState.engine){
+      try { await aiState.engine.unload?.(); } catch(_){}
+      aiState.engine = null;
+    }
+
+    const engine = await webllm.CreateMLCEngine(modelId, {
       initProgressCallback: (report) => {
-        let pct = 0;
-        if(typeof report.progress === "number") pct = Math.round(report.progress * 100);
-        else if(typeof report.progress === "string"){
-          const m = report.progress.match(/(\d+(?:\.\d+)?)%/);
-          pct = m ? Number(m[1]) : pct;
-        }
-        setProgress(pct);
-        askStatus.textContent = report.text || report.message || "Loading Sherpa AI…";
+        const progress = typeof report.progress === "number" ? report.progress : 0;
+        setProgress(Math.round(progress * 100));
+        if(report.text) askStatus.textContent = report.text;
       }
     });
-    await engine.reload(modelId);
+
     aiState.engine = engine;
-    aiState.conversation = [{ role: "system", content: systemPrompt() }];
+    aiState.conversation = [{ role:"system", content:systemPrompt() }];
     aiState.llmReady = true;
     setProgress(100);
-    setBadge(llmBadge, `LLM ready: ${modelId.includes("3B") ? "3B" : "1B"}`, "ready");
-    askStatus.textContent = "Sherpa AI is ready. Ask by text or tap Talk.";
-    setSherpaReply("Sherpa AI is ready", "Ask about the shot in front of you, your club choice, course planning, wind, hazards, or your mental game.");
+    setBadge(llmBadge, `AI ready • ${friendly}`, "ready");
+    askStatus.textContent = `Sherpa AI is ready with ${modelId}.`;
+    setSherpaReply("Sherpa AI is ready", "Ask about a club, target, hazard, planning decision, or the shot in front of you.");
   }catch(err){
-    console.error(err);
+    console.error("Sherpa AI load error:", err);
     aiState.llmReady = false;
     setProgress(0);
-    setBadge(llmBadge, "LLM failed", "err");
-    askStatus.textContent = "Sherpa AI could not be loaded. Try the smaller model or reload the page.";
-    setSherpaReply("Sherpa AI could not load", "Try the smaller 1B model, make sure you have a modern browser with WebGPU, and reload the page.");
+    setBadge(llmBadge, "AI could not load", "err");
+    const detail = shortError(err);
+    askStatus.textContent = `Load error: ${detail}`;
+    setSherpaReply("Sherpa AI could not load", `The app now reports the actual problem: ${detail}`);
   }finally{
     aiState.loadingLLM = false;
   }
 }
-async function loadVoiceSTT(){
-  if(aiState.sttReady || aiState.loadingVoice) return;
-  aiState.loadingVoice = true;
-  setBadge(voiceBadge, "Preparing voice…", "warn");
-  try{
-    const mod = await import("https://esm.sh/@xenova/transformers@2.17.2");
-    if(mod.env && mod.env.backends && mod.env.backends.onnx){
-      mod.env.allowLocalModels = false;
-      mod.env.useBrowserCache = true;
-      mod.env.backends.onnx.wasm.numThreads = 1;
-    }
-    aiState.sttPipeline = await mod.pipeline("automatic-speech-recognition", "Xenova/whisper-tiny.en");
-    aiState.sttReady = true;
-    setBadge(voiceBadge, "Voice ready", "ready");
-    askStatus.textContent = aiState.llmReady ? "Sherpa AI and voice input are ready." : "Voice input is ready.";
-  }catch(err){
-    console.error(err);
-    aiState.sttReady = false;
-    setBadge(voiceBadge, "Voice unavailable", "err");
-    askStatus.textContent = "Voice model could not load. You can still type questions.";
-  }finally{
-    aiState.loadingVoice = false;
-  }
-}
-async function ensureSherpaReady(){
-  if(!aiState.llmReady) await loadSherpaLLM();
-  if(!aiState.sttReady) loadVoiceSTT();
-}
-function supportedRecorderMime(){
-  const options = ["audio/webm;codecs=opus", "audio/webm", "audio/mp4", "audio/ogg;codecs=opus"];
-  return options.find(type => window.MediaRecorder && MediaRecorder.isTypeSupported(type)) || "";
-}
-async function startVoiceCapture(){
-  await ensureSherpaReady();
-  if(aiState.listening){ stopVoiceCapture(); return; }
-  if(!navigator.mediaDevices?.getUserMedia){
-    setBadge(voiceBadge, "Mic unsupported", "err");
-    askStatus.textContent = "Microphone capture is not supported in this browser.";
-    return;
-  }
-  if(!aiState.sttReady || !aiState.sttPipeline){
-    askStatus.textContent = "Voice input is still loading. Try again in a moment or type your question.";
-    return;
-  }
-  try{
-    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-    const mimeType = supportedRecorderMime();
-    aiState.audioChunks = [];
-    aiState.mediaRecorder = new MediaRecorder(stream, mimeType ? { mimeType } : {});
-    aiState.mediaRecorder.ondataavailable = evt => { if(evt.data.size) aiState.audioChunks.push(evt.data); };
-    aiState.mediaRecorder.onstop = async () => {
-      aiState.listening = false;
-      micBtn.classList.remove("listening");
-      micBtn.textContent = "🎙️ Talk";
-      stream.getTracks().forEach(t => t.stop());
-      askStatus.textContent = "Transcribing your question…";
-      try{
-        const blob = new Blob(aiState.audioChunks, { type: mimeType || "audio/webm" });
-        const arr = await blob.arrayBuffer();
-        const result = await aiState.sttPipeline(arr);
-        const text = typeof result === "string" ? result : (result.text || "");
-        $("#questionInput").value = text.trim();
-        askStatus.textContent = text ? "Voice captured. Asking Sherpa…" : "No speech was recognized. Try again.";
-        if(text.trim()) await askSherpaAI();
-      }catch(err){
-        console.error(err);
-        askStatus.textContent = "Voice could not be transcribed. You can type the question instead.";
-      }
-    };
-    aiState.mediaRecorder.start();
-    aiState.listening = true;
-    micBtn.classList.add("listening");
-    micBtn.textContent = "■ Stop";
-    askStatus.textContent = "Listening… Tap again to stop.";
-    setBadge(voiceBadge, "Listening…", "warn");
-  }catch(err){
-    console.error(err);
-    setBadge(voiceBadge, "Mic denied", "err");
-    askStatus.textContent = "Microphone access was denied or unavailable.";
-  }
-}
-function stopVoiceCapture(){
-  if(aiState.mediaRecorder && aiState.listening){
-    aiState.mediaRecorder.stop();
-    setBadge(voiceBadge, "Voice ready", "ready");
-  }
-}
+
 async function askSherpaAI(){
   const question = $("#questionInput").value.trim();
   if(!question){
-    setSherpaReply("Ask Sherpa something", "Type or speak a golf question and Sherpa will answer using your current shot and planning context.");
+    setSherpaReply("Ask Sherpa something", "Type a question or tap Talk.");
     return;
   }
-  await ensureSherpaReady();
-  if(!aiState.llmReady || !aiState.engine){
-    setSherpaReply("Sherpa AI is not ready", "Load Sherpa AI first. If loading fails, try the smaller model or a WebGPU-capable browser.");
-    return;
+  if(!aiState.llmReady){
+    await loadSherpaLLM();
   }
-  askBtn.disabled = true; initAiBtn.disabled = true;
-  setSherpaReply("Sherpa is thinking…", "Looking at your current context and building a simple answer.");
-  askStatus.textContent = "Sherpa AI is generating an answer…";
+  if(!aiState.llmReady || !aiState.engine) return;
+
+  askBtn.disabled = true;
+  initAiBtn.disabled = true;
+  setSherpaReply("Sherpa is thinking…", "Using the current golf context.");
+  askStatus.textContent = "Generating an answer on this device…";
+
   try{
     const userPrompt = buildUserPrompt(question);
-    aiState.conversation.push({ role: "user", content: userPrompt });
+    aiState.conversation.push({ role:"user", content:userPrompt });
+
+    // Keep the on-device context from growing indefinitely.
+    if(aiState.conversation.length > 9){
+      aiState.conversation = [aiState.conversation[0], ...aiState.conversation.slice(-8)];
+    }
+
     const reply = await aiState.engine.chat.completions.create({
       messages: aiState.conversation,
       temperature: 0.35,
-      max_tokens: 220
+      max_tokens: 180
     });
-    const text = reply.choices?.[0]?.message?.content?.trim() || "I could not generate a useful answer just now.";
-    aiState.conversation.push({ role: "assistant", content: text });
+
+    const text = reply.choices?.[0]?.message?.content?.trim() || "I could not generate a useful answer.";
+    aiState.conversation.push({ role:"assistant", content:text });
+
     const parts = text.split(/(?<=[.!?])\s+/);
-    const title = (parts[0] && parts[0].length < 70) ? parts[0].replace(/[.!?]+$/,'') : "Sherpa says";
-    const body = (parts[0] && parts[0].length < 70) ? (parts.slice(1).join(' ') || text) : text;
+    const title = parts[0] && parts[0].length < 68 ? parts[0].replace(/[.!?]+$/,"") : "Sherpa says";
+    const body = parts[0] && parts[0].length < 68 ? (parts.slice(1).join(" ") || text) : text;
     setSherpaReply(title, body);
     askStatus.textContent = "Sherpa answered locally on this device.";
-    if("speechSynthesis" in window){
+
+    if(aiState.listening && "speechSynthesis" in window){
       speechSynthesis.cancel();
       const u = new SpeechSynthesisUtterance(text);
-      u.rate = 0.95; u.pitch = 0.98;
+      u.rate = 0.94;
+      u.pitch = 0.98;
       speechSynthesis.speak(u);
     }
   }catch(err){
-    console.error(err);
-    setSherpaReply("Sherpa hit a snag", "The model was loaded, but something went wrong while generating an answer. Try a shorter question or reload the app.");
-    askStatus.textContent = "Sherpa AI generation failed.";
+    console.error("Sherpa answer error:", err);
+    const detail = shortError(err);
+    setSherpaReply("Sherpa hit a snag", detail);
+    askStatus.textContent = `Answer error: ${detail}`;
   }finally{
-    askBtn.disabled = false; initAiBtn.disabled = false;
+    askBtn.disabled = false;
+    initAiBtn.disabled = false;
+    aiState.listening = false;
   }
 }
-initAiBtn.addEventListener("click", async ()=>{ await loadSherpaLLM(true); loadVoiceSTT(); });
+
+/* Voice: use the browser's live speech-recognition API when available.
+   It is far lighter on iPad than loading a second large ML model alongside WebLLM. */
+function setupVoice(){
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if(!SR){
+    setBadge(voiceBadge, "Voice unavailable", "err");
+    micBtn.disabled = true;
+    askStatus.textContent = "Voice recognition is not available in this browser; text Ask Sherpa still works.";
+    return;
+  }
+  const recognition = new SR();
+  recognition.lang = "en-US";
+  recognition.interimResults = true;
+  recognition.continuous = false;
+  recognition.maxAlternatives = 1;
+  aiState.recognition = recognition;
+
+  recognition.onstart = ()=>{
+    aiState.listening = true;
+    micBtn.classList.add("listening");
+    micBtn.textContent = "Listening…";
+    setBadge(voiceBadge, "Listening", "warn");
+    askStatus.textContent = "Speak naturally. Sherpa will stop listening when you finish.";
+  };
+  recognition.onresult = e=>{
+    let finalText = "", interim = "";
+    for(let i=e.resultIndex;i<e.results.length;i++){
+      const t=e.results[i][0].transcript;
+      if(e.results[i].isFinal) finalText += t;
+      else interim += t;
+    }
+    $("#questionInput").value = (finalText || interim).trim();
+  };
+  recognition.onerror = e=>{
+    aiState.listening = false;
+    micBtn.classList.remove("listening");
+    micBtn.textContent = "🎙️ Talk";
+    setBadge(voiceBadge, "Voice ready", "ready");
+    askStatus.textContent = `Voice error: ${e.error || "unknown"}. You can type instead.`;
+  };
+  recognition.onend = async ()=>{
+    const wasListening = aiState.listening;
+    aiState.listening = false;
+    micBtn.classList.remove("listening");
+    micBtn.textContent = "🎙️ Talk";
+    setBadge(voiceBadge, "Voice ready", "ready");
+    const text = $("#questionInput").value.trim();
+    if(wasListening && text){
+      aiState.listening = true; // marks this as a voice question so the answer is spoken.
+      await askSherpaAI();
+      aiState.listening = false;
+    }
+  };
+  setBadge(voiceBadge, "Voice ready", "ready");
+}
+function startTalk(){
+  if(!aiState.recognition){
+    setupVoice();
+    if(!aiState.recognition) return;
+  }
+  try{
+    $("#questionInput").value = "";
+    aiState.recognition.start();
+  }catch(err){
+    askStatus.textContent = `Voice could not start: ${shortError(err)}`;
+  }
+}
+
+initAiBtn.addEventListener("click", ()=>loadSherpaLLM(true));
 askBtn.addEventListener("click", askSherpaAI);
-$("#questionInput").addEventListener("keydown", e=>{ if(e.key==="Enter"){ e.preventDefault(); askSherpaAI(); }});
-micBtn.addEventListener("click", async ()=>{ if(aiState.listening) stopVoiceCapture(); else await startVoiceCapture(); });
+$("#questionInput").addEventListener("keydown", e=>{
+  if(e.key === "Enter"){
+    e.preventDefault();
+    askSherpaAI();
+  }
+});
+micBtn.addEventListener("click", startTalk);
 $("#speakAnswerBtn").addEventListener("click", ()=>{
-  if(!("speechSynthesis" in window)){ toast("Spoken answers are not supported in this browser"); return; }
+  if(!("speechSynthesis" in window)){
+    toast("Spoken answers are not supported in this browser");
+    return;
+  }
   speechSynthesis.cancel();
   const u = new SpeechSynthesisUtterance(aiState.lastAnswer || `${answerTitle.textContent}. ${answerText.textContent}`);
-  u.rate = 0.95; u.pitch = 0.98;
+  u.rate = 0.94;
+  u.pitch = 0.98;
   speechSynthesis.speak(u);
 });
-$("#stopSpeakingBtn").addEventListener("click", ()=>{ if("speechSynthesis" in window) speechSynthesis.cancel(); });
-setBadge(deviceBadge, "On-device only", "ready");
-setBadge(llmBadge, "LLM loading not started", "warn");
-setBadge(voiceBadge, "Voice not started", "warn");
+$("#stopSpeakingBtn").addEventListener("click", ()=>{
+  if("speechSynthesis" in window) speechSynthesis.cancel();
+});
+modelSelect.addEventListener("change", ()=>{
+  if(aiState.llmReady){
+    setBadge(llmBadge, "Model change pending", "warn");
+    askStatus.textContent = "Tap Load Sherpa AI to switch models.";
+  }
+});
+setBadge(deviceBadge, navigator.gpu ? "WebGPU detected" : "WebGPU not detected", navigator.gpu ? "ready" : "err");
+setupVoice();
 /* Course API helpers */
 function normalizeCourse(c){
  const loc=c.location||c.address||{};
@@ -1257,10 +1311,10 @@ function finishRound(){state.round.finished=new Date().toISOString();state.round
 
 /* Rounds/export */
 function renderRounds(){const l=$("#roundList");l.innerHTML="";if(!state.rounds.length){l.innerHTML='<div class="round-item"><div><h3>No saved rounds yet.</h3><p>Finished rounds stay on this device until you export or clear browser data.</p></div></div>';return}state.rounds.forEach(r=>{const played=r.holes.filter(h=>h.finished||h.shots.length).length,par=r.holes.slice(0,played).reduce((s,h)=>s+h.par,0),diff=r.totalStrokes-par;const el=document.createElement("div");el.className="round-item";el.innerHTML=`<div><h3>${r.course}</h3><p>${new Date(r.started).toLocaleDateString()} • ${played} holes • ${r.tee} tees</p></div><div class="round-score">${r.totalStrokes}${played?` (${diff>=0?"+":""}${diff})`:""}</div>`;l.appendChild(el)})}
-$("#exportBtn").onclick=()=>{const b=new Blob([JSON.stringify({version:"0.4.0",clubs:state.clubs,rounds:state.rounds},null,2)],{type:"application/json"}),a=document.createElement("a");a.href=URL.createObjectURL(b);a.download=`sherpa-caddie-data-${new Date().toISOString().slice(0,10)}.json`;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),500)};
+$("#exportBtn").onclick=()=>{const b=new Blob([JSON.stringify({version:"0.4.1",clubs:state.clubs,rounds:state.rounds},null,2)],{type:"application/json"}),a=document.createElement("a");a.href=URL.createObjectURL(b);a.download=`sherpa-caddie-data-${new Date().toISOString().slice(0,10)}.json`;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),500)};
 $("#importBtn").onclick=()=>$("#importFile").click();$("#importFile").onchange=async e=>{const f=e.target.files[0];if(!f)return;try{const d=JSON.parse(await f.text());if(d.clubs)state.clubs=d.clubs;if(d.rounds)state.rounds=d.rounds;save();renderClubs();renderRounds();toast("Data imported")}catch{toast("Could not import that file")}e.target.value=""};
 
-if("serviceWorker"in navigator)window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js?v=040").catch(()=>{}));
+if("serviceWorker"in navigator)window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js?v=041").catch(()=>{}));
 renderClubs();renderRounds();if(state.round){show("play");showRoundMode()}
 })();
 </script>
