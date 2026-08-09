@@ -2,7 +2,7 @@
   "name": "Sherpa Caddie",
   "short_name": "Sherpa Caddie",
   "description": "One-shot-at-a-time golf guidance combining a caddie, coach and mentor.",
-  "start_url": "./index.html?v=032",
+  "start_url": "./index.html?v=033",
   "scope": "./",
   "display": "standalone",
   "background_color": "#F8F3EA",

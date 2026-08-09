@@ -1,5 +1,5 @@
 # Sherpa Caddie
-### Version 0.3.2
+### Version 0.3.3
 
 **PWA:**  
 https://davidfliesen.github.io/SherpaCaddy
@@ -10,7 +10,7 @@ Sherpa Caddie combines the practical help of a **caddie** with the guidance and 
 
 The core idea is simple: **one shot at a time.**
 
-## Version 0.3.2
+## Version 0.3.3
 
 This version corrects an earlier v0.3 update that used the wrong codebase. v0.3.2 keeps the simpler visual layout of the original PWA while preserving the complete One-Shot Sherpa feature set.
 
@@ -104,3 +104,15 @@ Pick the target, take one practice swing, and commit.
 
 **Created by David Fliesen**  
 © 2026
+
+
+### v0.3.3 — Ask Sherpa Fix
+- Rebuilt Ask Sherpa interaction around a proper form submit handler.
+- Ask button now responds reliably.
+- Enter key submits the question.
+- Microphone input submits recognized speech automatically where browser speech recognition is supported.
+- Added a dedicated visible Sherpa reply panel.
+- Added optional spoken answers using browser text-to-speech.
+- Expanded the local Sherpa knowledge engine for club selection, safe targets, mental reset, wind, hazards, putting, scoring, etiquette, and beginner questions.
+- During an active round, Ask Sherpa now uses the current hole, remaining distance, personal club distances, current recommendation, safe target, and mental cue.
+- Ask Sherpa remains local and does not require a backend or API key. It is rule-based rather than a generative AI model.

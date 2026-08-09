@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#18311C">
 <meta name="description" content="Sherpa Caddie — one-shot-at-a-time golf guidance combining a caddie, coach and mentor.">
-<link rel="manifest" href="manifest.webmanifest?v=032">
-<link rel="icon" href="icons/favicon.png?v=032" type="image/png">
-<link rel="apple-touch-icon" href="icons/icon-192.png?v=032">
-<title>Sherpa Caddie v0.3.2</title>
+<link rel="manifest" href="manifest.webmanifest?v=033">
+<link rel="icon" href="icons/favicon.png?v=033" type="image/png">
+<link rel="apple-touch-icon" href="icons/icon-192.png?v=033">
+<title>Sherpa Caddie v0.3.3</title>
 <style>
 :root{
   --forest:#18311C;
@@ -99,6 +99,15 @@ main{width:min(1160px,calc(100% - 28px));margin:0 auto;padding-bottom:18px}
 .ask h3{margin:0;font-size:1.2rem}
 .ask-row{display:grid;grid-template-columns:1fr auto auto;gap:8px}
 .ask-row input{border:1px solid var(--line);border-radius:9px;padding:11px 12px}
+.ask-reply{
+  margin-top:9px;padding:10px 12px;border-radius:10px;
+  background:var(--soft);border-left:4px solid var(--fairway);
+  min-height:64px
+}
+.ask-reply strong{display:block;color:var(--forest);margin-bottom:4px}
+.ask-reply p{margin:0;color:var(--navy);line-height:1.4}
+.ask-tools{display:flex;gap:7px;align-items:center;justify-content:flex-end;margin-top:7px}
+.ask-status{margin-right:auto;color:var(--stone);font-size:.78rem}
 
 /* PLAY pre-round */
 .play-grid{display:grid;grid-template-columns:1.08fr .92fr;gap:13px}
@@ -229,12 +238,12 @@ main{width:min(1160px,calc(100% - 28px));margin:0 auto;padding-bottom:18px}
 <body>
 <div class="app">
 <header class="topbar">
-  <img class="brand-logo" src="assets/sherpa-caddie-logo.png?v=032" alt="Sherpa Caddie">
+  <img class="brand-logo" src="assets/sherpa-caddie-logo.png?v=033" alt="Sherpa Caddie">
   <div class="brand-text">
     <h1>Sherpa Caddie</h1>
     <p>Your guide. Your game. Your best round.</p>
   </div>
-  <div class="version">v0.3.2</div>
+  <div class="version">v0.3.3</div>
 </header>
 
 <div class="tabs-wrap">
@@ -267,13 +276,21 @@ main{width:min(1160px,calc(100% - 28px));margin:0 auto;padding-bottom:18px}
 
     <article class="card ask">
       <div class="ask-head">
-        <div><p class="eyebrow">Ask Sherpa</p><h3 id="answerTitle">What can I help with?</h3></div>
+        <div><p class="eyebrow">Ask Sherpa</p><h3>What can I help with?</h3></div>
       </div>
-      <div id="answerText" class="muted">Try: “Should I take more club?”, “Where is the safe miss?”, or “How do I reset after a bad hole?”</div>
-      <div class="ask-row">
-        <input id="questionInput" placeholder="Ask a golf question…" autocomplete="off">
-        <button class="btn primary" id="askBtn">Ask</button>
-        <button class="btn secondary" id="micBtn" aria-label="Speak to Sherpa">🎙️</button>
+      <div class="muted">Try: “What club should I use?”, “Where is the safe miss?”, “What should I focus on?”, or “How do I reset after a bad hole?”</div>
+      <form class="ask-row" id="askForm">
+        <input id="questionInput" placeholder="Ask Sherpa a golf question…" autocomplete="off" aria-label="Ask Sherpa a golf question">
+        <button class="btn primary" id="askBtn" type="submit">Ask</button>
+        <button class="btn secondary" id="micBtn" type="button" aria-label="Speak to Sherpa">🎙️</button>
+      </form>
+      <div class="ask-reply" id="askReply" aria-live="polite">
+        <strong id="answerTitle">Sherpa is ready</strong>
+        <p id="answerText">Ask about the shot in front of you, club choice, safe targets, scoring, etiquette, or the mental game.</p>
+      </div>
+      <div class="ask-tools">
+        <span class="ask-status" id="askStatus">Answers run locally on this device.</span>
+        <button class="btn ghost" type="button" id="speakAnswerBtn">🔊 Read Answer</button>
       </div>
     </article>
   </div>
@@ -410,7 +427,7 @@ main{width:min(1160px,calc(100% - 28px));margin:0 auto;padding-bottom:18px}
   </article>
 </section>
 
-<div class="footer"><span>Sherpa Caddie v0.3.2</span><button id="aboutBtn">What’s in v0.3?</button></div>
+<div class="footer"><span>Sherpa Caddie v0.3.3</span><button id="aboutBtn">What’s in v0.3?</button></div>
 </main>
 </div>
 
@@ -453,7 +470,7 @@ main{width:min(1160px,calc(100% - 28px));margin:0 auto;padding-bottom:18px}
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 const CLUBS={"Driver":220,"3 Wood":205,"5 Wood":190,"4 Hybrid":180,"5 Iron":170,"6 Iron":160,"7 Iron":150,"8 Iron":140,"9 Iron":125,"Pitching Wedge":110,"Gap Wedge":95,"Sand Wedge":75,"Lob Wedge":55,"Putter":10};
 const FALLBACK_HOLES=[[4,365],[4,330],[3,155],[5,490],[4,385],[4,350],[3,145],[5,510],[4,375],[4,360],[3,165],[5,500],[4,340],[4,395],[3,150],[5,475],[4,370],[4,355]];
-const KEY={clubs:"sherpa.clubs.032",rounds:"sherpa.rounds.032",current:"sherpa.current.032"};
+const KEY={clubs:"sherpa.clubs.033",rounds:"sherpa.rounds.033",current:"sherpa.current.033"};
 const state={
  clubs:JSON.parse(localStorage.getItem(KEY.clubs)||"null")||{...CLUBS},
  rounds:JSON.parse(localStorage.getItem(KEY.rounds)||"[]"),
@@ -478,19 +495,134 @@ $("#resetClubsBtn").onclick=()=>{state.clubs={...CLUBS};renderClubs();save();toa
 $("#aboutBtn").onclick=()=>$("#aboutModal").classList.remove("hidden");$("#closeAboutModal").onclick=()=>$("#aboutModal").classList.add("hidden");
 $("#aboutModal").addEventListener("click",e=>{if(e.target.id==="aboutModal")$("#aboutModal").classList.add("hidden")});
 
-/* Ask Sherpa */
-function answer(q){q=q.toLowerCase();
- if(q.includes("bad")||q.includes("reset"))return["Reset the shot","That shot is finished. Breathe, choose the next target, and make the next shot a new start."];
- if(q.includes("club")||q.includes("short")||q.includes("more"))return["Take enough club","Most recreational golfers are better served by a comfortable swing with enough club than by forcing a shorter club."];
- if(q.includes("target")||q.includes("aim")||q.includes("miss"))return["Find the safe miss","Aim for the widest useful landing area and play away from the hazard that can turn one mistake into several strokes."];
- if(q.includes("mind")||q.includes("focus")||q.includes("think"))return["One thought only","Pick the target, take one practice swing, and commit. Do not play the rest of the hole in your head."];
- if(q.includes("par"))return["Par","Par is the expected number of strokes for the hole. A bogey is one over par; a birdie is one under."];
- return["One-Shot Sherpa","Tell me about the shot in front of you — distance, lie, wind, target, or what is worrying you. Keep the question about this shot, not the whole round."]
+/* Ask Sherpa — local, reliable, and shot-aware */
+function currentShotContext(){
+  if(!state.round) return null;
+  const h=state.round.holes[state.round.holeIndex];
+  if(!h) return null;
+  const club=state.selectedClub||recClub(h.remaining);
+  const [safeTarget,safeWhy]=target(h.remaining);
+  return {
+    hole:h.n, par:h.par, remaining:Math.round(h.remaining),
+    strokes:h.strokes, club, safeTarget, safeWhy,
+    cue:cue(), wind:state.round.wind
+  };
 }
-function ask(){const q=$("#questionInput").value.trim();if(!q)return;const [t,a]=answer(q);$("#answerTitle").textContent=t;$("#answerText").textContent=a}
-$("#askBtn").onclick=ask;$("#questionInput").addEventListener("keydown",e=>{if(e.key==="Enter")ask()});
-$("#micBtn").onclick=()=>{const R=window.SpeechRecognition||window.webkitSpeechRecognition;if(!R){toast("Voice input is not supported in this browser.");return}const r=new R();r.lang="en-US";r.onresult=e=>{$("#questionInput").value=e.results[0][0].transcript;ask()};r.onerror=()=>toast("Voice input could not start");r.start()};
+function sherpaAnswer(q){
+  const text=(q||"").trim().toLowerCase();
+  const ctx=currentShotContext();
 
+  if(!text) return ["Ask me something","Type a question about the shot in front of you, club choice, course strategy, scoring, etiquette, or your mental game."];
+
+  if(text.includes("what club") || text.includes("which club") || text.includes("club should") || text.includes("take more club") || text.includes("too little club")){
+    if(ctx) return ["Club recommendation",`You have about ${ctx.remaining} yards. I would start with your ${ctx.club}. Take enough club to make a comfortable swing rather than forcing too little club.`];
+    return ["Take enough club","Set your personal club distances first. In general, a comfortable swing with enough club is better than forcing a shorter club and coming up short."];
+  }
+
+  if(text.includes("where") && (text.includes("aim") || text.includes("target") || text.includes("miss")) ||
+     text.includes("safe miss") || text.includes("safe target")){
+    if(ctx) return ["Safe target",`${ctx.safeTarget}. ${ctx.safeWhy}`];
+    return ["Find the safe miss","Aim for the widest useful landing area and play away from the hazard that can turn one mistake into several strokes."];
+  }
+
+  if(text.includes("focus") || text.includes("think") || text.includes("mental") || text.includes("mind") || text.includes("before i swing")){
+    if(ctx) return ["One thought",ctx.cue];
+    return ["One thought only","Pick the target, take one practice swing, and commit. Do not try to play the rest of the hole in your head."];
+  }
+
+  if(text.includes("bad hole") || text.includes("bad shot") || text.includes("reset") || text.includes("frustrat") || text.includes("angry")){
+    return ["Reset the shot","That shot is finished. Learn what you need from it, then leave it behind. Breathe, choose the next target, and make the next shot a new start."];
+  }
+
+  if(text.includes("distance") || text.includes("yards") || text.includes("how far")){
+    if(ctx) return ["Distance to play",`You have about ${ctx.remaining} yards remaining on Hole ${ctx.hole}. Sherpa currently favors your ${ctx.club}.`];
+    return ["Distance","Start a round and Sherpa will use the current shot distance together with your saved club distances."];
+  }
+
+  if(text.includes("wind")){
+    if(ctx){
+      const w=ctx.wind==="cross"?"a crosswind":ctx.wind==="calm"?"light or calm wind":ctx.wind;
+      return ["Wind strategy",`You are playing in ${w}. Keep the target conservative and avoid forcing a shorter club. Make a balanced swing and let the club do the work.`];
+    }
+    return ["Wind strategy","Into the wind, take more club and swing smoothly. With a crosswind, favor the safe side. With helping wind, stay controlled rather than swinging harder."];
+  }
+
+  if(text.includes("bunker") || text.includes("sand")){
+    return ["Bunker basics","Prioritize getting the ball safely out. Choose a target with plenty of green, keep the plan simple, and do not turn one bunker shot into several risky attempts."];
+  }
+
+  if(text.includes("water") || text.includes("hazard") || text.includes("penalty")){
+    return ["Avoid the big number","Play away from the hazard when a safer target still leaves a reasonable next shot. Giving up a few yards is often much cheaper than taking a penalty."];
+  }
+
+  if(text.includes("putt") || text.includes("putting") || text.includes("green")){
+    return ["On the green","Pick the line, choose the speed, and commit to the roll. For long putts, getting the ball close is usually more important than trying to make everything."];
+  }
+
+  if(text.includes("par")){
+    return ["Par","Par is the expected number of strokes for a hole. A bogey is one over par, a birdie is one under, and a double bogey is two over."];
+  }
+
+  if(text.includes("score") || text.includes("scoring")){
+    return ["Scoring","Count every stroke used to play the hole, including putts and applicable penalty strokes. Sherpa automatically counts the shots you record during a round."];
+  }
+
+  if(text.includes("turn") || text.includes("etiquette") || text.includes("pace") || text.includes("ready golf")){
+    return ["Keep play simple and considerate","Be ready when it is your turn, stay out of another player's line and swing area, keep practice swings limited, and move along when it is safe."];
+  }
+
+  if(text.includes("first time") || text.includes("beginner") || text.includes("new golfer")){
+    return ["Keep it simple","You do not need to play perfect golf. Learn the basic safety and etiquette, choose comfortable clubs, aim for safe targets, and focus on one shot at a time."];
+  }
+
+  if(text.includes("what should i do") || text.includes("help me") || text.includes("next shot")){
+    if(ctx) return ["This shot",`You have about ${ctx.remaining} yards. Use your ${ctx.club}, aim for the ${ctx.safeTarget.toLowerCase()}, and keep one thought: ${ctx.cue}`];
+    return ["Start with the next decision","Choose the course, set your club distances, and start a round. Sherpa will then guide the club, target, and mental cue for the shot in front of you."];
+  }
+
+  if(ctx) return ["Keep it to this shot",`For Hole ${ctx.hole}, you have about ${ctx.remaining} yards. Sherpa favors your ${ctx.club} and the ${ctx.safeTarget.toLowerCase()}. One thought: ${ctx.cue}`];
+
+  return ["One-Shot Sherpa","I can help with club choice, safe targets, wind, hazards, scoring, etiquette, and the mental game. For shot-specific advice, start a round so I can use the current distance and your club setup."];
+}
+function setSherpaReply(title,text){
+  $("#answerTitle").textContent=title;
+  $("#answerText").textContent=text;
+  $("#askStatus").textContent="Sherpa answered locally on this device.";
+}
+function askSherpa(){
+  const q=$("#questionInput").value.trim();
+  const [title,text]=sherpaAnswer(q);
+  setSherpaReply(title,text);
+  if(q) $("#questionInput").select();
+}
+$("#askForm").addEventListener("submit",e=>{e.preventDefault();askSherpa();});
+
+$("#micBtn").addEventListener("click",()=>{
+  const Recognition=window.SpeechRecognition||window.webkitSpeechRecognition;
+  if(!Recognition){
+    $("#askStatus").textContent="Voice input is not supported in this browser. Type your question instead.";
+    toast("Voice input is not supported here");
+    return;
+  }
+  const r=new Recognition();
+  r.lang="en-US"; r.interimResults=false; r.maxAlternatives=1;
+  $("#askStatus").textContent="Listening…";
+  r.onresult=e=>{
+    $("#questionInput").value=e.results[0][0].transcript;
+    askSherpa();
+  };
+  r.onerror=()=>{$("#askStatus").textContent="I could not hear that. Type the question or try the microphone again.";};
+  r.onend=()=>{if($("#askStatus").textContent==="Listening…") $("#askStatus").textContent="Microphone stopped. Try again or type your question.";};
+  r.start();
+});
+
+$("#speakAnswerBtn").addEventListener("click",()=>{
+  if(!("speechSynthesis" in window)){toast("Spoken answers are not supported in this browser");return;}
+  speechSynthesis.cancel();
+  const u=new SpeechSynthesisUtterance(`${$("#answerTitle").textContent}. ${$("#answerText").textContent}`);
+  u.rate=0.96; u.pitch=1;
+  speechSynthesis.speak(u);
+});
 /* Course API helpers */
 function normalizeCourse(c){
  const loc=c.location||c.address||{};
@@ -598,10 +730,10 @@ function finishRound(){state.round.finished=new Date().toISOString();state.round
 
 /* Rounds/export */
 function renderRounds(){const l=$("#roundList");l.innerHTML="";if(!state.rounds.length){l.innerHTML='<div class="round-item"><div><h3>No saved rounds yet.</h3><p>Finished rounds stay on this device until you export or clear browser data.</p></div></div>';return}state.rounds.forEach(r=>{const played=r.holes.filter(h=>h.finished||h.shots.length).length,par=r.holes.slice(0,played).reduce((s,h)=>s+h.par,0),diff=r.totalStrokes-par;const el=document.createElement("div");el.className="round-item";el.innerHTML=`<div><h3>${r.course}</h3><p>${new Date(r.started).toLocaleDateString()} • ${played} holes • ${r.tee} tees</p></div><div class="round-score">${r.totalStrokes}${played?` (${diff>=0?"+":""}${diff})`:""}</div>`;l.appendChild(el)})}
-$("#exportBtn").onclick=()=>{const b=new Blob([JSON.stringify({version:"0.3.2",clubs:state.clubs,rounds:state.rounds},null,2)],{type:"application/json"}),a=document.createElement("a");a.href=URL.createObjectURL(b);a.download=`sherpa-caddie-data-${new Date().toISOString().slice(0,10)}.json`;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),500)};
+$("#exportBtn").onclick=()=>{const b=new Blob([JSON.stringify({version:"0.3.3",clubs:state.clubs,rounds:state.rounds},null,2)],{type:"application/json"}),a=document.createElement("a");a.href=URL.createObjectURL(b);a.download=`sherpa-caddie-data-${new Date().toISOString().slice(0,10)}.json`;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),500)};
 $("#importBtn").onclick=()=>$("#importFile").click();$("#importFile").onchange=async e=>{const f=e.target.files[0];if(!f)return;try{const d=JSON.parse(await f.text());if(d.clubs)state.clubs=d.clubs;if(d.rounds)state.rounds=d.rounds;save();renderClubs();renderRounds();toast("Data imported")}catch{toast("Could not import that file")}e.target.value=""};
 
-if("serviceWorker"in navigator)window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js?v=032").catch(()=>{}));
+if("serviceWorker"in navigator)window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js?v=033").catch(()=>{}));
 renderClubs();renderRounds();if(state.round){show("play");showRoundMode()}
 })();
 </script>
