@@ -1,5 +1,5 @@
 # Sherpa Caddie
-### Version 0.4.1
+### Version 0.5.0
 
 **PWA:**  
 https://davidfliesen.github.io/SherpaCaddy
@@ -9,6 +9,34 @@ https://davidfliesen.github.io/SherpaCaddy
 Sherpa Caddie combines the practical help of a **caddie** with the guidance and perspective of a **Sherpa mentor**. It is designed especially for new and recreational golfers who benefit more from one clear decision than from a screen full of statistics.
 
 The core idea is simple: **one shot at a time.**
+
+## Version 0.5.0
+
+This release upgrades the **Play** experience with a much richer **Hole Planner** inspired by Garmin-style golf mapping, while also adding a branded Sherpa splash screen that reinforces the app identity when it launches.
+
+### New in v0.5.0
+
+- New branded **Sherpa splash screen** with launch animation
+- Upgraded **Hole Planner** modal designed for tablet-first play
+- Garmin-inspired **vertical hole view** generated from mapped hole geometry when available
+- Right-side planning panel with:
+  - focused hole summary
+  - front / center / back target yardages
+  - strategy modes: **Play Smart**, **Attack**, **Lay Up**
+  - recommended club and carry distance
+  - wind summary and **plays-like** distance
+  - mapped hazard callouts
+  - Sherpa strategy guidance
+- Hole-to-hole navigation inside the planner
+- Tap the map to place a **manual target**, then see the carry/leave distance update
+- Planner now defaults to a specific hole instead of only a generic course overview
+
+### Changed files in v0.5.0
+
+- `index.html`
+- `manifest.webmanifest`
+- `sw.js`
+- `README.md`
 
 ## Version 0.3.3
 
@@ -91,6 +119,19 @@ Pick the target, take one practice swing, and commit.
 - `README.md`
 
 ## Changelog
+
+### v0.5.0 — Hole Planner + Splash Screen
+- Added a branded Sherpa splash/loading screen on app launch.
+- Rebuilt the course planning modal into a full **Hole Planner** experience.
+- Added a Garmin-inspired vertical hole visualization for mapped holes.
+- Added front / center / back hole target yardages in the planner.
+- Added strategy modes: **Play Smart**, **Attack**, and **Lay Up**.
+- Added dynamic recommendation cards for target, club, carry, wind, and plays-like distance.
+- Added mapped hazard callouts for bunkers and water when available from course geometry.
+- Added previous / next hole navigation inside the planner.
+- Added manual target selection from map taps with updated carry and leave distance.
+- Updated app-shell versioning and PWA cache version to **v0.5.0**.
+
 
 ### v0.3.2
 - Restored the preferred original app-layout style.
