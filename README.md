@@ -1,5 +1,5 @@
 # Sherpa Caddie
-### Version 0.5.1
+### Version 0.6.0
 
 **PWA:**  
 https://davidfliesen.github.io/SherpaCaddy
@@ -10,13 +10,18 @@ Sherpa Caddie combines the practical help of a **caddie** with the guidance and 
 
 The core idea is simple: **one shot at a time.**
 
-## Version 0.5.1
+## Version 0.6.0
 
-This release keeps the new Hole Planner and upgrades the branded Sherpa splash experience so the app launch feels more polished and intentional.
+This release fixes course-location discovery and makes the overall tablet interface visibly more app-like while preserving the Hole Planner, Sherpa AI, voice, weather, scoring, and club-distance features.
 
-### New in v0.5.1
+### New in v0.6.0
 
-- Refined **5-second animated Sherpa splash screen** with a more deliberate app-like introduction
+- Major **visual redesign** of the app shell: dark branded header, richer golf palette, stronger hero panel, more distinctive action cards, and a more premium Play screen
+- Rebuilt **Find Courses Near Me** to combine OpenStreetMap/Overpass and OpenGolfAPI results and sort them by real GPS distance
+- Added a separate `userCoords` location so device GPS can no longer be confused with selected-course coordinates
+- Fixed **Use Typed Course** so it resolves the typed name using multiple map/course sources rather than assigning the coordinates of a previously selected course
+- If a typed course cannot be resolved, map planning now stays disabled instead of displaying a false location
+- Added a clean **Sherpa schematic hole view** when exact numbered hole geometry is unavailable
 - Upgraded **Hole Planner** modal designed for tablet-first play
 - Garmin-inspired **vertical hole view** generated from mapped hole geometry when available
 - Right-side planning panel with:
@@ -31,7 +36,7 @@ This release keeps the new Hole Planner and upgrades the branded Sherpa splash e
 - Tap the map to place a **manual target**, then see the carry/leave distance update
 - Planner now defaults to a specific hole instead of only a generic course overview
 
-### Changed files in v0.5.1
+### Changed files in v0.6.0
 
 - `index.html`
 - `manifest.webmanifest`
@@ -119,6 +124,18 @@ Pick the target, take one practice swing, and commit.
 - `README.md`
 
 ## Changelog
+
+### v0.6.0 — Visual Redesign + Course Location Fix
+- Reworked the app shell to look substantially more like a dedicated golf app and less like white web cards.
+- Added deep forest branded header and gold active navigation.
+- Added richer course, AI, action-card, round, and learning-panel treatments.
+- Rebuilt nearby course discovery around OpenStreetMap/Overpass plus OpenGolfAPI.
+- Nearby results are sorted by actual distance from device GPS.
+- Separated device location from selected-course location.
+- Fixed typed-course handling so stale coordinates can no longer be reused.
+- Typed course names are resolved against multiple sources before map planning is enabled.
+- Added a labeled Sherpa schematic hole visual when exact numbered hole geometry is unavailable.
+- Updated PWA/cache versioning to **v0.6.0**.
 
 ### v0.5.1 — Extended Animated Splash Screen
 - Extended the Sherpa splash screen to stay on screen for about 5 seconds.
