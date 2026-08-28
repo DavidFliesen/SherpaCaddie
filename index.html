@@ -5,10 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#18311C">
 <meta name="description" content="Sherpa Caddie — one-shot-at-a-time golf guidance combining a caddie, coach and mentor.">
-<link rel="manifest" href="manifest.webmanifest?v=062">
-<link rel="icon" href="icons/favicon.png?v=062" type="image/png">
-<link rel="apple-touch-icon" href="icons/icon-192.png?v=062">
-<title>Sherpa Caddie v0.6.2</title>
+<link rel="manifest" href="manifest.webmanifest?v=063">
+<link rel="icon" href="icons/favicon.png?v=063" type="image/png">
+<link rel="apple-touch-icon" href="icons/icon-192.png?v=063">
+<link rel="preload" as="image" href="assets/sherpa-caddie-logo-fast.webp?v=063" type="image/webp" fetchpriority="high">
+<title>Sherpa Caddie v0.6.3</title>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
   crossorigin="">
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
@@ -301,14 +302,14 @@ main{width:min(1160px,calc(100% - 28px));margin:0 auto;padding-bottom:18px}
 .splash-rings::after{inset:34px;border-color:rgba(186,145,91,.26)}
 .splash-logo-stage{position:relative;display:inline-flex;align-items:center;justify-content:center;min-height:260px;min-width:280px}
 .splash-logo-glow{position:absolute;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,rgba(67,98,64,.16) 0%,rgba(235,217,193,.22) 42%,rgba(255,255,255,0) 72%);filter:blur(1px);animation:splashGlow 2.8s ease-in-out infinite}
-.splash-logo{width:min(70vw,255px);max-width:255px;display:block;margin:0 auto 6px;position:relative;z-index:1;transform-origin:center center;animation:splashLogoIntro 5s ease-in-out both}
+.splash-logo{width:min(70vw,255px);max-width:255px;display:block;margin:0 auto 6px;position:relative;z-index:1;transform-origin:center center;animation:splashLogoIntro 5s ease-in-out both;image-rendering:auto}
 .splash-title{font-family:Georgia,"Times New Roman",serif;font-size:clamp(2.3rem,5vw,3.2rem);font-weight:800;color:var(--forest);letter-spacing:.02em;opacity:0;animation:splashTextIn .8s ease forwards .55s}
 .splash-subtitle{margin-top:4px;color:var(--meadow);font-weight:800;letter-spacing:.08em;text-transform:uppercase;font-size:.82rem;opacity:0;animation:splashTextIn .8s ease forwards .95s}
 .splash-path{width:min(74vw,320px);height:18px;margin:18px auto 10px;border-radius:999px;background:linear-gradient(90deg,#e2d5bf 0%,#f6ecdb 100%);position:relative;overflow:hidden;opacity:0;animation:splashTextIn .8s ease forwards 1.35s}
 .splash-path span{position:absolute;left:-18%;top:2px;width:32%;height:14px;border-radius:999px;background:linear-gradient(90deg,var(--fairway),var(--tan));animation:splashRun 2.1s ease-in-out infinite .6s}
 .splash-path i{position:absolute;left:-10px;top:3px;width:12px;height:12px;border-radius:50%;background:#fff;border:2px solid var(--forest);box-shadow:0 0 0 3px rgba(255,255,255,.35);animation:splashBall 2.1s ease-in-out infinite .6s}
 .splash-caption{color:var(--stone);font-weight:800;font-size:.92rem;opacity:0;animation:splashTextIn .8s ease forwards 1.7s}
-@keyframes splashLogoIntro{0%{transform:scale(.7) translateY(14px);opacity:0;filter:blur(3px)}12%{transform:scale(1.04) translateY(-4px);opacity:1;filter:blur(0)}32%{transform:scale(1) translateY(0)}60%{transform:scale(1.03) translateY(-4px)}100%{transform:scale(1) translateY(0);opacity:1}}
+@keyframes splashLogoIntro{0%{transform:scale(.92) translateY(4px);opacity:1}14%{transform:scale(1.04) translateY(-4px);opacity:1}32%{transform:scale(1) translateY(0)}60%{transform:scale(1.03) translateY(-4px)}100%{transform:scale(1) translateY(0);opacity:1}}
 @keyframes splashTextIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 @keyframes splashGlow{0%,100%{transform:scale(.96);opacity:.55}50%{transform:scale(1.08);opacity:.92}}
 @keyframes splashPulse{0%,100%{transform:translateX(-50%) scale(1);opacity:.86}50%{transform:translateX(-50%) scale(1.05);opacity:1}}
@@ -393,7 +394,7 @@ main{padding-top:14px;padding-bottom:30px}
     <div class="splash-rings" aria-hidden="true"></div>
     <div class="splash-logo-stage" aria-hidden="true">
       <div class="splash-logo-glow"></div>
-      <img class="splash-logo" src="assets/sherpa-caddie-logo-clean.png?v=060" alt="Sherpa Caddie logo">
+      <img class="splash-logo" src="assets/sherpa-caddie-logo-fast.webp?v=063" width="320" height="349" decoding="sync" fetchpriority="high" alt="Sherpa Caddie logo">
     </div>
     <div class="splash-title">Sherpa Caddie</div>
     <div class="splash-subtitle">Your guide. Your game. Your best round.</div>
@@ -403,12 +404,12 @@ main{padding-top:14px;padding-bottom:30px}
 </div>
 <div class="app">
 <header class="topbar">
-  <div class="brand-badge"><img class="brand-logo" src="assets/sherpa-caddie-logo.png?v=062" alt="Sherpa Caddie"></div>
+  <div class="brand-badge"><img class="brand-logo" src="assets/sherpa-caddie-logo-fast.webp?v=063" width="180" height="196" decoding="sync" fetchpriority="high" alt="Sherpa Caddie"></div>
   <div class="brand-text">
     <h1>Sherpa Caddie</h1>
     <p>Your guide. Your game. Your best round.</p>
   </div>
-  <div class="version">v0.6.2</div>
+  <div class="version">v0.6.3</div>
 </header>
 
 <div class="tabs-wrap">
@@ -617,7 +618,7 @@ main{padding-top:14px;padding-bottom:30px}
   </article>
 </section>
 
-<div class="footer"><span>Sherpa Caddie v0.6.2</span><button id="aboutBtn">What’s in v0.6.2?</button></div>
+<div class="footer"><span>Sherpa Caddie v0.6.3</span><button id="aboutBtn">What’s in v0.6.3?</button></div>
 </main>
 </div>
 
@@ -1377,7 +1378,7 @@ $("#importBtn").onclick=()=>$("#importFile").click();$("#importFile").onchange=a
 function hideSplash(){const el=$("#splashScreen");if(!el||el.classList.contains("is-hidden"))return;el.classList.add("is-hidden");setTimeout(()=>el.remove(),800)}
 window.addEventListener("load",()=>setTimeout(hideSplash,5000));
 setTimeout(hideSplash,5600);
-if("serviceWorker"in navigator)window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js?v=062").catch(()=>{}));
+if("serviceWorker"in navigator)window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js?v=063").catch(()=>{}));
 renderClubs();renderRounds();if(state.round){show("play");showRoundMode()}
 })();
 </script>

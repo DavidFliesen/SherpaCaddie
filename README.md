@@ -1,5 +1,5 @@
 # Sherpa Caddie
-### Version 0.6.2
+### Version 0.6.3
 
 **PWA:**  
 https://davidfliesen.github.io/SherpaCaddy
@@ -10,11 +10,18 @@ Sherpa Caddie combines the practical help of a **caddie** with the guidance and 
 
 The core idea is simple: **one shot at a time.**
 
-## Version 0.6.2
+## Version 0.6.3
 
 This release fixes course-location discovery and makes the overall tablet interface visibly more app-like while preserving the Hole Planner, Sherpa AI, voice, weather, scoring, and club-distance features.
 
-### New in v0.6.2
+### New in v0.6.3
+
+- Replaced the 535 KB header/splash PNG with a **37 KB optimized WebP** version of the same logo artwork
+- The logo is now **preloaded before the app UI**, so it should appear on the first splash frame instead of popping in late
+- Header and splash now share one cached logo file instead of loading two large images
+- Removed both 535 KB logo PNGs from the service-worker pre-cache to avoid more than 1 MB of unnecessary startup downloading
+- Fixed the splash screen cache-buster mismatch (`v060` inside v0.6.1/v0.6.2)
+- Splash animation now starts with the logo already visible instead of animating from blur/opacity 0
 
 - Rebuilt nearby-course discovery around **three independent sources**: OpenStreetMap Search (Nominatim), OpenStreetMap Detail (Overpass), and OpenGolfAPI
 - Added **ZIP-code search**: entering `29483` now resolves the ZIP to a map area and searches for golf courses around it
@@ -47,7 +54,13 @@ This release fixes course-location discovery and makes the overall tablet interf
 - Tap the map to place a **manual target**, then see the carry/leave distance update
 - Planner now defaults to a specific hole instead of only a generic course overview
 
-### Changed files in v0.6.2
+### Changed files in v0.6.3
+
+- `index.html`
+- `manifest.webmanifest`
+- `sw.js`
+- `README.md`
+- `assets/sherpa-caddie-logo-fast.webp` **(new optimized logo asset)**
 
 - `index.html`
 - `manifest.webmanifest`
@@ -135,6 +148,15 @@ Pick the target, take one practice swing, and commit.
 - `README.md`
 
 ## Changelog
+
+### v0.6.3 — Fast Logo Loading Fix
+- Replaced the large header/splash logo PNG requests with one 37 KB optimized WebP asset.
+- Preloaded the logo so it is available immediately for the splash screen and header.
+- Fixed the stale splash-logo `v060` URL that remained in later releases.
+- Removed the two 535 KB logo PNGs from service-worker pre-caching.
+- Changed the splash intro so the logo is visible from the first animation frame.
+- Preserved the v0.6.2 course-search fixes and v0.6.1 header contrast improvements.
+- Updated PWA/cache versioning to **v0.6.3**.
 
 ### v0.6.2 — Course Search Reliability Fix
 - Fixed the regression that could return zero golf courses when OpenGolfAPI and the primary Overpass service were unavailable.
