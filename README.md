@@ -1,5 +1,5 @@
 # Sherpa Caddie
-### Version 0.5.0
+### Version 0.5.1
 
 **PWA:**  
 https://davidfliesen.github.io/SherpaCaddy
@@ -10,13 +10,13 @@ Sherpa Caddie combines the practical help of a **caddie** with the guidance and 
 
 The core idea is simple: **one shot at a time.**
 
-## Version 0.5.0
+## Version 0.5.1
 
-This release upgrades the **Play** experience with a much richer **Hole Planner** inspired by Garmin-style golf mapping, while also adding a branded Sherpa splash screen that reinforces the app identity when it launches.
+This release keeps the new Hole Planner and upgrades the branded Sherpa splash experience so the app launch feels more polished and intentional.
 
-### New in v0.5.0
+### New in v0.5.1
 
-- New branded **Sherpa splash screen** with launch animation
+- Refined **5-second animated Sherpa splash screen** with a more deliberate app-like introduction
 - Upgraded **Hole Planner** modal designed for tablet-first play
 - Garmin-inspired **vertical hole view** generated from mapped hole geometry when available
 - Right-side planning panel with:
@@ -31,7 +31,7 @@ This release upgrades the **Play** experience with a much richer **Hole Planner*
 - Tap the map to place a **manual target**, then see the carry/leave distance update
 - Planner now defaults to a specific hole instead of only a generic course overview
 
-### Changed files in v0.5.0
+### Changed files in v0.5.1
 
 - `index.html`
 - `manifest.webmanifest`
@@ -119,6 +119,12 @@ Pick the target, take one practice swing, and commit.
 - `README.md`
 
 ## Changelog
+
+### v0.5.1 — Extended Animated Splash Screen
+- Extended the Sherpa splash screen to stay on screen for about 5 seconds.
+- Added a more deliberate logo-stage animation to better reinforce the Sherpa Caddie brand and app feel.
+- Added a moving ball/path accent and staggered title/subtitle reveal.
+- Updated versioning and service-worker cache values to **v0.5.1**.
 
 ### v0.5.0 — Hole Planner + Splash Screen
 - Added a branded Sherpa splash/loading screen on app launch.
