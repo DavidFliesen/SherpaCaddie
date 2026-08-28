@@ -1,5 +1,5 @@
 # Sherpa Caddie
-### Version 0.6.1
+### Version 0.6.2
 
 **PWA:**  
 https://davidfliesen.github.io/SherpaCaddy
@@ -10,11 +10,19 @@ Sherpa Caddie combines the practical help of a **caddie** with the guidance and 
 
 The core idea is simple: **one shot at a time.**
 
-## Version 0.6.1
+## Version 0.6.2
 
 This release fixes course-location discovery and makes the overall tablet interface visibly more app-like while preserving the Hole Planner, Sherpa AI, voice, weather, scoring, and club-distance features.
 
-### New in v0.6.1
+### New in v0.6.2
+
+- Rebuilt nearby-course discovery around **three independent sources**: OpenStreetMap Search (Nominatim), OpenStreetMap Detail (Overpass), and OpenGolfAPI
+- Added **ZIP-code search**: entering `29483` now resolves the ZIP to a map area and searches for golf courses around it
+- Added fallback behavior so an OpenGolf or Overpass outage no longer produces an empty app by itself
+- Added source-status text in search results so the app can say which source worked and which one was unavailable
+- Added a secondary Overpass server fallback
+- Nearby results remain sorted by actual distance from the GPS/search center
+- Preserved the **v0.6.1 high-contrast logo plaque** in the header
 
 - New **high-contrast logo plaque** in the top header so the Sherpa Caddie mark stays visible against the darker branded background
 - Improved header spacing and visual emphasis for the Sherpa brand
@@ -39,7 +47,7 @@ This release fixes course-location discovery and makes the overall tablet interf
 - Tap the map to place a **manual target**, then see the carry/leave distance update
 - Planner now defaults to a specific hole instead of only a generic course overview
 
-### Changed files in v0.6.1
+### Changed files in v0.6.2
 
 - `index.html`
 - `manifest.webmanifest`
@@ -127,6 +135,15 @@ Pick the target, take one practice swing, and commit.
 - `README.md`
 
 ## Changelog
+
+### v0.6.2 — Course Search Reliability Fix
+- Fixed the regression that could return zero golf courses when OpenGolfAPI and the primary Overpass service were unavailable.
+- Added OpenStreetMap/Nominatim bounded golf-course search as an independent primary fallback.
+- Added ZIP-code area resolution and nearby course search.
+- Added a second Overpass endpoint fallback.
+- Added search-source diagnostics and clearer failure messages.
+- Preserved the v0.6.1 logo/header improvement.
+- Updated PWA/cache versioning to **v0.6.2**.
 
 ### v0.6.1 — Header Logo Contrast Fix
 - Added a dedicated light plaque behind the Sherpa Caddie logo in the header.
