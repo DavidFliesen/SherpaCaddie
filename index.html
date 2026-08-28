@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#18311C">
 <meta name="description" content="Sherpa Caddie — one-shot-at-a-time golf guidance combining a caddie, coach and mentor.">
-<link rel="manifest" href="manifest.webmanifest?v=060">
-<link rel="icon" href="icons/favicon.png?v=060" type="image/png">
-<link rel="apple-touch-icon" href="icons/icon-192.png?v=060">
-<title>Sherpa Caddie v0.6.0</title>
+<link rel="manifest" href="manifest.webmanifest?v=061">
+<link rel="icon" href="icons/favicon.png?v=061" type="image/png">
+<link rel="apple-touch-icon" href="icons/icon-192.png?v=061">
+<title>Sherpa Caddie v0.6.1</title>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
   crossorigin="">
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
@@ -355,10 +355,12 @@ main{width:min(1160px,calc(100% - 28px));margin:0 auto;padding-bottom:18px}
 html,body{background:#112817}
 body{background-image:radial-gradient(circle at 14% 12%,rgba(134,146,80,.18),transparent 27%),radial-gradient(circle at 88% 78%,rgba(186,145,91,.16),transparent 30%),linear-gradient(145deg,#102617 0%,#1a3820 46%,#0e2230 100%);background-attachment:fixed}
 .app{min-height:100dvh;background:linear-gradient(180deg,rgba(248,243,234,.96) 0%,rgba(239,233,220,.97) 100%)}
-.topbar{height:100px;background:linear-gradient(105deg,#102a18 0%,#1d4225 60%,#294b2d 100%);border-bottom:0;box-shadow:0 10px 28px rgba(5,22,11,.25);position:relative;overflow:hidden}
+.topbar{height:112px;background:linear-gradient(105deg,#102a18 0%,#1d4225 60%,#294b2d 100%);border-bottom:0;box-shadow:0 10px 28px rgba(5,22,11,.25);position:relative;overflow:hidden}
 .topbar:after{content:"";position:absolute;right:-70px;top:-110px;width:330px;height:250px;border:1px solid rgba(235,217,193,.16);border-radius:50%;box-shadow:0 0 0 32px rgba(235,217,193,.035),0 0 0 65px rgba(235,217,193,.025);pointer-events:none}
-.brand-logo{width:88px;height:84px;filter:drop-shadow(0 5px 8px rgba(0,0,0,.22));position:relative;z-index:1}
-.brand-text{position:relative;z-index:1}.brand-text h1{color:#fffdf6;font-size:1.85rem;letter-spacing:.01em}.brand-text p{color:#e9ddc8;font-weight:650}.version{position:relative;z-index:1;color:#fff;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);padding:7px 10px;border-radius:999px}
+.brand-badge{position:relative;z-index:1;display:grid;place-items:center;flex:0 0 auto;width:104px;height:104px;padding:10px;border-radius:24px;background:linear-gradient(180deg,#fffefb 0%,#f0e8da 100%);border:1px solid rgba(186,145,91,.42);box-shadow:0 10px 26px rgba(0,0,0,.16),inset 0 1px 0 rgba(255,255,255,.85)}
+.brand-badge:before{content:"";position:absolute;inset:7px;border-radius:18px;border:1px solid rgba(24,49,28,.08);pointer-events:none}
+.brand-logo{width:82px;height:82px;filter:drop-shadow(0 3px 5px rgba(0,0,0,.12));position:relative;z-index:1}
+.brand-text{position:relative;z-index:1}.brand-text h1{color:#fffdf6;font-size:1.85rem;letter-spacing:.01em;text-shadow:0 1px 2px rgba(0,0,0,.18)}.brand-text p{color:#f1e6d3;font-weight:700}.version{position:relative;z-index:1;color:#fff;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);padding:7px 10px;border-radius:999px}
 .tabs-wrap{top:0;padding:0 14px 10px;background:linear-gradient(180deg,#18371f 0%,rgba(248,243,234,.96) 100%)}
 .tabs{border:0;border-radius:0 0 16px 16px;box-shadow:0 8px 22px rgba(11,32,51,.13);background:#f9f5ed}
 .tab{padding:14px 8px;background:#f9f5ed;color:#314b34;border-color:#ded3c1}.tab.active{background:linear-gradient(180deg,#c9a66b,#b98d4d);color:#132b19;text-shadow:0 1px rgba(255,255,255,.35)}
@@ -380,8 +382,8 @@ main{padding-top:14px;padding-bottom:30px}
 .rounds-card{background:linear-gradient(160deg,#f8f3e9,#eef3e8)}
 .footer{color:#6e6a61}.footer button{color:#34583a}
 .map-modal{background:linear-gradient(160deg,#f8f3e9 0%,#edf2e9 100%)}.map-status{background:#ebe6da}.planner-card.light{background:linear-gradient(180deg,#fffdf8,#f5efe4)}
-@media(max-width:850px){.topbar{height:92px}.brand-text h1{font-size:1.55rem}}
-@media(max-width:620px){body{background:#f0eadf}.topbar{height:80px}.tabs-wrap{background:#18371f}.app{background:#f2ece1}}
+@media(max-width:850px){.topbar{height:98px}.brand-badge{width:92px;height:92px;padding:8px}.brand-logo{width:72px;height:72px}.brand-text h1{font-size:1.55rem}}
+@media(max-width:620px){body{background:#f0eadf}.topbar{height:84px}.brand-badge{width:74px;height:74px;padding:6px;border-radius:18px}.brand-logo{width:58px;height:58px}.tabs-wrap{background:#18371f}.app{background:#f2ece1}}
 
 </style>
 </head>
@@ -401,12 +403,12 @@ main{padding-top:14px;padding-bottom:30px}
 </div>
 <div class="app">
 <header class="topbar">
-  <img class="brand-logo" src="assets/sherpa-caddie-logo.png?v=060" alt="Sherpa Caddie">
+  <div class="brand-badge"><img class="brand-logo" src="assets/sherpa-caddie-logo.png?v=061" alt="Sherpa Caddie"></div>
   <div class="brand-text">
     <h1>Sherpa Caddie</h1>
     <p>Your guide. Your game. Your best round.</p>
   </div>
-  <div class="version">v0.6.0</div>
+  <div class="version">v0.6.1</div>
 </header>
 
 <div class="tabs-wrap">
@@ -615,7 +617,7 @@ main{padding-top:14px;padding-bottom:30px}
   </article>
 </section>
 
-<div class="footer"><span>Sherpa Caddie v0.6.0</span><button id="aboutBtn">What’s in v0.6.0?</button></div>
+<div class="footer"><span>Sherpa Caddie v0.6.1</span><button id="aboutBtn">What’s in v0.6.1?</button></div>
 </main>
 </div>
 
@@ -637,7 +639,7 @@ main{padding-top:14px;padding-bottom:30px}
 
 <div id="aboutModal" class="modal-backdrop hidden" role="dialog" aria-modal="true">
   <div class="modal" style="max-width:650px">
-    <div class="section-head"><div><p class="eyebrow">One-Shot Sherpa</p><h2>Version 0.6 additions</h2></div><button class="btn ghost" id="closeAboutModal">Close</button></div>
+    <div class="section-head"><div><p class="eyebrow">One-Shot Sherpa</p><h2>Version 0.6.1 additions</h2></div><button class="btn ghost" id="closeAboutModal">Close</button></div>
     <ul style="color:var(--stone);line-height:1.7">
       <li>Personal club-distance setup</li>
       <li>Simplified in-round screen</li>
@@ -1334,7 +1336,7 @@ $("#importBtn").onclick=()=>$("#importFile").click();$("#importFile").onchange=a
 function hideSplash(){const el=$("#splashScreen");if(!el||el.classList.contains("is-hidden"))return;el.classList.add("is-hidden");setTimeout(()=>el.remove(),800)}
 window.addEventListener("load",()=>setTimeout(hideSplash,5000));
 setTimeout(hideSplash,5600);
-if("serviceWorker"in navigator)window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js?v=060").catch(()=>{}));
+if("serviceWorker"in navigator)window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js?v=061").catch(()=>{}));
 renderClubs();renderRounds();if(state.round){show("play");showRoundMode()}
 })();
 </script>

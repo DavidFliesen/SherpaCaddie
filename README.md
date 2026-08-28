@@ -1,5 +1,5 @@
 # Sherpa Caddie
-### Version 0.6.0
+### Version 0.6.1
 
 **PWA:**  
 https://davidfliesen.github.io/SherpaCaddy
@@ -10,11 +10,14 @@ Sherpa Caddie combines the practical help of a **caddie** with the guidance and 
 
 The core idea is simple: **one shot at a time.**
 
-## Version 0.6.0
+## Version 0.6.1
 
 This release fixes course-location discovery and makes the overall tablet interface visibly more app-like while preserving the Hole Planner, Sherpa AI, voice, weather, scoring, and club-distance features.
 
-### New in v0.6.0
+### New in v0.6.1
+
+- New **high-contrast logo plaque** in the top header so the Sherpa Caddie mark stays visible against the darker branded background
+- Improved header spacing and visual emphasis for the Sherpa brand
 
 - Major **visual redesign** of the app shell: dark branded header, richer golf palette, stronger hero panel, more distinctive action cards, and a more premium Play screen
 - Rebuilt **Find Courses Near Me** to combine OpenStreetMap/Overpass and OpenGolfAPI results and sort them by real GPS distance
@@ -36,7 +39,7 @@ This release fixes course-location discovery and makes the overall tablet interf
 - Tap the map to place a **manual target**, then see the carry/leave distance update
 - Planner now defaults to a specific hole instead of only a generic course overview
 
-### Changed files in v0.6.0
+### Changed files in v0.6.1
 
 - `index.html`
 - `manifest.webmanifest`
@@ -124,6 +127,12 @@ Pick the target, take one practice swing, and commit.
 - `README.md`
 
 ## Changelog
+
+### v0.6.1 — Header Logo Contrast Fix
+- Added a dedicated light plaque behind the Sherpa Caddie logo in the header.
+- Increased contrast and separation so the logo no longer gets lost against the dark green branded top area.
+- Slightly adjusted header sizing and responsive behavior to preserve the stronger brand presence on tablet and smaller screens.
+- Updated PWA/cache versioning to **v0.6.1**.
 
 ### v0.6.0 — Visual Redesign + Course Location Fix
 - Reworked the app shell to look substantially more like a dedicated golf app and less like white web cards.
