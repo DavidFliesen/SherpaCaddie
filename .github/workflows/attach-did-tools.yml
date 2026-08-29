@@ -1,1 +1,112 @@
+name: Attach D-ID tools to Sage
 
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  attach-tools:
+    runs-on: ubuntu-latest
+    env:
+      DID_API_KEY: ${{ secrets.DID_API_KEY }}
+      DID_AGENT_ID: v2_agt_0-5IY10J
+
+    steps:
+      - name: Validate secret
+        shell: bash
+        run: |
+          if [ -z "$DID_API_KEY" ]; then
+            echo "::error::Repository secret DID_API_KEY is not configured."
+            exit 1
+          fi
+
+      - name: Attach Sherpa Caddie client tools to Sage
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          cat > /tmp/did-tools-payload.json <<'JSON'
+          {
+            "tools": {
+              "items": [
+                { "tool_id": "tl_x94h0ee9_FGNaK5Jx05A1" },
+                { "tool_id": "tl_tosILbkdAqtaHDojqNN_L" },
+                { "tool_id": "tl_YhBpHTCkL73Lsdtomi007" },
+                { "tool_id": "tl_qycJWIs8eF-vKIUU7FXw5" },
+                { "tool_id": "tl_YJOO5DFUg1MgGlYEn_YBU" },
+                { "tool_id": "tl_IuLN6kSEzh0E2s2q8odoi" },
+                { "tool_id": "tl_1DHAD4ItuCDQYEJXq8NdP" },
+                { "tool_id": "tl_QbGzwBNy6KKH7yxNYh7en" },
+                { "tool_id": "tl_ZhLjIJk812fPxg76DjfNC" }
+              ],
+              "tool_choice": "auto"
+            }
+          }
+          JSON
+
+          HTTP_CODE="$(
+            curl --silent --show-error               --output /tmp/did-agent-response.json               --write-out "%{http_code}"               --request PATCH               "https://api.d-id.com/agents/${DID_AGENT_ID}"               --header "Authorization: Basic ${DID_API_KEY}"               --header "Content-Type: application/json"               --header "Accept: application/json"               --data-binary @/tmp/did-tools-payload.json
+          )"
+
+          echo "D-ID returned HTTP ${HTTP_CODE}"
+
+          if [ "$HTTP_CODE" -lt 200 ] || [ "$HTTP_CODE" -ge 300 ]; then
+            echo "::error::D-ID agent update failed."
+            jq . /tmp/did-agent-response.json 2>/dev/null || cat /tmp/did-agent-response.json
+            exit 1
+          fi
+
+          jq . /tmp/did-agent-response.json
+
+      - name: Verify all nine tools are attached
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          HTTP_CODE="$(
+            curl --silent --show-error               --output /tmp/did-agent-verify.json               --write-out "%{http_code}"               --request GET               "https://api.d-id.com/agents/${DID_AGENT_ID}"               --header "Authorization: Basic ${DID_API_KEY}"               --header "Accept: application/json"
+          )"
+
+          if [ "$HTTP_CODE" -lt 200 ] || [ "$HTTP_CODE" -ge 300 ]; then
+            echo "::error::Could not verify the Sage agent after updating it."
+            jq . /tmp/did-agent-verify.json 2>/dev/null || cat /tmp/did-agent-verify.json
+            exit 1
+          fi
+
+          EXPECTED_IDS=(
+            "tl_x94h0ee9_FGNaK5Jx05A1"
+            "tl_tosILbkdAqtaHDojqNN_L"
+            "tl_YhBpHTCkL73Lsdtomi007"
+            "tl_qycJWIs8eF-vKIUU7FXw5"
+            "tl_YJOO5DFUg1MgGlYEn_YBU"
+            "tl_IuLN6kSEzh0E2s2q8odoi"
+            "tl_1DHAD4ItuCDQYEJXq8NdP"
+            "tl_QbGzwBNy6KKH7yxNYh7en"
+            "tl_ZhLjIJk812fPxg76DjfNC"
+          )
+
+          MISSING=0
+          for TOOL_ID in "${EXPECTED_IDS[@]}"; do
+            if jq -e --arg id "$TOOL_ID"               '.tools.items // [] | any(.tool_id == $id)'               /tmp/did-agent-verify.json >/dev/null; then
+              echo "Attached: $TOOL_ID"
+            else
+              echo "::error::Missing tool: $TOOL_ID"
+              MISSING=1
+            fi
+          done
+
+          TOOL_CHOICE="$(jq -r '.tools.tool_choice // empty' /tmp/did-agent-verify.json)"
+          if [ "$TOOL_CHOICE" != "auto" ]; then
+            echo "::error::Expected tool_choice=auto, got '${TOOL_CHOICE:-missing}'."
+            MISSING=1
+          fi
+
+          if [ "$MISSING" -ne 0 ]; then
+            echo "::error::Sage tool verification failed."
+            jq '.tools' /tmp/did-agent-verify.json
+            exit 1
+          fi
+
+          echo "Success: all 9 Sherpa Caddie client tools are attached to Sage with tool_choice=auto."
