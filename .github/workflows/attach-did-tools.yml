@@ -10,17 +10,24 @@ jobs:
   attach-tools:
     runs-on: ubuntu-latest
     env:
-      DID_API_KEY: ${{ secrets.DID_API_KEY }}
+      DID_API_USERNAME: ${{ secrets.DID_API_USERNAME }}
+      DID_API_PASSWORD: ${{ secrets.DID_API_PASSWORD }}
       DID_AGENT_ID: v2_agt_0-5IY10J
 
     steps:
-      - name: Validate secret
+      - name: Validate D-ID secrets
         shell: bash
         run: |
-          if [ -z "$DID_API_KEY" ]; then
-            echo "::error::Repository secret DID_API_KEY is not configured."
+          set -euo pipefail
+          if [ -z "$DID_API_USERNAME" ]; then
+            echo "::error::Repository secret DID_API_USERNAME is not configured."
             exit 1
           fi
+          if [ -z "$DID_API_PASSWORD" ]; then
+            echo "::error::Repository secret DID_API_PASSWORD is not configured."
+            exit 1
+          fi
+          echo "Both D-ID credential secrets are configured."
 
       - name: Verify D-ID authentication
         shell: bash
@@ -28,13 +35,13 @@ jobs:
           set -euo pipefail
 
           HTTP_CODE="$(
-            curl --silent --show-error               --output /tmp/did-auth-check.json               --write-out "%{http_code}"               --user "$DID_API_KEY"               --request GET               "https://api.d-id.com/agents/${DID_AGENT_ID}"               --header "Accept: application/json"
+            curl --silent --show-error               --output /tmp/did-auth-check.json               --write-out "%{http_code}"               --user "${DID_API_USERNAME}:${DID_API_PASSWORD}"               --request GET               "https://api.d-id.com/agents/${DID_AGENT_ID}"               --header "Accept: application/json"
           )"
 
           echo "D-ID authentication check returned HTTP ${HTTP_CODE}"
 
           if [ "$HTTP_CODE" -lt 200 ] || [ "$HTTP_CODE" -ge 300 ]; then
-            echo "::error::D-ID authentication failed. Make sure DID_API_KEY contains the exact API_USERNAME:API_PASSWORD value, with no 'Basic ' prefix, quotes, or extra spaces."
+            echo "::error::D-ID authentication failed. Confirm these are the PRIVATE D-ID API username/password from Account Settings, not the ck_ client key."
             jq . /tmp/did-auth-check.json 2>/dev/null || cat /tmp/did-auth-check.json
             exit 1
           fi
@@ -66,7 +73,7 @@ jobs:
           JSON
 
           HTTP_CODE="$(
-            curl --silent --show-error               --output /tmp/did-agent-response.json               --write-out "%{http_code}"               --user "$DID_API_KEY"               --request PATCH               "https://api.d-id.com/agents/${DID_AGENT_ID}"               --header "Content-Type: application/json"               --header "Accept: application/json"               --data-binary @/tmp/did-tools-payload.json
+            curl --silent --show-error               --output /tmp/did-agent-response.json               --write-out "%{http_code}"               --user "${DID_API_USERNAME}:${DID_API_PASSWORD}"               --request PATCH               "https://api.d-id.com/agents/${DID_AGENT_ID}"               --header "Content-Type: application/json"               --header "Accept: application/json"               --data-binary @/tmp/did-tools-payload.json
           )"
 
           echo "D-ID agent update returned HTTP ${HTTP_CODE}"
@@ -86,7 +93,7 @@ jobs:
           set -euo pipefail
 
           HTTP_CODE="$(
-            curl --silent --show-error               --output /tmp/did-agent-verify.json               --write-out "%{http_code}"               --user "$DID_API_KEY"               --request GET               "https://api.d-id.com/agents/${DID_AGENT_ID}"               --header "Accept: application/json"
+            curl --silent --show-error               --output /tmp/did-agent-verify.json               --write-out "%{http_code}"               --user "${DID_API_USERNAME}:${DID_API_PASSWORD}"               --request GET               "https://api.d-id.com/agents/${DID_AGENT_ID}"               --header "Accept: application/json"
           )"
 
           if [ "$HTTP_CODE" -lt 200 ] || [ "$HTTP_CODE" -ge 300 ]; then
