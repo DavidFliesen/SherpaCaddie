@@ -5,11 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#18311C">
 <meta name="description" content="Sherpa Caddie — one-shot-at-a-time golf guidance combining a caddie, coach and mentor.">
-<link rel="manifest" href="manifest.webmanifest?v=064">
-<link rel="icon" href="icons/favicon.png?v=064" type="image/png">
-<link rel="apple-touch-icon" href="icons/icon-192.png?v=064">
-<link rel="preload" as="image" href="assets/sherpa-caddie-logo-fast.webp?v=064" type="image/webp" fetchpriority="high">
-<title>Sherpa Caddie v0.6.4</title>
+<link rel="manifest" href="manifest.webmanifest?v=070">
+<link rel="icon" href="icons/favicon.png?v=070" type="image/png">
+<link rel="apple-touch-icon" href="icons/icon-192.png?v=070">
+<link rel="preload" as="image" href="assets/sherpa-caddie-logo-fast.webp?v=070" type="image/webp" fetchpriority="high">
+<title>Sherpa Caddie v0.7.0</title>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
   crossorigin="">
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
@@ -79,6 +79,17 @@ main{width:min(1160px,calc(100% - 28px));margin:0 auto;padding-bottom:18px}
 .btn.tan{background:var(--tan);color:var(--navy)}
 .btn.danger{background:#F7E8E4;color:var(--danger);border-color:#E7C7BF}
 .btn:disabled{opacity:.45;cursor:not-allowed}
+
+/* HANDS-FREE SHERPA */
+.voice-mode-panel{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:12px;align-items:center;padding:11px 12px;border:1px solid #d8d2c4;border-radius:13px;background:linear-gradient(90deg,#f9f5ec 0%,#edf4e9 100%)}
+.voice-mode-copy strong{display:block;color:var(--forest);font-size:.94rem}.voice-mode-copy span{display:block;color:var(--stone);font-size:.78rem;margin-top:2px;line-height:1.35}
+.switch-row{display:flex;align-items:center;gap:8px;font-size:.78rem;font-weight:850;color:var(--forest);white-space:nowrap;cursor:pointer}.switch-row input{position:absolute;opacity:0;pointer-events:none}.switch-row i{width:42px;height:24px;border-radius:999px;background:#c9c6bd;position:relative;transition:.2s;box-shadow:inset 0 0 0 1px rgba(11,32,51,.08)}.switch-row i:after{content:"";position:absolute;width:18px;height:18px;left:3px;top:3px;border-radius:50%;background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.22);transition:.2s}.switch-row input:checked+i{background:var(--forest)}.switch-row input:checked+i:after{transform:translateX(18px)}
+.voice-mode-status{font-size:.76rem;color:var(--stone);padding:0 2px}.voice-mode-status.active{color:var(--forest);font-weight:800}
+.round-voice-bar{padding:10px 14px;display:grid;grid-template-columns:1fr auto;gap:8px 14px;align-items:center;border-left:5px solid var(--tan);background:linear-gradient(90deg,#fffaf0 0%,#edf5e9 100%)}
+.round-voice-main{display:flex;align-items:center;gap:10px}.round-voice-icon{font-size:1.3rem}.round-voice-main strong{display:block;color:var(--forest)}.round-voice-main span:not(.round-voice-icon){display:block;color:var(--stone);font-size:.78rem;margin-top:2px}
+.round-voice-switches{display:flex;gap:12px;align-items:center}.switch-row.compact{font-size:.72rem}.switch-row.compact i{width:38px;height:22px}.switch-row.compact i:after{width:16px;height:16px}.switch-row.compact input:checked+i:after{transform:translateX(16px)}
+.round-voice-hint{grid-column:1/-1;font-size:.73rem;color:var(--stone);border-top:1px solid rgba(108,108,106,.16);padding-top:7px}
+@media(max-width:760px){.voice-mode-panel{grid-template-columns:1fr 1fr}.voice-mode-copy{grid-column:1/-1}.round-voice-bar{grid-template-columns:1fr}.round-voice-switches{justify-content:flex-start}.round-voice-hint{grid-column:1}}
 
 /* HOME */
 .home{display:grid;grid-template-rows:auto auto auto;gap:13px}
@@ -394,7 +405,7 @@ main{padding-top:14px;padding-bottom:30px}
     <div class="splash-rings" aria-hidden="true"></div>
     <div class="splash-logo-stage" aria-hidden="true">
       <div class="splash-logo-glow"></div>
-      <img class="splash-logo" src="assets/sherpa-caddie-logo-fast.webp?v=064" width="320" height="349" decoding="sync" fetchpriority="high" alt="Sherpa Caddie logo">
+      <img class="splash-logo" src="assets/sherpa-caddie-logo-fast.webp?v=070" width="320" height="349" decoding="sync" fetchpriority="high" alt="Sherpa Caddie logo">
     </div>
     <div class="splash-title">Sherpa Caddie</div>
     <div class="splash-subtitle">Your guide. Your game. Your best round.</div>
@@ -404,12 +415,12 @@ main{padding-top:14px;padding-bottom:30px}
 </div>
 <div class="app">
 <header class="topbar">
-  <div class="brand-badge"><img class="brand-logo" src="assets/sherpa-caddie-logo-fast.webp?v=064" width="180" height="196" decoding="sync" fetchpriority="high" alt="Sherpa Caddie"></div>
+  <div class="brand-badge"><img class="brand-logo" src="assets/sherpa-caddie-logo-fast.webp?v=070" width="180" height="196" decoding="sync" fetchpriority="high" alt="Sherpa Caddie"></div>
   <div class="brand-text">
     <h1>Sherpa Caddie</h1>
     <p>Your guide. Your game. Your best round.</p>
   </div>
-  <div class="version">v0.6.4</div>
+  <div class="version">v0.7.0</div>
 </header>
 
 <div class="tabs-wrap">
@@ -455,11 +466,29 @@ main{padding-top:14px;padding-bottom:30px}
           <div>
             <label for="modelSelect" class="note-line" style="margin-right:6px">Model</label>
             <select id="modelSelect" class="model-select" aria-label="Sherpa AI model">
-              <option value="light">Lightweight — best for iPad</option>
-              <option value="better">Better answers — more memory</option>
+              <option value="better" selected>Recommended — better 1B answers</option>
+              <option value="light">Fast fallback — lightweight</option>
             </select>
           </div>
         </div>
+
+        <div class="voice-mode-panel">
+          <div class="voice-mode-copy">
+            <strong>Hands-Free Caddie</strong>
+            <span>Turn it on once, then say <b>“Sherpa…”</b> before a question or command.</span>
+          </div>
+          <label class="switch-row">
+            <span>Hands-Free</span>
+            <input class="handsfree-toggle" type="checkbox" aria-label="Hands-Free Caddie">
+            <i aria-hidden="true"></i>
+          </label>
+          <label class="switch-row">
+            <span>Spoken Replies</span>
+            <input class="speak-toggle" type="checkbox" checked aria-label="Spoken Sherpa replies">
+            <i aria-hidden="true"></i>
+          </label>
+        </div>
+        <div class="voice-mode-status" id="homeVoiceModeStatus">Hands-Free is off. Manual Talk and typed questions still work.</div>
 
         <div class="note-line">First use downloads the selected AI model and caches it in your browser. Sherpa automatically chooses the most compatible quantization for this device.</div>
         <div class="progress-line" aria-hidden="true"><span id="aiProgressBar"></span></div>
@@ -551,6 +580,18 @@ main{padding-top:14px;padding-bottom:30px}
       <div class="hole-stat"><span>TOTAL</span><strong id="totalStat">0</strong></div>
     </article>
 
+    <article class="card round-voice-bar">
+      <div class="round-voice-main">
+        <span class="round-voice-icon">🎙️</span>
+        <div><strong>Hands-Free Sherpa</strong><span id="roundVoiceModeStatus">Off — turn it on to use Sherpa without reaching for the screen.</span></div>
+      </div>
+      <div class="round-voice-switches">
+        <label class="switch-row compact"><span>Hands-Free</span><input class="handsfree-toggle" type="checkbox" aria-label="Hands-Free Caddie during round"><i aria-hidden="true"></i></label>
+        <label class="switch-row compact"><span>Speak</span><input class="speak-toggle" type="checkbox" checked aria-label="Spoken replies during round"><i aria-hidden="true"></i></label>
+      </div>
+      <div class="round-voice-hint">Say “Sherpa, what club?”, “Sherpa, how far?”, “Sherpa, good shot”, or “Sherpa, next hole”.</div>
+    </article>
+
     <article class="card plan">
       <div class="plan-col"><p class="eyebrow">Club</p><h3 id="clubRec">Driver</h3><p id="clubWhy">Take enough club to make a comfortable swing.</p></div>
       <div class="plan-col"><p class="eyebrow">Safe target</p><h3 id="targetRec">Wide part of fairway</h3><p id="targetWhy">Avoid the biggest trouble and set up the next shot.</p></div>
@@ -618,7 +659,7 @@ main{padding-top:14px;padding-bottom:30px}
   </article>
 </section>
 
-<div class="footer"><span>Sherpa Caddie v0.6.4</span><button id="aboutBtn">What’s in v0.6.4?</button></div>
+<div class="footer"><span>Sherpa Caddie v0.7.0</span><button id="aboutBtn">What’s in v0.7.0?</button></div>
 </main>
 </div>
 
@@ -640,7 +681,7 @@ main{padding-top:14px;padding-bottom:30px}
 
 <div id="aboutModal" class="modal-backdrop hidden" role="dialog" aria-modal="true">
   <div class="modal" style="max-width:650px">
-    <div class="section-head"><div><p class="eyebrow">One-Shot Sherpa</p><h2>Version 0.6.2 additions</h2></div><button class="btn ghost" id="closeAboutModal">Close</button></div>
+    <div class="section-head"><div><p class="eyebrow">One-Shot Sherpa</p><h2>Version 0.7 additions</h2></div><button class="btn ghost" id="closeAboutModal">Close</button></div>
     <ul style="color:var(--stone);line-height:1.7">
       <li>Personal club-distance setup</li>
       <li>Simplified in-round screen</li>
@@ -659,6 +700,11 @@ main{padding-top:14px;padding-bottom:30px}
       <li>Major visual refresh with a stronger golf-app shell</li>
       <li>Multi-source nearby course discovery using OpenGolf + OpenStreetMap</li>
       <li>Typed course names now resolve to verified coordinates instead of reusing stale coordinates</li>
+      <li>Hands-Free Caddie voice mode with “Sherpa” wake phrase</li>
+      <li>Spoken Replies on/off control</li>
+      <li>Voice commands for common in-round actions</li>
+      <li>AI echo detection and automatic retry/fallback</li>
+      <li>Recommended 1B local model as the default quality choice</li>
       <li>On-device generative Sherpa AI using WebLLM</li>
       <li>Improved voice flow with local Whisper speech recognition</li>
     </ul>
@@ -813,6 +859,15 @@ const aiState = {
   lastAnswer: "",
   recognition: null,
   listening: false,
+  manualVoicePending: false,
+  handsFree: false,
+  speakReplies: true,
+  speaking: false,
+  stoppingRecognition: false,
+  restartingRecognition: false,
+  processingVoice: false,
+  lastTranscript: "",
+  history: [],
   adapter: null,
   adapterFeatures: new Set()
 };
@@ -872,18 +927,24 @@ function mapPlanningContext(){
   };
 }
 function systemPrompt(){
-  return `You are Sherpa, the golf guide inside Sherpa Caddie.
-You combine the practical help of a caddie, the instruction of a coach, and the calm perspective of a mentor.
+  return `You are Sherpa, the conversational golf guide inside Sherpa Caddie.
+Your job is to ANSWER the golfer, not echo them.
 
-Keep answers concise: usually 2 to 5 short sentences.
-Use plain English for beginner and recreational golfers.
-Prioritize the current shot and the safest useful target.
-Explain club choices briefly.
-Never invent a yardage, score, hazard, weather condition, or map feature that the app did not provide.
-When a golfer is mentally rushing, bring them back to one shot and one thought.
-When club choice is close, favor enough club for a comfortable swing rather than forcing too little club.
-If detailed course-map information is unavailable, say so.
-Do not give long technical swing instruction during a round.`;
+RULES
+- Never repeat, quote, or merely paraphrase the golfer's question as your answer.
+- Start with the actual recommendation, answer, or explanation.
+- Keep answers concise: usually 2 to 5 short sentences.
+- Use plain English for beginner and recreational golfers.
+- Prioritize the current shot and the safest useful target.
+- Explain club choices briefly and practically.
+- Never invent a yardage, score, hazard, weather condition, or map feature the app did not provide.
+- If required information is missing, say exactly what is missing and give the best general guidance you safely can.
+- When a golfer is mentally rushing, bring them back to one shot and one thought.
+- When club choice is close, favor enough club for a comfortable swing rather than forcing too little club.
+- Do not give long technical swing instruction during a round.
+- Do not begin with phrases like "You asked" or "Your question is".
+
+Sound like a calm, capable caddie standing beside the golfer.`;
 }
 function buildUserPrompt(question){
   const shot = currentShotContext();
@@ -984,7 +1045,8 @@ async function loadSherpaLLM(force=false){
     });
 
     aiState.engine = engine;
-    aiState.conversation = [{ role:"system", content:systemPrompt() }];
+    aiState.conversation = [];
+    aiState.history = [];
     aiState.llmReady = true;
     setProgress(100);
     setBadge(llmBadge, `AI ready • ${friendly}`, "ready");
@@ -992,146 +1054,203 @@ async function loadSherpaLLM(force=false){
     setSherpaReply("Sherpa AI is ready", "Ask about a club, target, hazard, planning decision, or the shot in front of you.");
   }catch(err){
     console.error("Sherpa AI load error:", err);
-    aiState.llmReady = false;
-    setProgress(0);
-    setBadge(llmBadge, "AI could not load", "err");
-    const detail = shortError(err);
-    askStatus.textContent = `Load error: ${detail}`;
-    setSherpaReply("Sherpa AI could not load", `The app now reports the actual problem: ${detail}`);
-  }finally{
-    aiState.loadingLLM = false;
-  }
+    const wasBetter=modelSelect.value==="better";
+    aiState.llmReady=false;setProgress(0);
+    if(wasBetter&&!force){
+      modelSelect.value="light";aiState.loadingLLM=false;setBadge(llmBadge,"Trying lightweight fallback…","warn");askStatus.textContent="The recommended 1B model did not initialize, so Sherpa is trying the lightweight fallback.";return loadSherpaLLM(false);
+    }
+    setBadge(llmBadge,"AI could not load","err");
+    const detail=shortError(err);askStatus.textContent=`Load error: ${detail}`;setSherpaReply("Sherpa AI could not load",`The local model could not start: ${detail}. Hands-Free round commands can still work without the language model.`);
+  }finally{aiState.loadingLLM=false}
 }
 
-async function askSherpaAI(){
-  const question = $("#questionInput").value.trim();
-  if(!question){
-    setSherpaReply("Ask Sherpa something", "Type a question or tap Talk.");
+function normalizeAnswerText(s){return String(s||"").toLowerCase().replace(/[^a-z0-9\s]/g," ").replace(/\s+/g," ").trim()}
+function answerLooksLikeEcho(question, answer){
+  const q=normalizeAnswerText(question), a=normalizeAnswerText(answer);
+  if(!a || !q) return true;
+  if(a===q || a===`question ${q}` || a.startsWith(q) && a.length < q.length+28) return true;
+  if(a.includes(q) && a.length < q.length*1.45) return true;
+  const qWords=new Set(q.split(" ").filter(w=>w.length>2)), aWords=new Set(a.split(" ").filter(w=>w.length>2));
+  if(!qWords.size) return false;
+  let overlap=0; qWords.forEach(w=>{if(aWords.has(w)) overlap++});
+  return overlap/qWords.size > .88 && aWords.size <= qWords.size+3;
+}
+function fallbackGolfAnswer(question){
+  const q=normalizeAnswerText(question), shot=currentShotContext();
+  if(/repeat|repeating|echo|answer/.test(q) && /question|asked|ask/.test(q)) return "The lightweight local model sometimes echoes a prompt instead of answering it. Sherpa now detects that behavior, retries the answer, and falls back to app guidance rather than showing the repeated question.";
+  if(/chip|chipping/.test(q)) return "For a basic chip, start with a pitching wedge or 9-iron when you have room to run the ball. Use a sand wedge when you need more height or less roll. Pick the simplest shot that lands safely on the green.";
+  if(/what club|which club|club should|recommend.*club/.test(q)) return shot ? `From ${shot.remaining} yards, Sherpa's current recommendation is ${shot.recommendedClub}. Aim at ${shot.safeTarget.toLowerCase()} and make a comfortable swing.` : "Start a round or give me the distance and lie. Then I can base the club choice on your saved personal club distances.";
+  if(/how far|distance|yards|yardage/.test(q)) return shot ? `You have about ${shot.remaining} yards remaining on Hole ${shot.hole}.` : "I need an active hole or a distance from you before I can give a useful yardage answer.";
+  if(/where.*aim|target|safe miss|aim/.test(q)) return shot ? `Aim for ${shot.safeTarget.toLowerCase()}. ${shot.safeWhy}` : "Without a current hole, favor the widest useful landing area and keep the biggest hazard out of play.";
+  if(/wind/.test(q)) return state.weather ? `Current wind is about ${Math.round(state.weather.wind_speed_10m)} mph with gusts around ${Math.round(state.weather.wind_gusts_10m)} mph. Use that as an adjustment, but keep the target and contact simple.` : "Live wind is not loaded right now. Load course weather before relying on a wind adjustment.";
+  if(/nervous|rushing|frustrat|mental|focus|reset/.test(q)) return "Forget the last shot. Pick one clear target, take one practice swing, and commit to this shot only.";
+  return "I couldn't get a reliable answer from the local model that time. Ask me about your club, distance, target, wind, hazard, score, or mental reset and I'll use the current round data directly.";
+}
+function historyMessages(){return aiState.history.slice(-4).map(x=>({role:x.role,content:x.content}))}
+async function generateSherpaText(question){
+  const baseMessages=[{role:"system",content:systemPrompt()},...historyMessages(),{role:"user",content:buildUserPrompt(question)}];
+  const first=await aiState.engine.chat.completions.create({messages:baseMessages,temperature:.22,max_tokens:190});
+  let text=first.choices?.[0]?.message?.content?.trim()||"";
+  if(answerLooksLikeEcho(question,text)){
+    const retryMessages=[{role:"system",content:systemPrompt()},{role:"user",content:`Answer this golf question directly. Do not repeat any part of the question. Give the answer first.\n\n${buildUserPrompt(question)}`}];
+    const second=await aiState.engine.chat.completions.create({messages:retryMessages,temperature:.12,max_tokens:190});
+    text=second.choices?.[0]?.message?.content?.trim()||"";
+  }
+  if(answerLooksLikeEcho(question,text)) text=fallbackGolfAnswer(question);
+  return text||fallbackGolfAnswer(question);
+}
+function speakSherpa(text, resumeHandsFree=true){
+  if(!aiState.speakReplies || !("speechSynthesis" in window)){
+    if(resumeHandsFree && aiState.handsFree) scheduleHandsFreeRestart();
     return;
   }
-  if(!aiState.llmReady){
-    await loadSherpaLLM();
+  aiState.speaking=true;
+  if(aiState.recognition && aiState.listening){
+    aiState.stoppingRecognition=true;
+    try{aiState.recognition.stop()}catch(_){}
   }
-  if(!aiState.llmReady || !aiState.engine) return;
-
-  askBtn.disabled = true;
-  initAiBtn.disabled = true;
-  setSherpaReply("Sherpa is thinking…", "Using the current golf context.");
-  askStatus.textContent = "Generating an answer on this device…";
-
+  speechSynthesis.cancel();
+  const u=new SpeechSynthesisUtterance(text);
+  u.rate=.94;u.pitch=.98;
+  u.onend=()=>{aiState.speaking=false;if(resumeHandsFree&&aiState.handsFree)scheduleHandsFreeRestart()};
+  u.onerror=()=>{aiState.speaking=false;if(resumeHandsFree&&aiState.handsFree)scheduleHandsFreeRestart()};
+  speechSynthesis.speak(u);
+}
+async function askSherpaAI(questionOverride=null, options={}){
+  const question=(questionOverride ?? $("#questionInput").value).trim();
+  if(!question){setSherpaReply("Ask Sherpa something","Type a question, tap Talk, or turn on Hands-Free Caddie.");return}
+  if(!aiState.llmReady) await loadSherpaLLM();
+  if(!aiState.llmReady||!aiState.engine){
+    const fb=fallbackGolfAnswer(question);setSherpaReply("Sherpa says",fb);if(options.voice)speakSherpa(fb);return;
+  }
+  askBtn.disabled=true;initAiBtn.disabled=true;setSherpaReply("Sherpa is thinking…","Using the current golf context.");askStatus.textContent="Generating an answer on this device…";
   try{
-    const userPrompt = buildUserPrompt(question);
-    aiState.conversation.push({ role:"user", content:userPrompt });
-
-    // Keep the on-device context from growing indefinitely.
-    if(aiState.conversation.length > 9){
-      aiState.conversation = [aiState.conversation[0], ...aiState.conversation.slice(-8)];
-    }
-
-    const reply = await aiState.engine.chat.completions.create({
-      messages: aiState.conversation,
-      temperature: 0.35,
-      max_tokens: 180
-    });
-
-    const text = reply.choices?.[0]?.message?.content?.trim() || "I could not generate a useful answer.";
-    aiState.conversation.push({ role:"assistant", content:text });
-
-    const parts = text.split(/(?<=[.!?])\s+/);
-    const title = parts[0] && parts[0].length < 68 ? parts[0].replace(/[.!?]+$/,"") : "Sherpa says";
-    const body = parts[0] && parts[0].length < 68 ? (parts.slice(1).join(" ") || text) : text;
-    setSherpaReply(title, body);
-    askStatus.textContent = "Sherpa answered locally on this device.";
-
-    if(aiState.listening && "speechSynthesis" in window){
-      speechSynthesis.cancel();
-      const u = new SpeechSynthesisUtterance(text);
-      u.rate = 0.94;
-      u.pitch = 0.98;
-      speechSynthesis.speak(u);
-    }
+    const text=await generateSherpaText(question);
+    aiState.history.push({role:"user",content:question},{role:"assistant",content:text});
+    if(aiState.history.length>8)aiState.history=aiState.history.slice(-8);
+    const parts=text.split(/(?<=[.!?])\s+/), first=parts[0]||"";
+    const title=first.length>0&&first.length<62&&!first.endsWith("?")?first.replace(/[.!]+$/,""):"Sherpa says";
+    const body=title!=="Sherpa says"?(parts.slice(1).join(" ")||text):text;
+    setSherpaReply(title,body);askStatus.textContent="Sherpa answered locally on this device.";
+    if(options.voice) speakSherpa(text);
   }catch(err){
-    console.error("Sherpa answer error:", err);
-    const detail = shortError(err);
-    setSherpaReply("Sherpa hit a snag", detail);
-    askStatus.textContent = `Answer error: ${detail}`;
-  }finally{
-    askBtn.disabled = false;
-    initAiBtn.disabled = false;
-    aiState.listening = false;
-  }
+    console.error("Sherpa answer error:",err);const fb=fallbackGolfAnswer(question);setSherpaReply("Sherpa says",fb);askStatus.textContent=`Local model problem: ${shortError(err)} — using Sherpa app guidance.`;if(options.voice)speakSherpa(fb);
+  }finally{askBtn.disabled=false;initAiBtn.disabled=false}
 }
 
-/* Voice: use the browser's live speech-recognition API when available.
-   It is far lighter on iPad than loading a second large ML model alongside WebLLM. */
-function setupVoice(){
-  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
-  if(!SR){
-    setBadge(voiceBadge, "Voice unavailable", "err");
-    micBtn.disabled = true;
-    askStatus.textContent = "Voice recognition is not available in this browser; text Ask Sherpa still works.";
-    return;
+/* Voice + Hands-Free Caddie. The first activation is always a user gesture.
+   In hands-free mode Sherpa listens for the wake phrase "Sherpa" and pauses while speaking. */
+function updateVoiceModeUI(){
+  $$(".handsfree-toggle").forEach(x=>x.checked=aiState.handsFree);
+  $$(".speak-toggle").forEach(x=>x.checked=aiState.speakReplies);
+  const home=$("#homeVoiceModeStatus"), round=$("#roundVoiceModeStatus");
+  if(aiState.handsFree){
+    const msg=aiState.listening?'Listening for “Sherpa…”':'Hands-Free on — listening resumes automatically.';
+    if(home){home.textContent=msg;home.classList.add("active")}
+    if(round)round.textContent=msg;
+  }else{
+    if(home){home.textContent="Hands-Free is off. Manual Talk and typed questions still work.";home.classList.remove("active")}
+    if(round)round.textContent="Off — turn it on to use Sherpa without reaching for the screen.";
   }
-  const recognition = new SR();
-  recognition.lang = "en-US";
-  recognition.interimResults = true;
-  recognition.continuous = false;
-  recognition.maxAlternatives = 1;
-  aiState.recognition = recognition;
-
-  recognition.onstart = ()=>{
-    aiState.listening = true;
-    micBtn.classList.add("listening");
-    micBtn.textContent = "Listening…";
-    setBadge(voiceBadge, "Listening", "warn");
-    askStatus.textContent = "Speak naturally. Sherpa will stop listening when you finish.";
+}
+function speechRecognitionClass(){return window.SpeechRecognition||window.webkitSpeechRecognition}
+function setupVoice(){
+  const SR=speechRecognitionClass();
+  if(!SR){setBadge(voiceBadge,"Voice unavailable","err");micBtn.disabled=true;askStatus.textContent="Voice recognition is not available in this browser; typed Ask Sherpa still works.";return false}
+  if(aiState.recognition) return true;
+  const recognition=new SR();
+  recognition.lang="en-US";recognition.interimResults=true;recognition.continuous=false;recognition.maxAlternatives=1;aiState.recognition=recognition;
+  recognition.onstart=()=>{aiState.listening=true;aiState.restartingRecognition=false;micBtn.classList.add("listening");micBtn.textContent=aiState.handsFree?"🎙️ Hands-Free":"Listening…";setBadge(voiceBadge,aiState.handsFree?"Hands-Free listening":"Listening","warn");askStatus.textContent=aiState.handsFree?'Say “Sherpa” before a question or command.':'Speak naturally. Sherpa will stop listening when you finish.';updateVoiceModeUI()};
+  recognition.onresult=e=>{
+    let finalText="",interim="";
+    for(let i=e.resultIndex;i<e.results.length;i++){const s=e.results[i][0].transcript;if(e.results[i].isFinal)finalText+=s;else interim+=s}
+    if(!aiState.handsFree){$("#questionInput").value=(finalText||interim).trim();return}
+    if(interim&&!finalText) askStatus.textContent=`Listening… ${interim.trim()}`;
+    if(finalText){const spoken=finalText.trim();aiState.lastTranscript=spoken;processHandsFreeUtterance(spoken)}
   };
-  recognition.onresult = e=>{
-    let finalText = "", interim = "";
-    for(let i=e.resultIndex;i<e.results.length;i++){
-      const t=e.results[i][0].transcript;
-      if(e.results[i].isFinal) finalText += t;
-      else interim += t;
-    }
-    $("#questionInput").value = (finalText || interim).trim();
+  recognition.onerror=e=>{
+    const err=e.error||"unknown";aiState.listening=false;micBtn.classList.remove("listening");micBtn.textContent="🎙️ Talk";
+    if(err==="not-allowed"||err==="service-not-allowed"){aiState.handsFree=false;setBadge(voiceBadge,"Voice permission needed","err");askStatus.textContent="Microphone permission is required for Hands-Free Caddie."}
+    else if(err!=="no-speech"&&err!=="aborted") askStatus.textContent=`Voice error: ${err}.`;
+    updateVoiceModeUI();
   };
-  recognition.onerror = e=>{
-    aiState.listening = false;
-    micBtn.classList.remove("listening");
-    micBtn.textContent = "🎙️ Talk";
-    setBadge(voiceBadge, "Voice ready", "ready");
-    askStatus.textContent = `Voice error: ${e.error || "unknown"}. You can type instead.`;
+  recognition.onend=async()=>{
+    const manual=aiState.manualVoicePending, text=$("#questionInput").value.trim();
+    aiState.listening=false;micBtn.classList.remove("listening");micBtn.textContent="🎙️ Talk";
+    if(aiState.stoppingRecognition){aiState.stoppingRecognition=false;updateVoiceModeUI();return}
+    if(manual){aiState.manualVoicePending=false;setBadge(voiceBadge,"Voice ready","ready");if(text)await askSherpaAI(text,{voice:true});else updateVoiceModeUI();return}
+    if(aiState.handsFree&&!aiState.speaking) scheduleHandsFreeRestart(); else {setBadge(voiceBadge,"Voice ready","ready");updateVoiceModeUI()}
   };
-  recognition.onend = async ()=>{
-    const wasListening = aiState.listening;
-    aiState.listening = false;
-    micBtn.classList.remove("listening");
-    micBtn.textContent = "🎙️ Talk";
-    setBadge(voiceBadge, "Voice ready", "ready");
-    const text = $("#questionInput").value.trim();
-    if(wasListening && text){
-      aiState.listening = true; // marks this as a voice question so the answer is spoken.
-      await askSherpaAI();
-      aiState.listening = false;
-    }
-  };
-  setBadge(voiceBadge, "Voice ready", "ready");
+  setBadge(voiceBadge,"Voice ready","ready");updateVoiceModeUI();return true;
+}
+function startRecognition(handsFree=false){
+  if(!setupVoice())return;
+  if(aiState.listening||aiState.speaking)return;
+  try{aiState.recognition.continuous=!!handsFree;aiState.recognition.interimResults=true;aiState.recognition.start()}catch(err){if(!/already started/i.test(String(err)))askStatus.textContent=`Voice could not start: ${shortError(err)}`}
+}
+function scheduleHandsFreeRestart(){
+  if(!aiState.handsFree||aiState.speaking||aiState.listening||aiState.restartingRecognition)return;
+  aiState.restartingRecognition=true;
+  setTimeout(()=>{aiState.restartingRecognition=false;if(aiState.handsFree&&!aiState.speaking&&!aiState.listening)startRecognition(true)},350);
+}
+function extractWakeCommand(text){
+  const m=String(text).match(/(?:^|\b)(?:hey\s+)?sherpa\b[,:\s-]*(.*)$/i);
+  return m?m[1].trim():null;
+}
+function speakLocal(text){setSherpaReply("Sherpa says",text);askStatus.textContent="Hands-Free command completed.";speakSherpa(text)}
+function clubFromSpeech(q){
+  const names=Object.keys(state.clubs);
+  const aliases={"three wood":"3 Wood","five wood":"5 Wood","four hybrid":"4 Hybrid","five iron":"5 Iron","six iron":"6 Iron","seven iron":"7 Iron","eight iron":"8 Iron","nine iron":"9 Iron","pitching wedge":"Pitching Wedge","gap wedge":"Gap Wedge","sand wedge":"Sand Wedge","lob wedge":"Lob Wedge","driver":"Driver","putter":"Putter"};
+  for(const [a,n] of Object.entries(aliases))if(q.includes(a))return n;
+  return names.find(n=>q.includes(n.toLowerCase()))||null;
+}
+async function handleRoundVoiceCommand(command){
+  const q=normalizeAnswerText(command), h=state.round?hole():null;
+  if(!h)return false;
+  if(/^(good|great)( shot| one)?$|record.*good/.test(q)){recordShot("good");speakLocal("Good shot recorded. New shot, fresh start.");return true}
+  if(/^(okay|ok)( shot| one)?$|record.*(okay|ok)/.test(q)){recordShot("okay");speakLocal("Okay shot recorded. Focus on the next target.");return true}
+  if(/^(poor|bad)( shot| one)?$|record.*(poor|bad)/.test(q)){recordShot("poor");speakLocal("Poor shot recorded. Leave it behind and start fresh.");return true}
+  if(/finish( the)? hole|hole finished/.test(q)){$("#finishHoleBtn").click();speakLocal("Hole finished. The next tee is a fresh start.");return true}
+  if(/next hole/.test(q)){if(h.finished){$("#nextHoleBtn").click();speakLocal(`Moving to Hole ${hole().n}.`)}else speakLocal("Finish this hole first, then I can move you to the next one.");return true}
+  const club=clubFromSpeech(q);if(club&&/(use|select|choose|hit|club)/.test(q)){state.selectedClub=club;renderShot();speakLocal(`${club} selected.`);return true}
+  if(/what club|which club|club should|recommend.*club/.test(q)){const s=currentShotContext();speakLocal(`I recommend ${s.recommendedClub} from about ${s.remaining} yards. Aim at ${s.safeTarget.toLowerCase()}.`);return true}
+  if(/how far|distance|yards|yardage/.test(q)){const s=currentShotContext();speakLocal(`You have about ${s.remaining} yards remaining on Hole ${s.hole}.`);return true}
+  if(/where.*aim|what.*target|target|safe miss/.test(q)){const s=currentShotContext();speakLocal(`Aim for ${s.safeTarget.toLowerCase()}. ${s.safeWhy}`);return true}
+  return false;
+}
+async function processHandsFreeUtterance(spoken){
+  if(aiState.processingVoice)return;
+  const command=extractWakeCommand(spoken);
+  if(command===null){askStatus.textContent='Hands-Free is listening. Say “Sherpa” first.';return}
+  if(!command){speakLocal("Yes? What do you need?");return}
+  aiState.processingVoice=true;
+  try{
+    $("#questionInput").value=command;
+    if(await handleRoundVoiceCommand(command))return;
+    await askSherpaAI(command,{voice:true});
+  }finally{aiState.processingVoice=false}
+}
+function setHandsFree(on){
+  aiState.handsFree=!!on;
+  if(!aiState.handsFree){
+    aiState.manualVoicePending=false;aiState.restartingRecognition=false;
+    if(aiState.recognition&&aiState.listening){aiState.stoppingRecognition=true;try{aiState.recognition.stop()}catch(_){}}
+    setBadge(voiceBadge,"Voice ready","ready");updateVoiceModeUI();return;
+  }
+  if(!setupVoice()){aiState.handsFree=false;updateVoiceModeUI();return}
+  updateVoiceModeUI();
+  startRecognition(true);
 }
 function startTalk(){
-  if(!aiState.recognition){
-    setupVoice();
-    if(!aiState.recognition) return;
-  }
-  try{
-    $("#questionInput").value = "";
-    aiState.recognition.start();
-  }catch(err){
-    askStatus.textContent = `Voice could not start: ${shortError(err)}`;
-  }
+  if(aiState.handsFree){setHandsFree(false);return}
+  if(!setupVoice())return;
+  $("#questionInput").value="";aiState.manualVoicePending=true;startRecognition(false);
 }
+$$('.handsfree-toggle').forEach(el=>el.addEventListener('change',e=>setHandsFree(e.target.checked)));
+$$('.speak-toggle').forEach(el=>el.addEventListener('change',e=>{aiState.speakReplies=e.target.checked;$$('.speak-toggle').forEach(x=>x.checked=aiState.speakReplies);if(!aiState.speakReplies&&"speechSynthesis"in window)speechSynthesis.cancel();updateVoiceModeUI()}));
 
 initAiBtn.addEventListener("click", ()=>loadSherpaLLM(true));
-askBtn.addEventListener("click", askSherpaAI);
+askBtn.addEventListener("click", ()=>askSherpaAI());
 $("#questionInput").addEventListener("keydown", e=>{
   if(e.key === "Enter"){
     e.preventDefault();
@@ -1140,18 +1259,12 @@ $("#questionInput").addEventListener("keydown", e=>{
 });
 micBtn.addEventListener("click", startTalk);
 $("#speakAnswerBtn").addEventListener("click", ()=>{
-  if(!("speechSynthesis" in window)){
-    toast("Spoken answers are not supported in this browser");
-    return;
-  }
-  speechSynthesis.cancel();
-  const u = new SpeechSynthesisUtterance(aiState.lastAnswer || `${answerTitle.textContent}. ${answerText.textContent}`);
-  u.rate = 0.94;
-  u.pitch = 0.98;
-  speechSynthesis.speak(u);
+  if(!("speechSynthesis" in window)){toast("Spoken answers are not supported in this browser");return}
+  const text=aiState.lastAnswer || `${answerTitle.textContent}. ${answerText.textContent}`;
+  const previous=aiState.speakReplies;aiState.speakReplies=true;speakSherpa(text,false);aiState.speakReplies=previous;
 });
 $("#stopSpeakingBtn").addEventListener("click", ()=>{
-  if("speechSynthesis" in window) speechSynthesis.cancel();
+  if("speechSynthesis" in window) speechSynthesis.cancel();aiState.speaking=false;if(aiState.handsFree)scheduleHandsFreeRestart();
 });
 modelSelect.addEventListener("change", ()=>{
   if(aiState.llmReady){
@@ -1386,7 +1499,7 @@ $("#importBtn").onclick=()=>$("#importFile").click();$("#importFile").onchange=a
 function hideSplash(){const el=$("#splashScreen");if(!el||el.classList.contains("is-hidden"))return;el.classList.add("is-hidden");setTimeout(()=>el.remove(),800)}
 window.addEventListener("load",()=>setTimeout(hideSplash,5000));
 setTimeout(hideSplash,5600);
-if("serviceWorker"in navigator)window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js?v=064").catch(()=>{}));
+if("serviceWorker"in navigator)window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js?v=070").catch(()=>{}));
 renderClubs();renderRounds();if(state.round){show("play");showRoundMode()}
 })();
 </script>

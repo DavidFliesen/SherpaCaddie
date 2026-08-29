@@ -1,5 +1,32 @@
 # Sherpa Caddie
-### Version 0.6.4
+### Version 0.7.0
+
+This release focuses on making Sherpa AI behave like an actual caddie during play instead of a text box that happens to use a local model.
+
+### New in v0.7.0
+
+- **Hands-Free Caddie** mode with a one-time on/off switch
+- Wake phrase: say **“Sherpa…”** before a question or command
+- Automatic spoken replies can be turned **on or off independently**
+- Hands-free in-round commands for common actions such as:
+  - “Sherpa, what club?”
+  - “Sherpa, how far?”
+  - “Sherpa, good shot”
+  - “Sherpa, poor shot”
+  - “Sherpa, next hole”
+- Voice recognition pauses while Sherpa is speaking so it does not answer itself
+- AI output now detects question-echo responses, automatically retries, and falls back to deterministic Sherpa guidance if the local model still fails
+- The **1B model** is now the recommended default for answer quality; the lightweight model remains available as a fallback
+- Hands-Free controls are available both on Home and directly in the active-round screen
+
+### Changed files in v0.7.0
+
+- `index.html`
+- `manifest.webmanifest`
+- `sw.js`
+- `README.md`
+
+## Version 0.7.0
 
 **PWA:**  
 https://davidfliesen.github.io/SherpaCaddy
@@ -120,6 +147,17 @@ Pick the target, take one practice swing, and commit.
 - `README.md`
 
 ## Changelog
+
+### v0.7.0 — Hands-Free Sherpa AI
+- Added Hands-Free Caddie mode with the “Sherpa” wake phrase.
+- Added independent Spoken Replies toggle.
+- Added local voice commands for common round actions so scoring and navigation can require fewer screen taps.
+- Added AI echo detection, automatic retry, and deterministic fallback responses.
+- Made the 1B model the recommended default while preserving the lightweight fallback.
+- Prevented Sherpa speech output from feeding back into speech recognition.
+- Added the voice-mode controls to the active-round screen.
+- Updated PWA/cache versioning to **v0.7.0**.
+
 
 ### v0.6.4 — Course Search Repair
 - Corrected the OpenGolf location parameter from `radius` to `radius_mi`.
