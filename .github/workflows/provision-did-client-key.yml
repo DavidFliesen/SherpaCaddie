@@ -1,0 +1,92 @@
+name: Provision D-ID client key
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  provision:
+    runs-on: ubuntu-latest
+    env:
+      DID_API_USERNAME: ${{ secrets.DID_API_USERNAME }}
+      DID_API_PASSWORD: ${{ secrets.DID_API_PASSWORD }}
+      DID_AGENT_ID: v2_agt_cPCRZyGW
+
+    steps:
+      - name: Check out Sherpa Caddie
+        uses: actions/checkout@v4
+
+      - name: Validate D-ID secrets
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -n "$DID_API_USERNAME" || { echo "::error::DID_API_USERNAME is missing."; exit 1; }
+          test -n "$DID_API_PASSWORD" || { echo "::error::DID_API_PASSWORD is missing."; exit 1; }
+
+      - name: Create current Sage agent client key
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          cat > /tmp/key-request.json <<'JSON'
+          {
+            "allowed_domains": ["https://davidfliesen.github.io"],
+            "name": "Sherpa Caddie GitHub Pages"
+          }
+          JSON
+
+          HTTP_CODE="$(
+            curl --silent --show-error \
+              --output /tmp/key-response.json \
+              --write-out "%{http_code}" \
+              --user "${DID_API_USERNAME}:${DID_API_PASSWORD}" \
+              --request POST \
+              "https://api.d-id.com/agents/${DID_AGENT_ID}/client-keys" \
+              --header "Content-Type: application/json" \
+              --header "Accept: application/json" \
+              --data-binary @/tmp/key-request.json
+          )"
+
+          echo "D-ID client-key request returned HTTP ${HTTP_CODE}"
+          if [ "$HTTP_CODE" -lt 200 ] || [ "$HTTP_CODE" -ge 300 ]; then
+            echo "::error::D-ID client-key creation failed."
+            jq . /tmp/key-response.json 2>/dev/null || cat /tmp/key-response.json
+            exit 1
+          fi
+
+          CLIENT_KEY="$(jq -r '.client_key // .clientKey // .key // empty' /tmp/key-response.json)"
+          if [ -z "$CLIENT_KEY" ]; then
+            echo "::error::D-ID created a key but the response did not contain a recognized client-key field."
+            jq . /tmp/key-response.json
+            exit 1
+          fi
+
+          # Client keys are designed for frontend use and are restricted to the allowed domain.
+          jq -n \
+            --arg agentId "$DID_AGENT_ID" \
+            --arg clientKey "$CLIENT_KEY" \
+            '{agentId:$agentId,clientKey:$clientKey}' \
+            > did-config.json
+
+          echo "Created a new domain-restricted D-ID client key for ${DID_AGENT_ID}."
+
+      - name: Commit Sherpa Live configuration
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add did-config.json
+          if git diff --cached --quiet; then
+            echo "No configuration change to commit."
+            exit 0
+          fi
+          git commit -m "Provision D-ID client key for Sherpa Live"
+          git push
+
+      - name: Done
+        run: |
+          echo "Success: did-config.json now contains the current Sage agent-scoped, domain-restricted client key."
+          echo "Wait for GitHub Pages to redeploy, then fully close and reopen Sherpa Caddie."
