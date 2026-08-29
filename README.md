@@ -1,3 +1,15 @@
+## Version 0.11.4 — Persistent Sherpa Companion + iPhone Live Safety
+
+- Added a compact **Sage companion bar that stays available on every tab**: GUIDE, PLAY, CLUBS, LEARN, and REVIEW.
+- The companion provides the intended **Text / Voice / Sherpa Live** choices everywhere.
+- Added a persistent Ask field and microphone button so Sage can advise, answer questions, and invoke app-aware functions without returning to GUIDE.
+- Sherpa Live stays connected while navigating between tabs.
+- On iPhone-class widths, D-ID video is reduced further to **240-class output** to reduce Safari memory pressure; small tablets use 360 and larger screens 720.
+- Added a crash guard: if iOS Safari kills/reloads the page during a D-ID session, Sherpa comes back safely in Text mode instead of immediately reconnecting Live and creating a restart loop.
+- Selecting a golf course now automatically scrolls the chosen-course panel into view.
+- GUIDE remains the opening tab; PLAY remains course selection unless the golfer explicitly chooses Resume Round.
+
+
 ## Version 0.11.3 — iPhone Stability + Audio-First Sherpa Live
 
 - **Audio first:** Sherpa Live keeps audio enabled immediately while video may finish rendering a moment later.
@@ -42,8 +54,8 @@ Physical device testing is still recommended because Safari and Android browser 
 - Sherpa Live now tries the current D-ID Client SDK from jsDelivr first, with esm.sh as a fallback, and reports a specific configuration/SDK/connection error instead of remaining indefinitely on Connecting.
 - `did-config.json` is intentionally excluded from service-worker caching.
 
-### One-time provisioning after installing v0.11.3
-1. Upload the v0.11.3 changed files.
+### One-time provisioning after installing v0.11.4
+1. Upload the v0.11.4 changed files.
 2. GitHub → Actions → **Provision D-ID client key** → Run workflow on `main`.
 3. Wait for the resulting GitHub Pages deployment.
 4. Fully close/reopen Sherpa Caddie and choose **Sherpa Live**.
@@ -59,7 +71,7 @@ https://davidfliesen.github.io/SherpaCaddy
 
 Sherpa Caddie combines the practical help of a caddie with the guidance and perspective of a Sherpa mentor. The core principle remains **one shot at a time**.
 
-## v0.11.3 — Sherpa Live Client SDK
+## v0.11.4 — Sherpa Live Client SDK
 
 This release replaces the visible D-ID Embed with the D-ID Client SDK so Sage is integrated into Sherpa Caddie as part of the app rather than appearing as a third-party overlay.
 
@@ -87,7 +99,7 @@ The nine attached D-ID client tools are registered inside the PWA: round context
 - The same Sage identity appears in Sherpa Live, transcript imagery, and the launch animation.
 - The formal/military-style presentation has been replaced with a cleaner forest-green golf quarter-zip look.
 
-### Changed files in v0.11.3
+### Changed files in v0.11.4
 
 - `index.html`
 - `manifest.webmanifest`
@@ -183,14 +195,14 @@ The PWA continues to use the browser speech-recognition API for microphone trans
 
 ## Changelog
 
-### v0.11.3 — Sherpa Live Client SDK
+### v0.11.4 — Sherpa Live Client SDK
 - Replaced the D-ID embed UI with the D-ID Client SDK.
 - Added native Text / Voice / Sherpa Live experience modes.
 - Registered all nine Sherpa client-tool handlers in the browser.
 - Added native Sage video, golf-context, transcript, listening/speaking, and connection UI.
 - Added the redesigned Sage portrait to Sherpa Live and the launch animation.
 - D-ID connects only after Sherpa Live is explicitly selected.
-- Updated PWA/cache versioning to **v0.11.3**.
+- Updated PWA/cache versioning to **v0.11.4**.
 
 ### v0.10.0 — Sherpa Live D-ID Integration
 - Added Text / Sherpa Live mode switching on the Guide screen.
