@@ -1,5 +1,5 @@
 # Sherpa Caddie
-### Version 0.10.0
+### Version 0.11.0
 
 **PWA:**  
 https://davidfliesen.github.io/SherpaCaddy
@@ -7,6 +7,42 @@ https://davidfliesen.github.io/SherpaCaddy
 ## Purpose
 
 Sherpa Caddie combines the practical help of a caddie with the guidance and perspective of a Sherpa mentor. The core principle remains **one shot at a time**.
+
+## v0.11.0 — Sherpa Live Client SDK
+
+This release replaces the visible D-ID Embed with the D-ID Client SDK so Sage is integrated into Sherpa Caddie as part of the app rather than appearing as a third-party overlay.
+
+### Sherpa experiences
+
+- **Text** — quiet/local Sherpa guidance without D-ID streaming.
+- **Voice** — hands-free local Sherpa without avatar video.
+- **Sherpa Live** — Sage appears inside the native Sherpa dashboard, answers through D-ID streaming, and can use Sherpa Caddie client tools.
+
+### Sherpa Live SDK
+
+- Uses D-ID Agent `v2_agt_cPCRZyGW` through the Client SDK.
+- D-ID is connected only when the golfer explicitly selects Sherpa Live.
+- The app owns the video frame, transcript, connection indicators, controls, and golf dashboard.
+- Browser speech recognition remains the microphone input layer for the V2 photo avatar; D-ID automatically speaks/animates Sage's replies.
+- Hands-free listening pauses while Sage speaks and resumes afterward.
+
+### Client tools
+
+The nine attached D-ID client tools are registered inside the PWA: round context, shot recommendation, weather, club distances, record shot, finish hole, next hole, strategy, and Hole Planner. Deterministic golf data remains controlled by Sherpa Caddie rather than guessed by the Agent.
+
+### Sage visual synchronization
+
+- Added the redesigned modern golf-guide Sage portrait as an app asset.
+- The same Sage identity appears in Sherpa Live, transcript imagery, and the launch animation.
+- The formal/military-style presentation has been replaced with a cleaner forest-green golf quarter-zip look.
+
+### Changed files in v0.11.0
+
+- `index.html`
+- `manifest.webmanifest`
+- `sw.js`
+- `README.md`
+- `assets/sage-sherpa-live.webp` (new)
 
 ## v0.9.0 — Five-Tab Navigation + Beginner Setup
 
@@ -95,6 +131,15 @@ The PWA continues to use the browser speech-recognition API for microphone trans
 - Hands-Free Caddie controls on Guide and during a round
 
 ## Changelog
+
+### v0.11.0 — Sherpa Live Client SDK
+- Replaced the D-ID embed UI with the D-ID Client SDK.
+- Added native Text / Voice / Sherpa Live experience modes.
+- Registered all nine Sherpa client-tool handlers in the browser.
+- Added native Sage video, golf-context, transcript, listening/speaking, and connection UI.
+- Added the redesigned Sage portrait to Sherpa Live and the launch animation.
+- D-ID connects only after Sherpa Live is explicitly selected.
+- Updated PWA/cache versioning to **v0.11.0**.
 
 ### v0.10.0 — Sherpa Live D-ID Integration
 - Added Text / Sherpa Live mode switching on the Guide screen.

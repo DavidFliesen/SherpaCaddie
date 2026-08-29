@@ -5,11 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#18311C">
 <meta name="description" content="Sherpa Caddie — one-shot-at-a-time golf guidance combining a caddie, coach and mentor.">
-<link rel="manifest" href="manifest.webmanifest?v=0100">
-<link rel="icon" href="icons/favicon.png?v=0100" type="image/png">
-<link rel="apple-touch-icon" href="icons/icon-192.png?v=0100">
-<link rel="preload" as="image" href="assets/sherpa-caddie-logo-fast.webp?v=0100" type="image/webp" fetchpriority="high">
-<title>Sherpa Caddie v0.10.0</title>
+<link rel="manifest" href="manifest.webmanifest?v=0110">
+<link rel="icon" href="icons/favicon.png?v=0110" type="image/png">
+<link rel="apple-touch-icon" href="icons/icon-192.png?v=0110">
+<link rel="preload" as="image" href="assets/sherpa-caddie-logo-fast.webp?v=0110" type="image/webp" fetchpriority="high">
+<link rel="preload" as="image" href="assets/sage-sherpa-live.webp?v=0110" type="image/webp">
+<title>Sherpa Caddie v0.11.0</title>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
   crossorigin="">
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
@@ -419,20 +420,37 @@ main{padding-top:14px;padding-bottom:30px}
 @media(max-width:850px){.topbar{height:98px}.brand-badge{width:92px;height:92px;padding:8px}.brand-logo{width:72px;height:72px}.brand-text h1{font-size:1.55rem}}
 @media(max-width:620px){body{background:#f0eadf}.topbar{height:84px}.brand-badge{width:74px;height:74px;padding:6px;border-radius:18px}.brand-logo{width:58px;height:58px}.tabs-wrap{background:#18371f}.app{background:#f2ece1}}
 
-/* GUIDE EXPERIENCE: Text / Sherpa Live */
+/* GUIDE EXPERIENCE: Text / Voice / Sherpa Live */
 .experience-switch{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:11px 12px;border:1px solid var(--line);border-radius:12px;background:linear-gradient(180deg,#fff,#f7f2e8)}
 .experience-copy strong{display:block;color:var(--forest);font-size:.95rem}.experience-copy span{display:block;color:var(--stone);font-size:.8rem;margin-top:2px;line-height:1.35}
-.experience-tabs{display:grid;grid-template-columns:1fr 1fr;gap:6px;padding:4px;border-radius:11px;background:#ece5d8;min-width:245px}
+.experience-tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;padding:4px;border-radius:11px;background:#ece5d8;min-width:365px}
 .experience-btn{border:0;border-radius:8px;padding:9px 12px;font-weight:900;background:transparent;color:var(--stone)}
 .experience-btn.active{background:var(--forest);color:#fff;box-shadow:0 3px 10px rgba(24,49,28,.18)}
-.sherpa-live-shell{display:none;gap:10px}.sherpa-live-shell.active{display:grid}.text-sherpa-shell.is-hidden{display:none}
-.sherpa-live-stage{min-height:430px;border:1px solid var(--line);border-radius:16px;overflow:hidden;background:linear-gradient(180deg,#15381f 0%,#0f2d19 100%);position:relative}
-#sherpaLiveAvatar{width:100%;min-height:430px;height:100%;display:block;background:transparent}
-.sherpa-live-loading{position:absolute;inset:0;display:grid;place-items:center;text-align:center;padding:28px;color:#f8f3ea;pointer-events:none;transition:opacity .25s ease}.sherpa-live-loading.hidden{opacity:0;visibility:hidden}
-.sherpa-live-loading strong{font-family:Georgia,serif;font-size:1.55rem}.sherpa-live-loading span{display:block;margin-top:7px;color:#e5d7bd;max-width:520px;line-height:1.45}
-.sherpa-live-note{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;padding:9px 11px;border-radius:10px;background:#f5eddf;border-left:4px solid var(--tan);color:var(--navy);font-size:.8rem;line-height:1.35}
-.sherpa-live-note button{white-space:nowrap}
-@media(max-width:720px){.experience-switch{align-items:stretch;flex-direction:column}.experience-tabs{min-width:0;width:100%}.sherpa-live-stage,#sherpaLiveAvatar{min-height:360px}}
+.sherpa-live-shell{display:none;gap:12px}.sherpa-live-shell.active{display:grid}.text-sherpa-shell.is-hidden{display:none}
+.live-topline{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:2px 2px 0}
+.live-title{display:flex;align-items:center;gap:10px;color:var(--forest)}.live-title strong{font-family:Georgia,"Times New Roman",serif;font-size:1.25rem}.live-title small{color:var(--stone);font-style:italic}
+.live-pulse{width:18px;height:18px;border:2px solid var(--fairway);border-radius:50%;position:relative}.live-pulse:before,.live-pulse:after{content:"";position:absolute;inset:-6px;border:1px solid rgba(67,98,64,.35);border-radius:50%;animation:livePulse 1.8s ease-out infinite}.live-pulse:after{inset:-11px;animation-delay:.55s}
+@keyframes livePulse{0%{transform:scale(.7);opacity:.8}100%{transform:scale(1.18);opacity:0}}
+.live-state-pill{display:inline-flex;align-items:center;gap:7px;border-radius:999px;padding:7px 10px;background:#f3eadc;color:#71511c;font-weight:900;font-size:.74rem;border:1px solid #e1cfad}.live-state-pill.connected{background:#edf5e9;color:var(--forest);border-color:#c7d8c1}.live-state-pill.error{background:#f7e8e4;color:var(--danger);border-color:#e7c7bf}.live-state-dot{width:8px;height:8px;border-radius:50%;background:currentColor}
+.sherpa-live-dashboard{display:grid;grid-template-columns:minmax(300px,.95fr) minmax(360px,1.05fr);gap:14px}
+.live-avatar-card{min-height:465px;border-radius:18px;overflow:hidden;position:relative;border:1px solid rgba(24,49,28,.25);background:radial-gradient(circle at 50% 38%,rgba(226,235,216,.35),transparent 32%),linear-gradient(180deg,#7c9b74 0%,#2c5631 100%);box-shadow:0 10px 28px rgba(11,32,51,.12)}
+.live-avatar-card:after{content:"";position:absolute;inset:18px;border:1px solid rgba(237,209,132,.55);border-radius:50%;pointer-events:none;transform:scale(.78);box-shadow:0 0 34px rgba(235,217,193,.28)}
+.live-avatar-poster,.live-avatar-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 26%}.live-avatar-video{display:none;background:#173018}.live-avatar-video.active{display:block}.live-avatar-poster.hidden{display:none}
+.live-avatar-overlay{position:absolute;inset:auto 0 0;padding:54px 18px 16px;background:linear-gradient(180deg,transparent,rgba(7,28,14,.82));z-index:3;display:flex;align-items:end;justify-content:space-between;gap:10px}
+.live-nameplate{display:inline-flex;align-items:center;gap:8px;border-radius:999px;padding:8px 13px;background:rgba(12,38,20,.84);color:#fff;border:1px solid rgba(235,217,193,.7);font-weight:850}.live-nameplate span{color:#e3bd72}.live-visual-state{color:#f5ead8;font-size:.76rem;font-weight:800;text-align:right}
+.live-context-stack{display:grid;gap:10px}.live-hole-card{border-radius:17px;overflow:hidden;border:1px solid #d6c8b1;background:#fff;box-shadow:var(--shadow)}
+.live-hole-head{padding:12px 14px;background:linear-gradient(105deg,#18311c,#2f6235);color:#fff;display:flex;justify-content:space-between;align-items:center;gap:10px}.live-hole-head strong{font-family:Georgia,"Times New Roman",serif;font-size:1.32rem}.live-hole-head span{color:#e6c075;font-weight:850}
+.live-yardages{display:grid;grid-template-columns:repeat(3,1fr)}.live-yardage{padding:11px;text-align:center;border-right:1px solid var(--line)}.live-yardage:last-child{border-right:0}.live-yardage small{display:block;text-transform:uppercase;letter-spacing:.06em;color:var(--stone);font-weight:800}.live-yardage strong{display:block;font-size:1.7rem;color:var(--forest);margin-top:2px}.live-yardage.center strong{color:#a8752c}
+.live-info-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:9px}.live-info{background:#fff;border:1px solid var(--line);border-radius:13px;padding:10px 11px}.live-info small{display:block;color:var(--stone);font-size:.7rem;font-weight:850;text-transform:uppercase;letter-spacing:.04em}.live-info strong{display:block;color:var(--forest);font-size:1rem;margin-top:3px}
+.live-control-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}.live-control{background:#fff;border:1px solid var(--line);border-radius:13px;padding:10px;display:grid;gap:7px;align-content:center}.live-control b{color:var(--forest);font-size:.75rem}.live-connection{font-size:.78rem;font-weight:900;color:var(--stone)}.live-connection.good{color:var(--forest)}.live-connection.weak{color:#8a651d}.live-tool-status{font-size:.76rem;color:var(--stone);min-height:18px;padding:0 2px}
+.live-transcript{display:grid;gap:8px}.live-message{display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:start;border:1px solid var(--line);border-radius:13px;padding:10px 12px;background:#f8f6ef}.live-message.sage{background:#eef2e6}.live-message-avatar{width:34px;height:34px;border-radius:50%;object-fit:cover;border:2px solid #d9c08f}.live-message strong{color:var(--forest)}.live-message span{color:var(--navy);line-height:1.4}.live-message time{color:var(--stone);font-size:.7rem;white-space:nowrap}
+.live-compose{display:grid;grid-template-columns:1fr auto auto auto;gap:8px}.live-compose input{border:1px solid var(--line);border-radius:10px;padding:11px 12px;background:#fff}.live-compose .listening{background:var(--tan);color:var(--navy)}
+.live-note{padding:9px 11px;border-radius:10px;background:#f5eddf;border-left:4px solid var(--tan);color:var(--navy);font-size:.78rem;line-height:1.35}
+.splash-sage{width:214px;height:214px;object-fit:cover;object-position:center 24%;border-radius:50%;border:5px solid #f8f3ea;box-shadow:0 0 0 2px rgba(24,49,28,.16),0 12px 30px rgba(24,49,28,.18);position:relative;z-index:2;animation:splashSageIntro 5s ease-in-out both}
+@keyframes splashSageIntro{0%{transform:scale(.92);opacity:.9}15%{transform:scale(1.025);opacity:1}45%{transform:scale(1)}75%{transform:scale(1.018)}100%{transform:scale(1)}}
+@media(max-width:900px){.sherpa-live-dashboard{grid-template-columns:1fr}.live-avatar-card{min-height:390px}.live-control-grid{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:720px){.experience-switch{align-items:stretch;flex-direction:column}.experience-tabs{min-width:0;width:100%}.live-info-grid,.live-control-grid{grid-template-columns:1fr 1fr}.live-compose{grid-template-columns:1fr auto}.live-compose input{grid-column:1/-1}}
+@media(max-width:480px){.live-info-grid,.live-control-grid{grid-template-columns:1fr}.live-avatar-card{min-height:340px}.live-message{grid-template-columns:auto 1fr}.live-message time{display:none}}
 
 </style>
 </head>
@@ -442,7 +460,7 @@ main{padding-top:14px;padding-bottom:30px}
     <div class="splash-rings" aria-hidden="true"></div>
     <div class="splash-logo-stage" aria-hidden="true">
       <div class="splash-logo-glow"></div>
-      <img class="splash-logo" src="assets/sherpa-caddie-logo-fast.webp?v=0100" decoding="sync" fetchpriority="high" alt="Sherpa Caddie logo">
+      <img class="splash-sage" src="assets/sage-sherpa-live.webp?v=0110" decoding="async" alt="Sage, Sherpa Caddie guide">
     </div>
     <div class="splash-title">Sherpa Caddie</div>
     <div class="splash-subtitle">Your guide. Your game. Your best round.</div>
@@ -452,12 +470,12 @@ main{padding-top:14px;padding-bottom:30px}
 </div>
 <div class="app">
 <header class="topbar">
-  <div class="brand-badge"><img class="brand-logo" src="assets/sherpa-caddie-logo-fast.webp?v=0100" width="180" height="196" decoding="sync" fetchpriority="high" alt="Sherpa Caddie"></div>
+  <div class="brand-badge"><img class="brand-logo" src="assets/sherpa-caddie-logo-fast.webp?v=0110" width="180" height="196" decoding="sync" fetchpriority="high" alt="Sherpa Caddie"></div>
   <div class="brand-text">
     <h1>Sherpa Caddie</h1>
     <p>Your guide. Your game. Your best round.</p>
   </div>
-  <div class="version">v0.10.0</div>
+  <div class="version">v0.11.0</div>
 </header>
 
 <div class="tabs-wrap">
@@ -490,10 +508,11 @@ main{padding-top:14px;padding-bottom:30px}
       <div class="experience-switch" aria-label="Sherpa experience mode">
         <div class="experience-copy">
           <strong>Choose your Sherpa experience</strong>
-          <span>Text keeps Sherpa local. Sherpa Live opens the conversational D-ID avatar and uses an internet connection.</span>
+          <span>Text is quiet and local. Voice is hands-free without video. Sherpa Live brings Sage on screen with D-ID conversation and app-aware golf tools.</span>
         </div>
         <div class="experience-tabs" role="group" aria-label="Sherpa mode">
           <button type="button" class="experience-btn active" data-sherpa-mode="text">💬 Text</button>
+          <button type="button" class="experience-btn" data-sherpa-mode="voice">🎙️ Voice</button>
           <button type="button" class="experience-btn" data-sherpa-mode="live">👤 Sherpa Live</button>
         </div>
       </div>
@@ -566,16 +585,59 @@ main{padding-top:14px;padding-bottom:30px}
       </div>
 
       <div class="sherpa-live-shell" id="sherpaLiveShell">
-        <div class="sherpa-live-stage">
-          <div id="sherpaLiveAvatar" aria-label="Sherpa Live conversational avatar"></div>
-          <div class="sherpa-live-loading" id="sherpaLiveLoading">
-            <div><strong>Connecting Sherpa Live…</strong><span>Sherpa’s avatar is loading. The D-ID connection starts only when you choose Sherpa Live.</span></div>
+        <div class="live-topline">
+          <div class="live-title"><span class="live-pulse" aria-hidden="true"></span><div><strong>Sherpa Live</strong> <small>Your real-time caddie. Always with you.</small></div></div>
+          <div class="live-state-pill" id="liveStatePill"><span class="live-state-dot"></span><span id="liveStateText">Offline</span></div>
+        </div>
+
+        <div class="sherpa-live-dashboard">
+          <div class="live-avatar-card" id="liveAvatarCard">
+            <img id="sherpaLivePoster" class="live-avatar-poster" src="assets/sage-sherpa-live.webp?v=0110" alt="Sage, Sherpa Caddie live guide">
+            <video id="sherpaLiveVideo" class="live-avatar-video" autoplay playsinline aria-label="Sage Sherpa Live avatar"></video>
+            <div class="live-avatar-overlay">
+              <div class="live-nameplate">Sage <span>•</span> Sherpa Live</div>
+              <div class="live-visual-state" id="liveVisualState">Ready when you are</div>
+            </div>
+          </div>
+
+          <div class="live-context-stack">
+            <div class="live-hole-card">
+              <div class="live-hole-head"><strong id="liveHoleTitle">Pre-round Guide</strong><span id="liveHoleMeta">Plan smart</span></div>
+              <div class="live-yardages">
+                <div class="live-yardage"><small>Front</small><strong id="liveFrontYds">—</strong></div>
+                <div class="live-yardage center"><small>Center</small><strong id="liveCenterYds">—</strong></div>
+                <div class="live-yardage"><small>Back</small><strong id="liveBackYds">—</strong></div>
+              </div>
+            </div>
+            <div class="live-info-grid">
+              <div class="live-info"><small>Wind</small><strong id="liveWind">—</strong></div>
+              <div class="live-info"><small>Plays like</small><strong id="livePlaysLike">—</strong></div>
+              <div class="live-info"><small>Recommended club</small><strong id="liveClub">Set your clubs</strong></div>
+              <div class="live-info"><small>Safe miss / target</small><strong id="liveTarget">Center / safe side</strong></div>
+              <div class="live-info"><small>Current strategy</small><strong id="liveStrategy">Play Smart</strong></div>
+              <div class="live-info"><small>Course</small><strong id="liveCourse">Choose a course</strong></div>
+            </div>
+            <div class="live-control-grid">
+              <label class="live-control switch-row"><b>🎙️ Hands-Free</b><input class="handsfree-toggle" type="checkbox" aria-label="Sherpa Live hands-free"><i aria-hidden="true"></i></label>
+              <label class="live-control switch-row"><b>🔊 Spoken Replies</b><input class="speak-toggle" type="checkbox" checked aria-label="Sherpa Live spoken replies"><i aria-hidden="true"></i></label>
+              <div class="live-control"><b>📶 Live Connection</b><div class="live-connection" id="liveConnectionText">Disconnected</div></div>
+            </div>
+            <div class="live-tool-status" id="liveToolStatus">Sage can read your round, weather, clubs, shot plan, scoring, strategy, and Hole Planner through Sherpa Caddie.</div>
           </div>
         </div>
-        <div class="sherpa-live-note">
-          <span><strong>Sherpa Live</strong> is the conversational avatar mode. It uses D-ID streaming and therefore requires an internet connection and may use your D-ID minutes.</span>
-          <button type="button" class="btn ghost" id="restartSherpaLiveBtn">Restart Live</button>
+
+        <div class="live-transcript" aria-live="polite">
+          <div class="live-message"><div>👤</div><div><strong>You:</strong> <span id="liveUserText">Say “Hey Sherpa” or type a question.</span></div><time id="liveUserTime"></time></div>
+          <div class="live-message sage"><img class="live-message-avatar" src="assets/sage-sherpa-live.webp?v=0110" alt=""><div><strong>Sage:</strong> <span id="liveSageText">I’m ready to guide your next shot.</span></div><time id="liveSageTime"></time></div>
         </div>
+
+        <div class="live-compose">
+          <input id="liveQuestionInput" autocomplete="off" placeholder="Ask Sage about this shot, your club, weather, strategy, or the hole…" aria-label="Ask Sage in Sherpa Live">
+          <button type="button" class="btn primary" id="liveAskBtn">Ask Sage</button>
+          <button type="button" class="btn secondary" id="liveMicBtn">🎙️ Talk</button>
+          <button type="button" class="btn ghost" id="restartSherpaLiveBtn">Reconnect</button>
+        </div>
+        <div class="live-note"><strong>Sherpa Live:</strong> D-ID streams Sage only while this mode is connected. Sherpa’s scoring, yardages, club distances, weather, map geometry, and round state remain controlled by the PWA rather than guessed by the avatar.</div>
       </div>
     </article>
   </div>
@@ -802,7 +864,7 @@ main{padding-top:14px;padding-bottom:30px}
   </article>
 </section>
 
-<div class="footer"><span>Sherpa Caddie v0.10.0</span><button id="aboutBtn">What’s in v0.10.0?</button></div>
+<div class="footer"><span>Sherpa Caddie v0.11.0</span><button id="aboutBtn">What’s in v0.11.0?</button></div>
 </main>
 </div>
 
@@ -840,7 +902,9 @@ main{padding-top:14px;padding-bottom:30px}
       <li>Voice commands for common in-round actions</li>
       <li>AI echo detection and automatic retry/fallback</li>
       <li>Qwen-family on-device generative Sherpa AI using WebLLM</li>
-      <li>Optional Sherpa Live D-ID avatar mode with Text / Live switching</li>
+      <li>Native Sherpa Live D-ID Client SDK integration with Text / Voice / Live modes</li>
+      <li>Nine D-ID client tools connected to Sherpa round data and controls</li>
+      <li>New Sage golf-guide portrait synchronized with the splash and live experience</li>
       <li>Browser speech recognition retained as the PWA microphone-input layer for iPad compatibility</li>
     </ul>
   </div>
@@ -991,49 +1055,139 @@ $("#resetClubsBtn").onclick=()=>{activeClubNames().forEach(n=>state.clubs[n]=CLU
 $("#aboutBtn").onclick=()=>$("#aboutModal").classList.remove("hidden");$("#closeAboutModal").onclick=()=>$("#aboutModal").classList.add("hidden");
 $("#aboutModal").addEventListener("click",e=>{if(e.target.id==="aboutModal")$("#aboutModal").classList.add("hidden")});
 
-/* Sherpa experience mode — local Text or D-ID Sherpa Live */
-const SHERPA_LIVE_SCRIPT_ID="sherpaDidEmbedScript";
-const SHERPA_LIVE_TARGET_ID="sherpaLiveAvatar";
-let sherpaLiveLoaded=false;
-let sherpaLiveScript=null;
-function setSherpaMode(mode){
-  const live=mode==="live";
-  $$(".experience-btn").forEach(b=>b.classList.toggle("active",b.dataset.sherpaMode===mode));
-  const textShell=$("#textSherpaShell"),liveShell=$("#sherpaLiveShell");
-  if(textShell)textShell.classList.toggle("is-hidden",live);
-  if(liveShell)liveShell.classList.toggle("active",live);
-  localStorage.setItem("sherpa.experience.0100",mode);
-  if(live)loadSherpaLive();
-}
-function loadSherpaLive(force=false){
-  const target=$("#"+SHERPA_LIVE_TARGET_ID),loading=$("#sherpaLiveLoading");
-  if(!target)return;
-  if(force){
-    const old=document.getElementById(SHERPA_LIVE_SCRIPT_ID);if(old)old.remove();
-    target.innerHTML="";sherpaLiveLoaded=false;sherpaLiveScript=null;
-    if(loading){loading.classList.remove("hidden");loading.innerHTML='<div><strong>Reconnecting Sherpa Live…</strong><span>Starting a fresh D-ID avatar session.</span></div>'}
-  }
-  if(sherpaLiveLoaded||document.getElementById(SHERPA_LIVE_SCRIPT_ID))return;
-  const script=document.createElement("script");
-  script.type="module";
-  script.id=SHERPA_LIVE_SCRIPT_ID;
-  script.src="https://agent.d-id.com/v2/index.js";
-  script.dataset.mode="full";
-  script.dataset.clientKey="ck_Cpxzap1_MB5LOCx6M2Hdx";
-  script.dataset.agentId="v2_agt_0-5IY10J";
-  script.dataset.name="did-agent";
-  script.dataset.monitor="true";
-  script.dataset.targetId=SHERPA_LIVE_TARGET_ID;
-  script.onload=()=>{sherpaLiveLoaded=true;sherpaLiveScript=script;if(loading)setTimeout(()=>loading.classList.add("hidden"),1100)};
-  script.onerror=()=>{if(loading)loading.innerHTML='<div><strong>Sherpa Live could not connect</strong><span>Check the internet connection and confirm davidfliesen.github.io is an allowed domain in D-ID.</span></div>'};
-  document.body.appendChild(script);
-}
-$$(".experience-btn").forEach(b=>b.addEventListener("click",()=>setSherpaMode(b.dataset.sherpaMode)));
-const restartLive=$("#restartSherpaLiveBtn");if(restartLive)restartLive.addEventListener("click",()=>loadSherpaLive(true));
-const savedExperience=localStorage.getItem("sherpa.experience.0100")||"text";
-setSherpaMode(savedExperience==="live"?"live":"text");
+/* Sherpa experience mode — Text / Voice / D-ID Client SDK Sherpa Live */
+const DID_AGENT_ID="v2_agt_cPCRZyGW";
+const DID_CLIENT_KEY="ck_Cpxzap1_MB5LOCx6M2Hdx";
+const DID_SDK_URL="https://esm.sh/@d-id/client-sdk@2.0.6?bundle";
+let sherpaExperience="text";
+const liveState={sdk:null,manager:null,srcObject:null,connecting:false,connected:false,connection:"disconnected",connectivity:"UNKNOWN",lastUser:"",lastSage:"",tool:"",mode:"idle"};
 
-/* Sherpa AI v0.10.0 — auto-start Qwen local AI + natural Kokoro voice + hands-free wake flow */
+function liveNow(){return new Date().toLocaleTimeString([], {hour:"numeric",minute:"2-digit"})}
+function setLiveState(text,kind=""){
+  const pill=$("#liveStatePill"),label=$("#liveStateText");if(label)label.textContent=text;
+  if(pill)pill.className=`live-state-pill ${kind}`.trim();
+}
+function setLiveConnection(text,kind=""){
+  const el=$("#liveConnectionText");if(!el)return;el.textContent=text;el.className=`live-connection ${kind}`.trim();
+}
+function setLiveVisual(text){const el=$("#liveVisualState");if(el)el.textContent=text}
+function setLiveToolStatus(text){const el=$("#liveToolStatus");if(el)el.textContent=text}
+function setLiveTranscript(role,text){
+  if(!text)return;
+  if(role==="user"){
+    liveState.lastUser=text;const el=$("#liveUserText");if(el)el.textContent=text;const tm=$("#liveUserTime");if(tm)tm.textContent=liveNow();
+  }else{
+    liveState.lastSage=text;const el=$("#liveSageText");if(el)el.textContent=text;const tm=$("#liveSageTime");if(tm)tm.textContent=liveNow();
+  }
+}
+function refreshSherpaLiveContext(){
+  const round=state.round;
+  const course=round?.course||state.selectedCourse?.name||"Choose a course";
+  const courseEl=$("#liveCourse");if(courseEl)courseEl.textContent=course;
+  const strategyLabel=state.plannerMode==="attack"?"Attack":state.plannerMode==="layup"?"Lay Up":"Play Smart";
+  const strategyEl=$("#liveStrategy");if(strategyEl)strategyEl.textContent=strategyLabel;
+  const windSpeed=Number(state.weather?.wind_speed_10m??0),gust=Number(state.weather?.wind_gusts_10m??0);
+  const windEl=$("#liveWind");if(windEl)windEl.textContent=windSpeed?`${Math.round(windSpeed)} mph${gust?` • gust ${Math.round(gust)}`:""}`:(round?.wind==="cross"?"Light / cross":"Calm / not loaded");
+  if(!round){
+    $("#liveHoleTitle").textContent="Pre-round Guide";$("#liveHoleMeta").textContent="Plan smart";
+    ["#liveFrontYds","#liveCenterYds","#liveBackYds","#livePlaysLike"].forEach(id=>$(id).textContent="—");
+    $("#liveClub").textContent=activeClubNames().length?"Ready from your bag":"Set your clubs";$("#liveTarget").textContent="Choose a course / start a round";return;
+  }
+  const h=hole(),ctx=currentShotContext();if(!h||!ctx)return;
+  const remain=Math.round(h.remaining),front=Math.max(0,remain-5),back=remain+5;
+  $("#liveHoleTitle").textContent=`Hole ${h.n}`;$("#liveHoleMeta").textContent=`Par ${h.par} • Shot ${h.strokes+1}`;
+  $("#liveFrontYds").textContent=front;$("#liveCenterYds").textContent=remain;$("#liveBackYds").textContent=back;
+  $("#liveClub").textContent=ctx.recommendedClub;$("#liveTarget").textContent=ctx.safeTarget;
+  const playsLike=Math.round(remain*(round.wind==="cross"?1.02:1));$("#livePlaysLike").textContent=`${playsLike} yds`;
+}
+function showLiveStream(active=true){
+  const video=$("#sherpaLiveVideo"),poster=$("#sherpaLivePoster");if(!video||!poster)return;
+  if(active){video.classList.add("active");poster.classList.add("hidden")}else{video.classList.remove("active");poster.classList.remove("hidden")}
+}
+function liveToolResult(data){return JSON.stringify(data)}
+function registerSherpaLiveTools(manager){
+  manager.registerClientTool("get_round_context",async()=>{
+    if(!state.round)return liveToolResult({active_round:false,course:state.selectedCourse?.name||null,message:"No active round. The golfer can still plan a course or start a round."});
+    const h=hole();return liveToolResult({active_round:true,course:state.round.course,hole:h.n,par:h.par,total_yards:h.yards,remaining_yards:Math.round(h.remaining),tee:state.round.tee,strokes_on_hole:h.strokes,total_score:state.round.totalStrokes,goal:state.round.goal});
+  });
+  manager.registerClientTool("get_shot_recommendation",async()=>{
+    if(!state.round)throw new Error("No active round. Ask the golfer to start a round first.");
+    const c=currentShotContext(),playsLike=Math.round(c.remaining*(state.round.wind==="cross"?1.02:1));
+    return liveToolResult({recommended_club:c.recommendedClub,measured_yards:c.remaining,plays_like_yards:playsLike,target:c.safeTarget,safe_miss:c.safeTarget,reason:c.safeWhy,strategy:state.plannerMode,cue:c.cue});
+  });
+  manager.registerClientTool("get_weather_context",async()=>liveToolResult({temperature_f:state.weather?.temperature_2m??null,wind_mph:state.weather?.wind_speed_10m??null,gust_mph:state.weather?.wind_gusts_10m??null,wind_direction_degrees:state.weather?.wind_direction_10m??null,round_wind:state.round?.wind??null,weather_loaded:!!state.weather}));
+  manager.registerClientTool("get_club_distances",async()=>liveToolResult({bag_mode:state.bagMode,clubs:Object.fromEntries(activeClubEntries())}));
+  manager.registerClientTool("record_shot",async(args={})=>{
+    if(!state.round)throw new Error("No active round.");
+    let q=String(args.quality||"").toLowerCase();if(q==="ok")q="okay";if(!["good","okay","poor"].includes(q))throw new Error("quality must be good, okay, or poor");
+    const d=String(args.miss_direction||"center").toLowerCase();if(["left","right","short","long","center"].includes(d))state.direction=d;
+    recordShot(q);refreshSherpaLiveContext();return liveToolResult({success:true,recorded_quality:q,miss_direction:state.round?state.round.holes[state.round.holeIndex].shots.slice(-1)[0]?.direction:d,current_round:state.round?currentShotContext():null});
+  });
+  manager.registerClientTool("finish_hole",async()=>{
+    if(!state.round)throw new Error("No active round.");const h=hole();if(!h.finished)$("#finishHoleBtn").click();refreshSherpaLiveContext();return liveToolResult({success:true,hole:h.n,strokes:h.strokes,finished:h.finished});
+  });
+  manager.registerClientTool("next_hole",async()=>{
+    if(!state.round)throw new Error("No active round.");const h=hole();if(!h.finished)throw new Error("The current hole is not finished yet.");if(state.round.holeIndex>=state.round.holes.length-1)throw new Error("This is the final hole.");$("#nextHoleBtn").click();refreshSherpaLiveContext();return liveToolResult({success:true,hole:hole().n,par:hole().par,remaining_yards:Math.round(hole().remaining)});
+  });
+  manager.registerClientTool("set_strategy",async(args={})=>{
+    let s=String(args.strategy||"").toLowerCase().replace(/\s+/g,"");if(s==="playsmart")s="smart";if(s==="lay-up")s="layup";if(!["smart","attack","layup"].includes(s))throw new Error("strategy must be smart, attack, or layup");
+    state.plannerMode=s;state.plannerManualTarget=null;updateStrategyButtons();if($("#mapHoleSelect"))updateHolePlanner();refreshSherpaLiveContext();return liveToolResult({success:true,strategy:s,label:s==="smart"?"Play Smart":s==="attack"?"Attack":"Lay Up"});
+  });
+  manager.registerClientTool("open_hole_planner",async()=>{
+    if(!state.selectedCourse&&!state.round)throw new Error("Choose a course before opening Hole Planner.");show("play");openCourseMap();return liveToolResult({success:true,opened:true,hole:state.round?hole().n:Number($("#mapHoleSelect")?.value||1)});
+  });
+}
+async function connectSherpaLive(force=false){
+  if(liveState.connecting)return;
+  if(force&&liveState.manager){try{await liveState.manager.disconnect()}catch(_){}liveState.manager=null;liveState.connected=false;liveState.srcObject=null;showLiveStream(false)}
+  if(liveState.connected&&liveState.manager)return;
+  liveState.connecting=true;setLiveState("Connecting…");setLiveConnection("Connecting…");setLiveVisual("Connecting Sage…");setLiveToolStatus("Starting a secure D-ID session and registering Sherpa Caddie tools…");
+  try{
+    if(!liveState.sdk)liveState.sdk=await import(DID_SDK_URL);
+    const create=liveState.sdk.createAgentManager||liveState.sdk.default?.createAgentManager;if(!create)throw new Error("D-ID Client SDK did not expose createAgentManager");
+    const video=$("#sherpaLiveVideo");
+    const callbacks={
+      onSrcObjectReady(value){liveState.srcObject=value;if(video){video.srcObject=value;video.muted=!aiState.speakReplies;video.play().catch(()=>{})}showLiveStream(true);return value},
+      onConnectionStateChange(stateName){liveState.connection=String(stateName||"").toLowerCase();liveState.connected=liveState.connection==="connected";if(liveState.connected){setLiveState("Live","connected");setLiveConnection("Connected","good");setLiveVisual("Sage is ready");setLiveToolStatus("Live tools ready — Sage can use Sherpa’s real round data and controls.")}else if(["fail","closed"].includes(liveState.connection)){setLiveState("Connection issue","error");setLiveConnection(liveState.connection,"weak");setLiveVisual("Tap Reconnect")}else{setLiveState(stateName||"Connecting…");setLiveConnection(stateName||"Connecting…")}},
+      onConnectivityStateChange(value){liveState.connectivity=String(value||"UNKNOWN");setLiveConnection(liveState.connectivity==="STRONG"?"Connected":liveState.connectivity==="WEAK"?"Weak connection":"Connected",liveState.connectivity==="WEAK"?"weak":"good")},
+      onVideoStateChange(value){const talking=String(value||"").toUpperCase()!=="STOP";liveState.mode=talking?"speaking":"idle";aiState.speaking=talking;setLiveVisual(talking?"Sage is speaking":"Sage is listening");if(talking&&aiState.recognition&&aiState.listening){aiState.stoppingRecognition=true;try{aiState.recognition.stop()}catch(_){}}if(!talking&&aiState.handsFree&&sherpaExperience==="live")scheduleHandsFreeRestart()},
+      onNewMessage(messages,type){if(!Array.isArray(messages)||!messages.length)return;const last=messages[messages.length-1];if(last?.role==="user")setLiveTranscript("user",last.content);if(last?.role==="assistant"&&(type==="answer"||type==="partial")){setLiveTranscript("assistant",last.content);if(type==="answer")setLiveVisual("Sage is speaking")}},
+      onToolEvent(event){const p=event?.payload||{};if(event?.type==="ToolCallStarted")setLiveToolStatus(`Sage is using ${p.name||"a Sherpa tool"}…`);else if(event?.type==="ToolCallDone"){setLiveToolStatus(`${p.name||"Sherpa tool"} completed.`);refreshSherpaLiveContext()}else if(event?.type==="ToolCallError")setLiveToolStatus(`${p.name||"Sherpa tool"} had a problem. Sage will explain.`)},
+      onError(error,errorData){console.error("D-ID Sherpa Live error",error,errorData);setLiveState("Live error","error");setLiveConnection("Needs attention","weak");setLiveVisual("Tap Reconnect");setLiveToolStatus(`Sherpa Live problem: ${shortError(error||errorData)}`)}
+    };
+    liveState.manager=await create(DID_AGENT_ID,{auth:{type:"key",clientKey:DID_CLIENT_KEY},callbacks,streamOptions:{compatibilityMode:"auto",streamWarmup:true,outputResolution:720}});
+    registerSherpaLiveTools(liveState.manager);
+    await liveState.manager.connect();
+    liveState.connected=true;setLiveState("Live","connected");setLiveConnection("Connected","good");setLiveVisual("Sage is ready");refreshSherpaLiveContext();
+  }catch(err){console.error("Sherpa Live connect failed",err);liveState.connected=false;setLiveState("Could not connect","error");setLiveConnection("Disconnected","weak");setLiveVisual("Tap Reconnect");setLiveToolStatus(`Could not start Sherpa Live: ${shortError(err)}. If this Agent was recreated, confirm its current D-ID client key.`)}
+  finally{liveState.connecting=false}
+}
+async function disconnectSherpaLive(){if(liveState.manager){try{await liveState.manager.disconnect()}catch(_){}}liveState.manager=null;liveState.connected=false;liveState.srcObject=null;showLiveStream(false);setLiveState("Offline");setLiveConnection("Disconnected");setLiveVisual("Ready when you are")}
+async function sendSherpaLive(text){
+  const q=String(text||"").trim();if(!q)return;
+  setLiveTranscript("user",q);setLiveVisual("Sage is thinking…");
+  if(aiState.recognition&&aiState.listening){aiState.stoppingRecognition=true;try{aiState.recognition.stop()}catch(_){}}
+  if(!liveState.connected||!liveState.manager)await connectSherpaLive();
+  if(!liveState.connected||!liveState.manager){setLiveTranscript("assistant","I could not connect to Sherpa Live. Tap Reconnect and try again.");return}
+  try{await liveState.manager.chat(q)}catch(err){setLiveState("Live error","error");setLiveTranscript("assistant",`I couldn't send that to Sage: ${shortError(err)}`);if(aiState.handsFree)scheduleHandsFreeRestart()}
+}
+async function setSherpaMode(mode){
+  if(!["text","voice","live"].includes(mode))mode="text";sherpaExperience=mode;
+  const live=mode==="live";$$('.experience-btn').forEach(b=>b.classList.toggle("active",b.dataset.sherpaMode===mode));
+  const textShell=$("#textSherpaShell"),liveShell=$("#sherpaLiveShell");if(textShell)textShell.classList.toggle("is-hidden",live);if(liveShell)liveShell.classList.toggle("active",live);
+  localStorage.setItem("sherpa.experience.0110",mode);
+  if(mode==="text"){if(aiState.handsFree)setHandsFree(false);await disconnectSherpaLive()}
+  else if(mode==="voice"){await disconnectSherpaLive();aiState.speakReplies=true;$$('.speak-toggle').forEach(x=>x.checked=true);setHandsFree(true)}
+  else{refreshSherpaLiveContext();await connectSherpaLive();aiState.speakReplies=true;$$('.speak-toggle').forEach(x=>x.checked=true);const v=$("#sherpaLiveVideo");if(v)v.muted=false;setHandsFree(true)}
+}
+$$('.experience-btn').forEach(b=>b.addEventListener('click',()=>setSherpaMode(b.dataset.sherpaMode)));
+const restartLive=$("#restartSherpaLiveBtn");if(restartLive)restartLive.addEventListener("click",()=>connectSherpaLive(true));
+const liveAsk=$("#liveAskBtn");if(liveAsk)liveAsk.addEventListener("click",()=>{const i=$("#liveQuestionInput");sendSherpaLive(i.value);i.value=""});
+const liveInput=$("#liveQuestionInput");if(liveInput)liveInput.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();const q=e.currentTarget.value;e.currentTarget.value="";sendSherpaLive(q)}});
+const liveMic=$("#liveMicBtn");if(liveMic)liveMic.addEventListener("click",()=>startTalk());
+refreshSherpaLiveContext();
+
+/* Sherpa AI v0.11.0 — auto-start Qwen local AI + natural Kokoro voice + hands-free wake flow */
 const aiState = {
   engine: null,
   webllm: null,
@@ -1058,7 +1212,7 @@ const aiState = {
   ttsReady: false,
   ttsLoading: false,
   ttsFailed: false,
-  ttsVoice: localStorage.getItem("sherpa.voice.0100") || "af_heart",
+  ttsVoice: localStorage.getItem("sherpa.voice.0110") || "af_heart",
   activeAudio: null,
   audioUnlocked: false,
   adapter: null,
@@ -1069,6 +1223,7 @@ const askStatus = $("#askStatus"), answerTitle = $("#answerTitle"), answerText =
 const askBtn = $("#askBtn"), initAiBtn = $("#initAiBtn"), micBtn = $("#micBtn"), modelSelect = $("#modelSelect");
 const voiceSelect = $("#voiceSelect"), aiProgressBar = $("#aiProgressBar");
 if(voiceSelect) voiceSelect.value = aiState.ttsVoice;
+setSherpaMode(sherpaExperience);
 
 function setBadge(el, text, kind=""){
   if(!el) return;
@@ -1408,25 +1563,25 @@ function setupVoice(){
   if(aiState.recognition) return true;
   const recognition=new SR();
   recognition.lang="en-US";recognition.interimResults=true;recognition.continuous=false;recognition.maxAlternatives=1;aiState.recognition=recognition;
-  recognition.onstart=()=>{aiState.listening=true;aiState.restartingRecognition=false;micBtn.classList.add("listening");micBtn.textContent=aiState.handsFree?"🎙️ Hands-Free":"Listening…";setBadge(voiceBadge,aiState.handsFree?"Hands-Free listening":"Listening","warn");askStatus.textContent=aiState.handsFree?'Say “Sherpa” or “Hey Sherpa,” then ask naturally.':'Speak naturally. Sherpa will stop listening when you finish.';updateVoiceModeUI()};
+  recognition.onstart=()=>{aiState.listening=true;aiState.restartingRecognition=false;micBtn.classList.add("listening");micBtn.textContent=aiState.handsFree?"🎙️ Hands-Free":"Listening…";const lm=$("#liveMicBtn");if(lm){lm.classList.add("listening");lm.textContent=aiState.handsFree?"🎙️ Listening":"Listening…";}setBadge(voiceBadge,aiState.handsFree?"Hands-Free listening":"Listening","warn");askStatus.textContent=aiState.handsFree?'Say “Sherpa” or “Hey Sherpa,” then ask naturally.':'Speak naturally. Sherpa will stop listening when you finish.';updateVoiceModeUI()};
   recognition.onresult=e=>{
     let finalText="",interim="";
     for(let i=e.resultIndex;i<e.results.length;i++){const s=e.results[i][0].transcript;if(e.results[i].isFinal)finalText+=s;else interim+=s}
-    if(!aiState.handsFree){$("#questionInput").value=(finalText||interim).trim();return}
+    if(!aiState.handsFree){const target=sherpaExperience==="live"?$("#liveQuestionInput"):$("#questionInput");if(target)target.value=(finalText||interim).trim();return}
     if(interim&&!finalText) askStatus.textContent=`Listening… ${interim.trim()}`;
     if(finalText){const spoken=finalText.trim();aiState.lastTranscript=spoken;processHandsFreeUtterance(spoken)}
   };
   recognition.onerror=e=>{
-    const err=e.error||"unknown";aiState.listening=false;micBtn.classList.remove("listening");micBtn.textContent="🎙️ Talk";
+    const err=e.error||"unknown";aiState.listening=false;micBtn.classList.remove("listening");micBtn.textContent="🎙️ Talk";const lm=$("#liveMicBtn");if(lm){lm.classList.remove("listening");lm.textContent="🎙️ Talk";}
     if(err==="not-allowed"||err==="service-not-allowed"){aiState.handsFree=false;setBadge(voiceBadge,"Voice permission needed","err");askStatus.textContent="Microphone permission is required for Hands-Free Caddie."}
     else if(err!=="no-speech"&&err!=="aborted") askStatus.textContent=`Voice error: ${err}.`;
     updateVoiceModeUI();
   };
   recognition.onend=async()=>{
-    const manual=aiState.manualVoicePending, text=$("#questionInput").value.trim();
-    aiState.listening=false;micBtn.classList.remove("listening");micBtn.textContent="🎙️ Talk";
+    const manual=aiState.manualVoicePending, source=sherpaExperience==="live"?$("#liveQuestionInput"):$("#questionInput"), text=(source?.value||"").trim();
+    aiState.listening=false;micBtn.classList.remove("listening");micBtn.textContent="🎙️ Talk";const lm=$("#liveMicBtn");if(lm){lm.classList.remove("listening");lm.textContent="🎙️ Talk";}
     if(aiState.stoppingRecognition){aiState.stoppingRecognition=false;updateVoiceModeUI();return}
-    if(manual){aiState.manualVoicePending=false;setBadge(voiceBadge,"Voice ready","ready");if(text)await askSherpaAI(text,{voice:true});else updateVoiceModeUI();return}
+    if(manual){aiState.manualVoicePending=false;setBadge(voiceBadge,"Voice ready","ready");if(text){if(source)source.value="";if(sherpaExperience==="live")await sendSherpaLive(text);else await askSherpaAI(text,{voice:true})}else updateVoiceModeUI();return}
     if(aiState.handsFree&&!aiState.speaking) scheduleHandsFreeRestart(); else {setBadge(voiceBadge,"Voice ready","ready");updateVoiceModeUI()}
   };
   setBadge(voiceBadge,"Voice ready","ready");updateVoiceModeUI();return true;
@@ -1481,6 +1636,7 @@ async function processHandsFreeUtterance(spoken){
   }
   aiState.wakeArmedUntil=0;aiState.processingVoice=true;
   try{
+    if(sherpaExperience==="live"){const li=$("#liveQuestionInput");if(li)li.value="";await sendSherpaLive(command);return}
     $("#questionInput").value=command;
     if(await handleRoundVoiceCommand(command))return;
     await askSherpaAI(command,{voice:true});
@@ -1503,11 +1659,11 @@ function setHandsFree(on){
 function startTalk(){
   if(aiState.handsFree){setHandsFree(false);return}
   if(!setupVoice())return;
-  $("#questionInput").value="";aiState.manualVoicePending=true;startRecognition(false);
+  const input=sherpaExperience==="live"?$("#liveQuestionInput"):$("#questionInput");if(input)input.value="";aiState.manualVoicePending=true;startRecognition(false);
 }
 $$('.handsfree-toggle').forEach(el=>el.addEventListener('change',e=>setHandsFree(e.target.checked)));
-$$('.speak-toggle').forEach(el=>el.addEventListener('change',e=>{aiState.speakReplies=e.target.checked;$$('.speak-toggle').forEach(x=>x.checked=aiState.speakReplies);if(!aiState.speakReplies)stopActiveVoice();updateVoiceModeUI()}));
-if(voiceSelect)voiceSelect.addEventListener("change",e=>{aiState.ttsVoice=e.target.value;localStorage.setItem("sherpa.voice.0100",aiState.ttsVoice);aiState.ttsFailed=false;if(aiState.ttsVoice!=="system")warmNaturalVoice();else setBadge(voiceBadge,"Voice ready • system","ready")});
+$$('.speak-toggle').forEach(el=>el.addEventListener('change',e=>{aiState.speakReplies=e.target.checked;$$('.speak-toggle').forEach(x=>x.checked=aiState.speakReplies);const lv=$("#sherpaLiveVideo");if(lv)lv.muted=!aiState.speakReplies;if(!aiState.speakReplies&&sherpaExperience!=="live")stopActiveVoice();updateVoiceModeUI()}));
+if(voiceSelect)voiceSelect.addEventListener("change",e=>{aiState.ttsVoice=e.target.value;localStorage.setItem("sherpa.voice.0110",aiState.ttsVoice);aiState.ttsFailed=false;if(aiState.ttsVoice!=="system")warmNaturalVoice();else setBadge(voiceBadge,"Voice ready • system","ready")});
 
 initAiBtn.addEventListener("click", ()=>loadSherpaLLM(true));
 askBtn.addEventListener("click", ()=>askSherpaAI());
@@ -1616,7 +1772,7 @@ function renderCourseResults(items,headline=""){
 }
 $("#courseSearchBtn").onclick=async()=>{const q=$("#courseSearch").value.trim();if(!q)return;$("#courseResults").innerHTML='<span class="muted">Searching the OpenGolf course database…</span>';try{const r=await combinedTextCourseSearch(q);renderCourseResults(r.items,r.summary)}catch(e){console.error(e);renderCourseResults([],"Course search could not be completed. Please try again.");toast("Course search could not be completed")}};
 $("#courseSearch").addEventListener("keydown",e=>{if(e.key==="Enter")$("#courseSearchBtn").click()});
-$("#useTypedCourseBtn").onclick=async()=>{const q=$("#courseSearch").value.trim();if(!q){toast("Type a course name first");return}$("#courseResults").innerHTML='<span class="muted">Resolving the real course location…</span>';try{const r=await combinedTextCourseSearch(q),best=r.items[0];if(best&&matchScore(q,best)>=20){selectCourse(best);renderCourseResults(r.items,r.summary);toast(`Using mapped location for ${best.name}`);return}}catch{}state.selectedCourse={name:q,city:"",state:"",address:"",lat:null,lon:null,raw:null,source:"Typed only"};state.coords=null;$("#selectedCourseName").textContent=q;$("#selectedCourseLocation").textContent="Name saved, but no verified map location was found. Map planning is disabled until a mapped course is selected.";$("#weatherNote").textContent="Weather needs a verified course location.";toast("Course name saved — location not verified")};
+$("#useTypedCourseBtn").onclick=async()=>{const q=$("#courseSearch").value.trim();if(!q){toast("Type a course name first");return}$("#courseResults").innerHTML='<span class="muted">Resolving the real course location…</span>';try{const r=await combinedTextCourseSearch(q),best=r.items[0];if(best&&matchScore(q,best)>=20){selectCourse(best);renderCourseResults(r.items,r.summary);toast(`Using mapped location for ${best.name}`);return}}catch{}state.selectedCourse={name:q,city:"",state:"",address:"",lat:null,lon:null,raw:null,source:"Typed only"};state.coords=null;$("#selectedCourseName").textContent=q;$("#selectedCourseLocation").textContent="Name saved, but no verified map location was found. Map planning is disabled until a mapped course is selected.";$("#weatherNote").textContent="Weather needs a verified course location.";refreshSherpaLiveContext();toast("Course name saved — location not verified")};
 $("#nearMeBtn").onclick=()=>{
  if(!navigator.geolocation){toast("Location is not supported in this browser.");return}
  $("#courseResults").innerHTML='<span class="muted">Using your GPS to find nearby golf courses…</span>';
@@ -1631,7 +1787,7 @@ async function hydrateSelectedCourse(){
    state.selectedCourse={...state.selectedCourse,...full,raw:detail};
    if(Number.isFinite(full.lat)&&Number.isFinite(full.lon))state.coords={lat:full.lat,lon:full.lon};
    const loc=full.address||[full.city,full.state].filter(Boolean).join(", ")||"Mapped course";const d=courseDistance(full);
-   $("#selectedCourseLocation").textContent=loc+(d!=null?` • ${d<10?d.toFixed(1):Math.round(d)} mi from you`:"");
+   $("#selectedCourseLocation").textContent=loc+(d!=null?` • ${d<10?d.toFixed(1):Math.round(d)} mi from you`:"");refreshSherpaLiveContext();
  }catch(e){console.warn("OpenGolf course detail unavailable",e)}
 }
 function selectCourse(c,load=true){
@@ -1640,12 +1796,12 @@ function selectCourse(c,load=true){
  const d=courseDistance(c),loc=c.address||[c.city,c.state].filter(Boolean).join(", ")||"Verified mapped course";
  $("#selectedCourseLocation").textContent=loc+(d!=null?` • ${d<10?d.toFixed(1):Math.round(d)} mi from you`:"");
  if(state.coords&&load)loadWeather();else if(!state.coords)$("#weatherNote").textContent="No verified course coordinates are available yet.";
- hydrateSelectedCourse();
+ hydrateSelectedCourse();refreshSherpaLiveContext();
 }
 async function loadWeather(){
  if(!state.coords){$("#weatherNote").textContent="No verified course coordinates available. Select a mapped course before loading weather.";return}
  $("#weatherNote").textContent="Loading conditions at the course…";
- try{const u=`https://api.open-meteo.com/v1/forecast?latitude=${state.coords.lat}&longitude=${state.coords.lon}&current=temperature_2m,wind_speed_10m,wind_direction_10m,wind_gusts_10m,precipitation&temperature_unit=fahrenheit&wind_speed_unit=mph`;const d=await fetchJSONTimeout(u,{},6000);state.weather=d.current;$("#tempStat").textContent=`${Math.round(d.current.temperature_2m)}°F`;$("#windStat").textContent=`${Math.round(d.current.wind_speed_10m)} mph`;$("#gustStat").textContent=`${Math.round(d.current.wind_gusts_10m)} mph`;$("#weatherNote").textContent=d.current.precipitation>0?"Wet conditions at the selected course — favor control and extra margin.":"Conditions loaded at the selected course location."}catch{$("#weatherNote").textContent="Weather could not be loaded. Sherpa can still guide the round."}
+ try{const u=`https://api.open-meteo.com/v1/forecast?latitude=${state.coords.lat}&longitude=${state.coords.lon}&current=temperature_2m,wind_speed_10m,wind_direction_10m,wind_gusts_10m,precipitation&temperature_unit=fahrenheit&wind_speed_unit=mph`;const d=await fetchJSONTimeout(u,{},6000);state.weather=d.current;$("#tempStat").textContent=`${Math.round(d.current.temperature_2m)}°F`;$("#windStat").textContent=`${Math.round(d.current.wind_speed_10m)} mph`;$("#gustStat").textContent=`${Math.round(d.current.wind_gusts_10m)} mph`;$("#weatherNote").textContent=d.current.precipitation>0?"Wet conditions at the selected course — favor control and extra margin.":"Conditions loaded at the selected course location.";refreshSherpaLiveContext()}catch{$("#weatherNote").textContent="Weather could not be loaded. Sherpa can still guide the round.";refreshSherpaLiveContext()}
 }
 $("#refreshWeatherBtn").onclick=loadWeather;
 
@@ -1732,7 +1888,7 @@ function renderShot(){
  const h=hole(), rec=recClub(h.remaining);if(!state.selectedClub)state.selectedClub=rec;const [tr,tw]=target(h.remaining);
  $("#holeLabel").textContent=`Hole ${h.n}`;$("#holeInfo").textContent=`Par ${h.par} • ${h.yards} yards`;$("#shotStat").textContent=h.strokes+1;$("#remainStat").textContent=`${Math.round(h.remaining)} yds`;$("#totalStat").textContent=state.round.totalStrokes;
  $("#clubRec").textContent=state.selectedClub;$("#clubWhy").textContent=(state.round.wind==="cross"?"Allow for the wind, but ":"")+"take enough club to make a comfortable swing — do not force too little club.";
- $("#targetRec").textContent=tr;$("#targetWhy").textContent=tw;$("#mentalCue").textContent=cue();$("#nextHoleBtn").disabled=!h.finished;renderClubStrip()
+ $("#targetRec").textContent=tr;$("#targetWhy").textContent=tw;$("#mentalCue").textContent=cue();$("#nextHoleBtn").disabled=!h.finished;renderClubStrip();refreshSherpaLiveContext()
 }
 function renderClubStrip(){
  const order=activeClubNames(),s=$("#clubStrip");s.innerHTML="";order.forEach(n=>{const b=document.createElement("button");b.className="club-choice"+(n===state.selectedClub?" active":"");b.textContent=n;b.onclick=()=>{state.selectedClub=n;renderShot()};s.appendChild(b)})
@@ -1753,13 +1909,13 @@ function finishRound(){state.round.finished=new Date().toISOString();state.round
 
 /* Rounds/export */
 function renderRounds(){const l=$("#roundList");l.innerHTML="";if(!state.rounds.length){l.innerHTML='<div class="round-item"><div><h3>No saved rounds yet.</h3><p>Finished rounds stay on this device until you export or clear browser data.</p></div></div>';return}state.rounds.forEach(r=>{const played=r.holes.filter(h=>h.finished||h.shots.length).length,par=r.holes.slice(0,played).reduce((s,h)=>s+h.par,0),diff=r.totalStrokes-par;const el=document.createElement("div");el.className="round-item";el.innerHTML=`<div><h3>${r.course}</h3><p>${new Date(r.started).toLocaleDateString()} • ${played} holes • ${r.tee} tees</p></div><div class="round-score">${r.totalStrokes}${played?` (${diff>=0?"+":""}${diff})`:""}</div>`;l.appendChild(el)})}
-$("#exportBtn").onclick=()=>{const b=new Blob([JSON.stringify({version:"0.9.0",bagMode:state.bagMode,clubs:state.clubs,rounds:state.rounds},null,2)],{type:"application/json"}),a=document.createElement("a");a.href=URL.createObjectURL(b);a.download=`sherpa-caddie-data-${new Date().toISOString().slice(0,10)}.json`;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),500)};
+$("#exportBtn").onclick=()=>{const b=new Blob([JSON.stringify({version:"0.11.0",bagMode:state.bagMode,clubs:state.clubs,rounds:state.rounds},null,2)],{type:"application/json"}),a=document.createElement("a");a.href=URL.createObjectURL(b);a.download=`sherpa-caddie-data-${new Date().toISOString().slice(0,10)}.json`;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),500)};
 $("#importBtn").onclick=()=>$("#importFile").click();$("#importFile").onchange=async e=>{const f=e.target.files[0];if(!f)return;try{const d=JSON.parse(await f.text());if(d.clubs)state.clubs=d.clubs;if(d.bagMode)state.bagMode=d.bagMode;if(d.rounds)state.rounds=d.rounds;save();renderClubs();renderRounds();toast("Data imported")}catch{toast("Could not import that file")}e.target.value=""};
 
 function hideSplash(){const el=$("#splashScreen");if(!el||el.classList.contains("is-hidden"))return;el.classList.add("is-hidden");setTimeout(()=>el.remove(),800)}
 window.addEventListener("load",()=>setTimeout(hideSplash,5000));
 setTimeout(hideSplash,5600);
-if("serviceWorker"in navigator)window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js?v=0100").catch(()=>{}));
+if("serviceWorker"in navigator)window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js?v=0110").catch(()=>{}));
 renderClubs();renderRounds();if(state.round){show("play");showRoundMode()}
 })();
 </script>
