@@ -22,6 +22,25 @@ jobs:
             exit 1
           fi
 
+      - name: Verify D-ID authentication
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          HTTP_CODE="$(
+            curl --silent --show-error               --output /tmp/did-auth-check.json               --write-out "%{http_code}"               --user "$DID_API_KEY"               --request GET               "https://api.d-id.com/agents/${DID_AGENT_ID}"               --header "Accept: application/json"
+          )"
+
+          echo "D-ID authentication check returned HTTP ${HTTP_CODE}"
+
+          if [ "$HTTP_CODE" -lt 200 ] || [ "$HTTP_CODE" -ge 300 ]; then
+            echo "::error::D-ID authentication failed. Make sure DID_API_KEY contains the exact API_USERNAME:API_PASSWORD value, with no 'Basic ' prefix, quotes, or extra spaces."
+            jq . /tmp/did-auth-check.json 2>/dev/null || cat /tmp/did-auth-check.json
+            exit 1
+          fi
+
+          echo "D-ID authentication succeeded."
+
       - name: Attach Sherpa Caddie client tools to Sage
         shell: bash
         run: |
@@ -47,10 +66,10 @@ jobs:
           JSON
 
           HTTP_CODE="$(
-            curl --silent --show-error               --output /tmp/did-agent-response.json               --write-out "%{http_code}"               --request PATCH               "https://api.d-id.com/agents/${DID_AGENT_ID}"               --header "Authorization: Basic ${DID_API_KEY}"               --header "Content-Type: application/json"               --header "Accept: application/json"               --data-binary @/tmp/did-tools-payload.json
+            curl --silent --show-error               --output /tmp/did-agent-response.json               --write-out "%{http_code}"               --user "$DID_API_KEY"               --request PATCH               "https://api.d-id.com/agents/${DID_AGENT_ID}"               --header "Content-Type: application/json"               --header "Accept: application/json"               --data-binary @/tmp/did-tools-payload.json
           )"
 
-          echo "D-ID returned HTTP ${HTTP_CODE}"
+          echo "D-ID agent update returned HTTP ${HTTP_CODE}"
 
           if [ "$HTTP_CODE" -lt 200 ] || [ "$HTTP_CODE" -ge 300 ]; then
             echo "::error::D-ID agent update failed."
@@ -58,7 +77,8 @@ jobs:
             exit 1
           fi
 
-          jq . /tmp/did-agent-response.json
+          echo "D-ID agent update succeeded."
+          jq '.tools // .' /tmp/did-agent-response.json
 
       - name: Verify all nine tools are attached
         shell: bash
@@ -66,11 +86,11 @@ jobs:
           set -euo pipefail
 
           HTTP_CODE="$(
-            curl --silent --show-error               --output /tmp/did-agent-verify.json               --write-out "%{http_code}"               --request GET               "https://api.d-id.com/agents/${DID_AGENT_ID}"               --header "Authorization: Basic ${DID_API_KEY}"               --header "Accept: application/json"
+            curl --silent --show-error               --output /tmp/did-agent-verify.json               --write-out "%{http_code}"               --user "$DID_API_KEY"               --request GET               "https://api.d-id.com/agents/${DID_AGENT_ID}"               --header "Accept: application/json"
           )"
 
           if [ "$HTTP_CODE" -lt 200 ] || [ "$HTTP_CODE" -ge 300 ]; then
-            echo "::error::Could not verify the Sage agent after updating it."
+            echo "::error::Could not verify Sage after updating it."
             jq . /tmp/did-agent-verify.json 2>/dev/null || cat /tmp/did-agent-verify.json
             exit 1
           fi
