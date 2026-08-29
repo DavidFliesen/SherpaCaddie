@@ -1,66 +1,38 @@
 # Sherpa Caddie
-### Version 0.6.3
+### Version 0.6.4
 
 **PWA:**  
 https://davidfliesen.github.io/SherpaCaddy
 
 ## Purpose
 
-Sherpa Caddie combines the practical help of a **caddie** with the guidance and perspective of a **Sherpa mentor**. It is designed especially for new and recreational golfers who benefit more from one clear decision than from a screen full of statistics.
+Sherpa Caddie combines the practical help of a **caddie** with the guidance and perspective of a **Sherpa mentor**. The core idea remains simple: **one shot at a time.**
 
-The core idea is simple: **one shot at a time.**
+## Version 0.6.4 — Course Search Repair
 
-## Version 0.6.3
+This release repairs the course-search path and makes the golf-course database the primary source of truth. It keeps the v0.6.3 fast logo work, v0.6.1 header contrast treatment, and the v0.6 Hole Planner redesign.
 
-This release fixes course-location discovery and makes the overall tablet interface visibly more app-like while preserving the Hole Planner, Sherpa AI, voice, weather, scoring, and club-distance features.
+### Fixed in v0.6.4
 
-### New in v0.6.3
+- Corrected the OpenGolf nearby-search parameter from `radius` to the documented **`radius_mi`**.
+- Made **OpenGolfAPI** the primary source for nearby and name-based course discovery.
+- Added an **OpenGolf state-index fallback** for ZIP/city searches, then filters courses by actual distance from the resolved search point.
+- Added alternate-name searching so older/common course names can resolve to current database names.
+- Kept OpenStreetMap/Overpass only as a fallback instead of making it a critical dependency.
+- Added a third Overpass endpoint for hole-geometry fallback.
+- Fixed contradictory result messaging that could report successful sources but display no courses.
+- Selected OpenGolf courses now load their full course detail/scorecard in the background.
+- Hole-map geometry now cycles through multiple Overpass endpoints before falling back to Sherpa's schematic planner.
 
-- Replaced the 535 KB header/splash PNG with a **37 KB optimized WebP** version of the same logo artwork
-- The logo is now **preloaded before the app UI**, so it should appear on the first splash frame instead of popping in late
-- Header and splash now share one cached logo file instead of loading two large images
-- Removed both 535 KB logo PNGs from the service-worker pre-cache to avoid more than 1 MB of unnecessary startup downloading
-- Fixed the splash screen cache-buster mismatch (`v060` inside v0.6.1/v0.6.2)
-- Splash animation now starts with the logo already visible instead of animating from blur/opacity 0
+### Retained
 
-- Rebuilt nearby-course discovery around **three independent sources**: OpenStreetMap Search (Nominatim), OpenStreetMap Detail (Overpass), and OpenGolfAPI
-- Added **ZIP-code search**: entering `29483` now resolves the ZIP to a map area and searches for golf courses around it
-- Added fallback behavior so an OpenGolf or Overpass outage no longer produces an empty app by itself
-- Added source-status text in search results so the app can say which source worked and which one was unavailable
-- Added a secondary Overpass server fallback
-- Nearby results remain sorted by actual distance from the GPS/search center
-- Preserved the **v0.6.1 high-contrast logo plaque** in the header
+- Optimized fast-loading Sherpa logo and branded splash screen.
+- High-contrast logo plaque in the dark branded header.
+- Home | Play | Learn | My Rounds navigation.
+- Personal club distances, weather, One-Shot Sherpa, local round storage, import/export, voice, and Sherpa AI.
+- Hole Planner with front/center/back yardages, strategy modes, hazards, target planning, and schematic fallback.
 
-- New **high-contrast logo plaque** in the top header so the Sherpa Caddie mark stays visible against the darker branded background
-- Improved header spacing and visual emphasis for the Sherpa brand
-
-- Major **visual redesign** of the app shell: dark branded header, richer golf palette, stronger hero panel, more distinctive action cards, and a more premium Play screen
-- Rebuilt **Find Courses Near Me** to combine OpenStreetMap/Overpass and OpenGolfAPI results and sort them by real GPS distance
-- Added a separate `userCoords` location so device GPS can no longer be confused with selected-course coordinates
-- Fixed **Use Typed Course** so it resolves the typed name using multiple map/course sources rather than assigning the coordinates of a previously selected course
-- If a typed course cannot be resolved, map planning now stays disabled instead of displaying a false location
-- Added a clean **Sherpa schematic hole view** when exact numbered hole geometry is unavailable
-- Upgraded **Hole Planner** modal designed for tablet-first play
-- Garmin-inspired **vertical hole view** generated from mapped hole geometry when available
-- Right-side planning panel with:
-  - focused hole summary
-  - front / center / back target yardages
-  - strategy modes: **Play Smart**, **Attack**, **Lay Up**
-  - recommended club and carry distance
-  - wind summary and **plays-like** distance
-  - mapped hazard callouts
-  - Sherpa strategy guidance
-- Hole-to-hole navigation inside the planner
-- Tap the map to place a **manual target**, then see the carry/leave distance update
-- Planner now defaults to a specific hole instead of only a generic course overview
-
-### Changed files in v0.6.3
-
-- `index.html`
-- `manifest.webmanifest`
-- `sw.js`
-- `README.md`
-- `assets/sherpa-caddie-logo-fast.webp` **(new optimized logo asset)**
+### Changed files in v0.6.4
 
 - `index.html`
 - `manifest.webmanifest`
@@ -148,6 +120,15 @@ Pick the target, take one practice swing, and commit.
 - `README.md`
 
 ## Changelog
+
+### v0.6.4 — Course Search Repair
+- Corrected the OpenGolf location parameter from `radius` to `radius_mi`.
+- Made OpenGolf the primary course discovery source.
+- Added OpenGolf state-index fallback for ZIP/city searches.
+- Added alternate-name matching for renamed courses such as older country-club names.
+- Kept OpenStreetMap/Overpass as fallback instead of a required dependency.
+- Added full OpenGolf course-detail hydration after course selection.
+- Updated PWA/cache versioning to **v0.6.4**.
 
 ### v0.6.3 — Fast Logo Loading Fix
 - Replaced the large header/splash logo PNG requests with one 37 KB optimized WebP asset.

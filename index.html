@@ -5,11 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#18311C">
 <meta name="description" content="Sherpa Caddie — one-shot-at-a-time golf guidance combining a caddie, coach and mentor.">
-<link rel="manifest" href="manifest.webmanifest?v=063">
-<link rel="icon" href="icons/favicon.png?v=063" type="image/png">
-<link rel="apple-touch-icon" href="icons/icon-192.png?v=063">
-<link rel="preload" as="image" href="assets/sherpa-caddie-logo-fast.webp?v=063" type="image/webp" fetchpriority="high">
-<title>Sherpa Caddie v0.6.3</title>
+<link rel="manifest" href="manifest.webmanifest?v=064">
+<link rel="icon" href="icons/favicon.png?v=064" type="image/png">
+<link rel="apple-touch-icon" href="icons/icon-192.png?v=064">
+<link rel="preload" as="image" href="assets/sherpa-caddie-logo-fast.webp?v=064" type="image/webp" fetchpriority="high">
+<title>Sherpa Caddie v0.6.4</title>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
   crossorigin="">
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
@@ -394,7 +394,7 @@ main{padding-top:14px;padding-bottom:30px}
     <div class="splash-rings" aria-hidden="true"></div>
     <div class="splash-logo-stage" aria-hidden="true">
       <div class="splash-logo-glow"></div>
-      <img class="splash-logo" src="assets/sherpa-caddie-logo-fast.webp?v=063" width="320" height="349" decoding="sync" fetchpriority="high" alt="Sherpa Caddie logo">
+      <img class="splash-logo" src="assets/sherpa-caddie-logo-fast.webp?v=064" width="320" height="349" decoding="sync" fetchpriority="high" alt="Sherpa Caddie logo">
     </div>
     <div class="splash-title">Sherpa Caddie</div>
     <div class="splash-subtitle">Your guide. Your game. Your best round.</div>
@@ -404,12 +404,12 @@ main{padding-top:14px;padding-bottom:30px}
 </div>
 <div class="app">
 <header class="topbar">
-  <div class="brand-badge"><img class="brand-logo" src="assets/sherpa-caddie-logo-fast.webp?v=063" width="180" height="196" decoding="sync" fetchpriority="high" alt="Sherpa Caddie"></div>
+  <div class="brand-badge"><img class="brand-logo" src="assets/sherpa-caddie-logo-fast.webp?v=064" width="180" height="196" decoding="sync" fetchpriority="high" alt="Sherpa Caddie"></div>
   <div class="brand-text">
     <h1>Sherpa Caddie</h1>
     <p>Your guide. Your game. Your best round.</p>
   </div>
-  <div class="version">v0.6.3</div>
+  <div class="version">v0.6.4</div>
 </header>
 
 <div class="tabs-wrap">
@@ -618,7 +618,7 @@ main{padding-top:14px;padding-bottom:30px}
   </article>
 </section>
 
-<div class="footer"><span>Sherpa Caddie v0.6.3</span><button id="aboutBtn">What’s in v0.6.3?</button></div>
+<div class="footer"><span>Sherpa Caddie v0.6.4</span><button id="aboutBtn">What’s in v0.6.4?</button></div>
 </main>
 </div>
 
@@ -1161,105 +1161,113 @@ modelSelect.addEventListener("change", ()=>{
 });
 setBadge(deviceBadge, navigator.gpu ? "WebGPU detected" : "WebGPU not detected", navigator.gpu ? "ready" : "err");
 setupVoice();
-/* Course discovery — resilient multi-source search */
+/* Course discovery — OpenGolf-first, with resilient fallbacks */
 function escapeHTML(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
 function normalizeCourse(c){
- const loc=c.location||c.address||{};
- const lat=Number(c.latitude??loc.latitude??loc.lat??c.lat), lon=Number(c.longitude??loc.longitude??loc.lng??loc.lon??c.lng);
- return {raw:c,id:c.id??c.course_id??c.slug??null,name:c.name??c.course_name??c.club_name??"Golf Course",city:c.city??loc.city??"",state:c.state??loc.state??"",address:c.formatted_address??c.address_text??"",lat:Number.isFinite(lat)?lat:null,lon:Number.isFinite(lon)?lon:null,source:c.source||"OpenGolfAPI",aliases:c.aliases||""};
+ const loc=(c&&typeof c.location==="object"?c.location:null)||(c&&typeof c.address==="object"?c.address:null)||{};
+ const lat=Number(c?.latitude??loc.latitude??loc.lat??c?.lat), lon=Number(c?.longitude??loc.longitude??loc.lng??loc.lon??c?.lng??c?.lon);
+ const addressText=typeof c?.address==="string"?c.address:(c?.formatted_address??c?.address_text??"");
+ return {raw:c?.raw??c,id:c?.id??c?.course_id??c?.slug??null,name:c?.name??c?.course_name??c?.club_name??"Golf Course",city:c?.city??loc.city??"",state:c?.state??loc.state??"",address:addressText,lat:Number.isFinite(lat)?lat:null,lon:Number.isFinite(lon)?lon:null,source:c?.source||"OpenGolfAPI",aliases:c?.aliases||"",distance_mi:Number(c?.distance_mi)};
 }
-function coursesFromPayload(d){if(Array.isArray(d))return d;if(Array.isArray(d.courses))return d.courses;if(Array.isArray(d.results))return d.results;if(Array.isArray(d.data))return d.data;return[]}
-function sleep(ms){return new Promise(r=>setTimeout(r,ms))}
-async function fetchJSONTimeout(url,options={},timeout=6500){
- const controller=new AbortController(), timer=setTimeout(()=>controller.abort(),timeout);
- try{const r=await fetch(url,{...options,signal:controller.signal});if(!r.ok)throw new Error(`HTTP ${r.status}`);return await r.json()}finally{clearTimeout(timer)}
-}
-async function courseSearch(url){const d=await fetchJSONTimeout(url,{},5500);return coursesFromPayload(d).map(normalizeCourse)}
+function coursesFromPayload(d){if(Array.isArray(d))return d;if(Array.isArray(d?.courses))return d.courses;if(Array.isArray(d?.results))return d.results;if(Array.isArray(d?.data))return d.data;return[]}
+async function fetchJSONTimeout(url,options={},timeout=7500){const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),timeout);try{const r=await fetch(url,{...options,signal:controller.signal});if(!r.ok)throw new Error(`HTTP ${r.status}`);return await r.json()}finally{clearTimeout(timer)}}
+async function courseSearch(url){const d=await fetchJSONTimeout(url,{},7500);return coursesFromPayload(d).map(x=>normalizeCourse({...x,source:"OpenGolfAPI"}))}
 function haversineMiles(a,b){if(!a||!b)return null;const R=3958.7613,rad=x=>x*Math.PI/180,dLat=rad(b.lat-a.lat),dLon=rad(b.lon-a.lon),la1=rad(a.lat),la2=rad(b.lat);const h=Math.sin(dLat/2)**2+Math.cos(la1)*Math.cos(la2)*Math.sin(dLon/2)**2;return 2*R*Math.asin(Math.sqrt(h))}
-function courseDistance(c){return Number.isFinite(c.lat)&&Number.isFinite(c.lon)&&state.userCoords?haversineMiles(state.userCoords,{lat:c.lat,lon:c.lon}):null}
-function searchDistance(c){const o=state.searchOrigin||state.userCoords;return Number.isFinite(c.lat)&&Number.isFinite(c.lon)&&o?haversineMiles(o,{lat:c.lat,lon:c.lon}):null}
+function courseDistance(c){return Number.isFinite(Number(c?.lat))&&Number.isFinite(Number(c?.lon))&&state.userCoords?haversineMiles(state.userCoords,{lat:Number(c.lat),lon:Number(c.lon)}):null}
+function searchDistance(c){const o=state.searchOrigin||state.userCoords;return Number.isFinite(Number(c?.lat))&&Number.isFinite(Number(c?.lon))&&o?haversineMiles(o,{lat:Number(c.lat),lon:Number(c.lon)}):null}
 function nameTokens(s){const stop=new Set(["the","at","golf","course","club","country","cc","gc","plantation","and","of","sc","south","carolina"]);return String(s||"").toLowerCase().replace(/[^a-z0-9]+/g," ").trim().split(/\s+/).filter(x=>x&&!stop.has(x))}
-function matchScore(query,c){const q=nameTokens(query),name=nameTokens(`${c.name} ${c.aliases||""}`);if(!q.length)return 0;let hits=0;q.forEach(x=>{if(name.includes(x))hits+=1});let score=(hits/q.length)*100;if(String(c.name).toLowerCase().includes(String(query).toLowerCase()))score+=35;const d=searchDistance(c);if(d!=null)score+=Math.max(0,24-d);return score}
-function dedupeCourses(items){const out=[];for(const c0 of items){const c=normalizeCourse(c0);if(!c.name||!Number.isFinite(c.lat)||!Number.isFinite(c.lon))continue;const key=nameTokens(c.name).join(" ")||c.name.toLowerCase();const dup=out.find(x=>{const sameName=(nameTokens(x.name).join(" ")===key);const d=haversineMiles({lat:x.lat,lon:x.lon},{lat:c.lat,lon:c.lon});return sameName||(d!=null&&d<.18&&nameTokens(x.name).some(v=>nameTokens(c.name).includes(v)))});if(!dup)out.push(c);else if((dup.source||"").includes("OpenGolf")&&!(c.source||"").includes("OpenGolf"))Object.assign(dup,c)}return out}
-function buildViewbox(lat,lon,radiusMiles=32){const latDelta=radiusMiles/69,lonDelta=radiusMiles/(69*Math.max(.25,Math.cos(lat*Math.PI/180)));return `${lon-lonDelta},${lat+latDelta},${lon+lonDelta},${lat-latDelta}`}
-function nominatimToCourse(x){const a=x.address||{},n=x.namedetails||{},e=x.extratags||{};return normalizeCourse({name:n.name||x.name||String(x.display_name||"").split(",")[0],city:a.city||a.town||a.village||a.municipality||a.hamlet||"",state:a.state||"",formatted_address:x.display_name||"",latitude:Number(x.lat),longitude:Number(x.lon),source:"OpenStreetMap Search",aliases:[n.alt_name,n.old_name,n.official_name,n.short_name,e.alt_name,e.old_name].filter(Boolean).join(" "),osm_class:x.class,osm_place_type:x.type,raw:x})}
-async function nominatimRequest(params){
- params.set("format","jsonv2");params.set("addressdetails","1");params.set("namedetails","1");params.set("extratags","1");params.set("countrycodes","us");
- const url=`https://nominatim.openstreetmap.org/search?${params.toString()}`;
- return fetchJSONTimeout(url,{headers:{"Accept":"application/json"}},6000);
+function matchScore(query,c){const q=nameTokens(query),name=nameTokens(`${c.name} ${c.aliases||""} ${c.city||""} ${c.state||""}`);if(!q.length)return 0;let hits=0;q.forEach(x=>{if(name.includes(x))hits++});let score=(hits/q.length)*100;if(String(c.name).toLowerCase().includes(String(query).toLowerCase()))score+=35;const d=searchDistance(c);if(d!=null)score+=Math.max(0,24-d);return score}
+function dedupeCourses(items){const out=[];for(const raw of items||[]){const c=(raw&&raw.name&&raw.lat!=null&&raw.lon!=null)?{...raw,lat:Number(raw.lat),lon:Number(raw.lon)}:normalizeCourse(raw);if(!c.name||!Number.isFinite(c.lat)||!Number.isFinite(c.lon))continue;const key=nameTokens(c.name).join(" ")||String(c.name).toLowerCase();const dup=out.find(x=>{const sameName=nameTokens(x.name).join(" ")===key;const d=haversineMiles({lat:x.lat,lon:x.lon},{lat:c.lat,lon:c.lon});return sameName||(d!=null&&d<.12&&nameTokens(x.name).some(v=>nameTokens(c.name).includes(v)))});if(!dup)out.push(c);else if((c.source||"").includes("OpenGolf")&&!(dup.source||"").includes("OpenGolf"))Object.assign(dup,c)}return out}
+
+async function openGolfNearby(lat,lon,radiusMiles=35){
+ const u=`https://api.opengolfapi.org/v1/courses/search?lat=${encodeURIComponent(lat)}&lng=${encodeURIComponent(lon)}&radius_mi=${encodeURIComponent(radiusMiles)}&limit=50`;
+ return courseSearch(u);
 }
-async function nominatimCourseSearch(query){
- const p=new URLSearchParams({q:query,limit:"12"});const d=await nominatimRequest(p);
- return d.map(nominatimToCourse).filter(c=>Number.isFinite(c.lat)&&Number.isFinite(c.lon));
+async function openGolfTextSearch(query){return courseSearch(`https://api.opengolfapi.org/v1/courses/search?q=${encodeURIComponent(query)}&limit=50`)}
+async function openGolfState(code){
+ if(!code)return[];
+ const all=[],batch=250;
+ for(let offset=0;offset<1250;offset+=batch){
+   const d=await fetchJSONTimeout(`https://api.opengolfapi.org/v1/courses/state/${encodeURIComponent(code)}?limit=${batch}&offset=${offset}`,{},7500);
+   const page=coursesFromPayload(d).map(x=>normalizeCourse({...x,source:"OpenGolfAPI state"}));
+   all.push(...page);
+   const total=Number(d?.total);
+   if(page.length<batch||(Number.isFinite(total)&&all.length>=total))break;
+ }
+ return all;
 }
-async function geocodeSearchArea(query){
- const zip=String(query).trim().match(/^\d{5}(?:-\d{4})?$/);
- const p=zip?new URLSearchParams({postalcode:zip[0].slice(0,5),limit:"3"}):new URLSearchParams({q:query,limit:"5"});
- const d=await nominatimRequest(p);if(!d.length)return null;const x=d[0];return{lat:Number(x.lat),lon:Number(x.lon),label:x.display_name||query};
-}
+function stateCodeFromAddress(a={}){const iso=a["ISO3166-2-lvl4"]||a["ISO3166-2-lvl3"]||a["ISO3166-2-lvl6"]||"";const m=String(iso).match(/US-([A-Z]{2})/);if(m)return m[1];const names={"South Carolina":"SC","North Carolina":"NC","Georgia":"GA","Florida":"FL","Virginia":"VA","Tennessee":"TN","Alabama":"AL","Mississippi":"MS","Texas":"TX","California":"CA","New York":"NY","Pennsylvania":"PA","Ohio":"OH","Michigan":"MI","Indiana":"IN","Illinois":"IL","Kentucky":"KY","Maryland":"MD","New Jersey":"NJ","Massachusetts":"MA","Connecticut":"CT","Rhode Island":"RI","Vermont":"VT","New Hampshire":"NH","Maine":"ME","West Virginia":"WV","Wisconsin":"WI","Minnesota":"MN","Iowa":"IA","Missouri":"MO","Arkansas":"AR","Louisiana":"LA","Oklahoma":"OK","Kansas":"KS","Nebraska":"NE","South Dakota":"SD","North Dakota":"ND","Montana":"MT","Wyoming":"WY","Colorado":"CO","New Mexico":"NM","Arizona":"AZ","Utah":"UT","Nevada":"NV","Idaho":"ID","Washington":"WA","Oregon":"OR","Alaska":"AK","Hawaii":"HI","Delaware":"DE","District of Columbia":"DC"};return names[a.state]||""}
+async function nominatimRequest(params){params.set("format","jsonv2");params.set("addressdetails","1");params.set("namedetails","1");params.set("extratags","1");params.set("countrycodes","us");return fetchJSONTimeout(`https://nominatim.openstreetmap.org/search?${params.toString()}`,{headers:{"Accept":"application/json"}},7000)}
+async function geocodeSearchArea(query){const zip=String(query).trim().match(/^\d{5}(?:-\d{4})?$/);const p=zip?new URLSearchParams({postalcode:zip[0].slice(0,5),limit:"3"}):new URLSearchParams({q:query,limit:"5"});const d=await nominatimRequest(p);if(!d.length)return null;const x=d[0],a=x.address||{};return{lat:Number(x.lat),lon:Number(x.lon),label:x.display_name||query,stateCode:stateCodeFromAddress(a),city:a.city||a.town||a.village||a.municipality||"",state:a.state||""}}
+async function reverseSearchArea(lat,lon){try{const u=`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${encodeURIComponent(lat)}&lon=${encodeURIComponent(lon)}&zoom=10&addressdetails=1`;const x=await fetchJSONTimeout(u,{headers:{"Accept":"application/json"}},7000),a=x.address||{};return{label:x.display_name||"",stateCode:stateCodeFromAddress(a),city:a.city||a.town||a.village||a.municipality||"",state:a.state||""}}catch{return null}}
 function looksLikeAreaQuery(q){q=String(q||"").trim();return /^\d{5}(?:-\d{4})?$/.test(q)||(/,/.test(q)&&!/golf|course|club|links|country/i.test(q))}
-function isGolfNominatimResult(x){const cls=String(x.class||"").toLowerCase(),type=String(x.type||"").toLowerCase(),display=String(x.display_name||"").toLowerCase(),extra=x.extratags||{};return cls==="leisure"&&type==="golf_course"||type.includes("golf")||String(extra.sport||"").toLowerCase()==="golf"||/golf course|golf club|country club|golf links/.test(display)}
-async function nominatimNearbyGolfCourses(lat,lon,radiusMiles=32){
- const p=new URLSearchParams({q:"golf course",limit:"40",bounded:"1",viewbox:buildViewbox(lat,lon,radiusMiles)});
- const d=await nominatimRequest(p);
- return d.filter(isGolfNominatimResult).map(nominatimToCourse).filter(c=>Number.isFinite(c.lat)&&Number.isFinite(c.lon));
-}
-const OVERPASS_ENDPOINTS=["https://overpass-api.de/api/interpreter","https://overpass.kumi.systems/api/interpreter"];
-async function overpassJSON(q){let last=null;for(const endpoint of OVERPASS_ENDPOINTS){try{return await fetchJSONTimeout(`${endpoint}?data=${encodeURIComponent(q)}`,{},5500)}catch(e){last=e}}throw last||new Error("Overpass unavailable")}
-async function nearbyOsmCourses(lat,lon,radiusMeters=45000){
- const q=`[out:json][timeout:12];(nwr(around:${radiusMeters},${lat},${lon})["leisure"="golf_course"]["name"];nwr(around:${radiusMeters},${lat},${lon})["sport"="golf"]["name"];);out center tags;`;
- const d=await overpassJSON(q);
- return (d.elements||[]).map(el=>{const tags=el.tags||{},p=el.center||el;if(!Number.isFinite(Number(p.lat))||!Number.isFinite(Number(p.lon)))return null;const street=[tags["addr:housenumber"],tags["addr:street"]].filter(Boolean).join(" ");return normalizeCourse({name:tags.name||tags.official_name||tags.short_name||"Golf Course",city:tags["addr:city"]||tags["addr:place"]||"",state:tags["addr:state"]||"",formatted_address:[street,tags["addr:city"],tags["addr:state"]].filter(Boolean).join(", "),latitude:Number(p.lat),longitude:Number(p.lon),source:"OpenStreetMap Detail",aliases:[tags.alt_name,tags.old_name,tags.short_name,tags.official_name].filter(Boolean).join(" "),osm_type:el.type,osm_id:el.id})}).filter(Boolean);
-}
-async function sourceResult(name,promise){try{const items=await promise;state.courseSourceHealth[name]="ok";return{ok:true,name,items}}catch(e){state.courseSourceHealth[name]=e?.message||"failed";console.warn(`${name} course source failed`,e);return{ok:false,name,items:[]}}}
-function sourceSummary(results){const ok=results.filter(r=>r.ok&&r.items.length).map(r=>r.name),failed=results.filter(r=>!r.ok).map(r=>r.name);if(ok.length)return`Found courses using ${ok.join(" + ")}${failed.length?` • ${failed.join(" + ")} unavailable`:""}`;if(failed.length===results.length)return"Course search services are temporarily unavailable. Please try again.";return"Search completed, but no matching golf courses were returned."}
-async function nearbyCourseSearchAll(lat,lon,radiusMiles=32){
- state.searchOrigin={lat,lon};
- const results=await Promise.all([
-   sourceResult("OpenStreetMap Search",nominatimNearbyGolfCourses(lat,lon,radiusMiles)),
-   sourceResult("OpenStreetMap Detail",nearbyOsmCourses(lat,lon,Math.round(radiusMiles*1609.344))),
-   sourceResult("OpenGolf",courseSearch(`https://api.opengolfapi.org/v1/courses/search?lat=${lat}&lng=${lon}&radius=${Math.round(radiusMiles)}`))
- ]);
- const items=dedupeCourses(results.flatMap(r=>r.items)).sort((a,b)=>(searchDistance(a)??9999)-(searchDistance(b)??9999));
- return{items,summary:sourceSummary(results)};
+function courseQueryVariants(q){const values=[String(q||"").trim()];const first=values[0].split(",")[0].trim();if(first&&first!==values[0])values.push(first);const core=nameTokens(first).join(" ");if(core&&core!==first.toLowerCase())values.push(core);return [...new Set(values.filter(Boolean))].slice(0,3)}
+
+const OVERPASS_ENDPOINTS=["https://overpass-api.de/api/interpreter","https://overpass.kumi.systems/api/interpreter","https://overpass.nchc.org.tw/api/interpreter"];
+async function overpassJSON(q){let last=null;for(const endpoint of OVERPASS_ENDPOINTS){try{return await fetchJSONTimeout(`${endpoint}?data=${encodeURIComponent(q)}`,{},6500)}catch(e){last=e}}throw last||new Error("Overpass unavailable")}
+async function nearbyOsmCourses(lat,lon,radiusMeters=30000){const q=`[out:json][timeout:10];(nwr(around:${radiusMeters},${lat},${lon})["leisure"="golf_course"]["name"];nwr(around:${radiusMeters},${lat},${lon})["sport"="golf"]["name"];);out center tags;`;const d=await overpassJSON(q);return(d.elements||[]).map(el=>{const tags=el.tags||{},p=el.center||el;if(!Number.isFinite(Number(p.lat))||!Number.isFinite(Number(p.lon)))return null;const street=[tags["addr:housenumber"],tags["addr:street"]].filter(Boolean).join(" ");return normalizeCourse({name:tags.name||tags.official_name||tags.short_name||"Golf Course",city:tags["addr:city"]||tags["addr:place"]||"",state:tags["addr:state"]||"",formatted_address:[street,tags["addr:city"],tags["addr:state"]].filter(Boolean).join(", "),latitude:Number(p.lat),longitude:Number(p.lon),source:"OpenStreetMap fallback",aliases:[tags.alt_name,tags.old_name,tags.short_name,tags.official_name].filter(Boolean).join(" "),osm_type:el.type,osm_id:el.id})}).filter(Boolean)}
+async function sourceResult(name,promise){try{const items=await promise;state.courseSourceHealth[name]="ok";return{ok:true,name,items:items||[]}}catch(e){state.courseSourceHealth[name]=e?.message||"failed";console.warn(`${name} course source failed`,e);return{ok:false,name,items:[]}}}
+function resultSummary(items,results,prefix=""){const good=results.filter(r=>r.ok&&r.items.length).map(r=>r.name),failed=results.filter(r=>!r.ok).map(r=>r.name);if(items.length)return`${prefix}${items.length} course${items.length===1?"":"s"} found${good.length?` • ${good.join(" + ")}`:""}${failed.length?` • fallback unavailable: ${failed.join(" + ")}`:""}`;if(failed.length===results.length)return`${prefix}Course services are temporarily unavailable. Please try again.`;return`${prefix}No golf courses matched this location.`}
+
+async function nearbyCourseSearchAll(lat,lon,radiusMiles=35,stateCode=""){
+ state.searchOrigin={lat:Number(lat),lon:Number(lon)};
+ const primary=await sourceResult("OpenGolf",openGolfNearby(lat,lon,radiusMiles));
+ let results=[primary],items=dedupeCourses(primary.items);
+ if(stateCode){const stateResult=await sourceResult("OpenGolf state fallback",openGolfState(stateCode).then(xs=>xs.filter(c=>{const d=searchDistance(c);return d!=null&&d<=radiusMiles+10})));results.push(stateResult);items=dedupeCourses([...items,...stateResult.items])}
+ if(items.length<3){const osm=await sourceResult("OpenStreetMap fallback",nearbyOsmCourses(lat,lon,Math.round(Math.min(radiusMiles,24)*1609.344)));results.push(osm);items=dedupeCourses([...items,...osm.items])}
+ items.sort((a,b)=>(searchDistance(a)??9999)-(searchDistance(b)??9999));
+ return{items,summary:resultSummary(items,results)};
 }
 async function combinedTextCourseSearch(query){
  const q=String(query||"").trim();
  if(looksLikeAreaQuery(q)){
-   const areaResult=await sourceResult("Location lookup",geocodeSearchArea(q).then(x=>x?[x]:[]));
-   const area=areaResult.items[0];
-   if(area){await sleep(1050);const nearby=await nearbyCourseSearchAll(area.lat,area.lon,34);return{...nearby,summary:`${area.label?`Search area: ${area.label.split(",").slice(0,3).join(", ")} • `:""}${nearby.summary}`}}
-   return{items:[],summary:"I could not resolve that ZIP/city to a map location."};
+   const area=await geocodeSearchArea(q);
+   if(!area)return{items:[],summary:"I could not resolve that ZIP/city to a map location."};
+   const nearby=await nearbyCourseSearchAll(area.lat,area.lon,35,area.stateCode);
+   return{...nearby,summary:`Search area: ${area.label.split(",").slice(0,3).join(", ")} • ${nearby.summary}`};
  }
  state.searchOrigin=state.userCoords||null;
- const tasks=[sourceResult("OpenStreetMap Search",nominatimCourseSearch(q)),sourceResult("OpenGolf",courseSearch(`https://api.opengolfapi.org/v1/courses/search?q=${encodeURIComponent(q)}`))];
- if(state.userCoords){tasks.push(sourceResult("OpenStreetMap Nearby",nominatimNearbyGolfCourses(state.userCoords.lat,state.userCoords.lon,38)));tasks.push(sourceResult("OpenStreetMap Detail",nearbyOsmCourses(state.userCoords.lat,state.userCoords.lon,61000)))}
- const results=await Promise.all(tasks);let items=dedupeCourses(results.flatMap(r=>r.items));items.sort((a,b)=>matchScore(q,b)-matchScore(q,a));return{items,summary:sourceSummary(results)};
+ const variants=courseQueryVariants(q),results=[];let items=[];
+ for(const v of variants){const r=await sourceResult(v===variants[0]?"OpenGolf":"OpenGolf alternate-name search",openGolfTextSearch(v));results.push(r);items.push(...r.items);if(items.length>=8)break}
+ items=dedupeCourses(items);
+ if(!items.length&&state.userCoords){const near=await sourceResult("OpenGolf nearby",openGolfNearby(state.userCoords.lat,state.userCoords.lon,40));results.push(near);items=dedupeCourses(near.items).filter(c=>matchScore(q,c)>=25)}
+ if(!items.length){const osm=await sourceResult("OpenStreetMap fallback",nearbyOsmCourses(state.userCoords?.lat??33,state.userCoords?.lon??-80,40000));results.push(osm);items=dedupeCourses(osm.items).filter(c=>matchScore(q,c)>=20)}
+ items.sort((a,b)=>matchScore(q,b)-matchScore(q,a));
+ return{items,summary:resultSummary(items,results)};
 }
 function renderCourseResults(items,headline=""){
  const box=$("#courseResults");box.innerHTML="";
  if(headline){const h=document.createElement("div");h.className="muted";h.style.cssText="font-size:.76rem;font-weight:800;margin-bottom:6px;line-height:1.35";h.textContent=headline;box.appendChild(h)}
- if(!items.length){box.insertAdjacentHTML("beforeend",'<div class="muted" style="font-size:.84rem">No golf courses were returned. Try a course name plus city/state, a ZIP code, or Find Courses Near Me.</div>');return}
- items.slice(0,12).forEach(c=>{const d=searchDistance(c),loc=c.address||[c.city,c.state].filter(Boolean).join(", ")||"Location available";const el=document.createElement("div");el.className="course-result";el.innerHTML=`<div><strong>${escapeHTML(c.name)}</strong><small>${escapeHTML(loc)}</small>${d!=null?`<span class="distance">${d<10?d.toFixed(1):Math.round(d)} mi away</span>`:""}<span class="source">${escapeHTML(c.source||"")}</span></div><button class="btn ghost">Choose</button>`;el.querySelector("button").onclick=()=>selectCourse(c);box.appendChild(el)})
+ if(!items.length){box.insertAdjacentHTML("beforeend",'<div class="muted" style="font-size:.84rem">No golf courses were returned. Try the course name, city/state, ZIP code, or Find Courses Near Me.</div>');return}
+ items.slice(0,16).forEach(c=>{const d=searchDistance(c),loc=c.address||[c.city,c.state].filter(Boolean).join(", ")||"Mapped course";const el=document.createElement("div");el.className="course-result";el.innerHTML=`<div><strong>${escapeHTML(c.name)}</strong><small>${escapeHTML(loc)}</small>${d!=null?`<span class="distance">${d<10?d.toFixed(1):Math.round(d)} mi away</span>`:""}<span class="source">${escapeHTML(c.source||"")}</span></div><button class="btn ghost">Choose</button>`;el.querySelector("button").onclick=()=>selectCourse(c);box.appendChild(el)})
 }
-$("#courseSearchBtn").onclick=async()=>{const q=$("#courseSearch").value.trim();if(!q)return;$("#courseResults").innerHTML='<span class="muted">Searching golf course and map sources…</span>';try{const r=await combinedTextCourseSearch(q);renderCourseResults(r.items,r.summary)}catch(e){console.error(e);renderCourseResults([],"Search could not be completed. Please try again.");toast("Course search could not be completed")}};
+$("#courseSearchBtn").onclick=async()=>{const q=$("#courseSearch").value.trim();if(!q)return;$("#courseResults").innerHTML='<span class="muted">Searching the OpenGolf course database…</span>';try{const r=await combinedTextCourseSearch(q);renderCourseResults(r.items,r.summary)}catch(e){console.error(e);renderCourseResults([],"Course search could not be completed. Please try again.");toast("Course search could not be completed")}};
 $("#courseSearch").addEventListener("keydown",e=>{if(e.key==="Enter")$("#courseSearchBtn").click()});
-$("#useTypedCourseBtn").onclick=async()=>{const q=$("#courseSearch").value.trim();if(!q){toast("Type a course name first");return}$("#courseResults").innerHTML='<span class="muted">Resolving the real course location…</span>';try{const r=await combinedTextCourseSearch(q),best=r.items[0];if(best&&(looksLikeAreaQuery(q)||matchScore(q,best)>=30)){selectCourse(best);renderCourseResults(r.items,r.summary);toast(`Using mapped location for ${best.name}`);return}}catch{}state.selectedCourse={name:q,city:"",state:"",address:"",lat:null,lon:null,raw:null,source:"Typed only"};state.coords=null;$("#selectedCourseName").textContent=q;$("#selectedCourseLocation").textContent="Name saved, but no verified map location was found. Map planning is disabled until a mapped course is selected.";$("#weatherNote").textContent="Weather needs a verified course location.";toast("Course name saved — location not verified")};
+$("#useTypedCourseBtn").onclick=async()=>{const q=$("#courseSearch").value.trim();if(!q){toast("Type a course name first");return}$("#courseResults").innerHTML='<span class="muted">Resolving the real course location…</span>';try{const r=await combinedTextCourseSearch(q),best=r.items[0];if(best&&matchScore(q,best)>=20){selectCourse(best);renderCourseResults(r.items,r.summary);toast(`Using mapped location for ${best.name}`);return}}catch{}state.selectedCourse={name:q,city:"",state:"",address:"",lat:null,lon:null,raw:null,source:"Typed only"};state.coords=null;$("#selectedCourseName").textContent=q;$("#selectedCourseLocation").textContent="Name saved, but no verified map location was found. Map planning is disabled until a mapped course is selected.";$("#weatherNote").textContent="Weather needs a verified course location.";toast("Course name saved — location not verified")};
 $("#nearMeBtn").onclick=()=>{
  if(!navigator.geolocation){toast("Location is not supported in this browser.");return}
- $("#courseResults").innerHTML='<span class="muted">Using your GPS and searching multiple golf-course sources…</span>';
- navigator.geolocation.getCurrentPosition(async p=>{
-   state.userCoords={lat:p.coords.latitude,lon:p.coords.longitude};state.searchOrigin=state.userCoords;
-   try{const r=await nearbyCourseSearchAll(state.userCoords.lat,state.userCoords.lon,32);renderCourseResults(r.items,`Nearby courses sorted by distance • ${r.summary}`);if(!r.items.length)toast("No nearby courses were returned — try Search with your ZIP code")}
-   catch(e){console.error(e);renderCourseResults([],"Nearby course search failed. Try your ZIP code or course name.");toast("Nearby course search failed")}
- },()=>{$("#courseResults").innerHTML='<span class="muted">Location permission was not granted. Enter your ZIP code or course name instead.</span>'},{enableHighAccuracy:true,timeout:12000,maximumAge:60000})
+ $("#courseResults").innerHTML='<span class="muted">Using your GPS to find nearby golf courses…</span>';
+ navigator.geolocation.getCurrentPosition(async p=>{state.userCoords={lat:p.coords.latitude,lon:p.coords.longitude};state.searchOrigin=state.userCoords;try{let r=await nearbyCourseSearchAll(state.userCoords.lat,state.userCoords.lon,35);if(!r.items.length){const area=await reverseSearchArea(state.userCoords.lat,state.userCoords.lon);if(area?.stateCode)r=await nearbyCourseSearchAll(state.userCoords.lat,state.userCoords.lon,35,area.stateCode)}renderCourseResults(r.items,`Nearby courses sorted by distance • ${r.summary}`);if(!r.items.length)toast("No nearby courses were returned — try your ZIP code") }catch(e){console.error(e);renderCourseResults([],"Nearby course search failed. Try your ZIP code or course name.");toast("Nearby course search failed")}},()=>{$("#courseResults").innerHTML='<span class="muted">Location permission was not granted. Enter your ZIP code or course name instead.</span>'},{enableHighAccuracy:true,timeout:12000,maximumAge:60000})
 };
+async function hydrateSelectedCourse(){
+ const c=state.selectedCourse;if(!c?.id)return;
+ try{
+   const detail=await fetchJSONTimeout(`https://api.opengolfapi.org/v1/courses/${encodeURIComponent(c.id)}`,{},7500);
+   if(!state.selectedCourse||state.selectedCourse.id!==c.id)return;
+   const full=normalizeCourse({...detail,source:"OpenGolfAPI"});
+   state.selectedCourse={...state.selectedCourse,...full,raw:detail};
+   if(Number.isFinite(full.lat)&&Number.isFinite(full.lon))state.coords={lat:full.lat,lon:full.lon};
+   const loc=full.address||[full.city,full.state].filter(Boolean).join(", ")||"Mapped course";const d=courseDistance(full);
+   $("#selectedCourseLocation").textContent=loc+(d!=null?` • ${d<10?d.toFixed(1):Math.round(d)} mi from you`:"");
+ }catch(e){console.warn("OpenGolf course detail unavailable",e)}
+}
 function selectCourse(c,load=true){
  c=normalizeCourse(c);state.selectedCourse=c;state.coords=(Number.isFinite(c.lat)&&Number.isFinite(c.lon))?{lat:c.lat,lon:c.lon}:null;
  $("#selectedCourseName").textContent=c.name;
  const d=courseDistance(c),loc=c.address||[c.city,c.state].filter(Boolean).join(", ")||"Verified mapped course";
  $("#selectedCourseLocation").textContent=loc+(d!=null?` • ${d<10?d.toFixed(1):Math.round(d)} mi from you`:"");
  if(state.coords&&load)loadWeather();else if(!state.coords)$("#weatherNote").textContent="No verified course coordinates are available yet.";
+ hydrateSelectedCourse();
 }
 async function loadWeather(){
  if(!state.coords){$("#weatherNote").textContent="No verified course coordinates available. Select a mapped course before loading weather.";return}
@@ -1305,7 +1313,7 @@ async function loadGolfMapDetails(coords){clearMapFeatures();$("#mapStatus").tex
     nwr(around:1800,${coords.lat},${coords.lon})["golf"~"^(hole|fairway|green|tee|bunker|water_hazard|pin)$"];
     nwr(around:1300,${coords.lat},${coords.lon})["natural"="water"];
   );
-  out tags geom;`;try{const url="https://overpass-api.de/api/interpreter?data="+encodeURIComponent(q),r=await fetch(url);if(!r.ok)throw new Error("Overpass");const data=await r.json();(data.elements||[]).forEach(el=>{if(el.type==="relation")addRelationMemberGeometry(el);else addGeometryLayer(el)});const layers=state.mapFeatureGroup.getLayers();if(layers.length){const bounds=state.mapFeatureGroup.getBounds();if(bounds.isValid()){state.mapCourseBounds=bounds;state.map.fitBounds(bounds,{padding:[24,24],maxZoom:17})}const holeCount=Object.keys(state.mapHoleLayers).length;$("#mapStatus").textContent=`Course map loaded. ${layers.length} mapped features found${holeCount?` including ${holeCount} numbered hole paths`:""}. Detailed coverage varies by course.`}else{state.map.setView([coords.lat,coords.lon],16);$("#mapStatus").textContent="The course map is available, but this course does not appear to have detailed golf features mapped in OpenStreetMap yet."}}catch(e){state.map.setView([coords.lat,coords.lon],16);$("#mapStatus").textContent="The base course map is available. Detailed golf overlays could not be loaded right now."}syncHolePlannerSelection();updateHolePlanner()}
+  out tags geom;`;try{const data=await overpassJSON(q);(data.elements||[]).forEach(el=>{if(el.type==="relation")addRelationMemberGeometry(el);else addGeometryLayer(el)});const layers=state.mapFeatureGroup.getLayers();if(layers.length){const bounds=state.mapFeatureGroup.getBounds();if(bounds.isValid()){state.mapCourseBounds=bounds;state.map.fitBounds(bounds,{padding:[24,24],maxZoom:17})}const holeCount=Object.keys(state.mapHoleLayers).length;$("#mapStatus").textContent=`Course map loaded. ${layers.length} mapped features found${holeCount?` including ${holeCount} numbered hole paths`:""}. Detailed coverage varies by course.`}else{state.map.setView([coords.lat,coords.lon],16);$("#mapStatus").textContent="The course location is correct, but detailed hole geometry is not available from the mapping source for this course."}}catch(e){console.warn("Hole geometry source unavailable",e);state.map.setView([coords.lat,coords.lon],16);$("#mapStatus").textContent="The course location is loaded. Detailed hole geometry is temporarily unavailable, so Sherpa will use the schematic planner view."}syncHolePlannerSelection();updateHolePlanner()}
 function syncHolePlannerSelection(){const sel=$("#mapHoleSelect"),val=sel.value;if(val==="all"){if(state.mapCourseBounds&&state.mapCourseBounds.isValid())state.map.fitBounds(state.mapCourseBounds,{padding:[24,24],maxZoom:17});return}const n=Number(val),layer=state.mapHoleLayers[n];Object.values(state.mapHoleLayers).forEach(l=>l.setStyle&&l.setStyle({color:"#0B2033",weight:4,opacity:.8}));if(layer){layer.setStyle&&layer.setStyle({color:"#BA915B",weight:7,opacity:1});const b=layer.getBounds?.();if(b&&b.isValid())state.map.fitBounds(b,{padding:[45,45],maxZoom:18})}}
 function recommendClubForDistance(targetYards){const clubs=Object.entries(state.clubs).filter(([n])=>n!=="Putter").map(([name,dist])=>({name,dist:Number(dist||0)})).filter(x=>x.dist>0).sort((a,b)=>a.dist-b.dist);if(!clubs.length)return{name:"Driver",dist:220};let best=clubs[0],score=Infinity;clubs.forEach(c=>{const s=Math.abs(c.dist-targetYards)+(c.dist>targetYards?4:0);if(s<score){score=s;best=c}});return best}
 function chooseStrategy(holeInfo,mode){const total=holeInfo.yards,par=holeInfo.par;if(par===3){const club=recommendClubForDistance(total);return{club:club.name,carry:club.dist,targetYards:total,leave:0,label:"Center green",summary:"Middle of the green is usually smarter than chasing a sucker pin."}}const clubs=Object.entries(state.clubs).filter(([n])=>n!=="Putter").map(([name,dist])=>({name,dist:Number(dist||0)})).filter(x=>x.dist>0).sort((a,b)=>b.dist-a.dist);const desiredLeave=mode==="attack"?(par===5?185:110):mode==="layup"?(par===5?165:155):(par===5?145:130);let best=null,bestScore=Infinity;clubs.forEach(c=>{const leave=Math.max(0,total-c.dist);let score=Math.abs(leave-desiredLeave);if(mode==="smart"&&c.name==="Driver")score+=16;if(mode==="layup"&&["Driver","3 Wood"].includes(c.name))score+=20;if(mode==="attack"&&c.name==="Driver")score-=10;if(c.dist>total-10)score+=8;if(score<bestScore){bestScore=score;best={club:c.name,carry:c.dist,targetYards:c.dist,leave}}});if(!best)best={club:"Driver",carry:220,targetYards:220,leave:Math.max(0,total-220)};best.label=mode==="attack"?"Aggressive line":mode==="layup"?"Conservative fairway":"Right-center fairway";best.summary=mode==="attack"?"Take on more distance only if the landing window still feels comfortable.":mode==="layup"?"Favor a position that keeps the next shot simple and playable.":"Favor the widest useful landing area and the easiest next shot.";return best}
@@ -1378,7 +1386,7 @@ $("#importBtn").onclick=()=>$("#importFile").click();$("#importFile").onchange=a
 function hideSplash(){const el=$("#splashScreen");if(!el||el.classList.contains("is-hidden"))return;el.classList.add("is-hidden");setTimeout(()=>el.remove(),800)}
 window.addEventListener("load",()=>setTimeout(hideSplash,5000));
 setTimeout(hideSplash,5600);
-if("serviceWorker"in navigator)window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js?v=063").catch(()=>{}));
+if("serviceWorker"in navigator)window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js?v=064").catch(()=>{}));
 renderClubs();renderRounds();if(state.round){show("play");showRoundMode()}
 })();
 </script>
