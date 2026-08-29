@@ -12,7 +12,7 @@ jobs:
     env:
       DID_API_USERNAME: ${{ secrets.DID_API_USERNAME }}
       DID_API_PASSWORD: ${{ secrets.DID_API_PASSWORD }}
-      DID_AGENT_ID: v2_agt_0-5IY10J
+      DID_AGENT_ID: v2_agt_cPCRZyGW
 
     steps:
       - name: Validate D-ID secrets
