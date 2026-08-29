@@ -1,3 +1,25 @@
+## Version 0.11.2 — Mobile Scaling + GUIDE Launch Fix
+
+- Sherpa Caddie now always opens on **GUIDE**, including when a round is already in progress. The active round remains preserved and appears when PLAY is selected.
+- Added stronger responsive viewport rules for iPhone, Android phones, compact Android tablets, iPad portrait/landscape, and desktop/tablet browsers.
+- Prevents wide grid/flex children from expanding the document beyond the viewport.
+- Adds explicit horizontal-overflow protection and `min-width:0` handling throughout the app shell.
+- Makes the five top navigation tabs fit the available phone width without requiring pinch-to-zoom.
+- Tightens the active-round layout on narrow phones and keeps club/choice rows locally scrollable instead of widening the whole page.
+- Increased splash-screen title, tagline, and loading caption size on phones while retaining the Sherpa Caddie logo.
+- Bumped cache/version identifiers so iOS Safari and installed PWAs fetch the corrected responsive layout.
+
+### Device targets checked in the responsive design
+The CSS now explicitly covers:
+- compact phones around 360–390 CSS px wide (common Android and iPhone mini/SE-class widths),
+- iPhone 13-class widths around 390 CSS px,
+- larger iPhones and Android phones,
+- small/large Android tablets,
+- iPad portrait and landscape,
+- desktop/tablet widths.
+
+Physical device testing is still recommended because Safari and Android browser UI can change the effective viewport height/width.
+
 ## Version 0.11.1 — Sherpa Live Connection Fix
 
 - Restored the **canonical Sherpa Caddie logo** to the launch animation. Sage's realistic portrait remains limited to the Sherpa Live experience and transcript.
@@ -7,8 +29,8 @@
 - Sherpa Live now tries the current D-ID Client SDK from jsDelivr first, with esm.sh as a fallback, and reports a specific configuration/SDK/connection error instead of remaining indefinitely on Connecting.
 - `did-config.json` is intentionally excluded from service-worker caching.
 
-### One-time provisioning after installing v0.11.1
-1. Upload the v0.11.1 changed files.
+### One-time provisioning after installing v0.11.2
+1. Upload the v0.11.2 changed files.
 2. GitHub → Actions → **Provision D-ID client key** → Run workflow on `main`.
 3. Wait for the resulting GitHub Pages deployment.
 4. Fully close/reopen Sherpa Caddie and choose **Sherpa Live**.
@@ -24,7 +46,7 @@ https://davidfliesen.github.io/SherpaCaddy
 
 Sherpa Caddie combines the practical help of a caddie with the guidance and perspective of a Sherpa mentor. The core principle remains **one shot at a time**.
 
-## v0.11.1 — Sherpa Live Client SDK
+## v0.11.2 — Sherpa Live Client SDK
 
 This release replaces the visible D-ID Embed with the D-ID Client SDK so Sage is integrated into Sherpa Caddie as part of the app rather than appearing as a third-party overlay.
 
@@ -52,7 +74,7 @@ The nine attached D-ID client tools are registered inside the PWA: round context
 - The same Sage identity appears in Sherpa Live, transcript imagery, and the launch animation.
 - The formal/military-style presentation has been replaced with a cleaner forest-green golf quarter-zip look.
 
-### Changed files in v0.11.1
+### Changed files in v0.11.2
 
 - `index.html`
 - `manifest.webmanifest`
@@ -148,14 +170,14 @@ The PWA continues to use the browser speech-recognition API for microphone trans
 
 ## Changelog
 
-### v0.11.1 — Sherpa Live Client SDK
+### v0.11.2 — Sherpa Live Client SDK
 - Replaced the D-ID embed UI with the D-ID Client SDK.
 - Added native Text / Voice / Sherpa Live experience modes.
 - Registered all nine Sherpa client-tool handlers in the browser.
 - Added native Sage video, golf-context, transcript, listening/speaking, and connection UI.
 - Added the redesigned Sage portrait to Sherpa Live and the launch animation.
 - D-ID connects only after Sherpa Live is explicitly selected.
-- Updated PWA/cache versioning to **v0.11.1**.
+- Updated PWA/cache versioning to **v0.11.2**.
 
 ### v0.10.0 — Sherpa Live D-ID Integration
 - Added Text / Sherpa Live mode switching on the Guide screen.

@@ -5,11 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#18311C">
 <meta name="description" content="Sherpa Caddie — one-shot-at-a-time golf guidance combining a caddie, coach and mentor.">
-<link rel="manifest" href="manifest.webmanifest?v=0111">
-<link rel="icon" href="icons/favicon.png?v=0111" type="image/png">
-<link rel="apple-touch-icon" href="icons/icon-192.png?v=0111">
-<link rel="preload" as="image" href="assets/sherpa-caddie-logo-fast.webp?v=0111" type="image/webp" fetchpriority="high">
-<title>Sherpa Caddie v0.11.1</title>
+<link rel="manifest" href="manifest.webmanifest?v=0112">
+<link rel="icon" href="icons/favicon.png?v=0112" type="image/png">
+<link rel="apple-touch-icon" href="icons/icon-192.png?v=0112">
+<link rel="preload" as="image" href="assets/sherpa-caddie-logo-fast.webp?v=0112" type="image/webp" fetchpriority="high">
+<title>Sherpa Caddie v0.11.2</title>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
   crossorigin="">
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
@@ -34,6 +34,26 @@
   --shadow:0 6px 20px rgba(11,32,51,.07);
 }
 *{box-sizing:border-box}
+html{
+  width:100%;
+  max-width:100%;
+  overflow-x:hidden;
+  -webkit-text-size-adjust:100%;
+  text-size-adjust:100%;
+}
+body{
+  width:100%;
+  max-width:100%;
+  overflow-x:hidden;
+}
+img,video,canvas,svg{max-width:100%}
+button,input,select,textarea{max-width:100%}
+.app,.topbar,.tabs-wrap,.tabs,main,.view,.card{max-width:100%}
+.view,.card,.home,.play-grid,.plan,.shot-grid,.round-view,.round-voice-bar,
+.voice-mode-panel,.ask,.ask-shell,.ask-modebar,.sherpa-controls,.experience-switch,
+.sherpa-live-dashboard,.live-panel,.live-avatar-card,.live-info-grid,.live-control-grid{
+  min-width:0;
+}
 html,body{margin:0;min-height:100%;background:var(--cream);color:var(--navy);
   font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif}
 button,input,select,textarea{font:inherit}
@@ -451,6 +471,69 @@ main{padding-top:14px;padding-bottom:30px}
 @media(max-width:720px){.experience-switch{align-items:stretch;flex-direction:column}.experience-tabs{min-width:0;width:100%}.live-info-grid,.live-control-grid{grid-template-columns:1fr 1fr}.live-compose{grid-template-columns:1fr auto}.live-compose input{grid-column:1/-1}}
 @media(max-width:480px){.live-info-grid,.live-control-grid{grid-template-columns:1fr}.live-avatar-card{min-height:340px}.live-message{grid-template-columns:auto 1fr}.live-message time{display:none}}
 
+
+@media(max-width:620px){
+  .splash-inner{width:min(96vw,520px);padding:18px 14px}
+  .splash-logo-stage{min-width:0;width:100%;min-height:245px}
+  .splash-logo{width:min(74vw,270px);max-width:270px}
+  .splash-title{font-size:clamp(2.65rem,12vw,3.35rem);line-height:1.02}
+  .splash-subtitle{font-size:.92rem;line-height:1.3;letter-spacing:.075em;max-width:330px;margin:7px auto 0}
+  .splash-caption{font-size:1rem;line-height:1.3}
+  .splash-path{margin-top:20px}
+}
+
+/* v0.11.2 — phone/tablet viewport hardening */
+@media(max-width:900px){
+  .topbar{width:100%;padding-left:max(10px,env(safe-area-inset-left));padding-right:max(10px,env(safe-area-inset-right))}
+  .tabs-wrap{width:100%;padding-left:0;padding-right:0}
+  .tabs{width:100%;max-width:100%}
+  main{width:calc(100% - 20px);max-width:100%;margin-left:auto;margin-right:auto}
+  .play-grid,.plan,.shot-grid,.summary-grid,.learn-grid{min-width:0}
+  .club-strip{width:100%;max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}
+}
+@media(max-width:620px){
+  body{font-size:16px}
+  .topbar{height:78px;gap:8px;padding-top:5px;padding-bottom:5px}
+  .brand-badge{width:68px;height:68px;padding:5px;border-radius:16px}
+  .brand-logo{width:56px;height:56px}
+  .brand-text{min-width:0}
+  .brand-text h1{font-size:1.22rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .tabs{grid-template-columns:repeat(5,minmax(0,1fr))}
+  .tab{min-width:0;padding:8px 1px;gap:2px;white-space:normal}
+  .tab-icon{font-size:1.02rem}
+  .tab-label{font-size:.59rem;letter-spacing:0}
+  main{width:calc(100% - 12px);padding-top:10px;padding-bottom:22px}
+  .card{border-radius:14px}
+  .round-view{gap:8px}
+  .holebar{padding:11px 12px;gap:8px}
+  .holebar h2{font-size:1.22rem}
+  .round-voice-bar{padding:10px 11px}
+  .round-voice-main,.round-voice-switches{min-width:0}
+  .round-voice-switches{display:grid;grid-template-columns:1fr 1fr;width:100%;gap:8px}
+  .switch-row.compact{justify-content:flex-start;white-space:normal}
+  .plan{padding:12px;gap:10px}
+  .plan-col{min-width:0;border-right:0;padding-right:0;border-bottom:1px solid var(--line);padding-bottom:10px}
+  .plan-col:last-child{border-bottom:0;padding-bottom:0}
+  .plan h3{font-size:1.25rem;overflow-wrap:anywhere}
+  .plan p{font-size:.96rem;overflow-wrap:anywhere}
+  .shot-panel{padding:11px 10px;overflow:hidden}
+  .club-strip{gap:6px;padding-bottom:5px}
+  .club-choice{flex:0 0 auto;padding:8px 10px}
+  .quality-row,.direction-row{max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .ask,.course-card,.selected-card{padding:12px}
+  .experience-tabs{grid-template-columns:repeat(3,minmax(0,1fr));width:100%;min-width:0}
+  .experience-btn{min-width:0;padding:9px 4px;font-size:.78rem}
+  .sherpa-controls{grid-template-columns:minmax(0,1fr) auto}
+  .sherpa-controls .wide-full{grid-column:1/-1}
+  .live-compose{grid-template-columns:minmax(0,1fr) auto}
+  .live-compose input{grid-column:1/-1;min-width:0}
+}
+@media(max-width:390px){
+  .tab-label{font-size:.55rem}
+  .brand-text h1{font-size:1.12rem}
+  main{width:calc(100% - 8px)}
+}
+
 </style>
 </head>
 <body>
@@ -459,7 +542,7 @@ main{padding-top:14px;padding-bottom:30px}
     <div class="splash-rings" aria-hidden="true"></div>
     <div class="splash-logo-stage" aria-hidden="true">
       <div class="splash-logo-glow"></div>
-      <img class="splash-logo" src="assets/sherpa-caddie-logo-fast.webp?v=0111" decoding="async" alt="Sherpa Caddie">
+      <img class="splash-logo" src="assets/sherpa-caddie-logo-fast.webp?v=0112" decoding="async" alt="Sherpa Caddie">
     </div>
     <div class="splash-title">Sherpa Caddie</div>
     <div class="splash-subtitle">Your guide. Your game. Your best round.</div>
@@ -469,12 +552,12 @@ main{padding-top:14px;padding-bottom:30px}
 </div>
 <div class="app">
 <header class="topbar">
-  <div class="brand-badge"><img class="brand-logo" src="assets/sherpa-caddie-logo-fast.webp?v=0111" width="180" height="196" decoding="sync" fetchpriority="high" alt="Sherpa Caddie"></div>
+  <div class="brand-badge"><img class="brand-logo" src="assets/sherpa-caddie-logo-fast.webp?v=0112" width="180" height="196" decoding="sync" fetchpriority="high" alt="Sherpa Caddie"></div>
   <div class="brand-text">
     <h1>Sherpa Caddie</h1>
     <p>Your guide. Your game. Your best round.</p>
   </div>
-  <div class="version">v0.11.1</div>
+  <div class="version">v0.11.2</div>
 </header>
 
 <div class="tabs-wrap">
@@ -591,7 +674,7 @@ main{padding-top:14px;padding-bottom:30px}
 
         <div class="sherpa-live-dashboard">
           <div class="live-avatar-card" id="liveAvatarCard">
-            <img id="sherpaLivePoster" class="live-avatar-poster" src="assets/sage-sherpa-live.webp?v=0111" alt="Sage, Sherpa Caddie live guide">
+            <img id="sherpaLivePoster" class="live-avatar-poster" src="assets/sage-sherpa-live.webp?v=0112" alt="Sage, Sherpa Caddie live guide">
             <video id="sherpaLiveVideo" class="live-avatar-video" autoplay playsinline aria-label="Sage Sherpa Live avatar"></video>
             <div class="live-avatar-overlay">
               <div class="live-nameplate">Sage <span>•</span> Sherpa Live</div>
@@ -627,7 +710,7 @@ main{padding-top:14px;padding-bottom:30px}
 
         <div class="live-transcript" aria-live="polite">
           <div class="live-message"><div>👤</div><div><strong>You:</strong> <span id="liveUserText">Say “Hey Sherpa” or type a question.</span></div><time id="liveUserTime"></time></div>
-          <div class="live-message sage"><img class="live-message-avatar" src="assets/sage-sherpa-live.webp?v=0111" alt=""><div><strong>Sage:</strong> <span id="liveSageText">I’m ready to guide your next shot.</span></div><time id="liveSageTime"></time></div>
+          <div class="live-message sage"><img class="live-message-avatar" src="assets/sage-sherpa-live.webp?v=0112" alt=""><div><strong>Sage:</strong> <span id="liveSageText">I’m ready to guide your next shot.</span></div><time id="liveSageTime"></time></div>
         </div>
 
         <div class="live-compose">
@@ -863,7 +946,7 @@ main{padding-top:14px;padding-bottom:30px}
   </article>
 </section>
 
-<div class="footer"><span>Sherpa Caddie v0.11.1</span><button id="aboutBtn">What’s in v0.11.1?</button></div>
+<div class="footer"><span>Sherpa Caddie v0.11.2</span><button id="aboutBtn">What’s in v0.11.2?</button></div>
 </main>
 </div>
 
@@ -1207,7 +1290,7 @@ async function setSherpaMode(mode){
   if(!["text","voice","live"].includes(mode))mode="text";sherpaExperience=mode;
   const live=mode==="live";$$('.experience-btn').forEach(b=>b.classList.toggle("active",b.dataset.sherpaMode===mode));
   const textShell=$("#textSherpaShell"),liveShell=$("#sherpaLiveShell");if(textShell)textShell.classList.toggle("is-hidden",live);if(liveShell)liveShell.classList.toggle("active",live);
-  localStorage.setItem("sherpa.experience.0111",mode);
+  localStorage.setItem("sherpa.experience.0112",mode);
   if(mode==="text"){if(aiState.handsFree)setHandsFree(false);await disconnectSherpaLive()}
   else if(mode==="voice"){await disconnectSherpaLive();aiState.speakReplies=true;$$('.speak-toggle').forEach(x=>x.checked=true);setHandsFree(true)}
   else{refreshSherpaLiveContext();await connectSherpaLive();aiState.speakReplies=true;$$('.speak-toggle').forEach(x=>x.checked=true);const v=$("#sherpaLiveVideo");if(v)v.muted=false;setHandsFree(true)}
@@ -1219,7 +1302,7 @@ const liveInput=$("#liveQuestionInput");if(liveInput)liveInput.addEventListener(
 const liveMic=$("#liveMicBtn");if(liveMic)liveMic.addEventListener("click",()=>startTalk());
 refreshSherpaLiveContext();
 
-/* Sherpa AI v0.11.1 — auto-start Qwen local AI + natural Kokoro voice + hands-free wake flow */
+/* Sherpa AI v0.11.2 — auto-start Qwen local AI + natural Kokoro voice + hands-free wake flow */
 const aiState = {
   engine: null,
   webllm: null,
@@ -1941,14 +2024,17 @@ function finishRound(){state.round.finished=new Date().toISOString();state.round
 
 /* Rounds/export */
 function renderRounds(){const l=$("#roundList");l.innerHTML="";if(!state.rounds.length){l.innerHTML='<div class="round-item"><div><h3>No saved rounds yet.</h3><p>Finished rounds stay on this device until you export or clear browser data.</p></div></div>';return}state.rounds.forEach(r=>{const played=r.holes.filter(h=>h.finished||h.shots.length).length,par=r.holes.slice(0,played).reduce((s,h)=>s+h.par,0),diff=r.totalStrokes-par;const el=document.createElement("div");el.className="round-item";el.innerHTML=`<div><h3>${r.course}</h3><p>${new Date(r.started).toLocaleDateString()} • ${played} holes • ${r.tee} tees</p></div><div class="round-score">${r.totalStrokes}${played?` (${diff>=0?"+":""}${diff})`:""}</div>`;l.appendChild(el)})}
-$("#exportBtn").onclick=()=>{const b=new Blob([JSON.stringify({version:"0.11.0",bagMode:state.bagMode,clubs:state.clubs,rounds:state.rounds},null,2)],{type:"application/json"}),a=document.createElement("a");a.href=URL.createObjectURL(b);a.download=`sherpa-caddie-data-${new Date().toISOString().slice(0,10)}.json`;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),500)};
+$("#exportBtn").onclick=()=>{const b=new Blob([JSON.stringify({version:"0.11.2",bagMode:state.bagMode,clubs:state.clubs,rounds:state.rounds},null,2)],{type:"application/json"}),a=document.createElement("a");a.href=URL.createObjectURL(b);a.download=`sherpa-caddie-data-${new Date().toISOString().slice(0,10)}.json`;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),500)};
 $("#importBtn").onclick=()=>$("#importFile").click();$("#importFile").onchange=async e=>{const f=e.target.files[0];if(!f)return;try{const d=JSON.parse(await f.text());if(d.clubs)state.clubs=d.clubs;if(d.bagMode)state.bagMode=d.bagMode;if(d.rounds)state.rounds=d.rounds;save();renderClubs();renderRounds();toast("Data imported")}catch{toast("Could not import that file")}e.target.value=""};
 
 function hideSplash(){const el=$("#splashScreen");if(!el||el.classList.contains("is-hidden"))return;el.classList.add("is-hidden");setTimeout(()=>el.remove(),800)}
 window.addEventListener("load",()=>setTimeout(hideSplash,5000));
 setTimeout(hideSplash,5600);
-if("serviceWorker"in navigator)window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js?v=0111").catch(()=>{}));
-renderClubs();renderRounds();if(state.round){show("play");showRoundMode()}
+if("serviceWorker"in navigator)window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js?v=0112").catch(()=>{}));
+renderClubs();
+renderRounds();
+if(state.round)showRoundMode();
+show("guide");
 })();
 </script>
 </body>
