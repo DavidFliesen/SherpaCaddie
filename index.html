@@ -5,11 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#18311C">
 <meta name="description" content="Sherpa Caddie — one-shot-at-a-time golf guidance combining a caddie, coach and mentor.">
-<link rel="manifest" href="manifest.webmanifest?v=0112">
-<link rel="icon" href="icons/favicon.png?v=0112" type="image/png">
-<link rel="apple-touch-icon" href="icons/icon-192.png?v=0112">
-<link rel="preload" as="image" href="assets/sherpa-caddie-logo-fast.webp?v=0112" type="image/webp" fetchpriority="high">
-<title>Sherpa Caddie v0.11.2</title>
+<link rel="manifest" href="manifest.webmanifest?v=0113">
+<link rel="icon" href="icons/favicon.png?v=0113" type="image/png">
+<link rel="apple-touch-icon" href="icons/icon-192.png?v=0113">
+<link rel="preload" as="image" href="assets/sherpa-caddie-logo-fast.webp?v=0113" type="image/webp" fetchpriority="high">
+<title>Sherpa Caddie v0.11.3</title>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
   crossorigin="">
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
@@ -482,7 +482,7 @@ main{padding-top:14px;padding-bottom:30px}
   .splash-path{margin-top:20px}
 }
 
-/* v0.11.2 — phone/tablet viewport hardening */
+/* v0.11.3 — phone/tablet viewport hardening */
 @media(max-width:900px){
   .topbar{width:100%;padding-left:max(10px,env(safe-area-inset-left));padding-right:max(10px,env(safe-area-inset-right))}
   .tabs-wrap{width:100%;padding-left:0;padding-right:0}
@@ -534,6 +534,38 @@ main{padding-top:14px;padding-bottom:30px}
   main{width:calc(100% - 8px)}
 }
 
+
+/* v0.11.3 — iPhone stability, audio-first Sherpa Live, and compact-phone readability */
+.active-round-banner{
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  margin-bottom:10px;padding:11px 12px;border-radius:14px;
+  background:linear-gradient(90deg,#edf5e9,#fff8e9);border:1px solid var(--line)
+}
+.active-round-banner strong{display:block;color:var(--forest);font-size:.98rem}
+.active-round-banner span{display:block;color:var(--stone);font-size:.82rem;margin-top:2px}
+@media(max-width:620px){
+  .active-round-banner{align-items:stretch;flex-direction:column}
+  .active-round-banner .btn{width:100%}
+
+  .voice-mode-panel{grid-template-columns:1fr!important;gap:10px}
+  .voice-mode-copy{grid-column:auto!important}
+  .voice-select-row{min-width:0!important;width:100%;display:grid;grid-template-columns:auto minmax(0,1fr)}
+  .voice-select-row select{min-width:0!important;width:100%}
+  .switch-row{white-space:normal;min-width:0}
+  .ask-modebar{display:grid;grid-template-columns:1fr;align-items:stretch}
+  .ask-badges{width:100%}
+  .ask-badge{font-size:.78rem;white-space:normal}
+  .model-select{width:100%;min-width:0;font-size:1rem}
+  .note-line,.voice-mode-status,.ask-status{font-size:.84rem;line-height:1.4}
+  .voice-mode-copy strong{font-size:1.02rem}
+  .voice-mode-copy span{font-size:.88rem}
+  .round-voice-main span:not(.round-voice-icon){font-size:.88rem;line-height:1.35}
+  .round-voice-hint{font-size:.84rem;line-height:1.4}
+  .live-control-grid{grid-template-columns:1fr!important}
+  .live-control{min-width:0}
+  .live-note,.live-tool-status{font-size:.84rem;line-height:1.4}
+}
+
 </style>
 </head>
 <body>
@@ -542,7 +574,7 @@ main{padding-top:14px;padding-bottom:30px}
     <div class="splash-rings" aria-hidden="true"></div>
     <div class="splash-logo-stage" aria-hidden="true">
       <div class="splash-logo-glow"></div>
-      <img class="splash-logo" src="assets/sherpa-caddie-logo-fast.webp?v=0112" decoding="async" alt="Sherpa Caddie">
+      <img class="splash-logo" src="assets/sherpa-caddie-logo-fast.webp?v=0113" decoding="async" alt="Sherpa Caddie">
     </div>
     <div class="splash-title">Sherpa Caddie</div>
     <div class="splash-subtitle">Your guide. Your game. Your best round.</div>
@@ -552,12 +584,12 @@ main{padding-top:14px;padding-bottom:30px}
 </div>
 <div class="app">
 <header class="topbar">
-  <div class="brand-badge"><img class="brand-logo" src="assets/sherpa-caddie-logo-fast.webp?v=0112" width="180" height="196" decoding="sync" fetchpriority="high" alt="Sherpa Caddie"></div>
+  <div class="brand-badge"><img class="brand-logo" src="assets/sherpa-caddie-logo-fast.webp?v=0113" width="180" height="196" decoding="sync" fetchpriority="high" alt="Sherpa Caddie"></div>
   <div class="brand-text">
     <h1>Sherpa Caddie</h1>
     <p>Your guide. Your game. Your best round.</p>
   </div>
-  <div class="version">v0.11.2</div>
+  <div class="version">v0.11.3</div>
 </header>
 
 <div class="tabs-wrap">
@@ -674,7 +706,7 @@ main{padding-top:14px;padding-bottom:30px}
 
         <div class="sherpa-live-dashboard">
           <div class="live-avatar-card" id="liveAvatarCard">
-            <img id="sherpaLivePoster" class="live-avatar-poster" src="assets/sage-sherpa-live.webp?v=0112" alt="Sage, Sherpa Caddie live guide">
+            <img id="sherpaLivePoster" class="live-avatar-poster" src="assets/sage-sherpa-live.webp?v=0113" alt="Sage, Sherpa Caddie live guide">
             <video id="sherpaLiveVideo" class="live-avatar-video" autoplay playsinline aria-label="Sage Sherpa Live avatar"></video>
             <div class="live-avatar-overlay">
               <div class="live-nameplate">Sage <span>•</span> Sherpa Live</div>
@@ -710,7 +742,7 @@ main{padding-top:14px;padding-bottom:30px}
 
         <div class="live-transcript" aria-live="polite">
           <div class="live-message"><div>👤</div><div><strong>You:</strong> <span id="liveUserText">Say “Hey Sherpa” or type a question.</span></div><time id="liveUserTime"></time></div>
-          <div class="live-message sage"><img class="live-message-avatar" src="assets/sage-sherpa-live.webp?v=0112" alt=""><div><strong>Sage:</strong> <span id="liveSageText">I’m ready to guide your next shot.</span></div><time id="liveSageTime"></time></div>
+          <div class="live-message sage"><img class="live-message-avatar" src="assets/sage-sherpa-live.webp?v=0113" alt=""><div><strong>Sage:</strong> <span id="liveSageText">I’m ready to guide your next shot.</span></div><time id="liveSageTime"></time></div>
         </div>
 
         <div class="live-compose">
@@ -727,6 +759,13 @@ main{padding-top:14px;padding-bottom:30px}
 
 <section id="play" class="view">
   <div id="preRound">
+    <div id="activeRoundBanner" class="active-round-banner hidden">
+      <div>
+        <strong>Round in progress</strong>
+        <span id="activeRoundSummary">Your current round is saved on this device.</span>
+      </div>
+      <button type="button" class="btn primary" id="resumeRoundBtn">Resume Round</button>
+    </div>
     <div class="play-grid">
       <article class="card course-card">
         <div class="section-head">
@@ -946,7 +985,7 @@ main{padding-top:14px;padding-bottom:30px}
   </article>
 </section>
 
-<div class="footer"><span>Sherpa Caddie v0.11.2</span><button id="aboutBtn">What’s in v0.11.2?</button></div>
+<div class="footer"><span>Sherpa Caddie v0.11.3</span><button id="aboutBtn">What’s in v0.11.3?</button></div>
 </main>
 </div>
 
@@ -1115,7 +1154,14 @@ const state={
 };
 function save(){localStorage.setItem(KEY.clubs,JSON.stringify(state.clubs));localStorage.setItem(KEY.rounds,JSON.stringify(state.rounds));localStorage.setItem(KEY.current,JSON.stringify(state.round));localStorage.setItem(KEY.bag,state.bagMode)}
 function toast(m){const t=$("#toast");t.textContent=m;t.classList.add("show");clearTimeout(toast.t);toast.t=setTimeout(()=>t.classList.remove("show"),1700)}
-function show(view){$$(".view").forEach(v=>v.classList.toggle("active",v.id===view));$$(".tab").forEach(t=>t.classList.toggle("active",t.dataset.view===view));window.scrollTo(0,0);if(view==="review")renderRounds();if(view==="clubs")renderClubs();if(view==="play"&&state.round)showRoundMode()}
+function show(view){
+  $$(".view").forEach(v=>v.classList.toggle("active",v.id===view));
+  $$(".tab").forEach(t=>t.classList.toggle("active",t.dataset.view===view));
+  window.scrollTo(0,0);
+  if(view==="review")renderRounds();
+  if(view==="clubs")renderClubs();
+  if(view==="play"){hideRoundMode();updateActiveRoundBanner()}
+}
 $$(".tab").forEach(b=>b.onclick=()=>show(b.dataset.view));$$("[data-go]").forEach(b=>b.onclick=()=>show(b.dataset.go));
 
 /* Club setup */
@@ -1248,8 +1294,24 @@ function registerSherpaLiveTools(manager){
     if(!state.selectedCourse&&!state.round)throw new Error("Choose a course before opening Hole Planner.");show("play");openCourseMap();return liveToolResult({success:true,opened:true,hole:state.round?hole().n:Number($("#mapHoleSelect")?.value||1)});
   });
 }
+function isCompactMobile(){
+  return window.matchMedia("(max-width: 620px)").matches || /iPhone|iPod|Android.+Mobile/i.test(navigator.userAgent);
+}
+async function releaseLocalAiForSherpaLive(){
+  if(!isCompactMobile())return;
+  try{
+    if(aiState?.engine&&typeof aiState.engine.unload==="function")await aiState.engine.unload();
+  }catch(_){}
+  if(typeof aiState!=="undefined"){
+    aiState.engine=null;
+    aiState.llmReady=false;
+    aiState.loadingLLM=false;
+  }
+  if(typeof llmBadge!=="undefined"&&llmBadge)setBadge(llmBadge,"Local AI paused for Sherpa Live","warn");
+}
 async function connectSherpaLive(force=false){
   if(liveState.connecting)return;
+  await releaseLocalAiForSherpaLive();
   if(force&&liveState.manager){try{await liveState.manager.disconnect()}catch(_){}liveState.manager=null;liveState.connected=false;liveState.srcObject=null;showLiveStream(false)}
   if(liveState.connected&&liveState.manager)return;
   liveState.connecting=true;setLiveState("Connecting…");setLiveConnection("Connecting…");setLiveVisual("Connecting Sage…");setLiveToolStatus("Starting a secure D-ID session and registering Sherpa Caddie tools…");
@@ -1262,7 +1324,20 @@ async function connectSherpaLive(force=false){
     const create=sdk.createAgentManager||sdk.default?.createAgentManager;
     const video=$("#sherpaLiveVideo");
     const callbacks={
-      onSrcObjectReady(value){liveState.srcObject=value;if(video){video.srcObject=value;video.muted=!aiState.speakReplies;video.play().catch(()=>{})}showLiveStream(true);return value},
+      onSrcObjectReady(value){
+        liveState.srcObject=value;
+        if(video){
+          video.srcObject=value;
+          video.muted=!aiState.speakReplies;
+          video.playsInline=true;
+          video.autoplay=true;
+          const reveal=()=>showLiveStream(true);
+          video.addEventListener("playing",reveal,{once:true});
+          video.addEventListener("loadeddata",reveal,{once:true});
+          video.play().catch(()=>{});
+        }
+        return value
+      },
       onConnectionStateChange(stateName){liveState.connection=String(stateName||"").toLowerCase();liveState.connected=liveState.connection==="connected";if(liveState.connected){setLiveState("Live","connected");setLiveConnection("Connected","good");setLiveVisual("Sage is ready");setLiveToolStatus("Live tools ready — Sage can use Sherpa’s real round data and controls.")}else if(["fail","closed"].includes(liveState.connection)){setLiveState("Connection issue","error");setLiveConnection(liveState.connection,"weak");setLiveVisual("Tap Reconnect")}else{setLiveState(stateName||"Connecting…");setLiveConnection(stateName||"Connecting…")}},
       onConnectivityStateChange(value){liveState.connectivity=String(value||"UNKNOWN");setLiveConnection(liveState.connectivity==="STRONG"?"Connected":liveState.connectivity==="WEAK"?"Weak connection":"Connected",liveState.connectivity==="WEAK"?"weak":"good")},
       onVideoStateChange(value){const talking=String(value||"").toUpperCase()!=="STOP";liveState.mode=talking?"speaking":"idle";aiState.speaking=talking;setLiveVisual(talking?"Sage is speaking":"Sage is listening");if(talking&&aiState.recognition&&aiState.listening){aiState.stoppingRecognition=true;try{aiState.recognition.stop()}catch(_){}}if(!talking&&aiState.handsFree&&sherpaExperience==="live")scheduleHandsFreeRestart()},
@@ -1270,7 +1345,12 @@ async function connectSherpaLive(force=false){
       onToolEvent(event){const p=event?.payload||{};if(event?.type==="ToolCallStarted")setLiveToolStatus(`Sage is using ${p.name||"a Sherpa tool"}…`);else if(event?.type==="ToolCallDone"){setLiveToolStatus(`${p.name||"Sherpa tool"} completed.`);refreshSherpaLiveContext()}else if(event?.type==="ToolCallError")setLiveToolStatus(`${p.name||"Sherpa tool"} had a problem. Sage will explain.`)},
       onError(error,errorData){console.error("D-ID Sherpa Live error",error,errorData);setLiveState("Live error","error");setLiveConnection("Needs attention","weak");setLiveVisual("Tap Reconnect");setLiveToolStatus(`Sherpa Live problem: ${shortError(error||errorData)}`)}
     };
-    liveState.manager=await create(cfg.agentId,{auth:{type:"key",clientKey:cfg.clientKey},callbacks,streamOptions:{compatibilityMode:"auto",streamWarmup:true}});
+    const liveResolution=window.innerWidth<=480?360:window.innerWidth<=820?480:720;
+    liveState.manager=await create(cfg.agentId,{
+      auth:{type:"key",clientKey:cfg.clientKey},
+      callbacks,
+      streamOptions:{compatibilityMode:"auto",streamWarmup:true,outputResolution:liveResolution}
+    });
     registerSherpaLiveTools(liveState.manager);
     await liveState.manager.connect();
     liveState.connected=true;setLiveState("Live","connected");setLiveConnection("Connected","good");setLiveVisual("Sage is ready");refreshSherpaLiveContext();
@@ -1290,9 +1370,17 @@ async function setSherpaMode(mode){
   if(!["text","voice","live"].includes(mode))mode="text";sherpaExperience=mode;
   const live=mode==="live";$$('.experience-btn').forEach(b=>b.classList.toggle("active",b.dataset.sherpaMode===mode));
   const textShell=$("#textSherpaShell"),liveShell=$("#sherpaLiveShell");if(textShell)textShell.classList.toggle("is-hidden",live);if(liveShell)liveShell.classList.toggle("active",live);
-  localStorage.setItem("sherpa.experience.0112",mode);
-  if(mode==="text"){if(aiState.handsFree)setHandsFree(false);await disconnectSherpaLive()}
-  else if(mode==="voice"){await disconnectSherpaLive();aiState.speakReplies=true;$$('.speak-toggle').forEach(x=>x.checked=true);setHandsFree(true)}
+  localStorage.setItem("sherpa.experience.0113",mode);
+  if(mode==="text"){
+    if(aiState.handsFree)setHandsFree(false);
+    await disconnectSherpaLive();
+    if(!aiState.llmReady&&!aiState.loadingLLM)loadSherpaLLM(false);
+  }
+  else if(mode==="voice"){
+    await disconnectSherpaLive();
+    if(!aiState.llmReady&&!aiState.loadingLLM)loadSherpaLLM(false);
+    aiState.speakReplies=true;$$('.speak-toggle').forEach(x=>x.checked=true);setHandsFree(true)
+  }
   else{refreshSherpaLiveContext();await connectSherpaLive();aiState.speakReplies=true;$$('.speak-toggle').forEach(x=>x.checked=true);const v=$("#sherpaLiveVideo");if(v)v.muted=false;setHandsFree(true)}
 }
 $$('.experience-btn').forEach(b=>b.addEventListener('click',()=>setSherpaMode(b.dataset.sherpaMode)));
@@ -1302,7 +1390,7 @@ const liveInput=$("#liveQuestionInput");if(liveInput)liveInput.addEventListener(
 const liveMic=$("#liveMicBtn");if(liveMic)liveMic.addEventListener("click",()=>startTalk());
 refreshSherpaLiveContext();
 
-/* Sherpa AI v0.11.2 — auto-start Qwen local AI + natural Kokoro voice + hands-free wake flow */
+/* Sherpa AI v0.11.3 — auto-start Qwen local AI + natural Kokoro voice + hands-free wake flow */
 const aiState = {
   engine: null,
   webllm: null,
@@ -1804,7 +1892,10 @@ modelSelect.addEventListener("change",()=>{
 });
 setBadge(deviceBadge, navigator.gpu ? "WebGPU detected" : "WebGPU not detected", navigator.gpu ? "ready" : "err");
 setupVoice();
-setTimeout(()=>{if(navigator.gpu&&!aiState.llmReady&&!aiState.loadingLLM)loadSherpaLLM(false)},900);
+setTimeout(()=>{
+  if(!isCompactMobile()&&navigator.gpu&&!aiState.llmReady&&!aiState.loadingLLM&&sherpaExperience!=="live")loadSherpaLLM(false);
+  else if(isCompactMobile()&&llmBadge&&!aiState.llmReady)setBadge(llmBadge,"Local AI loads when Text or Voice is used","warn");
+},900);
 /* Course discovery — OpenGolf-first, with resilient fallbacks */
 function escapeHTML(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
 function normalizeCourse(c){
@@ -1988,6 +2079,18 @@ $("#startRoundBtn").onclick=()=>{
  state.round={course:state.selectedCourse.name,tee:$("#teeChoice").value,goal:$("#roundGoal").value,wind:windType(),started:new Date().toISOString(),holeIndex:0,totalStrokes:0,holes};
  state.selectedClub=null;state.direction="center";save();showRoundMode();toast("Round started")
 };
+function updateActiveRoundBanner(){
+  const banner=$("#activeRoundBanner"),summary=$("#activeRoundSummary");
+  if(!banner)return;
+  const has=!!state.round;
+  banner.classList.toggle("hidden",!has);
+  if(has&&summary){
+    const h=state.round.holes?.[state.round.holeIndex||0];
+    summary.textContent=`${state.round.course||"Current course"} • Hole ${h?.n||((state.round.holeIndex||0)+1)} • ${state.round.totalStrokes||0} strokes recorded`;
+  }
+}
+const resumeRoundBtn=$("#resumeRoundBtn");
+if(resumeRoundBtn)resumeRoundBtn.onclick=()=>{if(!state.round)return;showRoundMode();window.scrollTo(0,0)};
 function showRoundMode(){$("#preRound").classList.add("hidden");$("#roundMode").classList.remove("hidden");renderShot()}
 function hideRoundMode(){$("#preRound").classList.remove("hidden");$("#roundMode").classList.add("hidden")}
 function hole(){return state.round.holes[state.round.holeIndex]}
@@ -2024,16 +2127,16 @@ function finishRound(){state.round.finished=new Date().toISOString();state.round
 
 /* Rounds/export */
 function renderRounds(){const l=$("#roundList");l.innerHTML="";if(!state.rounds.length){l.innerHTML='<div class="round-item"><div><h3>No saved rounds yet.</h3><p>Finished rounds stay on this device until you export or clear browser data.</p></div></div>';return}state.rounds.forEach(r=>{const played=r.holes.filter(h=>h.finished||h.shots.length).length,par=r.holes.slice(0,played).reduce((s,h)=>s+h.par,0),diff=r.totalStrokes-par;const el=document.createElement("div");el.className="round-item";el.innerHTML=`<div><h3>${r.course}</h3><p>${new Date(r.started).toLocaleDateString()} • ${played} holes • ${r.tee} tees</p></div><div class="round-score">${r.totalStrokes}${played?` (${diff>=0?"+":""}${diff})`:""}</div>`;l.appendChild(el)})}
-$("#exportBtn").onclick=()=>{const b=new Blob([JSON.stringify({version:"0.11.2",bagMode:state.bagMode,clubs:state.clubs,rounds:state.rounds},null,2)],{type:"application/json"}),a=document.createElement("a");a.href=URL.createObjectURL(b);a.download=`sherpa-caddie-data-${new Date().toISOString().slice(0,10)}.json`;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),500)};
+$("#exportBtn").onclick=()=>{const b=new Blob([JSON.stringify({version:"0.11.3",bagMode:state.bagMode,clubs:state.clubs,rounds:state.rounds},null,2)],{type:"application/json"}),a=document.createElement("a");a.href=URL.createObjectURL(b);a.download=`sherpa-caddie-data-${new Date().toISOString().slice(0,10)}.json`;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),500)};
 $("#importBtn").onclick=()=>$("#importFile").click();$("#importFile").onchange=async e=>{const f=e.target.files[0];if(!f)return;try{const d=JSON.parse(await f.text());if(d.clubs)state.clubs=d.clubs;if(d.bagMode)state.bagMode=d.bagMode;if(d.rounds)state.rounds=d.rounds;save();renderClubs();renderRounds();toast("Data imported")}catch{toast("Could not import that file")}e.target.value=""};
 
 function hideSplash(){const el=$("#splashScreen");if(!el||el.classList.contains("is-hidden"))return;el.classList.add("is-hidden");setTimeout(()=>el.remove(),800)}
 window.addEventListener("load",()=>setTimeout(hideSplash,5000));
 setTimeout(hideSplash,5600);
-if("serviceWorker"in navigator)window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js?v=0112").catch(()=>{}));
+if("serviceWorker"in navigator)window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js?v=0113").catch(()=>{}));
 renderClubs();
 renderRounds();
-if(state.round)showRoundMode();
+updateActiveRoundBanner();
 show("guide");
 })();
 </script>
