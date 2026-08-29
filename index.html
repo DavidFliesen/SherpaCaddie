@@ -5,11 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#18311C">
 <meta name="description" content="Sherpa Caddie — one-shot-at-a-time golf guidance combining a caddie, coach and mentor.">
-<link rel="manifest" href="manifest.webmanifest?v=080">
-<link rel="icon" href="icons/favicon.png?v=080" type="image/png">
-<link rel="apple-touch-icon" href="icons/icon-192.png?v=080">
-<link rel="preload" as="image" href="assets/sherpa-caddie-logo-fast.webp?v=080" type="image/webp" fetchpriority="high">
-<title>Sherpa Caddie v0.8.0</title>
+<link rel="manifest" href="manifest.webmanifest?v=0100">
+<link rel="icon" href="icons/favicon.png?v=0100" type="image/png">
+<link rel="apple-touch-icon" href="icons/icon-192.png?v=0100">
+<link rel="preload" as="image" href="assets/sherpa-caddie-logo-fast.webp?v=0100" type="image/webp" fetchpriority="high">
+<title>Sherpa Caddie v0.10.0</title>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
   crossorigin="">
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
@@ -57,7 +57,7 @@ button{cursor:pointer}
 .tabs{
   max-width:1160px;margin:0 auto;background:#fff;border:1px solid var(--line);
   border-radius:14px;box-shadow:var(--shadow);
-  display:grid;grid-template-columns:repeat(4,1fr);overflow:hidden
+  display:grid;grid-template-columns:repeat(5,1fr);overflow:hidden
 }
 .tab{
   border:0;border-right:1px solid var(--line);border-radius:0;padding:13px 8px;
@@ -377,7 +377,7 @@ body{background-image:radial-gradient(circle at 14% 12%,rgba(134,146,80,.18),tra
 .brand-text{position:relative;z-index:1}.brand-text h1{color:#fffdf6;font-size:1.85rem;letter-spacing:.01em;text-shadow:0 1px 2px rgba(0,0,0,.18)}.brand-text p{color:#f1e6d3;font-weight:700}.version{position:relative;z-index:1;color:#fff;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);padding:7px 10px;border-radius:999px}
 .tabs-wrap{top:0;padding:0 14px 10px;background:linear-gradient(180deg,#18371f 0%,rgba(248,243,234,.96) 100%)}
 .tabs{border:0;border-radius:0 0 16px 16px;box-shadow:0 8px 22px rgba(11,32,51,.13);background:#f9f5ed}
-.tab{padding:14px 8px;background:#f9f5ed;color:#314b34;border-color:#ded3c1}.tab.active{background:linear-gradient(180deg,#c9a66b,#b98d4d);color:#132b19;text-shadow:0 1px rgba(255,255,255,.35)}
+.tab{padding:12px 7px;background:#f9f5ed;color:#314b34;border-color:#ded3c1;display:flex;align-items:center;justify-content:center;gap:6px;white-space:nowrap}.tab-icon{font-size:1.05rem;line-height:1}.tab-label{font-size:.88rem;font-weight:900;letter-spacing:.02em;text-transform:uppercase}.tab.active{background:linear-gradient(180deg,#c9a66b,#b98d4d);color:#132b19;text-shadow:0 1px rgba(255,255,255,.35)}
 main{padding-top:14px;padding-bottom:30px}
 .card{background:linear-gradient(180deg,#fffdf9 0%,#f8f3e9 100%);border:1px solid rgba(124,110,82,.2);box-shadow:0 9px 24px rgba(31,49,34,.10)}
 .hero{position:relative;overflow:hidden;background:linear-gradient(112deg,#163a20 0%,#265330 68%,#557544 100%);border:0;box-shadow:0 14px 32px rgba(20,55,30,.24)}
@@ -396,8 +396,43 @@ main{padding-top:14px;padding-bottom:30px}
 .rounds-card{background:linear-gradient(160deg,#f8f3e9,#eef3e8)}
 .footer{color:#6e6a61}.footer button{color:#34583a}
 .map-modal{background:linear-gradient(160deg,#f8f3e9 0%,#edf2e9 100%)}.map-status{background:#ebe6da}.planner-card.light{background:linear-gradient(180deg,#fffdf8,#f5efe4)}
+
+/* v0.9 navigation, clubs and learning hub */
+.clubs-page{display:grid;gap:13px}
+.clubs-intro,.clubs-editor,.learn-intro{padding:16px 18px}
+.clubs-intro h2,.clubs-editor h2,.learn-intro h2{margin:0;color:var(--forest);font-size:1.45rem}
+.bag-presets{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+.bag-preset{border:1px solid var(--line);border-radius:14px;padding:13px;text-align:left;background:#fff;color:var(--forest);font-weight:900;box-shadow:var(--shadow)}
+.bag-preset strong{display:block;font-size:1.02rem}.bag-preset small{display:block;margin-top:4px;color:var(--stone);font-weight:650;line-height:1.35}
+.bag-preset.active{background:linear-gradient(160deg,#17391f,#2c5b36);color:#fff;border-color:#17391f}.bag-preset.active small{color:#e6dfd1}
+.bag-note{margin-top:10px;padding:10px 12px;border-radius:10px;background:var(--soft);border-left:4px solid var(--tan);color:var(--navy);font-size:.86rem;line-height:1.4}
+.clubs-editor .club-grid{margin-top:10px}
+.clubs-actions{display:flex;gap:8px;justify-content:flex-end;align-items:center;flex-wrap:wrap;margin-top:12px}.clubs-actions .modal-note{margin-right:auto}
+.tee-help{margin-top:8px;padding:9px 10px;border-radius:10px;background:rgba(248,243,234,.94);color:var(--navy);border:1px solid rgba(255,255,255,.35);font-size:.79rem;line-height:1.4}
+.tee-help strong{color:var(--forest)!important}.tee-help details{margin-top:5px}.tee-help summary{cursor:pointer;font-weight:850;color:var(--forest)}.tee-help p{margin:6px 0 0;color:var(--stone)}
+.learn-hub{display:grid;gap:12px}.learn-intro{background:linear-gradient(112deg,#17391f,#2c5b36);border:0;color:#fff}.learn-intro h2{color:#fff}.learn-intro p{margin:6px 0 0;color:#e8dfd0;line-height:1.45}
+.learn-categories{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.learn-category{padding:14px 16px}.learn-category h3{margin:0 0 4px;color:var(--forest);font-size:1.08rem}.learn-category>p{margin:0 0 9px;color:var(--stone);font-size:.84rem;line-height:1.35}
+.learn-topic{border-top:1px solid var(--line);padding:8px 0}.learn-topic:first-of-type{border-top:0}.learn-topic summary{cursor:pointer;list-style:none;font-weight:850;color:var(--navy);display:flex;align-items:center;gap:7px}.learn-topic summary::-webkit-details-marker{display:none}.learn-topic summary:after{content:"+";margin-left:auto;color:var(--tan);font-size:1.15rem}.learn-topic[open] summary:after{content:"−"}.learn-topic p{margin:7px 0 0 27px;color:var(--stone);font-size:.84rem;line-height:1.45}
+@media(max-width:850px){.tab{gap:4px}.tab-label{font-size:.8rem}.learn-categories{grid-template-columns:1fr 1fr}}
+@media(max-width:620px){.tab{flex-direction:column;gap:2px;padding:7px 2px}.tab-icon{font-size:1rem}.tab-label{font-size:.62rem}.bag-presets,.learn-categories{grid-template-columns:1fr}.clubs-actions{justify-content:stretch}.clubs-actions .modal-note{width:100%}.clubs-actions .btn{flex:1}}
+
 @media(max-width:850px){.topbar{height:98px}.brand-badge{width:92px;height:92px;padding:8px}.brand-logo{width:72px;height:72px}.brand-text h1{font-size:1.55rem}}
 @media(max-width:620px){body{background:#f0eadf}.topbar{height:84px}.brand-badge{width:74px;height:74px;padding:6px;border-radius:18px}.brand-logo{width:58px;height:58px}.tabs-wrap{background:#18371f}.app{background:#f2ece1}}
+
+/* GUIDE EXPERIENCE: Text / Sherpa Live */
+.experience-switch{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:11px 12px;border:1px solid var(--line);border-radius:12px;background:linear-gradient(180deg,#fff,#f7f2e8)}
+.experience-copy strong{display:block;color:var(--forest);font-size:.95rem}.experience-copy span{display:block;color:var(--stone);font-size:.8rem;margin-top:2px;line-height:1.35}
+.experience-tabs{display:grid;grid-template-columns:1fr 1fr;gap:6px;padding:4px;border-radius:11px;background:#ece5d8;min-width:245px}
+.experience-btn{border:0;border-radius:8px;padding:9px 12px;font-weight:900;background:transparent;color:var(--stone)}
+.experience-btn.active{background:var(--forest);color:#fff;box-shadow:0 3px 10px rgba(24,49,28,.18)}
+.sherpa-live-shell{display:none;gap:10px}.sherpa-live-shell.active{display:grid}.text-sherpa-shell.is-hidden{display:none}
+.sherpa-live-stage{min-height:430px;border:1px solid var(--line);border-radius:16px;overflow:hidden;background:linear-gradient(180deg,#15381f 0%,#0f2d19 100%);position:relative}
+#sherpaLiveAvatar{width:100%;min-height:430px;height:100%;display:block;background:transparent}
+.sherpa-live-loading{position:absolute;inset:0;display:grid;place-items:center;text-align:center;padding:28px;color:#f8f3ea;pointer-events:none;transition:opacity .25s ease}.sherpa-live-loading.hidden{opacity:0;visibility:hidden}
+.sherpa-live-loading strong{font-family:Georgia,serif;font-size:1.55rem}.sherpa-live-loading span{display:block;margin-top:7px;color:#e5d7bd;max-width:520px;line-height:1.45}
+.sherpa-live-note{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;padding:9px 11px;border-radius:10px;background:#f5eddf;border-left:4px solid var(--tan);color:var(--navy);font-size:.8rem;line-height:1.35}
+.sherpa-live-note button{white-space:nowrap}
+@media(max-width:720px){.experience-switch{align-items:stretch;flex-direction:column}.experience-tabs{min-width:0;width:100%}.sherpa-live-stage,#sherpaLiveAvatar{min-height:360px}}
 
 </style>
 </head>
@@ -407,7 +442,7 @@ main{padding-top:14px;padding-bottom:30px}
     <div class="splash-rings" aria-hidden="true"></div>
     <div class="splash-logo-stage" aria-hidden="true">
       <div class="splash-logo-glow"></div>
-      <img class="splash-logo" src="assets/sherpa-caddie-logo-fast.webp?v=080" decoding="sync" fetchpriority="high" alt="Sherpa Caddie logo">
+      <img class="splash-logo" src="assets/sherpa-caddie-logo-fast.webp?v=0100" decoding="sync" fetchpriority="high" alt="Sherpa Caddie logo">
     </div>
     <div class="splash-title">Sherpa Caddie</div>
     <div class="splash-subtitle">Your guide. Your game. Your best round.</div>
@@ -417,25 +452,26 @@ main{padding-top:14px;padding-bottom:30px}
 </div>
 <div class="app">
 <header class="topbar">
-  <div class="brand-badge"><img class="brand-logo" src="assets/sherpa-caddie-logo-fast.webp?v=080" width="180" height="196" decoding="sync" fetchpriority="high" alt="Sherpa Caddie"></div>
+  <div class="brand-badge"><img class="brand-logo" src="assets/sherpa-caddie-logo-fast.webp?v=0100" width="180" height="196" decoding="sync" fetchpriority="high" alt="Sherpa Caddie"></div>
   <div class="brand-text">
     <h1>Sherpa Caddie</h1>
     <p>Your guide. Your game. Your best round.</p>
   </div>
-  <div class="version">v0.8.0</div>
+  <div class="version">v0.10.0</div>
 </header>
 
 <div class="tabs-wrap">
 <nav class="tabs" aria-label="Main sections">
-  <button class="tab active" data-view="home">Home</button>
-  <button class="tab" data-view="play">Play</button>
-  <button class="tab" data-view="learn">Learn</button>
-  <button class="tab" data-view="rounds">My Rounds</button>
+  <button class="tab active" data-view="guide" aria-label="Guide — talk with Sherpa"><span class="tab-icon">🏔️</span><span class="tab-label">Guide</span></button>
+  <button class="tab" data-view="play" aria-label="Play — plan or start a round"><span class="tab-icon">🏌️</span><span class="tab-label">Play</span></button>
+  <button class="tab" data-view="clubs" aria-label="Clubs — set up your golf bag"><span class="tab-icon">🏑</span><span class="tab-label">Clubs</span></button>
+  <button class="tab" data-view="learn" aria-label="Learn — golf skills, rules and strategy"><span class="tab-icon">🧭</span><span class="tab-label">Learn</span></button>
+  <button class="tab" data-view="review" aria-label="Review — review saved rounds"><span class="tab-icon">📒</span><span class="tab-label">Review</span></button>
 </nav>
 </div>
 
 <main>
-<section id="home" class="view active">
+<section id="guide" class="view active">
   <div class="home">
     <article class="card hero">
       <div>
@@ -446,18 +482,23 @@ main{padding-top:14px;padding-bottom:30px}
       <div class="status"><span class="status-dot"></span>One shot at a time</div>
     </article>
 
-    <div class="actions">
-      <button class="action" data-go="play"><span class="icon">🏌️</span><strong>Start or Plan a Round</strong><small>Find a course, check conditions, and begin.</small></button>
-      <button class="action" id="clubSetupBtn"><span class="icon">🏑</span><strong>Set My Clubs</strong><small>Teach Sherpa how far you normally carry each club.</small></button>
-      <button class="action" data-go="learn"><span class="icon">🧭</span><strong>First-Time Golfer Guide</strong><small>Targets, fundamentals, etiquette, and mental resets.</small></button>
-      <button class="action" data-go="rounds"><span class="icon">📒</span><strong>Review My Rounds</strong><small>See what worked and one thing to focus on next time.</small></button>
-    </div>
-
     <article class="card ask">
       <div class="ask-head">
         <div><p class="eyebrow">Sherpa AI</p><h3>Talk to your golf guide</h3></div>
       </div>
 
+      <div class="experience-switch" aria-label="Sherpa experience mode">
+        <div class="experience-copy">
+          <strong>Choose your Sherpa experience</strong>
+          <span>Text keeps Sherpa local. Sherpa Live opens the conversational D-ID avatar and uses an internet connection.</span>
+        </div>
+        <div class="experience-tabs" role="group" aria-label="Sherpa mode">
+          <button type="button" class="experience-btn active" data-sherpa-mode="text">💬 Text</button>
+          <button type="button" class="experience-btn" data-sherpa-mode="live">👤 Sherpa Live</button>
+        </div>
+      </div>
+
+      <div class="text-sherpa-shell" id="textSherpaShell">
       <div class="ask-shell">
         <div class="ask-modebar">
           <div class="ask-badges">
@@ -522,6 +563,20 @@ main{padding-top:14px;padding-bottom:30px}
           <button class="btn ghost" type="button" id="speakAnswerBtn">🔊 Read Answer</button>
         </div>
       </div>
+      </div>
+
+      <div class="sherpa-live-shell" id="sherpaLiveShell">
+        <div class="sherpa-live-stage">
+          <div id="sherpaLiveAvatar" aria-label="Sherpa Live conversational avatar"></div>
+          <div class="sherpa-live-loading" id="sherpaLiveLoading">
+            <div><strong>Connecting Sherpa Live…</strong><span>Sherpa’s avatar is loading. The D-ID connection starts only when you choose Sherpa Live.</span></div>
+          </div>
+        </div>
+        <div class="sherpa-live-note">
+          <span><strong>Sherpa Live</strong> is the conversational avatar mode. It uses D-ID streaming and therefore requires an internet connection and may use your D-ID minutes.</span>
+          <button type="button" class="btn ghost" id="restartSherpaLiveBtn">Restart Live</button>
+        </div>
+      </div>
     </article>
   </div>
 </section>
@@ -532,7 +587,6 @@ main{padding-top:14px;padding-bottom:30px}
       <article class="card course-card">
         <div class="section-head">
           <div><p class="eyebrow">Plan your day</p><h2>Choose a golf course</h2></div>
-          <button class="btn ghost" id="openClubsFromPlay">My Clubs</button>
         </div>
         <button class="btn primary big-action" id="nearMeBtn">📍 Find Courses Near Me</button>
         <div class="divider">or</div>
@@ -563,9 +617,12 @@ main{padding-top:14px;padding-bottom:30px}
         </div>
 
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px">
-          <label style="font-size:.8rem;font-weight:850;color:var(--forest)">Tee
+          <label style="font-size:.8rem;font-weight:850;color:var(--forest)">Tee / playing distance
             <select id="teeChoice" style="display:block;width:100%;margin-top:4px;padding:9px;border:1px solid var(--line);border-radius:8px;background:#fff">
-              <option value="white">White</option><option value="gold">Gold</option><option value="red">Red</option>
+              <option value="red" selected>Red — Forward / shortest (easiest)</option>
+              <option value="gold">Gold — Forward / shorter</option>
+              <option value="white">White — Standard / middle</option>
+              <option value="blue">Blue — Back / longest</option>
             </select>
           </label>
           <label style="font-size:.8rem;font-weight:850;color:var(--forest)">Goal
@@ -573,6 +630,10 @@ main{padding-top:14px;padding-bottom:30px}
               <option value="score">Play for score</option><option value="practice">Practice & learn</option><option value="fun">Enjoy the round</option>
             </select>
           </label>
+        </div>
+        <div class="tee-help">
+          <strong>Newer golfer? Start with the shortest/forward tees.</strong> Tee colors are common conventions, not universal rules.
+          <details><summary>What do tee colors mean?</summary><p>Many courses use red for forward/shortest tees, gold for a shorter or senior set, white for middle tees, and blue for longer/back tees. Courses can use different colors, so choose the tee by total distance and comfort level rather than color alone.</p></details>
         </div>
         <div class="start-actions">
           <button class="btn tan" id="planMapBtn">Plan Course Map</button>
@@ -643,18 +704,89 @@ main{padding-top:14px;padding-bottom:30px}
   </div>
 </section>
 
-<section id="learn" class="view">
-  <div class="learn-grid">
-    <article class="card lesson"><div class="symbol">🎯</div><h3>Focus on this shot</h3><p>You are not playing the whole course in your head. You are only playing the shot in front of you.</p></article>
-    <article class="card lesson"><div class="symbol">🏑</div><h3>Take enough club</h3><p>Many poor shots come from trying to force too little club. A smoother swing with enough club is often smarter.</p></article>
-    <article class="card lesson"><div class="symbol">🧠</div><h3>Go back to fundamentals</h3><p>Pick the target. Choose the club. Take one practice swing. Commit.</p></article>
-    <article class="card lesson"><div class="symbol">🔄</div><h3>Bad holes happen</h3><p>Do not carry the last hole with you. The next shot is a new start.</p></article>
-    <article class="card lesson"><div class="symbol">🧭</div><h3>Read the safe miss</h3><p>Do not automatically attack the flag. Find the widest useful landing area and play away from major trouble.</p></article>
-    <article class="card lesson"><div class="symbol">💭</div><h3>Your last thought matters</h3><p>The final thought before the swing should describe what you want to do, not what you are afraid of doing.</p></article>
+<section id="clubs" class="view">
+  <div class="clubs-page">
+    <article class="card clubs-intro">
+      <p class="eyebrow">My bag</p>
+      <h2>Choose the clubs you carry</h2>
+      <p class="muted" style="margin:6px 0 0">Sherpa uses this bag and your carry distances for club recommendations.</p>
+      <div class="bag-presets">
+        <button class="bag-preset" type="button" data-bag="full"><strong>🏌️ Full Bag</strong><small>Use the complete common set of woods, hybrid, irons, wedges and putter.</small></button>
+        <button class="bag-preset" type="button" data-bag="sunday"><strong>🎒 Sunday Bag</strong><small>A lighter six-club setup for a simpler round or walking with fewer clubs.</small></button>
+      </div>
+      <div class="bag-note" id="bagDescription">Full Bag is selected.</div>
+    </article>
+    <article class="card clubs-editor">
+      <div class="section-head">
+        <div><p class="eyebrow">Personal carry distances</p><h2>How far do your clubs carry?</h2></div>
+      </div>
+      <p class="muted" style="margin-top:0">Use your normal carry distance, not your very best shot. These values stay on this device.</p>
+      <div class="club-grid" id="clubGrid"></div>
+      <div class="clubs-actions">
+        <span class="modal-note" id="clubNote">These distances drive Sherpa’s club recommendations.</span>
+        <button class="btn ghost" id="resetClubsBtn" type="button">Reset Distances</button>
+        <button class="btn primary" id="saveClubsBtn" type="button">Save My Bag</button>
+      </div>
+    </article>
   </div>
 </section>
 
-<section id="rounds" class="view">
+<section id="learn" class="view">
+  <div class="learn-hub">
+    <article class="card learn-intro">
+      <p class="eyebrow" style="color:#d7b77f">Learn with Sherpa</p>
+      <h2>Golf explained one useful idea at a time</h2>
+      <p>Use these short lessons before a round or open one when something comes up on the course. Learn covers getting started, shot planning, short game, rules, etiquette, and the mental game.</p>
+    </article>
+    <div class="learn-categories">
+      <article class="card learn-category">
+        <h3>🌱 Getting Started</h3><p>The basics that make a first round less confusing.</p>
+        <details class="learn-topic"><summary>⛳ Choosing the right tees</summary><p>Start from a distance where you can reach most greens comfortably. Tee colors vary by course; the shortest set is usually the most beginner-friendly.</p></details>
+        <details class="learn-topic"><summary>🏑 What the clubs are for</summary><p>Woods and hybrids cover longer shots, irons handle controlled approaches, wedges handle shorter shots and trouble, and the putter rolls the ball on the green.</p></details>
+        <details class="learn-topic"><summary>🧍 Setup and fundamentals</summary><p>Build a repeatable setup: comfortable grip, athletic posture, balanced stance, clear target, then one committed swing.</p></details>
+        <details class="learn-topic"><summary>📖 Common golf terms</summary><p>Par is the target score for a hole. Birdie is one under par, bogey is one over. Fairway, rough, green, bunker, penalty area, and lie describe where the ball is and what surrounds it.</p></details>
+      </article>
+      <article class="card learn-category">
+        <h3>🗺️ Playing the Course</h3><p>Make the next shot easier before trying to make it spectacular.</p>
+        <details class="learn-topic"><summary>🎯 Focus on this shot</summary><p>You are not playing the entire course in your head. Make one decision for the shot in front of you, then reset.</p></details>
+        <details class="learn-topic"><summary>🏑 Take enough club</summary><p>Many poor shots come from forcing too little club. A smoother swing with enough club is often the higher-percentage choice.</p></details>
+        <details class="learn-topic"><summary>🧭 Read the safe miss</summary><p>Do not automatically attack the flag. Look for the widest useful landing area and the side that keeps the biggest trouble out of play.</p></details>
+        <details class="learn-topic"><summary>💨 Wind and conditions</summary><p>Into the wind usually needs more club and a controlled swing. Helping wind can reduce the effective distance. Wet ground reduces roll; firm ground adds it.</p></details>
+        <details class="learn-topic"><summary>⚠️ Hazards and layups</summary><p>Know what distance brings trouble into play. A layup is not surrender—it is choosing a position that gives you a better next shot.</p></details>
+      </article>
+      <article class="card learn-category">
+        <h3>🟢 Short Game & Putting</h3><p>Simple choices around the green save a surprising number of strokes.</p>
+        <details class="learn-topic"><summary>🥄 Chip versus pitch</summary><p>A chip flies low and rolls more; a pitch flies higher and rolls less. Use the simplest shot that safely clears the trouble in front of you.</p></details>
+        <details class="learn-topic"><summary>🏖️ Basic bunker plan</summary><p>Prioritize getting out. Take enough loft, use the bounce, and choose a target that leaves plenty of room rather than chasing the flag.</p></details>
+        <details class="learn-topic"><summary>⛳ Putting basics</summary><p>Read the slope, choose a start line, then focus on speed. On long putts, getting the ball close is usually more important than trying to make everything.</p></details>
+        <details class="learn-topic"><summary>📍 Where to aim on the green</summary><p>Center of the green is often the smartest target when the pin is near trouble. Give yourself a putt instead of short-siding yourself.</p></details>
+      </article>
+      <article class="card learn-category">
+        <h3>🤝 Rules & Etiquette</h3><p>Enough rules to play confidently without turning golf into a law exam.</p>
+        <details class="learn-topic"><summary>🧮 Basic scoring</summary><p>Count every stroke plus applicable penalty strokes. Sherpa can record shots as you play so you do not have to reconstruct the hole afterward.</p></details>
+        <details class="learn-topic"><summary>⏱️ Pace of play</summary><p>Be ready when it is your turn, plan while others play when safe, and keep up with the group ahead. Ready golf is appropriate in many casual rounds.</p></details>
+        <details class="learn-topic"><summary>🛡️ Safety and courtesy</summary><p>Never hit when someone is within range. Stay quiet and still during another player’s stroke and avoid walking through putting lines.</p></details>
+        <details class="learn-topic"><summary>🌿 Care for the course</summary><p>Repair ball marks, replace or fill divots when appropriate, rake bunkers, and leave the course in better condition for the group behind you.</p></details>
+      </article>
+      <article class="card learn-category">
+        <h3>🧠 Mental Game</h3><p>Sherpa’s core philosophy: every shot is a new start.</p>
+        <details class="learn-topic"><summary>🧠 Go back to fundamentals</summary><p>When your mind speeds up, simplify: target, club, one practice swing, commit.</p></details>
+        <details class="learn-topic"><summary>🔄 Bad holes happen</summary><p>Do not carry the last hole onto the next tee. The score is recorded; the next shot starts at zero.</p></details>
+        <details class="learn-topic"><summary>💭 Your last thought matters</summary><p>Your final thought before the swing should describe what you want to do—not what you are afraid might happen.</p></details>
+        <details class="learn-topic"><summary>🌬️ Reset between shots</summary><p>Walk, breathe, observe, then decide. Give yourself a clear separation between the last result and the next task.</p></details>
+      </article>
+      <article class="card learn-category">
+        <h3>📐 Hole Strategy</h3><p>Think backward from the easiest next shot.</p>
+        <details class="learn-topic"><summary>3️⃣ Par 3 strategy</summary><p>Choose enough club to reach the safe part of the green. Center-green targets beat tucked pins when trouble surrounds the flag.</p></details>
+        <details class="learn-topic"><summary>4️⃣ Par 4 strategy</summary><p>The tee shot should set up a comfortable approach. Maximum distance is not automatically the best choice if it brings hazards or a poor angle into play.</p></details>
+        <details class="learn-topic"><summary>5️⃣ Par 5 strategy</summary><p>Decide whether the hole is realistically reachable or a three-shot hole. If laying up, choose the distance you want for the following approach.</p></details>
+        <details class="learn-topic"><summary>📊 Play your own game</summary><p>Good strategy depends on your actual carry distances and typical misses, not another golfer’s clubs or yardages.</p></details>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section id="review" class="view">
   <div class="summary-grid">
     <article class="card summary"><p class="eyebrow">What worked</p><h3>Smarter targets</h3><p>Choosing the safer side helps keep the ball in play and the next shot manageable.</p></article>
     <article class="card summary"><p class="eyebrow">What cost strokes</p><h3>Too little club</h3><p>Most poor shots happened when you selected too little club.</p></article>
@@ -670,30 +802,18 @@ main{padding-top:14px;padding-bottom:30px}
   </article>
 </section>
 
-<div class="footer"><span>Sherpa Caddie v0.8.0</span><button id="aboutBtn">What’s in v0.8.0?</button></div>
+<div class="footer"><span>Sherpa Caddie v0.10.0</span><button id="aboutBtn">What’s in v0.10.0?</button></div>
 </main>
-</div>
-
-<div id="clubModal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="clubModalTitle">
-  <div class="modal">
-    <div class="section-head">
-      <div><p class="eyebrow">Personal club-distance setup</p><h2 id="clubModalTitle">How far do your clubs carry?</h2></div>
-      <button class="btn ghost" id="closeClubModal">Close</button>
-    </div>
-    <p class="muted" style="margin-top:0">These are starting estimates. Change them to your normal carry distance; Sherpa stores them only on this device.</p>
-    <div class="club-grid" id="clubGrid"></div>
-    <div class="modal-actions">
-      <span class="modal-note" id="clubNote">These distances drive Sherpa’s club recommendations.</span>
-      <button class="btn ghost" id="resetClubsBtn">Reset</button>
-      <button class="btn primary" id="saveClubsBtn">Save Distances</button>
-    </div>
-  </div>
 </div>
 
 <div id="aboutModal" class="modal-backdrop hidden" role="dialog" aria-modal="true">
   <div class="modal" style="max-width:650px">
-    <div class="section-head"><div><p class="eyebrow">One-Shot Sherpa</p><h2>Version 0.8 additions</h2></div><button class="btn ghost" id="closeAboutModal">Close</button></div>
+    <div class="section-head"><div><p class="eyebrow">One-Shot Sherpa</p><h2>Version 0.10 additions</h2></div><button class="btn ghost" id="closeAboutModal">Close</button></div>
     <ul style="color:var(--stone);line-height:1.7">
+      <li>Five persistent navigation tabs: Guide, Play, Clubs, Learn, Review</li>
+      <li>Dedicated Clubs tab with Full Bag and Sunday Bag options</li>
+      <li>Expanded Learn hub covering fundamentals, course strategy, short game, rules, etiquette, and mental game</li>
+      <li>Beginner-friendly tee selector with forward/shortest tees as the default and an explanation of common tee colors</li>
       <li>Personal club-distance setup</li>
       <li>Simplified in-round screen</li>
       <li>Shot-quality buttons</li>
@@ -720,6 +840,7 @@ main{padding-top:14px;padding-bottom:30px}
       <li>Voice commands for common in-round actions</li>
       <li>AI echo detection and automatic retry/fallback</li>
       <li>Qwen-family on-device generative Sherpa AI using WebLLM</li>
+      <li>Optional Sherpa Live D-ID avatar mode with Text / Live switching</li>
       <li>Browser speech recognition retained as the PWA microphone-input layer for iPad compatibility</li>
     </ul>
   </div>
@@ -836,33 +957,83 @@ main{padding-top:14px;padding-bottom:30px}
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 const CLUBS={"Driver":220,"3 Wood":205,"5 Wood":190,"4 Hybrid":180,"5 Iron":170,"6 Iron":160,"7 Iron":150,"8 Iron":140,"9 Iron":125,"Pitching Wedge":110,"Gap Wedge":95,"Sand Wedge":75,"Lob Wedge":55,"Putter":10};
 const FALLBACK_HOLES=[[4,365],[4,330],[3,155],[5,490],[4,385],[4,350],[3,145],[5,510],[4,375],[4,360],[3,165],[5,500],[4,340],[4,395],[3,150],[5,475],[4,370],[4,355]];
-const KEY={clubs:"sherpa.clubs.041",rounds:"sherpa.rounds.041",current:"sherpa.current.041"};
+const KEY={clubs:"sherpa.clubs.041",rounds:"sherpa.rounds.041",current:"sherpa.current.041",bag:"sherpa.bag.090"};
+const SUNDAY_CLUBS=["Driver","4 Hybrid","7 Iron","Pitching Wedge","Sand Wedge","Putter"];
 const state={
  clubs:JSON.parse(localStorage.getItem(KEY.clubs)||"null")||{...CLUBS},
+ bagMode:localStorage.getItem(KEY.bag)||"full",
  rounds:JSON.parse(localStorage.getItem(KEY.rounds)||"[]"),
  round:JSON.parse(localStorage.getItem(KEY.current)||"null"),
  selectedCourse:null, coords:null, userCoords:null, weather:null, selectedClub:null, direction:"center",
  map:null, mapBase:null, mapFeatureGroup:null, mapHoleLayers:{}, mapHoleMeta:{}, mapFeatureMeta:[], mapTarget:null, mapCourseBounds:null, mapPlannerLayer:null, plannerMode:"smart", plannerManualTarget:null, searchOrigin:null, courseSourceHealth:{}
 };
-function save(){localStorage.setItem(KEY.clubs,JSON.stringify(state.clubs));localStorage.setItem(KEY.rounds,JSON.stringify(state.rounds));localStorage.setItem(KEY.current,JSON.stringify(state.round))}
+function save(){localStorage.setItem(KEY.clubs,JSON.stringify(state.clubs));localStorage.setItem(KEY.rounds,JSON.stringify(state.rounds));localStorage.setItem(KEY.current,JSON.stringify(state.round));localStorage.setItem(KEY.bag,state.bagMode)}
 function toast(m){const t=$("#toast");t.textContent=m;t.classList.add("show");clearTimeout(toast.t);toast.t=setTimeout(()=>t.classList.remove("show"),1700)}
-function show(view){$$(".view").forEach(v=>v.classList.toggle("active",v.id===view));$$(".tab").forEach(t=>t.classList.toggle("active",t.dataset.view===view));window.scrollTo(0,0);if(view==="rounds")renderRounds();if(view==="play"&&state.round)showRoundMode()}
+function show(view){$$(".view").forEach(v=>v.classList.toggle("active",v.id===view));$$(".tab").forEach(t=>t.classList.toggle("active",t.dataset.view===view));window.scrollTo(0,0);if(view==="review")renderRounds();if(view==="clubs")renderClubs();if(view==="play"&&state.round)showRoundMode()}
 $$(".tab").forEach(b=>b.onclick=()=>show(b.dataset.view));$$("[data-go]").forEach(b=>b.onclick=()=>show(b.dataset.go));
 
 /* Club setup */
-function renderClubs(){const g=$("#clubGrid");g.innerHTML="";Object.entries(CLUBS).forEach(([n,d])=>{const x=document.createElement("div");x.className="club-cell";x.innerHTML=`<label>${n}</label><input type="number" inputmode="numeric" min="0" max="400" value="${state.clubs[n]??d}" data-club="${n}">`;g.appendChild(x)})}
-function openClubs(){$("#clubModal").classList.remove("hidden");renderClubs()}
-function closeClubs(){$("#clubModal").classList.add("hidden")}
-$("#clubSetupBtn").onclick=openClubs;$("#openClubsFromPlay").onclick=openClubs;$("#closeClubModal").onclick=closeClubs;
-$("#clubModal").addEventListener("click",e=>{if(e.target.id==="clubModal")closeClubs()});
-$("#saveClubsBtn").onclick=()=>{$$("#clubGrid input").forEach(i=>state.clubs[i.dataset.club]=Number(i.value||0));save();$("#clubNote").textContent="Saved. Sherpa will use these distances.";toast("Club distances saved")};
-$("#resetClubsBtn").onclick=()=>{state.clubs={...CLUBS};renderClubs();save();toast("Club distances reset")};
+function activeClubNames(){return state.bagMode==="sunday"?SUNDAY_CLUBS:Object.keys(CLUBS)}
+function activeClubEntries(){return activeClubNames().map(name=>[name,Number(state.clubs[name]??CLUBS[name]??0)]).filter(([,d])=>d>0)}
+function saveVisibleClubInputs(){$$("#clubGrid input").forEach(i=>state.clubs[i.dataset.club]=Number(i.value||0))}
+function renderClubs(){
+ const g=$("#clubGrid");if(!g)return;g.innerHTML="";
+ activeClubNames().forEach(n=>{const d=CLUBS[n];const x=document.createElement("div");x.className="club-cell";x.innerHTML=`<label>${n}</label><input type="number" inputmode="numeric" min="0" max="400" value="${state.clubs[n]??d}" data-club="${n}" aria-label="${n} carry distance in yards">`;g.appendChild(x)});
+ $$(".bag-preset").forEach(b=>b.classList.toggle("active",b.dataset.bag===state.bagMode));
+ const desc=$("#bagDescription");if(desc)desc.textContent=state.bagMode==="sunday"?"Sunday Bag selected: Driver, 4 Hybrid, 7 Iron, Pitching Wedge, Sand Wedge, and Putter. This is a practical six-club starting set; your carry distances remain personal.":"Full Bag selected: Sherpa can recommend from your complete set of stored clubs.";
+ const note=$("#clubNote");if(note)note.textContent=`${state.bagMode==="sunday"?"Sunday":"Full"} Bag • ${activeClubNames().length} clubs available to Sherpa.`;
+}
+$$(".bag-preset").forEach(b=>b.onclick=()=>{saveVisibleClubInputs();state.bagMode=b.dataset.bag;save();renderClubs();toast(state.bagMode==="sunday"?"Sunday Bag selected":"Full Bag selected")});
+$("#saveClubsBtn").onclick=()=>{saveVisibleClubInputs();save();renderClubs();toast("Club distances saved")};
+$("#resetClubsBtn").onclick=()=>{activeClubNames().forEach(n=>state.clubs[n]=CLUBS[n]);renderClubs();save();toast("Current bag distances reset")};
 
 /* About */
 $("#aboutBtn").onclick=()=>$("#aboutModal").classList.remove("hidden");$("#closeAboutModal").onclick=()=>$("#aboutModal").classList.add("hidden");
 $("#aboutModal").addEventListener("click",e=>{if(e.target.id==="aboutModal")$("#aboutModal").classList.add("hidden")});
 
-/* Sherpa AI v0.8.0 — auto-start Qwen local AI + natural Kokoro voice + hands-free wake flow */
+/* Sherpa experience mode — local Text or D-ID Sherpa Live */
+const SHERPA_LIVE_SCRIPT_ID="sherpaDidEmbedScript";
+const SHERPA_LIVE_TARGET_ID="sherpaLiveAvatar";
+let sherpaLiveLoaded=false;
+let sherpaLiveScript=null;
+function setSherpaMode(mode){
+  const live=mode==="live";
+  $$(".experience-btn").forEach(b=>b.classList.toggle("active",b.dataset.sherpaMode===mode));
+  const textShell=$("#textSherpaShell"),liveShell=$("#sherpaLiveShell");
+  if(textShell)textShell.classList.toggle("is-hidden",live);
+  if(liveShell)liveShell.classList.toggle("active",live);
+  localStorage.setItem("sherpa.experience.0100",mode);
+  if(live)loadSherpaLive();
+}
+function loadSherpaLive(force=false){
+  const target=$("#"+SHERPA_LIVE_TARGET_ID),loading=$("#sherpaLiveLoading");
+  if(!target)return;
+  if(force){
+    const old=document.getElementById(SHERPA_LIVE_SCRIPT_ID);if(old)old.remove();
+    target.innerHTML="";sherpaLiveLoaded=false;sherpaLiveScript=null;
+    if(loading){loading.classList.remove("hidden");loading.innerHTML='<div><strong>Reconnecting Sherpa Live…</strong><span>Starting a fresh D-ID avatar session.</span></div>'}
+  }
+  if(sherpaLiveLoaded||document.getElementById(SHERPA_LIVE_SCRIPT_ID))return;
+  const script=document.createElement("script");
+  script.type="module";
+  script.id=SHERPA_LIVE_SCRIPT_ID;
+  script.src="https://agent.d-id.com/v2/index.js";
+  script.dataset.mode="full";
+  script.dataset.clientKey="ck_Cpxzap1_MB5LOCx6M2Hdx";
+  script.dataset.agentId="v2_agt_0-5IY10J";
+  script.dataset.name="did-agent";
+  script.dataset.monitor="true";
+  script.dataset.targetId=SHERPA_LIVE_TARGET_ID;
+  script.onload=()=>{sherpaLiveLoaded=true;sherpaLiveScript=script;if(loading)setTimeout(()=>loading.classList.add("hidden"),1100)};
+  script.onerror=()=>{if(loading)loading.innerHTML='<div><strong>Sherpa Live could not connect</strong><span>Check the internet connection and confirm davidfliesen.github.io is an allowed domain in D-ID.</span></div>'};
+  document.body.appendChild(script);
+}
+$$(".experience-btn").forEach(b=>b.addEventListener("click",()=>setSherpaMode(b.dataset.sherpaMode)));
+const restartLive=$("#restartSherpaLiveBtn");if(restartLive)restartLive.addEventListener("click",()=>loadSherpaLive(true));
+const savedExperience=localStorage.getItem("sherpa.experience.0100")||"text";
+setSherpaMode(savedExperience==="live"?"live":"text");
+
+/* Sherpa AI v0.10.0 — auto-start Qwen local AI + natural Kokoro voice + hands-free wake flow */
 const aiState = {
   engine: null,
   webllm: null,
@@ -887,7 +1058,7 @@ const aiState = {
   ttsReady: false,
   ttsLoading: false,
   ttsFailed: false,
-  ttsVoice: localStorage.getItem("sherpa.voice.080") || "af_heart",
+  ttsVoice: localStorage.getItem("sherpa.voice.0100") || "af_heart",
   activeAudio: null,
   audioUnlocked: false,
   adapter: null,
@@ -939,7 +1110,7 @@ function currentShotContext(){
   };
 }
 function clubDistancesText(){
-  return Object.entries(state.clubs).map(([k,v])=>`${k}: ${v} yds`).join(", ");
+  return activeClubEntries().map(([k,v])=>`${k}: ${v} yds`).join(", ");
 }
 function mapPlanningContext(){
   const holeSel = $("#mapHoleSelect");
@@ -1277,9 +1448,9 @@ function extractWakeCommand(text){
 }
 function speakLocal(text){setSherpaReply("Sherpa says",text);askStatus.textContent="Hands-Free command completed.";speakSherpa(text)}
 function clubFromSpeech(q){
-  const names=Object.keys(state.clubs);
+  const names=activeClubNames();
   const aliases={"three wood":"3 Wood","five wood":"5 Wood","four hybrid":"4 Hybrid","five iron":"5 Iron","six iron":"6 Iron","seven iron":"7 Iron","eight iron":"8 Iron","nine iron":"9 Iron","pitching wedge":"Pitching Wedge","gap wedge":"Gap Wedge","sand wedge":"Sand Wedge","lob wedge":"Lob Wedge","driver":"Driver","putter":"Putter"};
-  for(const [a,n] of Object.entries(aliases))if(q.includes(a))return n;
+  for(const [a,n] of Object.entries(aliases))if(q.includes(a)&&names.includes(n))return n;
   return names.find(n=>q.includes(n.toLowerCase()))||null;
 }
 async function handleRoundVoiceCommand(command){
@@ -1336,7 +1507,7 @@ function startTalk(){
 }
 $$('.handsfree-toggle').forEach(el=>el.addEventListener('change',e=>setHandsFree(e.target.checked)));
 $$('.speak-toggle').forEach(el=>el.addEventListener('change',e=>{aiState.speakReplies=e.target.checked;$$('.speak-toggle').forEach(x=>x.checked=aiState.speakReplies);if(!aiState.speakReplies)stopActiveVoice();updateVoiceModeUI()}));
-if(voiceSelect)voiceSelect.addEventListener("change",e=>{aiState.ttsVoice=e.target.value;localStorage.setItem("sherpa.voice.080",aiState.ttsVoice);aiState.ttsFailed=false;if(aiState.ttsVoice!=="system")warmNaturalVoice();else setBadge(voiceBadge,"Voice ready • system","ready")});
+if(voiceSelect)voiceSelect.addEventListener("change",e=>{aiState.ttsVoice=e.target.value;localStorage.setItem("sherpa.voice.0100",aiState.ttsVoice);aiState.ttsFailed=false;if(aiState.ttsVoice!=="system")warmNaturalVoice();else setBadge(voiceBadge,"Voice ready • system","ready")});
 
 initAiBtn.addEventListener("click", ()=>loadSherpaLLM(true));
 askBtn.addEventListener("click", ()=>askSherpaAI());
@@ -1517,8 +1688,8 @@ async function loadGolfMapDetails(coords){clearMapFeatures();$("#mapStatus").tex
   );
   out tags geom;`;try{const data=await overpassJSON(q);(data.elements||[]).forEach(el=>{if(el.type==="relation")addRelationMemberGeometry(el);else addGeometryLayer(el)});const layers=state.mapFeatureGroup.getLayers();if(layers.length){const bounds=state.mapFeatureGroup.getBounds();if(bounds.isValid()){state.mapCourseBounds=bounds;state.map.fitBounds(bounds,{padding:[24,24],maxZoom:17})}const holeCount=Object.keys(state.mapHoleLayers).length;$("#mapStatus").textContent=`Course map loaded. ${layers.length} mapped features found${holeCount?` including ${holeCount} numbered hole paths`:""}. Detailed coverage varies by course.`}else{state.map.setView([coords.lat,coords.lon],16);$("#mapStatus").textContent="The course location is correct, but detailed hole geometry is not available from the mapping source for this course."}}catch(e){console.warn("Hole geometry source unavailable",e);state.map.setView([coords.lat,coords.lon],16);$("#mapStatus").textContent="The course location is loaded. Detailed hole geometry is temporarily unavailable, so Sherpa will use the schematic planner view."}syncHolePlannerSelection();updateHolePlanner()}
 function syncHolePlannerSelection(){const sel=$("#mapHoleSelect"),val=sel.value;if(val==="all"){if(state.mapCourseBounds&&state.mapCourseBounds.isValid())state.map.fitBounds(state.mapCourseBounds,{padding:[24,24],maxZoom:17});return}const n=Number(val),layer=state.mapHoleLayers[n];Object.values(state.mapHoleLayers).forEach(l=>l.setStyle&&l.setStyle({color:"#0B2033",weight:4,opacity:.8}));if(layer){layer.setStyle&&layer.setStyle({color:"#BA915B",weight:7,opacity:1});const b=layer.getBounds?.();if(b&&b.isValid())state.map.fitBounds(b,{padding:[45,45],maxZoom:18})}}
-function recommendClubForDistance(targetYards){const clubs=Object.entries(state.clubs).filter(([n])=>n!=="Putter").map(([name,dist])=>({name,dist:Number(dist||0)})).filter(x=>x.dist>0).sort((a,b)=>a.dist-b.dist);if(!clubs.length)return{name:"Driver",dist:220};let best=clubs[0],score=Infinity;clubs.forEach(c=>{const s=Math.abs(c.dist-targetYards)+(c.dist>targetYards?4:0);if(s<score){score=s;best=c}});return best}
-function chooseStrategy(holeInfo,mode){const total=holeInfo.yards,par=holeInfo.par;if(par===3){const club=recommendClubForDistance(total);return{club:club.name,carry:club.dist,targetYards:total,leave:0,label:"Center green",summary:"Middle of the green is usually smarter than chasing a sucker pin."}}const clubs=Object.entries(state.clubs).filter(([n])=>n!=="Putter").map(([name,dist])=>({name,dist:Number(dist||0)})).filter(x=>x.dist>0).sort((a,b)=>b.dist-a.dist);const desiredLeave=mode==="attack"?(par===5?185:110):mode==="layup"?(par===5?165:155):(par===5?145:130);let best=null,bestScore=Infinity;clubs.forEach(c=>{const leave=Math.max(0,total-c.dist);let score=Math.abs(leave-desiredLeave);if(mode==="smart"&&c.name==="Driver")score+=16;if(mode==="layup"&&["Driver","3 Wood"].includes(c.name))score+=20;if(mode==="attack"&&c.name==="Driver")score-=10;if(c.dist>total-10)score+=8;if(score<bestScore){bestScore=score;best={club:c.name,carry:c.dist,targetYards:c.dist,leave}}});if(!best)best={club:"Driver",carry:220,targetYards:220,leave:Math.max(0,total-220)};best.label=mode==="attack"?"Aggressive line":mode==="layup"?"Conservative fairway":"Right-center fairway";best.summary=mode==="attack"?"Take on more distance only if the landing window still feels comfortable.":mode==="layup"?"Favor a position that keeps the next shot simple and playable.":"Favor the widest useful landing area and the easiest next shot.";return best}
+function recommendClubForDistance(targetYards){const clubs=activeClubEntries().filter(([n])=>n!=="Putter").map(([name,dist])=>({name,dist:Number(dist||0)})).sort((a,b)=>a.dist-b.dist);if(!clubs.length)return{name:"Driver",dist:220};let best=clubs[0],score=Infinity;clubs.forEach(c=>{const s=Math.abs(c.dist-targetYards)+(c.dist>targetYards?4:0);if(s<score){score=s;best=c}});return best}
+function chooseStrategy(holeInfo,mode){const total=holeInfo.yards,par=holeInfo.par;if(par===3){const club=recommendClubForDistance(total);return{club:club.name,carry:club.dist,targetYards:total,leave:0,label:"Center green",summary:"Middle of the green is usually smarter than chasing a sucker pin."}}const clubs=activeClubEntries().filter(([n])=>n!=="Putter").map(([name,dist])=>({name,dist:Number(dist||0)})).sort((a,b)=>b.dist-a.dist);const desiredLeave=mode==="attack"?(par===5?185:110):mode==="layup"?(par===5?165:155):(par===5?145:130);let best=null,bestScore=Infinity;clubs.forEach(c=>{const leave=Math.max(0,total-c.dist);let score=Math.abs(leave-desiredLeave);if(mode==="smart"&&c.name==="Driver")score+=16;if(mode==="layup"&&["Driver","3 Wood"].includes(c.name))score+=20;if(mode==="attack"&&c.name==="Driver")score-=10;if(c.dist>total-10)score+=8;if(score<bestScore){bestScore=score;best={club:c.name,carry:c.dist,targetYards:c.dist,leave}}});if(!best)best={club:"Driver",carry:220,targetYards:220,leave:Math.max(0,total-220)};best.label=mode==="attack"?"Aggressive line":mode==="layup"?"Conservative fairway":"Right-center fairway";best.summary=mode==="attack"?"Take on more distance only if the landing window still feels comfortable.":mode==="layup"?"Favor a position that keeps the next shot simple and playable.":"Favor the widest useful landing area and the easiest next shot.";return best}
 function plannerModeText(mode){return mode==="attack"?"Attack pushes farther down the hole when the risk is worth it.":mode==="layup"?"Lay Up favors control and a simpler next shot.":"Play Smart favors the widest useful landing area and the easiest next shot."}
 function plannerHoleData(n){const base=holeScoreData(n),points=state.mapHoleMeta[n]?.latlngs?.length?orientHolePoints(state.mapHoleMeta[n].latlngs,n):null,targets=greenTargets(Number(base.yards||360));const hazards=holeFeatures(n).filter(f=>["bunker","water","water_hazard"].includes(featureKind(f))).map(f=>{const proj=(points&&f.centroid)?projectPointToPolyline(f.centroid,points):null;return{name:f.label||(featureKind(f)==="water"?"Water":"Bunker"),type:featureKind(f),yards:proj?yardsFromMeters(proj.alongMeters):null,detail:featureKind(f)==="water"?"Major penalty area":"Keep this miss out of play"}}).sort((a,b)=>(a.yards??9999)-(b.yards??9999)).slice(0,4);let plan;if(state.plannerManualTarget&&state.plannerManualTarget.hole===n){const club=recommendClubForDistance(state.plannerManualTarget.yardsFromTee||base.yards);plan={club:club.name,carry:club.dist,targetYards:Math.round(state.plannerManualTarget.yardsFromTee||club.dist),leave:Math.max(0,base.yards-Math.round(state.plannerManualTarget.yardsFromTee||club.dist)),label:"Manual target",summary:"You marked this landing area on the map. Sherpa updated the carry and leave distance around it.",targetLatLng:state.plannerManualTarget.latlng}}else{plan=chooseStrategy(base,state.plannerMode);if(points?.length)plan.targetLatLng=pointAlongPolyline(points,clamp(plan.targetYards/Math.max(base.yards,1),0.05,0.98))}const wind=windSummaryForHole(points,plan.targetYards);return{number:n,par:base.par,yards:Math.round(base.yards),targets,points,hazards,plan,wind}}
 function updateStrategyButtons(){$$(".strategy-btn").forEach(b=>b.classList.toggle("active",b.dataset.mode===state.plannerMode))}
@@ -1531,7 +1702,7 @@ $("#clearTargetBtn").addEventListener("click",()=>{state.plannerManualTarget=nul
 
 /* Round */
 function windType(){const s=state.weather?.wind_speed_10m??0;if(s<5)return"calm";return"cross"}
-function teeAdj(){const t=$("#teeChoice").value;return t==="gold"?-15:t==="red"?-35:0}
+function teeAdj(){const t=$("#teeChoice").value;return t==="red"?-35:t==="gold"?-15:t==="blue"?20:0}
 function extractHoles(course){
  const c=course?.raw;if(!c)return null;
  const sources=[c.holes,c.scorecard?.holes,c.scorecards?.[0]?.holes,c.tees?.[0]?.holes].filter(Array.isArray);
@@ -1551,7 +1722,7 @@ function hideRoundMode(){$("#preRound").classList.remove("hidden");$("#roundMode
 function hole(){return state.round.holes[state.round.holeIndex]}
 function recClub(dist){
  const multiplier=state.round.wind==="cross"?1.02:1;
- const need=dist*multiplier, asc=Object.entries(state.clubs).filter(([n])=>n!=="Putter").sort((a,b)=>a[1]-b[1]);
+ const need=dist*multiplier, asc=activeClubEntries().filter(([n])=>n!=="Putter").sort((a,b)=>a[1]-b[1]);
  let idx=asc.findIndex(([,d])=>d>=need);if(idx<0)idx=asc.length-1;
  if(idx<asc.length-1&&asc[idx][1]-need<7)idx++;return asc[idx][0]
 }
@@ -1564,7 +1735,7 @@ function renderShot(){
  $("#targetRec").textContent=tr;$("#targetWhy").textContent=tw;$("#mentalCue").textContent=cue();$("#nextHoleBtn").disabled=!h.finished;renderClubStrip()
 }
 function renderClubStrip(){
- const order=Object.keys(CLUBS),s=$("#clubStrip");s.innerHTML="";order.forEach(n=>{const b=document.createElement("button");b.className="club-choice"+(n===state.selectedClub?" active":"");b.textContent=n;b.onclick=()=>{state.selectedClub=n;renderShot()};s.appendChild(b)})
+ const order=activeClubNames(),s=$("#clubStrip");s.innerHTML="";order.forEach(n=>{const b=document.createElement("button");b.className="club-choice"+(n===state.selectedClub?" active":"");b.textContent=n;b.onclick=()=>{state.selectedClub=n;renderShot()};s.appendChild(b)})
 }
 $$(".dir").forEach(b=>b.onclick=()=>{state.direction=b.dataset.dir;$$(".dir").forEach(x=>x.classList.toggle("active",x===b))});
 $$(".quality").forEach(b=>b.onclick=()=>recordShot(b.dataset.quality));
@@ -1578,17 +1749,17 @@ function recordShot(q){
 $("#finishHoleBtn").onclick=()=>{const h=hole();if(h.finished)return;if(h.remaining>0){h.strokes++;state.round.totalStrokes++}h.remaining=0;h.finished=true;$("#resetMessage").textContent=(h.strokes>h.par?"Bad holes happen. Leave it here. ":"Hole complete. ")+"The next tee is a fresh start.";save();renderShot()};
 $("#nextHoleBtn").onclick=()=>{const h=hole();if(!h.finished)return;if(state.round.holeIndex<state.round.holes.length-1){state.round.holeIndex++;state.selectedClub=null;save();renderShot();$("#resetMessage").textContent="Every shot is a new start."}else finishRound()};
 $("#endRoundBtn").onclick=()=>{if(confirm("End this round and save what you have recorded?"))finishRound()};
-function finishRound(){state.round.finished=new Date().toISOString();state.rounds.unshift(state.round);state.round=null;save();hideRoundMode();renderRounds();show("rounds");toast("Round saved")}
+function finishRound(){state.round.finished=new Date().toISOString();state.rounds.unshift(state.round);state.round=null;save();hideRoundMode();renderRounds();show("review");toast("Round saved")}
 
 /* Rounds/export */
 function renderRounds(){const l=$("#roundList");l.innerHTML="";if(!state.rounds.length){l.innerHTML='<div class="round-item"><div><h3>No saved rounds yet.</h3><p>Finished rounds stay on this device until you export or clear browser data.</p></div></div>';return}state.rounds.forEach(r=>{const played=r.holes.filter(h=>h.finished||h.shots.length).length,par=r.holes.slice(0,played).reduce((s,h)=>s+h.par,0),diff=r.totalStrokes-par;const el=document.createElement("div");el.className="round-item";el.innerHTML=`<div><h3>${r.course}</h3><p>${new Date(r.started).toLocaleDateString()} • ${played} holes • ${r.tee} tees</p></div><div class="round-score">${r.totalStrokes}${played?` (${diff>=0?"+":""}${diff})`:""}</div>`;l.appendChild(el)})}
-$("#exportBtn").onclick=()=>{const b=new Blob([JSON.stringify({version:"0.5.0",clubs:state.clubs,rounds:state.rounds},null,2)],{type:"application/json"}),a=document.createElement("a");a.href=URL.createObjectURL(b);a.download=`sherpa-caddie-data-${new Date().toISOString().slice(0,10)}.json`;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),500)};
-$("#importBtn").onclick=()=>$("#importFile").click();$("#importFile").onchange=async e=>{const f=e.target.files[0];if(!f)return;try{const d=JSON.parse(await f.text());if(d.clubs)state.clubs=d.clubs;if(d.rounds)state.rounds=d.rounds;save();renderClubs();renderRounds();toast("Data imported")}catch{toast("Could not import that file")}e.target.value=""};
+$("#exportBtn").onclick=()=>{const b=new Blob([JSON.stringify({version:"0.9.0",bagMode:state.bagMode,clubs:state.clubs,rounds:state.rounds},null,2)],{type:"application/json"}),a=document.createElement("a");a.href=URL.createObjectURL(b);a.download=`sherpa-caddie-data-${new Date().toISOString().slice(0,10)}.json`;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),500)};
+$("#importBtn").onclick=()=>$("#importFile").click();$("#importFile").onchange=async e=>{const f=e.target.files[0];if(!f)return;try{const d=JSON.parse(await f.text());if(d.clubs)state.clubs=d.clubs;if(d.bagMode)state.bagMode=d.bagMode;if(d.rounds)state.rounds=d.rounds;save();renderClubs();renderRounds();toast("Data imported")}catch{toast("Could not import that file")}e.target.value=""};
 
 function hideSplash(){const el=$("#splashScreen");if(!el||el.classList.contains("is-hidden"))return;el.classList.add("is-hidden");setTimeout(()=>el.remove(),800)}
 window.addEventListener("load",()=>setTimeout(hideSplash,5000));
 setTimeout(hideSplash,5600);
-if("serviceWorker"in navigator)window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js?v=080").catch(()=>{}));
+if("serviceWorker"in navigator)window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js?v=0100").catch(()=>{}));
 renderClubs();renderRounds();if(state.round){show("play");showRoundMode()}
 })();
 </script>

@@ -1,5 +1,5 @@
 # Sherpa Caddie
-### Version 0.8.0
+### Version 0.10.0
 
 **PWA:**  
 https://davidfliesen.github.io/SherpaCaddy
@@ -7,6 +7,52 @@ https://davidfliesen.github.io/SherpaCaddy
 ## Purpose
 
 Sherpa Caddie combines the practical help of a caddie with the guidance and perspective of a Sherpa mentor. The core principle remains **one shot at a time**.
+
+## v0.9.0 — Five-Tab Navigation + Beginner Setup
+
+This release simplifies the app around five persistent top-level destinations and expands beginner guidance.
+
+### Navigation
+
+- **🏔️ Guide** — opening screen with Sherpa AI and hands-free voice guidance
+- **🏌️ Play** — find a course, choose tees, check conditions, plan, and start a round
+- **🏑 Clubs** — full bag or Sunday Bag setup with personal carry distances
+- **🧭 Learn** — expanded golf learning hub
+- **📒 Review** — saved rounds, summaries, import, and export
+
+The old second row of Home-screen action cards has been removed so navigation is no longer duplicated.
+
+### Tee guidance
+
+- Forward/shortest tees are the default beginner setting.
+- Common red, gold, white, and blue tee conventions are explained at the point where the player chooses tees.
+- The app explicitly notes that tee colors are not universal and that players should choose by distance and comfort.
+
+### Clubs
+
+- Clubs is now a full tab instead of a modal overlay.
+- Added **Full Bag** and **Sunday Bag** modes.
+- The Sunday Bag starter preset uses Driver, 4 Hybrid, 7 Iron, Pitching Wedge, Sand Wedge, and Putter.
+- Sherpa recommendations, planning strategy, AI context, and in-round club controls respect the selected bag.
+
+### Learn
+
+Learn now covers far more than the original six ideas, with expandable lessons for:
+
+- getting started and tee selection
+- club purposes and fundamentals
+- course management, safe misses, wind, hazards, and layups
+- chipping, pitching, bunkers, and putting
+- scoring, pace of play, safety, courtesy, and course care
+- mental-game resets and one-shot-at-a-time focus
+- par-3, par-4, and par-5 strategy
+
+### Changed files in v0.10.0
+
+- `index.html`
+- `manifest.webmanifest`
+- `sw.js`
+- `README.md`
 
 ## v0.8.0 — Natural Hands-Free Sherpa
 
@@ -37,18 +83,36 @@ The PWA continues to use the browser speech-recognition API for microphone trans
 
 ## Current retained features
 
-- Home | Play | Learn | My Rounds layout
+- Guide | Play | Clubs | Learn | Review layout
 - Branded splash and dark golf-app shell
-- Personal club distances
+- Full Bag / Sunday Bag selection with personal club distances
 - One-Shot Sherpa shot guidance
 - Weather and course search
 - Hole Planner with map/schematic fallback
 - Front / center / back planning yardages
 - Play Smart / Attack / Lay Up strategies
 - Local round storage and import/export
-- Hands-Free Caddie controls on Home and during a round
+- Hands-Free Caddie controls on Guide and during a round
 
 ## Changelog
+
+### v0.10.0 — Sherpa Live D-ID Integration
+- Added Text / Sherpa Live mode switching on the Guide screen.
+- Integrated the supplied D-ID Agent using full mode with a dedicated in-app target container.
+- D-ID is loaded on demand only when Sherpa Live is selected.
+- Added clear internet/usage note and a Restart Live control.
+- Updated PWA/cache versioning to **v0.10.0**.
+
+
+### v0.9.0 — Five-Tab Navigation + Beginner Setup
+- Added Guide / Play / Clubs / Learn / Review persistent navigation.
+- Removed redundant home-screen action cards.
+- Promoted Clubs to its own full page.
+- Added Full Bag and Sunday Bag modes and made club recommendations bag-aware.
+- Made forward/shortest tees the beginner default and added tee-color guidance.
+- Expanded Learn into a multi-category golf learning hub.
+- Updated PWA/cache versioning to **v0.9.0**.
+
 
 ### v0.8.0 — Natural Hands-Free Sherpa
 - Corrected splash-logo aspect handling.
@@ -80,7 +144,7 @@ This release repairs the course-search path and makes the golf-course database t
 - Optimized fast-loading Sherpa logo and branded splash screen.
 - High-contrast logo plaque in the dark branded header.
 - Home | Play | Learn | My Rounds navigation.
-- Personal club distances, weather, One-Shot Sherpa, local round storage, import/export, voice, and Sherpa AI.
+- Full Bag / Sunday Bag selection with personal club distances, weather, One-Shot Sherpa, local round storage, import/export, voice, and Sherpa AI.
 - Hole Planner with front/center/back yardages, strategy modes, hazards, target planning, and schematic fallback.
 
 ### Changed files in v0.6.4
