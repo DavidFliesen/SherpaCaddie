@@ -5,11 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#18311C">
 <meta name="description" content="Sherpa Caddie — one-shot-at-a-time golf guidance combining a caddie, coach and mentor.">
-<link rel="manifest" href="manifest.webmanifest?v=070">
-<link rel="icon" href="icons/favicon.png?v=070" type="image/png">
-<link rel="apple-touch-icon" href="icons/icon-192.png?v=070">
-<link rel="preload" as="image" href="assets/sherpa-caddie-logo-fast.webp?v=070" type="image/webp" fetchpriority="high">
-<title>Sherpa Caddie v0.7.0</title>
+<link rel="manifest" href="manifest.webmanifest?v=080">
+<link rel="icon" href="icons/favicon.png?v=080" type="image/png">
+<link rel="apple-touch-icon" href="icons/icon-192.png?v=080">
+<link rel="preload" as="image" href="assets/sherpa-caddie-logo-fast.webp?v=080" type="image/webp" fetchpriority="high">
+<title>Sherpa Caddie v0.8.0</title>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
   crossorigin="">
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
@@ -84,6 +84,8 @@ main{width:min(1160px,calc(100% - 28px));margin:0 auto;padding-bottom:18px}
 .voice-mode-panel{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:12px;align-items:center;padding:11px 12px;border:1px solid #d8d2c4;border-radius:13px;background:linear-gradient(90deg,#f9f5ec 0%,#edf4e9 100%)}
 .voice-mode-copy strong{display:block;color:var(--forest);font-size:.94rem}.voice-mode-copy span{display:block;color:var(--stone);font-size:.78rem;margin-top:2px;line-height:1.35}
 .switch-row{display:flex;align-items:center;gap:8px;font-size:.78rem;font-weight:850;color:var(--forest);white-space:nowrap;cursor:pointer}.switch-row input{position:absolute;opacity:0;pointer-events:none}.switch-row i{width:42px;height:24px;border-radius:999px;background:#c9c6bd;position:relative;transition:.2s;box-shadow:inset 0 0 0 1px rgba(11,32,51,.08)}.switch-row i:after{content:"";position:absolute;width:18px;height:18px;left:3px;top:3px;border-radius:50%;background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.22);transition:.2s}.switch-row input:checked+i{background:var(--forest)}.switch-row input:checked+i:after{transform:translateX(18px)}
+.voice-select-row{display:flex;align-items:center;gap:8px;min-width:240px;font-size:.78rem;font-weight:850;color:var(--forest)}
+.voice-select-row select{min-width:190px}
 .voice-mode-status{font-size:.76rem;color:var(--stone);padding:0 2px}.voice-mode-status.active{color:var(--forest);font-weight:800}
 .round-voice-bar{padding:10px 14px;display:grid;grid-template-columns:1fr auto;gap:8px 14px;align-items:center;border-left:5px solid var(--tan);background:linear-gradient(90deg,#fffaf0 0%,#edf5e9 100%)}
 .round-voice-main{display:flex;align-items:center;gap:10px}.round-voice-icon{font-size:1.3rem}.round-voice-main strong{display:block;color:var(--forest)}.round-voice-main span:not(.round-voice-icon){display:block;color:var(--stone);font-size:.78rem;margin-top:2px}
@@ -313,7 +315,7 @@ main{width:min(1160px,calc(100% - 28px));margin:0 auto;padding-bottom:18px}
 .splash-rings::after{inset:34px;border-color:rgba(186,145,91,.26)}
 .splash-logo-stage{position:relative;display:inline-flex;align-items:center;justify-content:center;min-height:260px;min-width:280px}
 .splash-logo-glow{position:absolute;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,rgba(67,98,64,.16) 0%,rgba(235,217,193,.22) 42%,rgba(255,255,255,0) 72%);filter:blur(1px);animation:splashGlow 2.8s ease-in-out infinite}
-.splash-logo{width:min(70vw,255px);max-width:255px;display:block;margin:0 auto 6px;position:relative;z-index:1;transform-origin:center center;animation:splashLogoIntro 5s ease-in-out both;image-rendering:auto}
+.splash-logo{width:min(70vw,255px);height:auto!important;max-width:255px;max-height:none;object-fit:contain;aspect-ratio:auto;display:block;margin:0 auto 6px;position:relative;z-index:1;transform-origin:center center;animation:splashLogoIntro 5s ease-in-out both;image-rendering:auto}
 .splash-title{font-family:Georgia,"Times New Roman",serif;font-size:clamp(2.3rem,5vw,3.2rem);font-weight:800;color:var(--forest);letter-spacing:.02em;opacity:0;animation:splashTextIn .8s ease forwards .55s}
 .splash-subtitle{margin-top:4px;color:var(--meadow);font-weight:800;letter-spacing:.08em;text-transform:uppercase;font-size:.82rem;opacity:0;animation:splashTextIn .8s ease forwards .95s}
 .splash-path{width:min(74vw,320px);height:18px;margin:18px auto 10px;border-radius:999px;background:linear-gradient(90deg,#e2d5bf 0%,#f6ecdb 100%);position:relative;overflow:hidden;opacity:0;animation:splashTextIn .8s ease forwards 1.35s}
@@ -405,7 +407,7 @@ main{padding-top:14px;padding-bottom:30px}
     <div class="splash-rings" aria-hidden="true"></div>
     <div class="splash-logo-stage" aria-hidden="true">
       <div class="splash-logo-glow"></div>
-      <img class="splash-logo" src="assets/sherpa-caddie-logo-fast.webp?v=070" width="320" height="349" decoding="sync" fetchpriority="high" alt="Sherpa Caddie logo">
+      <img class="splash-logo" src="assets/sherpa-caddie-logo-fast.webp?v=080" decoding="sync" fetchpriority="high" alt="Sherpa Caddie logo">
     </div>
     <div class="splash-title">Sherpa Caddie</div>
     <div class="splash-subtitle">Your guide. Your game. Your best round.</div>
@@ -415,12 +417,12 @@ main{padding-top:14px;padding-bottom:30px}
 </div>
 <div class="app">
 <header class="topbar">
-  <div class="brand-badge"><img class="brand-logo" src="assets/sherpa-caddie-logo-fast.webp?v=070" width="180" height="196" decoding="sync" fetchpriority="high" alt="Sherpa Caddie"></div>
+  <div class="brand-badge"><img class="brand-logo" src="assets/sherpa-caddie-logo-fast.webp?v=080" width="180" height="196" decoding="sync" fetchpriority="high" alt="Sherpa Caddie"></div>
   <div class="brand-text">
     <h1>Sherpa Caddie</h1>
     <p>Your guide. Your game. Your best round.</p>
   </div>
-  <div class="version">v0.7.0</div>
+  <div class="version">v0.8.0</div>
 </header>
 
 <div class="tabs-wrap">
@@ -459,15 +461,15 @@ main{padding-top:14px;padding-bottom:30px}
       <div class="ask-shell">
         <div class="ask-modebar">
           <div class="ask-badges">
-            <span id="llmBadge" class="ask-badge warn">LLM loading not started</span>
+            <span id="llmBadge" class="ask-badge warn">AI warming up…</span>
             <span id="voiceBadge" class="ask-badge warn">Voice not started</span>
             <span id="deviceBadge" class="ask-badge">On-device only</span>
           </div>
           <div>
             <label for="modelSelect" class="note-line" style="margin-right:6px">Model</label>
             <select id="modelSelect" class="model-select" aria-label="Sherpa AI model">
-              <option value="better" selected>Recommended — better 1B answers</option>
-              <option value="light">Fast fallback — lightweight</option>
+              <option value="better" selected>Recommended — Qwen3 0.6B</option>
+              <option value="light">Fallback — Qwen2.5 0.5B</option>
             </select>
           </div>
         </div>
@@ -475,7 +477,7 @@ main{padding-top:14px;padding-bottom:30px}
         <div class="voice-mode-panel">
           <div class="voice-mode-copy">
             <strong>Hands-Free Caddie</strong>
-            <span>Turn it on once, then say <b>“Sherpa…”</b> before a question or command.</span>
+            <span>Turn it on once, then say <b>“Sherpa”</b>, <b>“Hey Sherpa”</b>, <b>“Okay Sherpa”</b>, or <b>“Hi Sherpa”</b>. Sherpa listens, answers aloud, then goes back to listening.</span>
           </div>
           <label class="switch-row">
             <span>Hands-Free</span>
@@ -487,26 +489,35 @@ main{padding-top:14px;padding-bottom:30px}
             <input class="speak-toggle" type="checkbox" checked aria-label="Spoken Sherpa replies">
             <i aria-hidden="true"></i>
           </label>
+          <label class="voice-select-row">
+            <span>Voice</span>
+            <select id="voiceSelect" class="model-select" aria-label="Sherpa voice">
+              <option value="af_heart" selected>Natural Sherpa — warm female</option>
+              <option value="af_bella">Natural Sherpa — bright female</option>
+              <option value="bf_emma">Natural Sherpa — British female</option>
+              <option value="system">System voice fallback</option>
+            </select>
+          </label>
         </div>
         <div class="voice-mode-status" id="homeVoiceModeStatus">Hands-Free is off. Manual Talk and typed questions still work.</div>
 
-        <div class="note-line">First use downloads the selected AI model and caches it in your browser. Sherpa automatically chooses the most compatible quantization for this device.</div>
+        <div class="note-line">Sherpa now starts its local AI automatically in the background. After the first use, browser caching keeps the model available without a separate Load step.</div>
         <div class="progress-line" aria-hidden="true"><span id="aiProgressBar"></span></div>
 
         <div class="sherpa-controls">
           <input id="questionInput" placeholder="Ask about this shot, the course, your club choice, or your mental game…" autocomplete="off" aria-label="Ask Sherpa a golf question">
           <button class="btn primary" id="askBtn" type="button">Ask</button>
           <button class="btn secondary listen-button" id="micBtn" type="button" aria-label="Speak to Sherpa">🎙️ Talk</button>
-          <button class="btn ghost wide-full" id="initAiBtn" type="button">Load Sherpa AI</button>
+          <button class="btn ghost wide-full" id="initAiBtn" type="button">Restart AI</button>
         </div>
 
         <div class="ask-reply" id="askReply" aria-live="polite">
-          <strong id="answerTitle">Sherpa AI is standing by</strong>
-          <p id="answerText">Load Sherpa AI, then ask by voice or text. Sherpa will combine your current shot data with golf guidance and answer in plain language.</p>
+          <strong id="answerTitle">Sherpa is getting ready</strong>
+          <p id="answerText">You can type now or turn on Hands-Free Caddie. Sherpa will initialize its local AI and natural voice automatically.</p>
         </div>
 
         <div class="secondary-row">
-          <span class="ask-status" id="askStatus">Sherpa AI has not been loaded yet.</span>
+          <span class="ask-status" id="askStatus">Sherpa AI will initialize automatically.</span>
           <button class="btn ghost" type="button" id="stopSpeakingBtn">🔇 Stop Voice</button>
           <button class="btn ghost" type="button" id="speakAnswerBtn">🔊 Read Answer</button>
         </div>
@@ -589,7 +600,7 @@ main{padding-top:14px;padding-bottom:30px}
         <label class="switch-row compact"><span>Hands-Free</span><input class="handsfree-toggle" type="checkbox" aria-label="Hands-Free Caddie during round"><i aria-hidden="true"></i></label>
         <label class="switch-row compact"><span>Speak</span><input class="speak-toggle" type="checkbox" checked aria-label="Spoken replies during round"><i aria-hidden="true"></i></label>
       </div>
-      <div class="round-voice-hint">Say “Sherpa, what club?”, “Sherpa, how far?”, “Sherpa, good shot”, or “Sherpa, next hole”.</div>
+      <div class="round-voice-hint">Say “Sherpa” or “Hey Sherpa,” then speak naturally. Sherpa answers aloud and automatically returns to listening.</div>
     </article>
 
     <article class="card plan">
@@ -659,7 +670,7 @@ main{padding-top:14px;padding-bottom:30px}
   </article>
 </section>
 
-<div class="footer"><span>Sherpa Caddie v0.7.0</span><button id="aboutBtn">What’s in v0.7.0?</button></div>
+<div class="footer"><span>Sherpa Caddie v0.8.0</span><button id="aboutBtn">What’s in v0.8.0?</button></div>
 </main>
 </div>
 
@@ -681,7 +692,7 @@ main{padding-top:14px;padding-bottom:30px}
 
 <div id="aboutModal" class="modal-backdrop hidden" role="dialog" aria-modal="true">
   <div class="modal" style="max-width:650px">
-    <div class="section-head"><div><p class="eyebrow">One-Shot Sherpa</p><h2>Version 0.7 additions</h2></div><button class="btn ghost" id="closeAboutModal">Close</button></div>
+    <div class="section-head"><div><p class="eyebrow">One-Shot Sherpa</p><h2>Version 0.8 additions</h2></div><button class="btn ghost" id="closeAboutModal">Close</button></div>
     <ul style="color:var(--stone);line-height:1.7">
       <li>Personal club-distance setup</li>
       <li>Simplified in-round screen</li>
@@ -700,13 +711,16 @@ main{padding-top:14px;padding-bottom:30px}
       <li>Major visual refresh with a stronger golf-app shell</li>
       <li>Multi-source nearby course discovery using OpenGolf + OpenStreetMap</li>
       <li>Typed course names now resolve to verified coordinates instead of reusing stale coordinates</li>
-      <li>Hands-Free Caddie voice mode with “Sherpa” wake phrase</li>
+      <li>Hands-Free Caddie accepts “Sherpa”, “Hey Sherpa”, “Okay Sherpa”, and “Hi Sherpa”</li>
+      <li>Natural local Kokoro voice with automatic spoken replies</li>
+      <li>Wake-then-question flow works even when recognition splits the wake phrase and question</li>
+      <li>Qwen3 0.6B local conversational model with Qwen2.5 fallback</li>
+      <li>AI starts automatically in the background; no Load AI step required</li>
       <li>Spoken Replies on/off control</li>
       <li>Voice commands for common in-round actions</li>
       <li>AI echo detection and automatic retry/fallback</li>
-      <li>Recommended 1B local model as the default quality choice</li>
-      <li>On-device generative Sherpa AI using WebLLM</li>
-      <li>Improved voice flow with local Whisper speech recognition</li>
+      <li>Qwen-family on-device generative Sherpa AI using WebLLM</li>
+      <li>Browser speech recognition retained as the PWA microphone-input layer for iPad compatibility</li>
     </ul>
   </div>
 </div>
@@ -848,7 +862,7 @@ $("#resetClubsBtn").onclick=()=>{state.clubs={...CLUBS};renderClubs();save();toa
 $("#aboutBtn").onclick=()=>$("#aboutModal").classList.remove("hidden");$("#closeAboutModal").onclick=()=>$("#aboutModal").classList.add("hidden");
 $("#aboutModal").addEventListener("click",e=>{if(e.target.id==="aboutModal")$("#aboutModal").classList.add("hidden")});
 
-/* Sherpa AI v0.4.1 — WebLLM using the official CDN path, lighter models, diagnostics, and simpler voice */
+/* Sherpa AI v0.8.0 — auto-start Qwen local AI + natural Kokoro voice + hands-free wake flow */
 const aiState = {
   engine: null,
   webllm: null,
@@ -867,14 +881,23 @@ const aiState = {
   restartingRecognition: false,
   processingVoice: false,
   lastTranscript: "",
+  wakeArmedUntil: 0,
   history: [],
+  tts: null,
+  ttsReady: false,
+  ttsLoading: false,
+  ttsFailed: false,
+  ttsVoice: localStorage.getItem("sherpa.voice.080") || "af_heart",
+  activeAudio: null,
+  audioUnlocked: false,
   adapter: null,
   adapterFeatures: new Set()
 };
 const llmBadge = $("#llmBadge"), voiceBadge = $("#voiceBadge"), deviceBadge = $("#deviceBadge");
 const askStatus = $("#askStatus"), answerTitle = $("#answerTitle"), answerText = $("#answerText");
 const askBtn = $("#askBtn"), initAiBtn = $("#initAiBtn"), micBtn = $("#micBtn"), modelSelect = $("#modelSelect");
-const aiProgressBar = $("#aiProgressBar");
+const voiceSelect = $("#voiceSelect"), aiProgressBar = $("#aiProgressBar");
+if(voiceSelect) voiceSelect.value = aiState.ttsVoice;
 
 function setBadge(el, text, kind=""){
   if(!el) return;
@@ -944,7 +967,7 @@ RULES
 - Do not give long technical swing instruction during a round.
 - Do not begin with phrases like "You asked" or "Your question is".
 
-Sound like a calm, capable caddie standing beside the golfer.`;
+Sound like a calm, capable caddie standing beside the golfer. Never expose internal reasoning or thinking tags.`;
 }
 function buildUserPrompt(question){
   const shot = currentShotContext();
@@ -978,7 +1001,8 @@ Strokes on this hole: ${shot.strokesOnHole}.
 Total strokes so far: ${shot.totalStrokes}.` : `No active round. Give general guidance using only the course, weather, map, and club-distance facts above.`}
 
 QUESTION
-${question}`.trim();
+${question}
+/no_think`.trim();
 }
 
 async function getWebGPUAdapter(){
@@ -991,16 +1015,15 @@ async function getWebGPUAdapter(){
 }
 
 function chooseModelId(webllm){
-  const family = modelSelect.value || "light";
+  const family = modelSelect.value || "better";
   const hasF16 = aiState.adapterFeatures.has("shader-f16");
   const candidates = family === "better"
     ? (hasF16
-        ? ["Llama-3.2-1B-Instruct-q4f16_1-MLC","Llama-3.2-1B-Instruct-q4f32_1-MLC"]
-        : ["Llama-3.2-1B-Instruct-q4f32_1-MLC"])
+        ? ["Qwen3-0.6B-q4f16_1-MLC","Qwen3-0.6B-q4f32_1-MLC","Qwen2.5-0.5B-Instruct-q4f16_1-MLC","Qwen2.5-0.5B-Instruct-q4f32_1-MLC"]
+        : ["Qwen3-0.6B-q4f32_1-MLC","Qwen2.5-0.5B-Instruct-q4f32_1-MLC"])
     : (hasF16
-        ? ["SmolLM2-360M-Instruct-q4f16_1-MLC","SmolLM2-360M-Instruct-q4f32_1-MLC"]
-        : ["SmolLM2-360M-Instruct-q4f32_1-MLC"]);
-
+        ? ["Qwen2.5-0.5B-Instruct-q4f16_1-MLC","Qwen2.5-0.5B-Instruct-q4f32_1-MLC","SmolLM2-360M-Instruct-q4f16_1-MLC"]
+        : ["Qwen2.5-0.5B-Instruct-q4f32_1-MLC","SmolLM2-360M-Instruct-q4f32_1-MLC"]);
   const available = new Set((webllm.prebuiltAppConfig?.model_list || []).map(m=>m.model_id));
   return candidates.find(id=>available.has(id)) || candidates[candidates.length-1];
 }
@@ -1027,7 +1050,7 @@ async function loadSherpaLLM(force=false){
 
     const modelId = chooseModelId(webllm);
     aiState.modelId = modelId;
-    const friendly = modelId.startsWith("SmolLM2") ? "Lightweight" : "1B";
+    const friendly = modelId.startsWith("Qwen3") ? "Qwen3" : modelId.startsWith("Qwen2.5") ? "Qwen2.5" : "Fallback";
     setBadge(llmBadge, `Loading ${friendly} model…`, "warn");
     askStatus.textContent = `Preparing ${modelId}. The first download may take several minutes.`;
 
@@ -1057,7 +1080,7 @@ async function loadSherpaLLM(force=false){
     const wasBetter=modelSelect.value==="better";
     aiState.llmReady=false;setProgress(0);
     if(wasBetter&&!force){
-      modelSelect.value="light";aiState.loadingLLM=false;setBadge(llmBadge,"Trying lightweight fallback…","warn");askStatus.textContent="The recommended 1B model did not initialize, so Sherpa is trying the lightweight fallback.";return loadSherpaLLM(false);
+      modelSelect.value="light";aiState.loadingLLM=false;setBadge(llmBadge,"Trying lightweight fallback…","warn");askStatus.textContent="The recommended Qwen3 model did not initialize, so Sherpa is trying the smaller Qwen2.5 fallback.";return loadSherpaLLM(false);
     }
     setBadge(llmBadge,"AI could not load","err");
     const detail=shortError(err);askStatus.textContent=`Load error: ${detail}`;setSherpaReply("Sherpa AI could not load",`The local model could not start: ${detail}. Hands-Free round commands can still work without the language model.`);
@@ -1089,31 +1112,85 @@ function fallbackGolfAnswer(question){
 function historyMessages(){return aiState.history.slice(-4).map(x=>({role:x.role,content:x.content}))}
 async function generateSherpaText(question){
   const baseMessages=[{role:"system",content:systemPrompt()},...historyMessages(),{role:"user",content:buildUserPrompt(question)}];
-  const first=await aiState.engine.chat.completions.create({messages:baseMessages,temperature:.22,max_tokens:190});
+  const first=await aiState.engine.chat.completions.create({messages:baseMessages,temperature:.18,max_tokens:180,repetition_penalty:1.08});
   let text=first.choices?.[0]?.message?.content?.trim()||"";
+  text=text.replace(/<think>[\s\S]*?<\/think>/gi,"").replace(/^\s*<\/?think>\s*/gi,"").trim();
   if(answerLooksLikeEcho(question,text)){
     const retryMessages=[{role:"system",content:systemPrompt()},{role:"user",content:`Answer this golf question directly. Do not repeat any part of the question. Give the answer first.\n\n${buildUserPrompt(question)}`}];
-    const second=await aiState.engine.chat.completions.create({messages:retryMessages,temperature:.12,max_tokens:190});
+    const second=await aiState.engine.chat.completions.create({messages:retryMessages,temperature:.08,max_tokens:170,repetition_penalty:1.1});
     text=second.choices?.[0]?.message?.content?.trim()||"";
+    text=text.replace(/<think>[\s\S]*?<\/think>/gi,"").trim();
   }
   if(answerLooksLikeEcho(question,text)) text=fallbackGolfAnswer(question);
   return text||fallbackGolfAnswer(question);
 }
-function speakSherpa(text, resumeHandsFree=true){
-  if(!aiState.speakReplies || !("speechSynthesis" in window)){
-    if(resumeHandsFree && aiState.handsFree) scheduleHandsFreeRestart();
-    return;
-  }
+function selectBestSystemVoice(){
+  if(!("speechSynthesis" in window)) return null;
+  const voices=speechSynthesis.getVoices().filter(v=>/^en/i.test(v.lang||""));
+  const preferred=["Samantha","Ava","Siri","Karen","Moira","Google US English","Microsoft Aria","Microsoft Jenny"];
+  for(const name of preferred){const v=voices.find(x=>(x.name||"").toLowerCase().includes(name.toLowerCase()));if(v)return v}
+  return voices.find(v=>v.localService)||voices[0]||null;
+}
+function unlockVoiceAudio(){
+  if(aiState.audioUnlocked)return;
+  aiState.audioUnlocked=true;
+  try{const Ctx=window.AudioContext||window.webkitAudioContext;if(Ctx){const c=new Ctx();c.resume?.();setTimeout(()=>c.close?.(),120)}}catch(_){ }
+  try{if("speechSynthesis"in window){const u=new SpeechSynthesisUtterance(" ");u.volume=0;speechSynthesis.speak(u)}}catch(_){ }
+}
+async function warmNaturalVoice(){
+  if(aiState.ttsReady||aiState.ttsLoading||aiState.ttsFailed||aiState.ttsVoice==="system")return aiState.ttsReady;
+  aiState.ttsLoading=true;
+  setBadge(voiceBadge,"Natural voice warming up…","warn");
+  try{
+    const mod=await import("https://esm.sh/kokoro-js@1.2.1?bundle");
+    aiState.tts=await mod.KokoroTTS.from_pretrained("onnx-community/Kokoro-82M-v1.0-ONNX",{dtype:"q4",device:"wasm"});
+    aiState.ttsReady=true;aiState.ttsFailed=false;
+    setBadge(voiceBadge,aiState.handsFree?"Hands-Free • natural voice":"Natural voice ready","ready");
+    return true;
+  }catch(err){
+    console.warn("Kokoro voice unavailable; using system voice",err);
+    aiState.ttsFailed=true;aiState.ttsReady=false;
+    setBadge(voiceBadge,"Voice ready • system fallback","ready");
+    return false;
+  }finally{aiState.ttsLoading=false}
+}
+function stopActiveVoice(){
+  try{if(aiState.activeAudio){aiState.activeAudio.pause();aiState.activeAudio.src="";aiState.activeAudio=null}}catch(_){ }
+  try{if("speechSynthesis"in window)speechSynthesis.cancel()}catch(_){ }
+  aiState.speaking=false;
+}
+function finishSpeaking(resumeHandsFree=true){
+  aiState.speaking=false;aiState.activeAudio=null;
+  if(resumeHandsFree&&aiState.handsFree)scheduleHandsFreeRestart();
+}
+async function playNaturalVoice(text,resumeHandsFree=true){
+  if(!aiState.ttsReady||!aiState.tts)return false;
+  try{
+    const audio=await aiState.tts.generate(text,{voice:aiState.ttsVoice||"af_heart"});
+    let blob=null;
+    if(typeof audio.toBlob==="function")blob=audio.toBlob();
+    else if(audio.buffer)blob=new Blob([audio.buffer],{type:"audio/wav"});
+    if(!blob)return false;
+    const url=URL.createObjectURL(blob),player=new Audio(url);aiState.activeAudio=player;
+    player.onended=()=>{URL.revokeObjectURL(url);finishSpeaking(resumeHandsFree)};
+    player.onerror=()=>{URL.revokeObjectURL(url);finishSpeaking(resumeHandsFree)};
+    await player.play();return true;
+  }catch(err){console.warn("Natural Sherpa voice failed",err);return false}
+}
+async function speakSherpa(text,resumeHandsFree=true){
+  if(!aiState.speakReplies){if(resumeHandsFree&&aiState.handsFree)scheduleHandsFreeRestart();return}
   aiState.speaking=true;
-  if(aiState.recognition && aiState.listening){
-    aiState.stoppingRecognition=true;
-    try{aiState.recognition.stop()}catch(_){}
+  if(aiState.recognition&&aiState.listening){aiState.stoppingRecognition=true;try{aiState.recognition.stop()}catch(_){}}
+  stopActiveVoice();aiState.speaking=true;
+  if(aiState.ttsVoice!=="system"){
+    if(!aiState.ttsReady&&!aiState.ttsFailed)await warmNaturalVoice();
+    if(await playNaturalVoice(text,resumeHandsFree))return;
   }
+  if(!("speechSynthesis" in window)){finishSpeaking(resumeHandsFree);return}
   speechSynthesis.cancel();
-  const u=new SpeechSynthesisUtterance(text);
-  u.rate=.94;u.pitch=.98;
-  u.onend=()=>{aiState.speaking=false;if(resumeHandsFree&&aiState.handsFree)scheduleHandsFreeRestart()};
-  u.onerror=()=>{aiState.speaking=false;if(resumeHandsFree&&aiState.handsFree)scheduleHandsFreeRestart()};
+  const u=new SpeechSynthesisUtterance(text),voice=selectBestSystemVoice();if(voice)u.voice=voice;
+  u.rate=.96;u.pitch=1.0;u.volume=1;
+  u.onend=()=>finishSpeaking(resumeHandsFree);u.onerror=()=>finishSpeaking(resumeHandsFree);
   speechSynthesis.speak(u);
 }
 async function askSherpaAI(questionOverride=null, options={}){
@@ -1145,7 +1222,7 @@ function updateVoiceModeUI(){
   $$(".speak-toggle").forEach(x=>x.checked=aiState.speakReplies);
   const home=$("#homeVoiceModeStatus"), round=$("#roundVoiceModeStatus");
   if(aiState.handsFree){
-    const msg=aiState.listening?'Listening for “Sherpa…”':'Hands-Free on — listening resumes automatically.';
+    const msg=aiState.listening?'Listening for “Sherpa” or “Hey Sherpa”…':'Hands-Free on — listening resumes automatically.';
     if(home){home.textContent=msg;home.classList.add("active")}
     if(round)round.textContent=msg;
   }else{
@@ -1160,7 +1237,7 @@ function setupVoice(){
   if(aiState.recognition) return true;
   const recognition=new SR();
   recognition.lang="en-US";recognition.interimResults=true;recognition.continuous=false;recognition.maxAlternatives=1;aiState.recognition=recognition;
-  recognition.onstart=()=>{aiState.listening=true;aiState.restartingRecognition=false;micBtn.classList.add("listening");micBtn.textContent=aiState.handsFree?"🎙️ Hands-Free":"Listening…";setBadge(voiceBadge,aiState.handsFree?"Hands-Free listening":"Listening","warn");askStatus.textContent=aiState.handsFree?'Say “Sherpa” before a question or command.':'Speak naturally. Sherpa will stop listening when you finish.';updateVoiceModeUI()};
+  recognition.onstart=()=>{aiState.listening=true;aiState.restartingRecognition=false;micBtn.classList.add("listening");micBtn.textContent=aiState.handsFree?"🎙️ Hands-Free":"Listening…";setBadge(voiceBadge,aiState.handsFree?"Hands-Free listening":"Listening","warn");askStatus.textContent=aiState.handsFree?'Say “Sherpa” or “Hey Sherpa,” then ask naturally.':'Speak naturally. Sherpa will stop listening when you finish.';updateVoiceModeUI()};
   recognition.onresult=e=>{
     let finalText="",interim="";
     for(let i=e.resultIndex;i<e.results.length;i++){const s=e.results[i][0].transcript;if(e.results[i].isFinal)finalText+=s;else interim+=s}
@@ -1194,7 +1271,8 @@ function scheduleHandsFreeRestart(){
   setTimeout(()=>{aiState.restartingRecognition=false;if(aiState.handsFree&&!aiState.speaking&&!aiState.listening)startRecognition(true)},350);
 }
 function extractWakeCommand(text){
-  const m=String(text).match(/(?:^|\b)(?:hey\s+)?sherpa\b[,:\s-]*(.*)$/i);
+  const raw=String(text||"").trim();
+  const m=raw.match(/(?:^|\b)(?:(?:hey|hi|hello|okay|ok)\s+)?(?:sherpa|sharpa|sherper)\b[,:\s-]*(.*)$/i);
   return m?m[1].trim():null;
 }
 function speakLocal(text){setSherpaReply("Sherpa says",text);askStatus.textContent="Hands-Free command completed.";speakSherpa(text)}
@@ -1220,10 +1298,17 @@ async function handleRoundVoiceCommand(command){
 }
 async function processHandsFreeUtterance(spoken){
   if(aiState.processingVoice)return;
-  const command=extractWakeCommand(spoken);
-  if(command===null){askStatus.textContent='Hands-Free is listening. Say “Sherpa” first.';return}
-  if(!command){speakLocal("Yes? What do you need?");return}
-  aiState.processingVoice=true;
+  const now=Date.now(),wakeCommand=extractWakeCommand(spoken);
+  let command=wakeCommand;
+  if(command===null && aiState.wakeArmedUntil>now){command=String(spoken||"").trim();aiState.wakeArmedUntil=0}
+  if(command===null){askStatus.textContent='Hands-Free is listening for “Sherpa” or “Hey Sherpa.”';return}
+  if(!command){
+    aiState.wakeArmedUntil=Date.now()+7000;
+    askStatus.textContent="I'm listening — ask your question.";
+    setSherpaReply("Sherpa is listening","Go ahead. You do not need to say the wake phrase again for this question.");
+    return;
+  }
+  aiState.wakeArmedUntil=0;aiState.processingVoice=true;
   try{
     $("#questionInput").value=command;
     if(await handleRoundVoiceCommand(command))return;
@@ -1238,7 +1323,10 @@ function setHandsFree(on){
     setBadge(voiceBadge,"Voice ready","ready");updateVoiceModeUI();return;
   }
   if(!setupVoice()){aiState.handsFree=false;updateVoiceModeUI();return}
+  unlockVoiceAudio();
   updateVoiceModeUI();
+  warmNaturalVoice();
+  if(!aiState.llmReady&&!aiState.loadingLLM)loadSherpaLLM(false);
   startRecognition(true);
 }
 function startTalk(){
@@ -1247,7 +1335,8 @@ function startTalk(){
   $("#questionInput").value="";aiState.manualVoicePending=true;startRecognition(false);
 }
 $$('.handsfree-toggle').forEach(el=>el.addEventListener('change',e=>setHandsFree(e.target.checked)));
-$$('.speak-toggle').forEach(el=>el.addEventListener('change',e=>{aiState.speakReplies=e.target.checked;$$('.speak-toggle').forEach(x=>x.checked=aiState.speakReplies);if(!aiState.speakReplies&&"speechSynthesis"in window)speechSynthesis.cancel();updateVoiceModeUI()}));
+$$('.speak-toggle').forEach(el=>el.addEventListener('change',e=>{aiState.speakReplies=e.target.checked;$$('.speak-toggle').forEach(x=>x.checked=aiState.speakReplies);if(!aiState.speakReplies)stopActiveVoice();updateVoiceModeUI()}));
+if(voiceSelect)voiceSelect.addEventListener("change",e=>{aiState.ttsVoice=e.target.value;localStorage.setItem("sherpa.voice.080",aiState.ttsVoice);aiState.ttsFailed=false;if(aiState.ttsVoice!=="system")warmNaturalVoice();else setBadge(voiceBadge,"Voice ready • system","ready")});
 
 initAiBtn.addEventListener("click", ()=>loadSherpaLLM(true));
 askBtn.addEventListener("click", ()=>askSherpaAI());
@@ -1263,17 +1352,17 @@ $("#speakAnswerBtn").addEventListener("click", ()=>{
   const text=aiState.lastAnswer || `${answerTitle.textContent}. ${answerText.textContent}`;
   const previous=aiState.speakReplies;aiState.speakReplies=true;speakSherpa(text,false);aiState.speakReplies=previous;
 });
-$("#stopSpeakingBtn").addEventListener("click", ()=>{
-  if("speechSynthesis" in window) speechSynthesis.cancel();aiState.speaking=false;if(aiState.handsFree)scheduleHandsFreeRestart();
-});
-modelSelect.addEventListener("change", ()=>{
-  if(aiState.llmReady){
-    setBadge(llmBadge, "Model change pending", "warn");
-    askStatus.textContent = "Tap Load Sherpa AI to switch models.";
-  }
+$("#stopSpeakingBtn").addEventListener("click",()=>{stopActiveVoice();if(aiState.handsFree)scheduleHandsFreeRestart()});
+modelSelect.addEventListener("change",()=>{
+  aiState.llmReady=false;
+  if(aiState.engine){try{aiState.engine.unload?.()}catch(_){}aiState.engine=null}
+  setBadge(llmBadge,"Switching local AI…","warn");
+  askStatus.textContent="Sherpa is switching models automatically.";
+  setTimeout(()=>loadSherpaLLM(true),100);
 });
 setBadge(deviceBadge, navigator.gpu ? "WebGPU detected" : "WebGPU not detected", navigator.gpu ? "ready" : "err");
 setupVoice();
+setTimeout(()=>{if(navigator.gpu&&!aiState.llmReady&&!aiState.loadingLLM)loadSherpaLLM(false)},900);
 /* Course discovery — OpenGolf-first, with resilient fallbacks */
 function escapeHTML(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
 function normalizeCourse(c){
@@ -1499,7 +1588,7 @@ $("#importBtn").onclick=()=>$("#importFile").click();$("#importFile").onchange=a
 function hideSplash(){const el=$("#splashScreen");if(!el||el.classList.contains("is-hidden"))return;el.classList.add("is-hidden");setTimeout(()=>el.remove(),800)}
 window.addEventListener("load",()=>setTimeout(hideSplash,5000));
 setTimeout(hideSplash,5600);
-if("serviceWorker"in navigator)window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js?v=070").catch(()=>{}));
+if("serviceWorker"in navigator)window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js?v=080").catch(()=>{}));
 renderClubs();renderRounds();if(state.round){show("play");showRoundMode()}
 })();
 </script>

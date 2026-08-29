@@ -1,39 +1,63 @@
 # Sherpa Caddie
-### Version 0.7.0
-
-This release focuses on making Sherpa AI behave like an actual caddie during play instead of a text box that happens to use a local model.
-
-### New in v0.7.0
-
-- **Hands-Free Caddie** mode with a one-time on/off switch
-- Wake phrase: say **“Sherpa…”** before a question or command
-- Automatic spoken replies can be turned **on or off independently**
-- Hands-free in-round commands for common actions such as:
-  - “Sherpa, what club?”
-  - “Sherpa, how far?”
-  - “Sherpa, good shot”
-  - “Sherpa, poor shot”
-  - “Sherpa, next hole”
-- Voice recognition pauses while Sherpa is speaking so it does not answer itself
-- AI output now detects question-echo responses, automatically retries, and falls back to deterministic Sherpa guidance if the local model still fails
-- The **1B model** is now the recommended default for answer quality; the lightweight model remains available as a fallback
-- Hands-Free controls are available both on Home and directly in the active-round screen
-
-### Changed files in v0.7.0
-
-- `index.html`
-- `manifest.webmanifest`
-- `sw.js`
-- `README.md`
-
-## Version 0.7.0
+### Version 0.8.0
 
 **PWA:**  
 https://davidfliesen.github.io/SherpaCaddy
 
 ## Purpose
 
-Sherpa Caddie combines the practical help of a **caddie** with the guidance and perspective of a **Sherpa mentor**. The core idea remains simple: **one shot at a time.**
+Sherpa Caddie combines the practical help of a caddie with the guidance and perspective of a Sherpa mentor. The core principle remains **one shot at a time**.
+
+## v0.8.0 — Natural Hands-Free Sherpa
+
+This release fixes the splash-logo aspect ratio and substantially upgrades the hands-free conversation loop.
+
+### Voice and AI changes
+
+- Fixed the splash logo so its original aspect ratio is preserved; the circular Sherpa emblem is no longer intentionally stretched by the page layout.
+- Sherpa AI now initializes automatically in the background. **Load Sherpa AI** is replaced by **Restart AI** as a recovery control rather than a required setup step.
+- Uses **Qwen3 0.6B** as the preferred local WebLLM model when supported, with **Qwen2.5 0.5B** and the previous lightweight model as fallbacks.
+- Added local **Kokoro-82M** TTS for more natural spoken replies, with selectable Sherpa voices and a carefully selected system-voice fallback.
+- Hands-Free accepts **Sherpa**, **Hey Sherpa**, **Okay Sherpa**, and **Hi Sherpa**.
+- Added a short wake window so the browser can recognize the wake phrase and the question as separate transcripts without dropping the question.
+- When Spoken Replies is enabled, hands-free answers are spoken automatically and listening resumes after Sherpa finishes speaking.
+- Deterministic commands such as yardage, club recommendation, target guidance, shot recording, and hole navigation remain ordinary app logic outside the LLM.
+- Qwen thinking tags are stripped from visible/spoken answers and direct-answer prompting is strengthened.
+
+### PWA speech-input note
+
+The PWA continues to use the browser speech-recognition API for microphone transcription in this release. A full sherpa-onnx WebAssembly ASR package can add roughly hundreds of megabytes of speech-model data, which is not appropriate to force into the current GitHub Pages PWA without a separate model packaging/build step. The voice flow is now modular so sherpa-onnx ASR/KWS can replace browser recognition in the later native iOS/Android packages while keeping the same Hands-Free Sherpa interaction.
+
+### Changed files in v0.8.0
+
+- `index.html`
+- `manifest.webmanifest`
+- `sw.js`
+- `README.md`
+
+## Current retained features
+
+- Home | Play | Learn | My Rounds layout
+- Branded splash and dark golf-app shell
+- Personal club distances
+- One-Shot Sherpa shot guidance
+- Weather and course search
+- Hole Planner with map/schematic fallback
+- Front / center / back planning yardages
+- Play Smart / Attack / Lay Up strategies
+- Local round storage and import/export
+- Hands-Free Caddie controls on Home and during a round
+
+## Changelog
+
+### v0.8.0 — Natural Hands-Free Sherpa
+- Corrected splash-logo aspect handling.
+- Auto-started local AI in the background.
+- Added Qwen3/Qwen2.5 local AI choices.
+- Added local Kokoro natural TTS and voice selection.
+- Added broader wake phrase handling and split wake/question flow.
+- Made spoken hands-free replies automatic with listening resumed after speech.
+- Updated PWA/cache versioning to v0.8.0.
 
 ## Version 0.6.4 — Course Search Repair
 
@@ -147,6 +171,16 @@ Pick the target, take one practice swing, and commit.
 - `README.md`
 
 ## Changelog
+
+### v0.8.0 — Natural Hands-Free Sherpa
+- Corrected splash-logo aspect ratio.
+- Auto-started the local AI in the background.
+- Added Qwen3 0.6B / Qwen2.5 0.5B model selection.
+- Added local Kokoro natural speech synthesis.
+- Added broader wake-phrase support and split wake/question handling.
+- Made spoken hands-free replies automatic with listening resumed after speech.
+- Updated PWA/cache versioning to **v0.8.0**.
+
 
 ### v0.7.0 — Hands-Free Sherpa AI
 - Added Hands-Free Caddie mode with the “Sherpa” wake phrase.
