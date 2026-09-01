@@ -1,3 +1,28 @@
+## Version 0.11.7 — Clear Sage Modes + Efficient Mentor + Verified Tools
+
+- The fixed top-left Sage area now has three genuinely distinct presentations while retaining exactly the same footprint on every app tab:
+  - **Text** shows a symbolic chat/typing display and animated dots while the user types or Sage thinks.
+  - **Voice** shows a symbolic microphone and waveform, with animation while listening or speaking.
+  - **Mentor** is the only mode that shows Sage’s photograph and streamed D-ID avatar.
+- Rebuilt the header as one responsive panel: Sage stays visible at left, her current text answer stays visible in the center, and the Sherpa Caddie logo remains visible at right in both normal and immersive/fullscreen layouts.
+- Added explicit top-left activity states for ready, listening, wake phrase heard, thinking, speaking, paused, microphone/connection error, and iPhone re-arm guidance.
+- Voice and Mentor now share the same device-side wake phrases: **Sherpa**, **Hey Sherpa**, **Sage**, and **Hey Sage**, with the existing Hi/Hello/Okay variants retained.
+- Selecting Voice or Mentor no longer automatically enables Hands-Free. The golfer can tap **Talk** for one question or deliberately enable Hands-Free.
+- Tapping the microphone while Hands-Free is already active now arms the next question without turning Hands-Free off.
+- iPhone/iPad speech recognition uses short recognition cycles with automatic restart instead of depending on unreliable continuous-browser recognition.
+- Selecting Mentor now pre-connects and warms the D-ID stream to reduce first-answer latency. It remains available during the conversation, then pauses after 90 seconds of inactivity or 15 seconds in the background to limit D-ID usage.
+- Device-side wake listening does not require an open D-ID session. No automatic Mentor greeting is generated when the mode is selected.
+- Tool diagnostics are now strict and event-backed. A test passes only after the requested tool emits **ToolCallStarted**, the matching Sherpa browser handler returns, and D-ID emits **ToolCallDone**.
+- Diagnostics distinguish **PASS**, **FAIL**, and **NO TOOL CALL**. Calling the wrong tool, returning a D-ID/tool error, timing out, or merely having Sage say “Done” cannot produce a pass.
+- State-changing diagnostic handlers remain dry runs and cannot alter a real round.
+
+### Changed files in v0.11.7
+
+- `index.html`
+- `manifest.webmanifest`
+- `sw.js`
+- `README.md`
+
 ## Version 0.11.6 — Sage Wake Name + Large Mentor Header + ARTEZIQ Settings
 
 - Added **“Sage”** and **“Hey Sage”** as hands-free wake names in Voice and Mentor modes, alongside **“Sherpa”** and **“Hey Sherpa.”** “Hi” and “Okay” prefixes work with either name.
