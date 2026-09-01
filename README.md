@@ -1,3 +1,21 @@
+## Version 0.11.5 — Persistent Mentor Header + D-ID Recovery + Tool Diagnostics
+
+- Sage now occupies a fixed, moderately sized top-left mentor area on GUIDE, PLAY, CLUBS, LEARN, and REVIEW.
+- The top-left area keeps the same footprint in all three modes: Text / Voice / Mentor.
+- The Sherpa Caddie logo is centered at the top. The GUIDE opening hero now carries “Sherpa Caddie — Your guide. Your game. Your best round.”
+- Replaced the large separate companion strip with a slim persistent Ask bar to reduce wasted space.
+- Text mode includes an animated three-dot typing indicator.
+- Voice mode includes an animated vocal waveform while listening/speaking.
+- Mentor keeps Sage’s static portrait visible while the V2 D-ID stream is idle and swaps to live D-ID video only when D-ID reports an active speaking state, avoiding the blank circular idle stream seen in v0.11.4.
+- Incoming D-ID audio/video tracks are separated when possible so audio can continue independently of video rendering.
+- Safari uses D-ID’s VP8 compatibility mode.
+- The local WebLLM engine is released whenever Mentor starts on any device, reducing GPU/memory competition.
+- Added a collapsible Test D-ID tools panel covering all nine attached client tools.
+- State-changing tool diagnostics run as dry tests, so they do not alter the golfer’s real round.
+- D-ID tool lifecycle callbacks mark each diagnostic PASS/FAIL.
+- Detailed local-AI controls on GUIDE are collapsed by default and can be reopened with the gear button.
+
+
 ## Version 0.11.4 — Persistent Sherpa Companion + iPhone Live Safety
 
 - Added a compact **Sage companion bar that stays available on every tab**: GUIDE, PLAY, CLUBS, LEARN, and REVIEW.
@@ -54,8 +72,8 @@ Physical device testing is still recommended because Safari and Android browser 
 - Sherpa Live now tries the current D-ID Client SDK from jsDelivr first, with esm.sh as a fallback, and reports a specific configuration/SDK/connection error instead of remaining indefinitely on Connecting.
 - `did-config.json` is intentionally excluded from service-worker caching.
 
-### One-time provisioning after installing v0.11.4
-1. Upload the v0.11.4 changed files.
+### One-time provisioning after installing v0.11.5
+1. Upload the v0.11.5 changed files.
 2. GitHub → Actions → **Provision D-ID client key** → Run workflow on `main`.
 3. Wait for the resulting GitHub Pages deployment.
 4. Fully close/reopen Sherpa Caddie and choose **Sherpa Live**.
@@ -71,7 +89,7 @@ https://davidfliesen.github.io/SherpaCaddy
 
 Sherpa Caddie combines the practical help of a caddie with the guidance and perspective of a Sherpa mentor. The core principle remains **one shot at a time**.
 
-## v0.11.4 — Sherpa Live Client SDK
+## v0.11.5 — Sherpa Live Client SDK
 
 This release replaces the visible D-ID Embed with the D-ID Client SDK so Sage is integrated into Sherpa Caddie as part of the app rather than appearing as a third-party overlay.
 
@@ -99,7 +117,7 @@ The nine attached D-ID client tools are registered inside the PWA: round context
 - The same Sage identity appears in Sherpa Live, transcript imagery, and the launch animation.
 - The formal/military-style presentation has been replaced with a cleaner forest-green golf quarter-zip look.
 
-### Changed files in v0.11.4
+### Changed files in v0.11.5
 
 - `index.html`
 - `manifest.webmanifest`
@@ -195,14 +213,14 @@ The PWA continues to use the browser speech-recognition API for microphone trans
 
 ## Changelog
 
-### v0.11.4 — Sherpa Live Client SDK
+### v0.11.5 — Sherpa Live Client SDK
 - Replaced the D-ID embed UI with the D-ID Client SDK.
 - Added native Text / Voice / Sherpa Live experience modes.
 - Registered all nine Sherpa client-tool handlers in the browser.
 - Added native Sage video, golf-context, transcript, listening/speaking, and connection UI.
 - Added the redesigned Sage portrait to Sherpa Live and the launch animation.
 - D-ID connects only after Sherpa Live is explicitly selected.
-- Updated PWA/cache versioning to **v0.11.4**.
+- Updated PWA/cache versioning to **v0.11.5**.
 
 ### v0.10.0 — Sherpa Live D-ID Integration
 - Added Text / Sherpa Live mode switching on the Guide screen.
