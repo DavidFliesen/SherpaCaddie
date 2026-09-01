@@ -1,3 +1,15 @@
+## Version 0.11.6 — Sage Wake Name + Large Mentor Header + ARTEZIQ Settings
+
+- Added **“Sage”** and **“Hey Sage”** as hands-free wake names in Voice and Mentor modes, alongside **“Sherpa”** and **“Hey Sherpa.”** “Hi” and “Okay” prefixes work with either name.
+- Doubled the persistent top header height. Sage’s Text/Voice/Mentor area and the centered Sherpa Caddie logo are approximately twice their previous height while preserving the same footprint across all three Sage modes.
+- Integrated the supplied **ARTEZIQ UI kit v1.0** and **ARTEZIQ Audio module v1.0** without modifying those supplied files.
+- Added the three supplied top-right controls: fullscreen, sound, and settings gear. Storage prefix is **`sc_`** so settings do not collide with other ARTEZIQ apps on the same GitHub Pages origin.
+- Added settings rows for Spoken Replies, Hands-Free listening, and Advanced GUIDE controls using the kit’s `extraSettingsHTML` hook.
+- The kit’s Sound level now also governs local Sage speech and D-ID Mentor audio. D-ID video remains muted because incoming speech is handled by the separate audio track.
+- Added the kit’s iOS immersive fullscreen fallback while keeping Sage visible; the centered brand/navigation/quickbar are treated as app chrome.
+- Fullscreen lock is re-applied after the splash and when a round starts.
+- Service-worker cache now includes the three ARTEZIQ kit files.
+
 ## Version 0.11.5 — Persistent Mentor Header + D-ID Recovery + Tool Diagnostics
 
 - Sage now occupies a fixed, moderately sized top-left mentor area on GUIDE, PLAY, CLUBS, LEARN, and REVIEW.
@@ -72,8 +84,8 @@ Physical device testing is still recommended because Safari and Android browser 
 - Sherpa Live now tries the current D-ID Client SDK from jsDelivr first, with esm.sh as a fallback, and reports a specific configuration/SDK/connection error instead of remaining indefinitely on Connecting.
 - `did-config.json` is intentionally excluded from service-worker caching.
 
-### One-time provisioning after installing v0.11.5
-1. Upload the v0.11.5 changed files.
+### One-time provisioning after installing v0.11.6
+1. Upload the v0.11.6 changed files.
 2. GitHub → Actions → **Provision D-ID client key** → Run workflow on `main`.
 3. Wait for the resulting GitHub Pages deployment.
 4. Fully close/reopen Sherpa Caddie and choose **Sherpa Live**.
@@ -89,7 +101,7 @@ https://davidfliesen.github.io/SherpaCaddy
 
 Sherpa Caddie combines the practical help of a caddie with the guidance and perspective of a Sherpa mentor. The core principle remains **one shot at a time**.
 
-## v0.11.5 — Sherpa Live Client SDK
+## v0.11.6 — Sherpa Live Client SDK
 
 This release replaces the visible D-ID Embed with the D-ID Client SDK so Sage is integrated into Sherpa Caddie as part of the app rather than appearing as a third-party overlay.
 
@@ -117,7 +129,7 @@ The nine attached D-ID client tools are registered inside the PWA: round context
 - The same Sage identity appears in Sherpa Live, transcript imagery, and the launch animation.
 - The formal/military-style presentation has been replaced with a cleaner forest-green golf quarter-zip look.
 
-### Changed files in v0.11.5
+### Changed files in v0.11.6
 
 - `index.html`
 - `manifest.webmanifest`
@@ -213,14 +225,14 @@ The PWA continues to use the browser speech-recognition API for microphone trans
 
 ## Changelog
 
-### v0.11.5 — Sherpa Live Client SDK
+### v0.11.6 — Sherpa Live Client SDK
 - Replaced the D-ID embed UI with the D-ID Client SDK.
 - Added native Text / Voice / Sherpa Live experience modes.
 - Registered all nine Sherpa client-tool handlers in the browser.
 - Added native Sage video, golf-context, transcript, listening/speaking, and connection UI.
 - Added the redesigned Sage portrait to Sherpa Live and the launch animation.
 - D-ID connects only after Sherpa Live is explicitly selected.
-- Updated PWA/cache versioning to **v0.11.5**.
+- Updated PWA/cache versioning to **v0.11.6**.
 
 ### v0.10.0 — Sherpa Live D-ID Integration
 - Added Text / Sherpa Live mode switching on the Guide screen.

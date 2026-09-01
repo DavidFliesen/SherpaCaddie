@@ -1,0 +1,112 @@
+/* ARTEZIQ UI Kit v1.0 — corner buttons + settings panel
+   Recolour by overriding these four variables in your own stylesheet. */
+:root{
+  --ui-accent:#2ec6e6;      /* icon + slider fill */
+  --ui-accent-lo:#1c9fc4;
+  --ui-panel:#0c2650;       /* panel background */
+  --ui-text:#eef4fb;
+  --ui-muted:#a9c0e0;
+}
+
+/* ---- three stacked buttons, true top-right corner ---- */
+.ui-corner{
+  position:fixed;
+  top:calc(env(safe-area-inset-top) + 8px);
+  right:calc(env(safe-area-inset-right) + 10px);
+  z-index:9000;
+  display:flex; flex-direction:column; gap:8px;
+}
+.ui-btn{
+  width:54px; height:54px; border-radius:16px;
+  border:1px solid rgba(169,192,224,.3);
+  background:rgba(5,22,29,.45); color:var(--ui-text);
+  display:grid; place-items:center; cursor:pointer;
+  -webkit-tap-highlight-color:transparent;
+}
+.ui-btn:active{ transform:translateY(1px); }
+.ui-btn svg{
+  width:30px; height:30px; stroke:var(--ui-accent); fill:none;
+  stroke-width:2; stroke-linecap:round; stroke-linejoin:round;
+}
+.ui-btn.off svg{ stroke:rgba(169,192,224,.55); }
+@media (max-width:420px){
+  .ui-btn{ width:46px; height:46px; border-radius:14px; }
+  .ui-btn svg{ width:25px; height:25px; }
+}
+
+/* ---- settings overlay ---- */
+.ui-overlay{
+  position:fixed; inset:0; z-index:9800;
+  display:grid; place-items:center; padding:20px;
+  background:linear-gradient(180deg,#0a2a55,#00102e 85%);
+  opacity:0; visibility:hidden; transition:opacity .3s ease, visibility .3s;
+}
+.ui-overlay.show{ opacity:1; visibility:visible; }
+.ui-card{ width:100%; max-width:430px; max-height:calc(100vh - 40px); overflow:auto; }
+.ui-panel{
+  background:var(--ui-panel); border:1px solid rgba(169,192,224,.16);
+  border-radius:22px; padding:20px; box-shadow:0 16px 40px rgba(0,0,0,.45);
+  font-family:ui-rounded,-apple-system,"SF Pro Rounded","Segoe UI",Roboto,system-ui,sans-serif;
+  color:var(--ui-text); text-align:left;
+}
+.ui-eyebrow{
+  text-align:center; font-size:11px; letter-spacing:.3em; text-transform:uppercase;
+  color:#ff9f1c; font-weight:800; margin-bottom:6px;
+}
+.ui-h2{ text-align:center; font-size:26px; margin:0 0 18px; font-weight:800; }
+
+/* sliders */
+.ui-row{ margin:0 0 20px; }
+.ui-row label{
+  display:flex; justify-content:space-between; align-items:baseline;
+  font-size:15.5px; font-weight:700; margin:0 0 10px;
+}
+.ui-val{ font-family:ui-monospace,Menlo,Consolas,monospace; font-size:13px;
+  color:var(--ui-accent); font-weight:800; }
+.ui-row input[type=range]{
+  -webkit-appearance:none; appearance:none; width:100%; height:30px;
+  background:transparent; cursor:pointer;
+}
+.ui-row input[type=range]::-webkit-slider-runnable-track{
+  height:8px; border-radius:999px;
+  background:linear-gradient(90deg,var(--ui-accent) var(--pct,50%),rgba(255,255,255,.14) var(--pct,50%));
+}
+.ui-row input[type=range]::-webkit-slider-thumb{
+  -webkit-appearance:none; width:26px; height:26px; margin-top:-9px;
+  border-radius:50%; background:#fff; box-shadow:0 2px 8px rgba(0,0,0,.5);
+}
+.ui-row input[type=range]::-moz-range-track{ height:8px; border-radius:999px; background:rgba(255,255,255,.14); }
+.ui-row input[type=range]::-moz-range-thumb{ width:26px; height:26px; border:0; border-radius:50%; background:#fff; }
+
+/* switch */
+.ui-switchrow{ display:flex; justify-content:space-between; align-items:center; gap:14px; margin:4px 0 6px; }
+.ui-txt h4{ margin:0 0 4px; font-size:15.5px; font-weight:700; }
+.ui-txt p{ margin:0; font-size:12.5px; color:var(--ui-muted); line-height:1.4; max-width:30ch; }
+.ui-switch{
+  position:relative; flex:0 0 58px; width:58px; height:33px; border-radius:999px;
+  border:1px solid rgba(169,192,224,.3); background:rgba(255,255,255,.09);
+  cursor:pointer; transition:background .2s ease;
+}
+.ui-switch::after{
+  content:""; position:absolute; top:3px; left:3px; width:25px; height:25px;
+  border-radius:50%; background:#fff; transition:transform .2s ease;
+}
+.ui-switch.on{ background:linear-gradient(160deg,var(--ui-accent),var(--ui-accent-lo)); border-color:transparent; }
+.ui-switch.on::after{ transform:translateX(25px); }
+
+/* done button */
+.ui-cta{ margin-top:20px; display:flex; }
+.ui-done{
+  flex:1; border:0; border-radius:15px; padding:15px 10px; cursor:pointer;
+  font-family:inherit; font-weight:800; font-size:15px;
+  background:linear-gradient(160deg,#ff9f1c,#ff7a1a); color:#3a1c05;
+  box-shadow:0 8px 20px rgba(255,138,92,.3);
+}
+.ui-done:active{ transform:translateY(1px); }
+
+/* immersive = iOS fallback for "fullscreen". Hide your own chrome here. */
+body.immersive .app-chrome{ display:none; }
+
+@media (prefers-reduced-motion: reduce){
+  .ui-overlay,.ui-switch,.ui-switch::after{ transition-duration:.001ms !important; }
+}
