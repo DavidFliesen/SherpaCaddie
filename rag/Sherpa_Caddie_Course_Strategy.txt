@@ -1,0 +1,68 @@
+SHERPA CADDIE KNOWLEDGE BASE
+Your guide. Your game. Your best round.
+
+CORE PHILOSOPHY
+Golf is played one decision and one swing at a time. Every shot is a new start. A result belongs to the past as soon as the ball stops; the golfer's useful work is to observe it, learn what matters, and return attention to the next shot.
+
+LIVE-DATA RULE
+This file contains durable golf knowledge, not current-round facts. For the golfer's course, hole, score, lie, remaining yardage, weather, wind, personal club distances, selected strategy, or recorded shots, Sage must use the appropriate Sherpa Caddie client tool. Never invent live data and never treat an example in this file as the golfer's current situation.
+
+DOCUMENT TITLE
+Course Strategy
+
+DOCUMENT PURPOSE
+Help the golfer choose shots that fit personal ability, normal dispersion, conditions, and the consequences of a miss. Strategy is not timid golf. It is choosing risk deliberately instead of discovering it after the swing.
+
+STRATEGY STARTS WITH LIVE CONTEXT
+Before recommending a current shot, gather the needed facts with Sherpa tools: round context, front-center-back distances, weather and wind, personal club carries, and the deterministic shot recommendation. Static examples in this document never replace live tool results.
+
+THE THREE STRATEGY MODES
+SMART favors the widest safe target, avoids severe penalties, and accepts a longer next shot when useful. ATTACK accepts more risk when the golfer has the skill, lie, confidence, and scoring reason to do so. LAYUP intentionally chooses a comfortable next distance and removes a hazard or forced carry. Strategy should be explicit so the golfer understands what is being traded.
+
+DECISION ORDER
+Use this order: identify the lie; identify forced carries and severe trouble; determine the distance that must be carried; account for wind, elevation, temperature, and firmness; review personal club carry and dispersion; choose the safest useful landing area; identify the preferred miss; select the club; commit.
+
+CARRY VERSUS TOTAL DISTANCE
+Carry distance determines whether the ball clears water, sand, rough, a false front, or another obstacle. Total distance matters for rollout and final position. Never use total club distance as though it were guaranteed carry. Personal carry data should come from get_club_distances.
+
+DISPERSION
+Golf shots form patterns, not single points. Aim so the normal pattern has room to finish safely. When trouble is tight to one side, move the target away from it rather than demanding a perfect curve. The best target is often not the flag; it is the location that produces the easiest range of next shots.
+
+SAFE MISS
+A safe miss avoids penalties, short-sided chips, blocked approaches, deep bunkers, and recovery shots with no green. State the safe miss in plain language: middle-right, short-left, front of green, or back to the fairway. Do not tell the golfer to avoid an object without also giving a positive target.
+
+TEE-SHOT PLANNING
+Work backward from the preferred approach. Choose a tee club that reaches the widest useful portion of the hole and leaves a comfortable next club. Driver is correct when its extra distance creates more value than its extra dispersion costs. A shorter club is correct when it removes severe trouble or fits the hole better.
+
+APPROACH PLANNING
+Use front, center, and back yardages rather than relying only on the flag. Favor the broadest part of the green unless conditions and skill justify a more aggressive target. A front flag does not require a front target when short is severely punished. A back flag does not require extra force if long is dangerous.
+
+PAR-FIVE PLANNING
+Decide whether reaching is realistic before selecting the second shot. If not, choose a layup that leaves a favored wedge carry, a clean angle, and a level lie. Avoid laying up automatically to an arbitrary yardage if another distance is more comfortable for the golfer.
+
+RECOVERY SHOTS
+The purpose of a recovery shot is to restore options. First ensure a clear path and sufficient loft. Advance the ball only as far as control permits. Sideways or backward can be the correct scoring play. A mistake followed by an emotional gamble often turns one lost stroke into several.
+
+WIND
+Use live weather data, then evaluate the wind at ball level and above the trees. Headwind generally increases required carry and exaggerates spin; tailwind may reduce carry requirement but also reduce stopping power. Crosswind changes target and curve. Prefer a controlled swing and enough club over trying to overpower the wind.
+
+ELEVATION, TEMPERATURE, AND FIRMNESS
+Uphill shots tend to play longer and downhill shots shorter, but landing angle and rollout also matter. Cold air and a cold ball can reduce distance. Firm ground increases rollout; soft ground reduces it. Treat adjustments as estimates, then combine them with the golfer's actual tendencies.
+
+LIE AND ROUGH
+The lie can override the number. Rough may reduce spin, change launch, twist the clubface, or limit clean contact. From a poor lie, choose the club and target that reliably escape first. Never recommend a forced carry based only on perfect-contact distance.
+
+SHORT-SIDE AVOIDANCE
+Short-sided means missing near the hole with little green available. It often turns a simple chip into a delicate shot. When the flag is near an edge, center-green strategy can create a longer putt but a much safer scoring pattern.
+
+PUTTING STRATEGY
+On long putts, the target is a leave area, not merely the cup. Favor the speed that keeps the next putt simple. On fast downhill or sharply breaking putts, protect against the miss that runs farthest away. Once line and pace are selected, strategy ends and commitment begins.
+
+MATCHING RISK TO STATE OF MIND
+Do not choose an aggressive shot merely to erase anger, recover a previous stroke, impress a partner, or force a score. If the golfer is tense or indecisive, widen the target and use the most repeatable shot. Calm commitment to a conservative target often produces a more athletic motion.
+
+COMMITMENT CHECK
+Before the swing, the golfer should be able to answer three questions: What is my target? What club and shot am I choosing? Where is the acceptable miss? If any answer is unclear, step back and decide. Once clear, stop calculating and play.
+
+SOURCE AND USE NOTE
+Original Sherpa Caddie course-management material. Current distances, weather, clubs, and round state must come from Sherpa tools.

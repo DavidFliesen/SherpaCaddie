@@ -1,0 +1,71 @@
+SHERPA CADDIE KNOWLEDGE BASE
+Your guide. Your game. Your best round.
+
+CORE PHILOSOPHY
+Golf is played one decision and one swing at a time. Every shot is a new start. A result belongs to the past as soon as the ball stops; the golfer's useful work is to observe it, learn what matters, and return attention to the next shot.
+
+LIVE-DATA RULE
+This file contains durable golf knowledge, not current-round facts. For the golfer's course, hole, score, lie, remaining yardage, weather, wind, personal club distances, selected strategy, or recorded shots, Sage must use the appropriate Sherpa Caddie client tool. Never invent live data and never treat an example in this file as the golfer's current situation.
+
+DOCUMENT TITLE
+Rules, Etiquette, and Golfer Guide
+
+DOCUMENT PURPOSE
+Help golfers participate safely, confidently, and courteously. This is a practical orientation, not the official Rules of Golf. Rules can change and local rules vary. When an exact ruling or penalty matters, Sage should say so and direct the golfer to the current official rules, the course committee, or a qualified official rather than guessing.
+
+THE MINDSET OF FAIR PLAY
+Integrity is part of golf. Apply the same standard to yourself that you would want from another player. When uncertain, pause, gather the facts, and seek the correct procedure. Embarrassment is not a reason to hide a mistake; one honest question is better than carrying doubt through the round.
+
+SAFETY FIRST
+Never play while people, animals, vehicles, or workers are within a plausible danger area. Warn others immediately when a ball may endanger them. Follow lightning, heat, cart, and course-closure instructions. Do not retrieve a ball from water, unstable ground, wildlife habitat, traffic, or another unsafe location.
+
+PACE OF PLAY
+Be ready when it is safe and appropriate to play. Prepare club, distance, and target while others play without distracting them. Limit ball searches to the time allowed by the current rules and group format. Move efficiently between shots, place equipment on the route to the next tee, and invite a faster group through when course practice permits.
+
+READY GOLF
+In casual stroke play, groups often use ready golf when it is safe and agreed upon. Safety and courtesy still control. Do not play out of turn if it could distract or endanger someone, and respect formats where order matters.
+
+CARE FOR THE COURSE
+Repair ball marks, replace or fill divots according to course practice, rake bunkers, avoid damaging greens, and follow cart restrictions. Leave the course in equal or better condition for the golfers behind you.
+
+QUIET AND POSITION
+Remain still and quiet when another golfer is preparing and playing. Avoid standing directly on the player's line, close behind the ball, or where a shadow distracts. On the green, avoid stepping on another player's putting line when practical.
+
+SCORING
+Know the format before starting: casual play, stroke play, match play, scramble, stableford, or another competition. Record scores honestly and confirm responsibilities before submitting a competitive card. Sage should not assume that one format's procedure applies to another.
+
+TEE SELECTION
+Choose tees that make the course enjoyable and allow a reasonable pace. Tee choice is about playing distance and experience, not identity or pride. Consider driving distance, forced carries, skill, weather, and the group's pace.
+
+COMMON TERMS
+Par is the designed score for a hole. Birdie is one under par, bogey one over, and double bogey two over. The fairway is the shorter-cut route toward the green. Rough is longer grass outside it. A bunker is a prepared sand area. A penalty area is specially marked and governed by current rules. Ground under repair and out of bounds are different conditions with different procedures.
+
+PROVISIONAL BALLS AND UNCERTAIN SEARCHES
+When a ball may be lost outside a penalty area or may be out of bounds, a provisional ball can often save time if announced and played correctly under the current rules. Exact application matters. Sage should encourage the golfer to check the current rule rather than provide a confident ruling from incomplete facts.
+
+PENALTY AREAS, OUT OF BOUNDS, AND UNPLAYABLE BALLS
+These situations do not all have the same relief options. Identify markings, where the ball last crossed, whether the ball is known or virtually certain to be in an area, and any local rule. For competition, consult the current official rule or an official. Never invent a drop location from a vague description.
+
+LOCAL RULES
+Scorecards, notices, starter instructions, and tournament sheets may contain local rules concerning drop zones, preferred lies, cart paths, environmental areas, or out-of-bounds boundaries. Local information takes priority over generic assumptions.
+
+FIRST-ROUND CHECKLIST
+Bring appropriate clubs, balls, tees, a divot tool, marker, water, weather protection, and any needed medication. Arrive early enough to check in, understand course instructions, warm up gently, and reach the tee without rushing. A calm start begins before the first swing.
+
+WEATHER AND CLOTHING
+Prepare for sun, rain, wind, cold, heat, and changing conditions. Follow official lightning guidance immediately. Hydrate appropriately and recognize that heat illness, dizziness, chest pain, confusion, or unusual weakness requires stopping and seeking help.
+
+CARTS AND WALKING
+Follow signs, ropes, path-only rules, accessibility instructions, and staff direction. Park where it will not delay the group or damage the course. Keep carts and bags away from greens and hazards as the course directs.
+
+BEGINNER COURTESY
+New golfers are welcome to ask questions. The priorities are safety, honest play, reasonable pace, and care for others and the course. Skill level is not an etiquette failure. Sage should explain without condescension and reduce anxiety by giving the next useful step.
+
+WHEN TO PICK UP
+In casual play, a group may agree to pick up when a hole has become frustrating or pace is suffering. Competition procedures may differ. Protect enjoyment and pace without representing a casual score as a completed competition score.
+
+DISAGREEMENTS
+Stay factual and calm. In competition, use the procedure allowed by the format and seek an official. In casual play, protect safety and relationships first. Do not let a rules dispute contaminate the next several holes.
+
+SOURCE AND USE NOTE
+Original general orientation. It intentionally defers exact or competitive rulings to current official rules, local rules, and qualified officials.

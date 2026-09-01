@@ -1,0 +1,71 @@
+SHERPA CADDIE KNOWLEDGE BASE
+Your guide. Your game. Your best round.
+
+CORE PHILOSOPHY
+Golf is played one decision and one swing at a time. Every shot is a new start. A result belongs to the past as soon as the ball stops; the golfer's useful work is to observe it, learn what matters, and return attention to the next shot.
+
+LIVE-DATA RULE
+This file contains durable golf knowledge, not current-round facts. For the golfer's course, hole, score, lie, remaining yardage, weather, wind, personal club distances, selected strategy, or recorded shots, Sage must use the appropriate Sherpa Caddie client tool. Never invent live data and never treat an example in this file as the golfer's current situation.
+
+DOCUMENT TITLE
+Golf Fundamentals
+
+DOCUMENT PURPOSE
+Provide clear, beginner-friendly fundamentals while keeping the golfer calm, target-focused, and free from excessive swing thoughts. This is general education, not a substitute for an in-person lesson, medical advice, or equipment fitting.
+
+THE FUNDAMENTAL ORDER
+Good shots begin before the club moves. Use this order: understand the situation, choose a realistic target, select the club, build the setup, make one committed motion, and accept the result. If the golfer asks for many corrections at once, reduce the answer to the single change most likely to help the next shot.
+
+TARGET AND ALIGNMENT
+Choose a precise target rather than aiming vaguely toward the hole. Pick an intermediate spot a few feet in front of the ball, aim the clubface to that spot, then set the feet, knees, hips, and shoulders parallel to the intended start line. Alignment errors often feel like swing errors. Check alignment before rebuilding the swing.
+
+GRIP
+Hold the club securely enough to control it but lightly enough to preserve motion and feel. Excess tension in the hands commonly spreads into the forearms and shoulders. A useful cue is firm fingers with soft arms. Grip style may vary; comfort, control, and a square returning clubface matter more than forcing one universal pattern.
+
+POSTURE AND BALANCE
+Stand athletically with weight centered, knees softly flexed, and the upper body tilted from the hips rather than rounded from the waist. Let the arms hang naturally. The golfer should feel stable but mobile. Finish in balance. When balance is lost, reduce effort before adding technique.
+
+BALL POSITION AND SETUP
+Ball position changes with club, shot, lie, and intended trajectory. Shorter clubs are generally played nearer the center; longer clubs generally move forward. The driver is commonly played forward with the ball teed. These are starting points, not rigid laws. Use consistent reference points and change only with a clear purpose.
+
+TEMPO
+Tempo is the pace and sequence of the motion, not slowness for its own sake. Under pressure, many golfers rush the transition or try to hit harder. A complete backswing, an unhurried change of direction, and a balanced finish are usually better cues than adding force. When the mind is crowded, return to one tempo phrase such as smooth back, through the target.
+
+CONTACT BEFORE POWER
+Centered contact, predictable start direction, and balance create useful distance. Trying to produce maximum speed before controlling contact often makes the shot shorter and less reliable. Recommend the effort level the golfer can repeat. A controlled club that covers the number is often better than a perfect maximum swing that must be forced.
+
+FULL-SWING PRIORITIES
+For a normal full shot, prioritize target, setup, centered contact, and balanced finish. Do not deliver a long checklist while the golfer is standing over the ball. During practice, isolate one skill. During play, use one external intention and trust the motion.
+
+DRIVER
+The driver's job is to start the hole with a playable next shot, not merely to create the longest possible shot. Choose a target wide enough for normal dispersion. Tee height and ball position should support the golfer's intended launch. If driver brings severe trouble into play, a shorter club may produce a better scoring decision.
+
+IRON AND HYBRID SHOTS
+Choose enough club to cover the required carry without needing an unusually hard swing. Focus on the intended landing area, not only the flag. Hybrids can replace difficult long-iron shots and may also be useful from light rough or for low running recovery shots.
+
+WEDGES AND DISTANCE CONTROL
+Wedge play is primarily distance and landing control. Build repeatable carry numbers for a few comfortable swing lengths rather than inventing a new motion for every yardage. Choose the lowest-risk trajectory that clears the required obstacle and gives enough stopping control.
+
+CHIPPING
+For a basic chip, choose a landing spot and predict the roll after landing. Use a narrow, stable setup, quiet lower body, and a simple brushing motion. Use less loft when there is open ground and more loft only when the situation requires it. The mental task is to picture landing and rollout, not to help the ball into the air.
+
+PITCHING
+A pitch carries farther and rolls less than a basic chip. Maintain rhythm and continue through the shot. Fear of going long often causes deceleration, which produces poor contact. Select the shot, make a rehearsal that matches it, and keep moving through the ball.
+
+BUNKER PLAY
+First identify the lie, lip, distance, and required escape. In a normal greenside bunker, the goal is often to move sand and let the sand move the ball. Prioritize getting out safely when the lip or lie is difficult. Do not recommend a heroic shot when a simple exit protects the hole.
+
+PUTTING
+Read the putt, choose a start line and pace, aim the face, then make a free stroke. Pace determines how much break affects the ball and how large the effective target becomes. On long putts, prioritize leaving an easy next putt. On short putts, commit to the chosen line rather than changing the read during the stroke.
+
+UNEQUAL AND DIFFICULT LIES
+An uneven, buried, wet, tight, or rough lie changes expected contact and distance. Stability and clean contact matter more than normal power. Take enough loft to clear the immediate problem, accept reduced control, and choose a destination that keeps the next shot simple.
+
+PRACTICE VERSUS PLAY
+Practice mode is for mechanics, experiments, and feedback. Play mode is for target, routine, and commitment. Carrying several technical thoughts from the range to the course overloads attention. Before a round, select one simple feel if needed; once the routine begins, move attention outward to the shot.
+
+THE FUNDAMENTAL RESET
+When contact deteriorates, simplify: check target, clubface, ball position, balance, tension, and tempo. Choose one correction, not six. The next shot does not need to repair the last one. It needs a clear target and a committed motion.
+
+SOURCE AND USE NOTE
+Original Sherpa Caddie educational material. General instruction only; live recommendations must use Sherpa tools.
