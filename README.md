@@ -1,3 +1,19 @@
+## Version 0.11.8 — iPhone Mentor Hands-Free Stability
+
+- Fixed the iPhone restart that could occur when Hands-Free was enabled in Mentor mode.
+- Mentor no longer downloads, initializes, or warms the local Kokoro voice model because D-ID supplies Mentor’s speech.
+- Compact phones no longer automatically initialize the local WebGPU language model merely from entering Text or Voice mode; it loads only if the golfer actually asks the local AI a question.
+- Switching to Mentor now cancels pending local AI and voice loads, unloads completed local models, and releases local speech resources before D-ID continues.
+- Added cancellation guards so a local model that began loading before Mentor was selected cannot finish later and compete with D-ID for iPhone memory.
+- Preserved the v0.11.7 responsive header, shared wake phrases, low-resolution iPhone D-ID video, audio-first stream handling, warmed Mentor connection, inactivity pause, and strict tool diagnostics.
+
+### Changed files in v0.11.8
+
+- `index.html`
+- `manifest.webmanifest`
+- `sw.js`
+- `README.md`
+
 ## Version 0.11.7 — Clear Sage Modes + Efficient Mentor + Verified Tools
 
 - The fixed top-left Sage area now has three genuinely distinct presentations while retaining exactly the same footprint on every app tab:
