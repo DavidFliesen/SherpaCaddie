@@ -1,3 +1,18 @@
+## Version 0.11.14 — D-ID Session Recovery and Audible Video Fallback
+
+- Added automatic recovery when D-ID reports a missing, invalid, expired, or unavailable session ID.
+- Discards stale Agent Manager connections, creates a fresh D-ID session, and retries the golfer’s question once.
+- Primes Video audio from the user’s Ask, Talk, and diagnostic gestures to improve iPhone/iPad Safari playback reliability.
+- Connects D-ID’s complete media stream to the required video element while retaining a separate audio-priority track.
+- Detects a missing or blocked D-ID audio track and reads Sage’s completed answer using the device’s local system voice without consuming additional D-ID speech credits.
+
+### Changed files in v0.11.14
+
+- `index.html`
+- `manifest.webmanifest`
+- `sw.js`
+- `README.md`
+
 ## Version 0.11.13 — Flowing iPhone Header and One-at-a-Time Tool Tests
 
 - Rebuilt the iPhone Sage header as a compact two-column identity area followed by full-width controls, answer, and instructions—eliminating the trapped blank space beneath the logo and Sage display.
