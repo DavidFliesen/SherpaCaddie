@@ -1,4 +1,4 @@
-name: Attach D-ID tools to Sage
+name: Repair and attach D-ID tools to Sage
 
 on:
   workflow_dispatch:
@@ -48,6 +48,53 @@ jobs:
 
           echo "D-ID authentication succeeded."
 
+      - name: Repair Sherpa client-tool definitions
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          EMPTY_SCHEMA='{"type":"object","properties":{},"required":[],"additionalProperties":false}'
+          SHOT_SCHEMA='{"type":"object","properties":{"quality":{"type":"string","enum":["good","okay","poor"],"description":"How well the shot was struck"},"miss_direction":{"type":"string","enum":["left","right","short","long","center"],"description":"Where the shot missed"}},"required":["quality"],"additionalProperties":false}'
+          STRATEGY_SCHEMA='{"type":"object","properties":{"strategy":{"type":"string","enum":["smart","attack","layup"],"description":"The course-management strategy to activate"}},"required":["strategy"],"additionalProperties":false}'
+
+          put_tool() {
+            local tool_id="$1" tool_name="$2" display_name="$3" description="$4" parameters="$5"
+            jq -n \
+              --arg name "$tool_name" \
+              --arg display_name "$display_name" \
+              --arg description "$description" \
+              --argjson parameters "$parameters" \
+              '{name:$name,display_name:$display_name,description:$description,provider:"Sherpa Caddie",schema:{parameters:$parameters},config:{type:"client"}}' \
+              > "/tmp/${tool_name}.json"
+
+            HTTP_CODE="$(curl --silent --show-error \
+              --output "/tmp/${tool_name}-response.json" \
+              --write-out "%{http_code}" \
+              --user "${DID_API_USERNAME}:${DID_API_PASSWORD}" \
+              --request PUT \
+              "https://api.d-id.com/tools/${tool_id}" \
+              --header "Content-Type: application/json" \
+              --header "Accept: application/json" \
+              --data-binary "@/tmp/${tool_name}.json")"
+
+            if [ "$HTTP_CODE" -lt 200 ] || [ "$HTTP_CODE" -ge 300 ]; then
+              echo "::error::Could not update ${tool_name} (HTTP ${HTTP_CODE})."
+              jq . "/tmp/${tool_name}-response.json" 2>/dev/null || cat "/tmp/${tool_name}-response.json"
+              exit 1
+            fi
+            echo "Repaired client tool: ${tool_name}"
+          }
+
+          put_tool "tl_x94h0ee9_FGNaK5Jx05A1" "get_round_context" "Round Context" "Get the golfer's current course, hole, par, yardage, strokes, score, tee, and round goal from Sherpa Caddie. Always use this when the golfer asks what course or hole they are playing, current distance, par, score, round status, or requests a get_round_context diagnostic." "$EMPTY_SCHEMA"
+          put_tool "tl_tosILbkdAqtaHDojqNN_L" "get_shot_recommendation" "Shot Recommendation" "Get Sherpa Caddie's live club recommendation, plays-like yardage, target, safe miss, strategy, reason, and mental cue. Always use this when the golfer asks what club to hit, where to aim, how the shot plays, or requests a get_shot_recommendation diagnostic." "$EMPTY_SCHEMA"
+          put_tool "tl_YhBpHTCkL73Lsdtomi007" "get_weather_context" "Weather Context" "Get the current temperature, wind, gusts, wind direction, and loaded-weather status from Sherpa Caddie. Always use this for current weather or wind questions and get_weather_context diagnostics." "$EMPTY_SCHEMA"
+          put_tool "tl_qycJWIs8eF-vKIUU7FXw5" "get_club_distances" "Club Distances" "Get the golfer's saved personal carry distances and current bag selection from Sherpa Caddie. Always use this when the golfer asks about their clubs or distances and get_club_distances diagnostics." "$EMPTY_SCHEMA"
+          put_tool "tl_YJOO5DFUg1MgGlYEn_YBU" "record_shot" "Record Shot" "Record a real golf shot in Sherpa Caddie using its quality and miss direction. Always use this when the golfer says to record, log, or save a shot and for record_shot diagnostics." "$SHOT_SCHEMA"
+          put_tool "tl_IuLN6kSEzh0E2s2q8odoi" "finish_hole" "Finish Hole" "Finish the current hole in Sherpa Caddie. Always use this when the golfer says the hole is finished or asks to complete it and for finish_hole diagnostics." "$EMPTY_SCHEMA"
+          put_tool "tl_1DHAD4ItuCDQYEJXq8NdP" "next_hole" "Next Hole" "Advance Sherpa Caddie to the next hole. Always use this when the golfer asks to continue or move to the next hole and for next_hole diagnostics." "$EMPTY_SCHEMA"
+          put_tool "tl_QbGzwBNy6KKH7yxNYh7en" "set_strategy" "Set Strategy" "Change Sherpa Caddie's course strategy to smart, attack, or layup. Always use this when the golfer requests a strategy change and for set_strategy diagnostics." "$STRATEGY_SCHEMA"
+          put_tool "tl_ZhLjIJk812fPxg76DjfNC" "open_hole_planner" "Open Hole Planner" "Open Sherpa Caddie's Hole Planner for the selected course or active round. Always use this when the golfer asks to see, show, or open the hole or planner and for open_hole_planner diagnostics." "$EMPTY_SCHEMA"
+
       - name: Attach Sherpa Caddie client tools to Sage
         shell: bash
         run: |
@@ -87,7 +134,7 @@ jobs:
           echo "D-ID agent update succeeded."
           jq '.tools // .' /tmp/did-agent-response.json
 
-      - name: Verify all nine tools are attached
+      - name: Verify all nine client tools and attachments
         shell: bash
         run: |
           set -euo pipefail
@@ -114,6 +161,18 @@ jobs:
             "tl_ZhLjIJk812fPxg76DjfNC"
           )
 
+          EXPECTED_NAMES=(
+            "get_round_context"
+            "get_shot_recommendation"
+            "get_weather_context"
+            "get_club_distances"
+            "record_shot"
+            "finish_hole"
+            "next_hole"
+            "set_strategy"
+            "open_hole_planner"
+          )
+
           MISSING=0
           for TOOL_ID in "${EXPECTED_IDS[@]}"; do
             if jq -e --arg id "$TOOL_ID"               '.tools.items // [] | any(.tool_id == $id)'               /tmp/did-agent-verify.json >/dev/null; then
@@ -121,6 +180,30 @@ jobs:
             else
               echo "::error::Missing tool: $TOOL_ID"
               MISSING=1
+            fi
+          done
+
+          for INDEX in "${!EXPECTED_IDS[@]}"; do
+            TOOL_ID="${EXPECTED_IDS[$INDEX]}"
+            EXPECTED_NAME="${EXPECTED_NAMES[$INDEX]}"
+            HTTP_CODE="$(curl --silent --show-error \
+              --output /tmp/did-tool-verify.json \
+              --write-out "%{http_code}" \
+              --user "${DID_API_USERNAME}:${DID_API_PASSWORD}" \
+              --request GET \
+              "https://api.d-id.com/tools/${TOOL_ID}" \
+              --header "Accept: application/json")"
+            if [ "$HTTP_CODE" -lt 200 ] || [ "$HTTP_CODE" -ge 300 ]; then
+              echo "::error::Could not read ${EXPECTED_NAME} (HTTP ${HTTP_CODE})."
+              MISSING=1
+            elif ! jq -e --arg name "$EXPECTED_NAME" \
+              '.name == $name and .config.type == "client" and .schema.parameters.type == "object"' \
+              /tmp/did-tool-verify.json >/dev/null; then
+              echo "::error::${EXPECTED_NAME} does not have the required client-tool definition."
+              jq '{name,description,config,schema}' /tmp/did-tool-verify.json
+              MISSING=1
+            else
+              echo "Verified client definition: ${EXPECTED_NAME}"
             fi
           done
 
@@ -136,4 +219,4 @@ jobs:
             exit 1
           fi
 
-          echo "Success: all 9 Sherpa Caddie client tools are attached to Sage with tool_choice=auto."
+          echo "Success: all 9 Sherpa Caddie tools have client configuration, strong trigger descriptions, valid schemas, and are attached to Sage with tool_choice=auto. Start a fresh Video session before retesting."
