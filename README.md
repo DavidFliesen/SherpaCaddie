@@ -1,3 +1,18 @@
+## Version 0.11.13 — Flowing iPhone Header and One-at-a-Time Tool Tests
+
+- Rebuilt the iPhone Sage header as a compact two-column identity area followed by full-width controls, answer, and instructions—eliminating the trapped blank space beneath the logo and Sage display.
+- Preserved the balanced Sherpa Caddie logo and Sage/Text/Voice tiles while making the rest of the header flow naturally at narrow widths.
+- Added a strict one-request-at-a-time lock for Video questions and D-ID diagnostics.
+- Disabled every other diagnostic button while a tool test is active, preventing overlapping requests, cancelled tests, and D-ID pending-request-limit errors.
+- Extended the diagnostic timeout and added clearer instructions to wait for a final result before starting the next test.
+
+### Changed files in v0.11.13
+
+- `index.html`
+- `manifest.webmanifest`
+- `sw.js`
+- `README.md`
+
 ## Version 0.11.12 — Tool Repair, Credit Fallback, Balanced iPhone Sage
 
 - Reworked the iPhone’s left column into two balanced square areas: the Sherpa Caddie logo above and the Sage/Text/Voice display below.
