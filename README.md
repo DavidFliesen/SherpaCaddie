@@ -1,3 +1,39 @@
+## Version 0.11.10 — Sherpa Mentor: Text / Voice / Video
+
+- Made **Sherpa Mentor** the umbrella experience with three modes named exactly **Text**, **Voice**, and **Video**.
+- Consolidated the mode selector, Sage response, typed-question field, Ask button, Talk button, and Hands-Free wake-word switch into the persistent top panel.
+- Text has a clearly visible typing field and Ask button.
+- Voice and Video both have a one-tap Talk button; no wake phrase is required after tapping it.
+- Clarified Hands-Free as an optional wake-word mode using “Sherpa,” “Hey Sherpa,” “Sage,” or “Hey Sage.”
+- Removed the redundant lower Voice/Video controls and transcript so the golfer no longer has to scroll to operate the Mentor.
+- Kept the compact-phone stability path: Voice avoids WebGPU/Kokoro loading, and Video uses low-resolution D-ID streaming with inactivity pausing.
+
+### Changed files in v0.11.10
+
+- `index.html`
+- `manifest.webmanifest`
+- `sw.js`
+- `README.md`
+
+## Version 0.11.9 — Unified Text / Audio / Video Console
+
+- Rebuilt the persistent header as one larger Sherpa console with Text, Audio, and Video modes.
+- Added a visible typing field and Ask button to Text mode.
+- Added a one-tap Talk button to Audio and Video; a wake phrase is not required for a one-time question.
+- Kept Hands-Free as an optional mode for the shared “Sherpa,” “Hey Sherpa,” “Sage,” and “Hey Sage” wake phrases.
+- Moved Sage’s current text response into the same top panel so it remains visible beside the mode display.
+- Removed duplicate voice, video, and transcript controls lower on the page.
+- Stabilized iPhone Audio by using lightweight app guidance and the iOS system voice without loading WebGPU or Kokoro models.
+- Kept D-ID Video audio-first, low-resolution on compact phones, warmed on selection, and paused after inactivity.
+- Preserved strict nine-tool diagnostics and the persistent five-tab layout.
+
+### Changed files in v0.11.9
+
+- `index.html`
+- `manifest.webmanifest`
+- `sw.js`
+- `README.md`
+
 ## Version 0.11.8 — iPhone Mentor Hands-Free Stability
 
 - Fixed the iPhone restart that could occur when Hands-Free was enabled in Mentor mode.
