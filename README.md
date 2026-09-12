@@ -1,3 +1,20 @@
+## Version 0.11.12 — Tool Repair, Credit Fallback, Balanced iPhone Sage
+
+- Reworked the iPhone’s left column into two balanced square areas: the Sherpa Caddie logo above and the Sage/Text/Voice display below.
+- Removed the long, heavily cropped iPhone portrait treatment while preserving the same left-column geometry across Text, Voice, and Video.
+- Added automatic D-ID credit detection. If a Video question fails because avatar credits are exhausted, Sage switches to Voice, announces what happened, and provides phone-safe guidance without using D-ID.
+- Strengthened every diagnostic prompt so Sage is explicitly instructed to invoke the exact named client tool rather than answer conversationally.
+- Updated the D-ID workflow to repair all nine tool definitions with `config.type: client`, valid schemas, and descriptions containing clear user triggers, then reattach and verify them.
+- Added clear diagnostic states distinguishing an Agent that skipped a tool from a test blocked by exhausted D-ID credits.
+
+### Changed files in v0.11.12
+
+- `index.html`
+- `manifest.webmanifest`
+- `sw.js`
+- `README.md`
+- `.github/workflows/attach-did-tools.yml`
+
 ## Version 0.11.11 — Clearer Sage Layout on iPhone and iPad
 
 - Standardized the mentor’s visible name as **Sage** on every device.
