@@ -1,3 +1,21 @@
+## Version 0.11.11 — Clearer Sage Layout on iPhone and iPad
+
+- Standardized the mentor’s visible name as **Sage** on every device.
+- Reordered the persistent Sage console into the natural sequence: choose mode, enter a question, choose how to ask, then read Sage’s answer.
+- Put the question field above the answer and moved **Ask Sage** below the question field.
+- Replaced the short input with a larger two-line question box; Shift+Enter can add a line and Enter submits.
+- Added clear **YOUR QUESTION** and **SAGE’S ANSWER** labels plus mode-specific instructions.
+- Enlarged the Sage avatar substantially on iPad and medium-size tablets.
+- Rebalanced the iPhone layout to remove trapped gaps while keeping the question, controls, answer, and status together.
+- Added `ARTEZIQ • Sherpa Caddie • v0.11.11` to the bottom of the splash screen.
+
+### Changed files in v0.11.11
+
+- `index.html`
+- `manifest.webmanifest`
+- `sw.js`
+- `README.md`
+
 ## Version 0.11.10 — Sherpa Mentor: Text / Voice / Video
 
 - Made **Sherpa Mentor** the umbrella experience with three modes named exactly **Text**, **Voice**, and **Video**.
