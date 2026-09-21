@@ -5,14 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#18311C">
 <meta name="description" content="Sherpa Caddie — one-shot-at-a-time golf guidance combining a caddie, coach and mentor.">
-<link rel="manifest" href="manifest.webmanifest?v=0125">
-<link rel="icon" href="icons/favicon.png?v=0125" type="image/png">
-<link rel="apple-touch-icon" href="icons/icon-192.png?v=0125">
-<link rel="preload" as="image" href="assets/sherpa-caddie-logo-fast.webp?v=0125" type="image/webp" fetchpriority="high">
-<title>Sherpa Caddie v0.11.15</title>
+<link rel="manifest" href="manifest.webmanifest?v=0126">
+<link rel="icon" href="icons/favicon.png?v=0126" type="image/png">
+<link rel="apple-touch-icon" href="icons/icon-192.png?v=0126">
+<link rel="preload" as="image" href="assets/sherpa-caddie-logo-fast.webp?v=0126" type="image/webp" fetchpriority="high">
+<title>Sherpa Caddie v0.11.16</title>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
   crossorigin="">
-<link rel="stylesheet" href="arteziq-ui.css?v=0125">
+<link rel="stylesheet" href="arteziq-ui.css?v=0126">
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
   crossorigin=""></script>
 <style>
@@ -810,7 +810,7 @@ body.immersive .brand-center{display:flex!important}
   body.immersive .mentor-topbar{height:132px}
 }
 
-/* v0.11.15 — Sage console in natural question → action → answer order */
+/* v0.11.16 — Sage console in natural question → action → answer order */
 .mentor-topbar{
   min-height:342px;height:auto;grid-template-columns:250px minmax(0,1fr) 112px;gap:18px;
   padding-top:16px;padding-bottom:16px;align-items:stretch
@@ -886,7 +886,7 @@ body.immersive .mentor-topbar{min-height:342px;height:auto}
   body.immersive .mentor-topbar{min-height:366px;height:auto}
 }
 
-/* v0.11.15 — compact, full-width mobile Sage flow */
+/* v0.11.16 — compact, full-width mobile Sage flow */
 .console-heading{display:grid;gap:8px;min-width:0}
 @media(max-width:760px){
   .mentor-topbar{
@@ -951,14 +951,14 @@ body.immersive .mentor-topbar{min-height:342px;height:auto}
     <div class="splash-rings" aria-hidden="true"></div>
     <div class="splash-logo-stage" aria-hidden="true">
       <div class="splash-logo-glow"></div>
-      <img class="splash-logo" src="assets/sherpa-caddie-logo-fast.webp?v=0125" decoding="async" alt="Sherpa Caddie">
+      <img class="splash-logo" src="assets/sherpa-caddie-logo-fast.webp?v=0126" decoding="async" alt="Sherpa Caddie">
     </div>
     <div class="splash-title">Sherpa Caddie</div>
     <div class="splash-subtitle">Your guide. Your game. Your best round.</div>
     <div class="splash-path" aria-hidden="true"><span></span><i></i></div>
     <div class="splash-caption">Walking your game plan into place…</div>
   </div>
-  <div class="splash-footer">ARTEZIQ • Sherpa Caddie • v0.11.15</div>
+  <div class="splash-footer">ARTEZIQ • Sherpa Caddie • v0.11.16</div>
 </div>
 <div class="app">
 <header class="topbar mentor-topbar" data-mode="text">
@@ -975,7 +975,7 @@ body.immersive .mentor-topbar{min-height:342px;height:auto}
         <div class="mentor-wave" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
       </div>
       <div class="mentor-live-media">
-        <img id="sherpaLivePoster" class="mentor-poster" src="assets/sage-sherpa-live.webp?v=0125" alt="Sage, Sherpa Caddie mentor">
+        <img id="sherpaLivePoster" class="mentor-poster" src="assets/sage-sherpa-live.webp?v=0126" alt="Sage, Sherpa Caddie mentor">
         <video id="sherpaLiveVideo" class="mentor-video" autoplay muted playsinline aria-label="Sage Video avatar"></video>
         <audio id="sherpaLiveAudio" autoplay playsinline></audio>
       </div>
@@ -1009,10 +1009,10 @@ body.immersive .mentor-topbar{min-height:342px;height:auto}
   </div>
 
   <div class="brand-center" aria-label="Sherpa Caddie">
-    <img class="brand-logo" src="assets/sherpa-caddie-logo-fast.webp?v=0125" width="180" height="196" decoding="sync" fetchpriority="high" alt="Sherpa Caddie">
+    <img class="brand-logo" src="assets/sherpa-caddie-logo-fast.webp?v=0126" width="180" height="196" decoding="sync" fetchpriority="high" alt="Sherpa Caddie">
   </div>
 
-  <div class="version app-chrome">v0.11.15</div>
+  <div class="version app-chrome">v0.11.16</div>
 </header>
 
 <div class="tabs-wrap app-chrome">
@@ -1173,7 +1173,7 @@ body.immersive .mentor-topbar{min-height:342px;height:auto}
 
         <div class="live-transcript" aria-live="polite">
           <div class="live-message"><div>👤</div><div><strong>You:</strong> <span id="liveUserText">Say “Hey Sherpa,” “Hey Sage,” or type a question.</span></div><time id="liveUserTime"></time></div>
-          <div class="live-message sage"><img class="live-message-avatar" src="assets/sage-sherpa-live.webp?v=0125" alt=""><div><strong>Sage:</strong> <span id="liveSageText">I’m ready to guide your next shot.</span></div><time id="liveSageTime"></time></div>
+          <div class="live-message sage"><img class="live-message-avatar" src="assets/sage-sherpa-live.webp?v=0126" alt=""><div><strong>Sage:</strong> <span id="liveSageText">I’m ready to guide your next shot.</span></div><time id="liveSageTime"></time></div>
         </div>
 
         <div class="live-compose">
@@ -1327,7 +1327,7 @@ body.immersive .mentor-topbar{min-height:342px;height:auto}
       <p class="muted" style="margin:6px 0 0">Sherpa uses this bag and your carry distances for club recommendations.</p>
       <div class="bag-presets">
         <button class="bag-preset" type="button" data-bag="full"><strong>🏌️ Full Bag</strong><small>Use the complete common set of woods, hybrid, irons, wedges and putter.</small></button>
-        <button class="bag-preset" type="button" data-bag="sunday"><strong>🎒 Sunday Bag</strong><small>A lighter six-club setup for a simpler round or walking with fewer clubs.</small></button>
+        <button class="bag-preset" type="button" data-bag="sunday"><strong>🎒 Dave’s Sunday Bag</strong><small>A balanced eight-club setup from driver through putter.</small></button>
       </div>
       <div class="bag-note" id="bagDescription">Full Bag is selected.</div>
     </article>
@@ -1417,14 +1417,15 @@ body.immersive .mentor-topbar{min-height:342px;height:auto}
   </article>
 </section>
 
-<div class="footer"><span>Sherpa Caddie v0.11.15</span><button id="aboutBtn">What’s in v0.11.15?</button></div>
+<div class="footer"><span>Sherpa Caddie v0.11.16</span><button id="aboutBtn">What’s in v0.11.16?</button></div>
 </main>
 </div>
 
 <div id="aboutModal" class="modal-backdrop hidden" role="dialog" aria-modal="true">
   <div class="modal" style="max-width:650px">
-    <div class="section-head"><div><p class="eyebrow">One-Shot Sherpa</p><h2>Version 0.11.15</h2></div><button class="btn ghost" id="closeAboutModal">Close</button></div>
+    <div class="section-head"><div><p class="eyebrow">One-Shot Sherpa</p><h2>Version 0.11.16</h2></div><button class="btn ghost" id="closeAboutModal">Close</button></div>
     <ul style="color:var(--stone);line-height:1.7">
+      <li>Dave’s Sunday Bag now uses eight clubs: Driver, 3 Wood, 4 Hybrid, 7 Iron, 9 Iron, Pitching Wedge, Sand Wedge, and Putter</li>
       <li>Official Summerville Country Club scorecard added for tomorrow’s field test</li>
       <li>Exact Blue, White, Gold, and Red hole yardages replace generic tee adjustments at Summerville</li>
       <li>Round and Hole Planner use the club’s official par-71 hole sequence</li>
@@ -1584,8 +1585,8 @@ body.immersive .mentor-topbar{min-height:342px;height:auto}
 </div>
 <div class="toast" id="toast"></div>
 
-<script src="arteziq-audio.js?v=0125"></script>
-<script src="arteziq-ui.js?v=0125"></script>
+<script src="arteziq-audio.js?v=0126"></script>
+<script src="arteziq-ui.js?v=0126"></script>
 <script>
 (()=>{"use strict";
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
@@ -1642,7 +1643,7 @@ const KNOWN_COURSES=[{
  }
 }];
 const KEY={clubs:"sherpa.clubs.041",rounds:"sherpa.rounds.041",current:"sherpa.current.041",bag:"sherpa.bag.090"};
-const SUNDAY_CLUBS=["Driver","4 Hybrid","7 Iron","Pitching Wedge","Sand Wedge","Putter"];
+const SUNDAY_CLUBS=["Driver","3 Wood","4 Hybrid","7 Iron","9 Iron","Pitching Wedge","Sand Wedge","Putter"];
 const state={
  clubs:JSON.parse(localStorage.getItem(KEY.clubs)||"null")||{...CLUBS},
  bagMode:localStorage.getItem(KEY.bag)||"full",
@@ -1671,7 +1672,7 @@ function renderClubs(){
  const g=$("#clubGrid");if(!g)return;g.innerHTML="";
  activeClubNames().forEach(n=>{const d=CLUBS[n];const x=document.createElement("div");x.className="club-cell";x.innerHTML=`<label>${n}</label><input type="number" inputmode="numeric" min="0" max="400" value="${state.clubs[n]??d}" data-club="${n}" aria-label="${n} carry distance in yards">`;g.appendChild(x)});
  $$(".bag-preset").forEach(b=>b.classList.toggle("active",b.dataset.bag===state.bagMode));
- const desc=$("#bagDescription");if(desc)desc.textContent=state.bagMode==="sunday"?"Sunday Bag selected: Driver, 4 Hybrid, 7 Iron, Pitching Wedge, Sand Wedge, and Putter. This is a practical six-club starting set; your carry distances remain personal.":"Full Bag selected: Sherpa can recommend from your complete set of stored clubs.";
+ const desc=$("#bagDescription");if(desc)desc.textContent=state.bagMode==="sunday"?"Dave’s Sunday Bag selected: Driver, 3 Wood, 4 Hybrid, 7 Iron, 9 Iron, Pitching Wedge, Sand Wedge, and Putter. Enter your personal carry distance for each club before the round.":"Full Bag selected: Sherpa can recommend from your complete set of stored clubs.";
  const note=$("#clubNote");if(note)note.textContent=`${state.bagMode==="sunday"?"Sunday":"Full"} Bag • ${activeClubNames().length} clubs available to Sherpa.`;
 }
 $$(".bag-preset").forEach(b=>b.onclick=()=>{saveVisibleClubInputs();state.bagMode=b.dataset.bag;save();renderClubs();toast(state.bagMode==="sunday"?"Sunday Bag selected":"Full Bag selected")});
@@ -2092,7 +2093,7 @@ async function setSherpaMode(mode){
   showMentorVideo(false);
   const live=mode==="live";$$('.experience-btn').forEach(b=>b.classList.toggle("active",b.dataset.sherpaMode===mode));
   const textShell=$("#textSherpaShell"),liveShell=$("#sherpaLiveShell");if(textShell&&!textShell.dataset.initCollapse){textShell.classList.add("guide-collapsed");textShell.dataset.initCollapse="1";}if(textShell)textShell.classList.toggle("is-hidden",live);if(liveShell)liveShell.classList.toggle("active",live);
-  localStorage.setItem("sherpa.experience.0125",mode);
+  localStorage.setItem("sherpa.experience.0126",mode);
   if(mode==="text"){
     if(aiState.handsFree)setHandsFree(false);
     await disconnectSherpaLive();
@@ -2189,7 +2190,7 @@ if(recentlyCrashedInLive()){
   const cs=$("#companionStatus");if(cs)cs.textContent="Sherpa Live paused after an iPhone browser restart";
 }
 
-/* Sherpa AI v0.11.15 — iPhone-safe Mentor Hands-Free resource isolation */
+/* Sherpa AI v0.11.16 — iPhone-safe Mentor Hands-Free resource isolation */
 const aiState = {
   engine: null,
   webllm: null,
@@ -3003,7 +3004,7 @@ $("#importBtn").onclick=()=>$("#importFile").click();$("#importFile").onchange=a
 function hideSplash(){const el=$("#splashScreen");if(!el||el.classList.contains("is-hidden"))return;el.classList.add("is-hidden");setTimeout(()=>el.remove(),800);setTimeout(()=>window.UIKIT?.applyFSLock?.(),850)}
 window.addEventListener("load",()=>setTimeout(hideSplash,5000));
 setTimeout(hideSplash,5600);
-if("serviceWorker"in navigator)window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js?v=0125").catch(()=>{}));
+if("serviceWorker"in navigator)window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js?v=0126").catch(()=>{}));
 initArteziqUiKit();
 renderClubs();
 renderRounds();

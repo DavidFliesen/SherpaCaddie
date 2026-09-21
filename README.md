@@ -1,3 +1,18 @@
+## Version 0.11.16 — Dave’s Eight-Club Sunday Bag
+
+- Updated the Sunday Bag preset to match Dave’s actual eight-club setup.
+- Added the 15° Adams Speedline FAST 10 as the 3 Wood.
+- Added the Adams IDEA a7 9 Iron to close the scoring-distance gap between the 7 Iron and Pitching Wedge.
+- Sunday Bag recommendations now use Driver, 3 Wood, 4 Hybrid, 7 Iron, 9 Iron, Pitching Wedge, Sand Wedge, and Putter.
+- Renamed the preset **Dave’s Sunday Bag** and updated its on-screen guidance.
+
+### Changed files in v0.11.16
+
+- `index.html`
+- `manifest.webmanifest`
+- `sw.js`
+- `README.md`
+
 ## Version 0.11.15 — Summerville Country Club Field Test
 
 - Added the official 18-hole Summerville Country Club scorecard for accurate on-course testing.
