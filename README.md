@@ -1,3 +1,18 @@
+## Version 0.11.15 — Summerville Country Club Field Test
+
+- Added the official 18-hole Summerville Country Club scorecard for accurate on-course testing.
+- Uses exact Blue (6,037), White (5,517), Gold (4,919), and Red (4,856) tee yardages instead of generic tee offsets.
+- Uses the official par sequence and par-71 total in Round and Hole Planner views.
+- Shows a visible verified-scorecard message and the selected tee’s total yardage before the round starts.
+- Keeps OpenGolf location, weather, and mapped-course features while giving the verified scorecard priority for hole distances.
+
+### Changed files in v0.11.15
+
+- `index.html`
+- `manifest.webmanifest`
+- `sw.js`
+- `README.md`
+
 ## Version 0.11.14 — D-ID Session Recovery and Audible Video Fallback
 
 - Added automatic recovery when D-ID reports a missing, invalid, expired, or unavailable session ID.

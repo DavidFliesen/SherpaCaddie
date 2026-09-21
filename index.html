@@ -5,14 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#18311C">
 <meta name="description" content="Sherpa Caddie — one-shot-at-a-time golf guidance combining a caddie, coach and mentor.">
-<link rel="manifest" href="manifest.webmanifest?v=0124">
-<link rel="icon" href="icons/favicon.png?v=0124" type="image/png">
-<link rel="apple-touch-icon" href="icons/icon-192.png?v=0124">
-<link rel="preload" as="image" href="assets/sherpa-caddie-logo-fast.webp?v=0124" type="image/webp" fetchpriority="high">
-<title>Sherpa Caddie v0.11.14</title>
+<link rel="manifest" href="manifest.webmanifest?v=0125">
+<link rel="icon" href="icons/favicon.png?v=0125" type="image/png">
+<link rel="apple-touch-icon" href="icons/icon-192.png?v=0125">
+<link rel="preload" as="image" href="assets/sherpa-caddie-logo-fast.webp?v=0125" type="image/webp" fetchpriority="high">
+<title>Sherpa Caddie v0.11.15</title>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
   crossorigin="">
-<link rel="stylesheet" href="arteziq-ui.css?v=0124">
+<link rel="stylesheet" href="arteziq-ui.css?v=0125">
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
   crossorigin=""></script>
 <style>
@@ -810,7 +810,7 @@ body.immersive .brand-center{display:flex!important}
   body.immersive .mentor-topbar{height:132px}
 }
 
-/* v0.11.14 — Sage console in natural question → action → answer order */
+/* v0.11.15 — Sage console in natural question → action → answer order */
 .mentor-topbar{
   min-height:342px;height:auto;grid-template-columns:250px minmax(0,1fr) 112px;gap:18px;
   padding-top:16px;padding-bottom:16px;align-items:stretch
@@ -886,7 +886,7 @@ body.immersive .mentor-topbar{min-height:342px;height:auto}
   body.immersive .mentor-topbar{min-height:366px;height:auto}
 }
 
-/* v0.11.14 — compact, full-width mobile Sage flow */
+/* v0.11.15 — compact, full-width mobile Sage flow */
 .console-heading{display:grid;gap:8px;min-width:0}
 @media(max-width:760px){
   .mentor-topbar{
@@ -951,14 +951,14 @@ body.immersive .mentor-topbar{min-height:342px;height:auto}
     <div class="splash-rings" aria-hidden="true"></div>
     <div class="splash-logo-stage" aria-hidden="true">
       <div class="splash-logo-glow"></div>
-      <img class="splash-logo" src="assets/sherpa-caddie-logo-fast.webp?v=0124" decoding="async" alt="Sherpa Caddie">
+      <img class="splash-logo" src="assets/sherpa-caddie-logo-fast.webp?v=0125" decoding="async" alt="Sherpa Caddie">
     </div>
     <div class="splash-title">Sherpa Caddie</div>
     <div class="splash-subtitle">Your guide. Your game. Your best round.</div>
     <div class="splash-path" aria-hidden="true"><span></span><i></i></div>
     <div class="splash-caption">Walking your game plan into place…</div>
   </div>
-  <div class="splash-footer">ARTEZIQ • Sherpa Caddie • v0.11.14</div>
+  <div class="splash-footer">ARTEZIQ • Sherpa Caddie • v0.11.15</div>
 </div>
 <div class="app">
 <header class="topbar mentor-topbar" data-mode="text">
@@ -975,7 +975,7 @@ body.immersive .mentor-topbar{min-height:342px;height:auto}
         <div class="mentor-wave" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
       </div>
       <div class="mentor-live-media">
-        <img id="sherpaLivePoster" class="mentor-poster" src="assets/sage-sherpa-live.webp?v=0124" alt="Sage, Sherpa Caddie mentor">
+        <img id="sherpaLivePoster" class="mentor-poster" src="assets/sage-sherpa-live.webp?v=0125" alt="Sage, Sherpa Caddie mentor">
         <video id="sherpaLiveVideo" class="mentor-video" autoplay muted playsinline aria-label="Sage Video avatar"></video>
         <audio id="sherpaLiveAudio" autoplay playsinline></audio>
       </div>
@@ -1009,10 +1009,10 @@ body.immersive .mentor-topbar{min-height:342px;height:auto}
   </div>
 
   <div class="brand-center" aria-label="Sherpa Caddie">
-    <img class="brand-logo" src="assets/sherpa-caddie-logo-fast.webp?v=0124" width="180" height="196" decoding="sync" fetchpriority="high" alt="Sherpa Caddie">
+    <img class="brand-logo" src="assets/sherpa-caddie-logo-fast.webp?v=0125" width="180" height="196" decoding="sync" fetchpriority="high" alt="Sherpa Caddie">
   </div>
 
-  <div class="version app-chrome">v0.11.14</div>
+  <div class="version app-chrome">v0.11.15</div>
 </header>
 
 <div class="tabs-wrap app-chrome">
@@ -1173,7 +1173,7 @@ body.immersive .mentor-topbar{min-height:342px;height:auto}
 
         <div class="live-transcript" aria-live="polite">
           <div class="live-message"><div>👤</div><div><strong>You:</strong> <span id="liveUserText">Say “Hey Sherpa,” “Hey Sage,” or type a question.</span></div><time id="liveUserTime"></time></div>
-          <div class="live-message sage"><img class="live-message-avatar" src="assets/sage-sherpa-live.webp?v=0124" alt=""><div><strong>Sage:</strong> <span id="liveSageText">I’m ready to guide your next shot.</span></div><time id="liveSageTime"></time></div>
+          <div class="live-message sage"><img class="live-message-avatar" src="assets/sage-sherpa-live.webp?v=0125" alt=""><div><strong>Sage:</strong> <span id="liveSageText">I’m ready to guide your next shot.</span></div><time id="liveSageTime"></time></div>
         </div>
 
         <div class="live-compose">
@@ -1219,6 +1219,7 @@ body.immersive .mentor-topbar{min-height:342px;height:auto}
         <p class="eyebrow">Selected course</p>
         <h2 class="selected-name" id="selectedCourseName">No course selected</h2>
         <p class="muted" id="selectedCourseLocation">Choose a course on the left.</p>
+        <p class="muted" id="courseDataNote" style="font-size:.8rem;font-weight:800;margin:6px 0 0"></p>
 
         <div class="weather-box">
           <strong style="color:var(--forest)">Playing conditions</strong>
@@ -1416,14 +1417,18 @@ body.immersive .mentor-topbar{min-height:342px;height:auto}
   </article>
 </section>
 
-<div class="footer"><span>Sherpa Caddie v0.11.14</span><button id="aboutBtn">What’s in v0.11.14?</button></div>
+<div class="footer"><span>Sherpa Caddie v0.11.15</span><button id="aboutBtn">What’s in v0.11.15?</button></div>
 </main>
 </div>
 
 <div id="aboutModal" class="modal-backdrop hidden" role="dialog" aria-modal="true">
   <div class="modal" style="max-width:650px">
-    <div class="section-head"><div><p class="eyebrow">One-Shot Sherpa</p><h2>Version 0.11.12</h2></div><button class="btn ghost" id="closeAboutModal">Close</button></div>
+    <div class="section-head"><div><p class="eyebrow">One-Shot Sherpa</p><h2>Version 0.11.15</h2></div><button class="btn ghost" id="closeAboutModal">Close</button></div>
     <ul style="color:var(--stone);line-height:1.7">
+      <li>Official Summerville Country Club scorecard added for tomorrow’s field test</li>
+      <li>Exact Blue, White, Gold, and Red hole yardages replace generic tee adjustments at Summerville</li>
+      <li>Round and Hole Planner use the club’s official par-71 hole sequence</li>
+      <li>The selected-course panel confirms the chosen tee’s verified total yardage before play</li>
       <li>The iPhone left column now has two balanced areas: Sherpa Caddie logo above and Sage mode display below</li>
       <li>Video no longer stretches Sage into a tall, heavily cropped iPhone portrait</li>
       <li>The same balanced left-column footprint remains in Text, Voice, and Video</li>
@@ -1579,8 +1584,8 @@ body.immersive .mentor-topbar{min-height:342px;height:auto}
 </div>
 <div class="toast" id="toast"></div>
 
-<script src="arteziq-audio.js?v=0124"></script>
-<script src="arteziq-ui.js?v=0124"></script>
+<script src="arteziq-audio.js?v=0125"></script>
+<script src="arteziq-ui.js?v=0125"></script>
 <script>
 (()=>{"use strict";
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
@@ -1625,6 +1630,17 @@ function initArteziqUiKit(){
 
 const CLUBS={"Driver":220,"3 Wood":205,"5 Wood":190,"4 Hybrid":180,"5 Iron":170,"6 Iron":160,"7 Iron":150,"8 Iron":140,"9 Iron":125,"Pitching Wedge":110,"Gap Wedge":95,"Sand Wedge":75,"Lob Wedge":55,"Putter":10};
 const FALLBACK_HOLES=[[4,365],[4,330],[3,155],[5,490],[4,385],[4,350],[3,145],[5,510],[4,375],[4,360],[3,165],[5,500],[4,340],[4,395],[3,150],[5,475],[4,370],[4,355]];
+const KNOWN_COURSES=[{
+ match:/summerville country club/i,
+ label:"Official Summerville Country Club scorecard",
+ pars:[5,3,4,4,4,3,4,4,5,4,5,5,3,4,3,4,3,4],
+ tees:{
+  blue:[445,182,362,306,360,180,365,345,475,411,512,515,175,345,212,315,187,345],
+  white:[425,155,346,250,334,140,324,311,434,400,490,500,154,320,198,252,160,324],
+  gold:[362,135,233,238,303,136,318,302,380,360,431,400,134,316,170,239,147,315],
+  red:[362,135,233,238,303,136,318,302,380,356,431,376,134,306,170,239,147,290]
+ }
+}];
 const KEY={clubs:"sherpa.clubs.041",rounds:"sherpa.rounds.041",current:"sherpa.current.041",bag:"sherpa.bag.090"};
 const SUNDAY_CLUBS=["Driver","4 Hybrid","7 Iron","Pitching Wedge","Sand Wedge","Putter"];
 const state={
@@ -2076,7 +2092,7 @@ async function setSherpaMode(mode){
   showMentorVideo(false);
   const live=mode==="live";$$('.experience-btn').forEach(b=>b.classList.toggle("active",b.dataset.sherpaMode===mode));
   const textShell=$("#textSherpaShell"),liveShell=$("#sherpaLiveShell");if(textShell&&!textShell.dataset.initCollapse){textShell.classList.add("guide-collapsed");textShell.dataset.initCollapse="1";}if(textShell)textShell.classList.toggle("is-hidden",live);if(liveShell)liveShell.classList.toggle("active",live);
-  localStorage.setItem("sherpa.experience.0124",mode);
+  localStorage.setItem("sherpa.experience.0125",mode);
   if(mode==="text"){
     if(aiState.handsFree)setHandsFree(false);
     await disconnectSherpaLive();
@@ -2173,7 +2189,7 @@ if(recentlyCrashedInLive()){
   const cs=$("#companionStatus");if(cs)cs.textContent="Sherpa Live paused after an iPhone browser restart";
 }
 
-/* Sherpa AI v0.11.14 — iPhone-safe Mentor Hands-Free resource isolation */
+/* Sherpa AI v0.11.15 — iPhone-safe Mentor Hands-Free resource isolation */
 const aiState = {
   engine: null,
   webllm: null,
@@ -2831,7 +2847,7 @@ async function hydrateSelectedCourse(){
    state.selectedCourse={...state.selectedCourse,...full,raw:detail};
    if(Number.isFinite(full.lat)&&Number.isFinite(full.lon))state.coords={lat:full.lat,lon:full.lon};
    const loc=full.address||[full.city,full.state].filter(Boolean).join(", ")||"Mapped course";const d=courseDistance(full);
-   $("#selectedCourseLocation").textContent=loc+(d!=null?` • ${d<10?d.toFixed(1):Math.round(d)} mi from you`:"");refreshSherpaLiveContext();
+   $("#selectedCourseLocation").textContent=loc+(d!=null?` • ${d<10?d.toFixed(1):Math.round(d)} mi from you`:"");updateCourseDataNote();refreshSherpaLiveContext();
  }catch(e){console.warn("OpenGolf course detail unavailable",e)}
 }
 function selectCourse(c,load=true){
@@ -2839,6 +2855,7 @@ function selectCourse(c,load=true){
  $("#selectedCourseName").textContent=c.name;
  const d=courseDistance(c),loc=c.address||[c.city,c.state].filter(Boolean).join(", ")||"Verified mapped course";
  $("#selectedCourseLocation").textContent=loc+(d!=null?` • ${d<10?d.toFixed(1):Math.round(d)} mi from you`:"");
+ updateCourseDataNote();
  if(state.coords&&load)loadWeather();else if(!state.coords)$("#weatherNote").textContent="No verified course coordinates are available yet.";
  hydrateSelectedCourse();refreshSherpaLiveContext();
  requestAnimationFrame(()=>{
@@ -2856,7 +2873,18 @@ $("#refreshWeatherBtn").onclick=loadWeather;
 /* Course planning map — upgraded Hole Planner */
 function clamp(n,min,max){return Math.max(min,Math.min(max,n))}
 function yardsFromMeters(m){return Math.round((Number(m)||0)*1.09361)}
-function holeDataList(){return extractHoles(state.selectedCourse) || FALLBACK_HOLES.map(([par,yards],i)=>({n:i+1,par,yards}))}
+function knownCourseProfile(course=state.selectedCourse){const name=String(course?.name||"");return KNOWN_COURSES.find(p=>p.match.test(name))||null}
+function knownCourseHoles(course=state.selectedCourse,tee=$("#teeChoice")?.value||"white"){
+ const profile=knownCourseProfile(course),yards=profile?.tees?.[tee];
+ return profile&&Array.isArray(yards)?profile.pars.map((par,i)=>({n:i+1,par,yards:yards[i]})):null
+}
+function updateCourseDataNote(){
+ const el=$("#courseDataNote");if(!el)return;
+ const profile=knownCourseProfile(),tee=$("#teeChoice")?.value||"white",yards=profile?.tees?.[tee];
+ el.textContent=profile&&yards?`✓ Verified scorecard • ${tee[0].toUpperCase()+tee.slice(1)} tees ${yards.reduce((a,b)=>a+b,0).toLocaleString()} yards • Par ${profile.pars.reduce((a,b)=>a+b,0)}`:"Course hole data will use the best available map source; verify the scorecard before play.";
+}
+$("#teeChoice")?.addEventListener("change",()=>{updateCourseDataNote();if(state.map)updateHolePlanner()});
+function holeDataList(){return knownCourseHoles() || extractHoles(state.selectedCourse) || FALLBACK_HOLES.map(([par,yards],i)=>({n:i+1,par,yards}))}
 function holeScoreData(n){return holeDataList()[n-1] || {n,par:4,yards:360}}
 function greenTargets(total){const depth=clamp(Math.round(total*0.028),8,16);return {front:Math.max(35,total-Math.round(depth/2)),center:total,back:total+Math.ceil(depth/2)}}
 function flattenedLatLngs(input){let arr=input;while(Array.isArray(arr)&&arr.length&&Array.isArray(arr[0]))arr=arr[0];return Array.isArray(arr)?arr.map(p=>({lat:Number(p.lat),lng:Number(p.lng??p.lon)})).filter(p=>Number.isFinite(p.lat)&&Number.isFinite(p.lng)):[]}
@@ -2916,8 +2944,8 @@ function extractHoles(course){
 }
 $("#startRoundBtn").onclick=()=>{
  if(!state.selectedCourse){toast("Choose or type a course first");return}
- const adj=teeAdj(), apiHoles=extractHoles(state.selectedCourse);
- const holes=(apiHoles??FALLBACK_HOLES.map(([par,yards],i)=>({par,yards,n:i+1}))).map((h,i)=>({n:i+1,par:h.par,yards:Math.max(70,h.yards+adj),remaining:Math.max(70,h.yards+adj),strokes:0,finished:false,shots:[]}));
+ const verifiedHoles=knownCourseHoles(state.selectedCourse,$("#teeChoice").value),apiHoles=extractHoles(state.selectedCourse),adj=verifiedHoles?0:teeAdj();
+ const holes=(verifiedHoles??apiHoles??FALLBACK_HOLES.map(([par,yards],i)=>({par,yards,n:i+1}))).map((h,i)=>({n:i+1,par:h.par,yards:Math.max(70,h.yards+adj),remaining:Math.max(70,h.yards+adj),strokes:0,finished:false,shots:[]}));
  state.round={course:state.selectedCourse.name,tee:$("#teeChoice").value,goal:$("#roundGoal").value,wind:windType(),started:new Date().toISOString(),holeIndex:0,totalStrokes:0,holes};
  state.selectedClub=null;state.direction="center";save();showRoundMode();window.UIKIT?.applyFSLock?.();toast("Round started")
 };
@@ -2975,7 +3003,7 @@ $("#importBtn").onclick=()=>$("#importFile").click();$("#importFile").onchange=a
 function hideSplash(){const el=$("#splashScreen");if(!el||el.classList.contains("is-hidden"))return;el.classList.add("is-hidden");setTimeout(()=>el.remove(),800);setTimeout(()=>window.UIKIT?.applyFSLock?.(),850)}
 window.addEventListener("load",()=>setTimeout(hideSplash,5000));
 setTimeout(hideSplash,5600);
-if("serviceWorker"in navigator)window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js?v=0124").catch(()=>{}));
+if("serviceWorker"in navigator)window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js?v=0125").catch(()=>{}));
 initArteziqUiKit();
 renderClubs();
 renderRounds();
