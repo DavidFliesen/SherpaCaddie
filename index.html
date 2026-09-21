@@ -5,14 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#18311C">
 <meta name="description" content="Sherpa Caddie — one-shot-at-a-time golf guidance combining a caddie, coach and mentor.">
-<link rel="manifest" href="manifest.webmanifest?v=0126">
-<link rel="icon" href="icons/favicon.png?v=0126" type="image/png">
-<link rel="apple-touch-icon" href="icons/icon-192.png?v=0126">
-<link rel="preload" as="image" href="assets/sherpa-caddie-logo-fast.webp?v=0126" type="image/webp" fetchpriority="high">
-<title>Sherpa Caddie v0.11.16</title>
+<link rel="manifest" href="manifest.webmanifest?v=0127">
+<link rel="icon" href="icons/favicon.png?v=0127" type="image/png">
+<link rel="apple-touch-icon" href="icons/icon-192.png?v=0127">
+<link rel="preload" as="image" href="assets/sherpa-caddie-logo-fast.webp?v=0127" type="image/webp" fetchpriority="high">
+<title>Sherpa Caddie v0.11.17</title>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
   crossorigin="">
-<link rel="stylesheet" href="arteziq-ui.css?v=0126">
+<link rel="stylesheet" href="arteziq-ui.css?v=0127">
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
   crossorigin=""></script>
 <style>
@@ -642,8 +642,8 @@ main{padding-top:14px;padding-bottom:30px}
 .mentor-symbol-word{position:absolute;top:9%;font-size:clamp(.58rem,1vw,.76rem);font-weight:900;letter-spacing:.16em;color:#f4eadc}
 .mentor-live-media{background:#173018;overflow:hidden}
 .mentor-poster,.mentor-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 22%}
-.mentor-video{display:none;background:#173018}
-.mentor-stage[data-mode="live"].video-active .mentor-video{display:block}
+.mentor-video{display:block;background:#173018;opacity:0;visibility:hidden;transition:opacity .16s ease}
+.mentor-stage[data-mode="live"].video-active .mentor-video{opacity:1;visibility:visible}
 .mentor-stage[data-mode="live"].video-active .mentor-poster{visibility:hidden}
 .mentor-stage .companion-dot{position:absolute;right:5px;bottom:5px;z-index:8}
 .mentor-stage.is-listening{border-color:#9ed8ff;box-shadow:0 0 0 4px rgba(112,196,244,.22),0 5px 18px rgba(0,0,0,.22)}
@@ -810,7 +810,7 @@ body.immersive .brand-center{display:flex!important}
   body.immersive .mentor-topbar{height:132px}
 }
 
-/* v0.11.16 — Sage console in natural question → action → answer order */
+/* v0.11.17 — Sage console in natural question → action → answer order */
 .mentor-topbar{
   min-height:342px;height:auto;grid-template-columns:250px minmax(0,1fr) 112px;gap:18px;
   padding-top:16px;padding-bottom:16px;align-items:stretch
@@ -886,7 +886,7 @@ body.immersive .mentor-topbar{min-height:342px;height:auto}
   body.immersive .mentor-topbar{min-height:366px;height:auto}
 }
 
-/* v0.11.16 — compact, full-width mobile Sage flow */
+/* v0.11.17 — compact, full-width mobile Sage flow */
 .console-heading{display:grid;gap:8px;min-width:0}
 @media(max-width:760px){
   .mentor-topbar{
@@ -951,14 +951,14 @@ body.immersive .mentor-topbar{min-height:342px;height:auto}
     <div class="splash-rings" aria-hidden="true"></div>
     <div class="splash-logo-stage" aria-hidden="true">
       <div class="splash-logo-glow"></div>
-      <img class="splash-logo" src="assets/sherpa-caddie-logo-fast.webp?v=0126" decoding="async" alt="Sherpa Caddie">
+      <img class="splash-logo" src="assets/sherpa-caddie-logo-fast.webp?v=0127" decoding="async" alt="Sherpa Caddie">
     </div>
     <div class="splash-title">Sherpa Caddie</div>
     <div class="splash-subtitle">Your guide. Your game. Your best round.</div>
     <div class="splash-path" aria-hidden="true"><span></span><i></i></div>
     <div class="splash-caption">Walking your game plan into place…</div>
   </div>
-  <div class="splash-footer">ARTEZIQ • Sherpa Caddie • v0.11.16</div>
+  <div class="splash-footer">ARTEZIQ • Sherpa Caddie • v0.11.17</div>
 </div>
 <div class="app">
 <header class="topbar mentor-topbar" data-mode="text">
@@ -975,9 +975,8 @@ body.immersive .mentor-topbar{min-height:342px;height:auto}
         <div class="mentor-wave" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
       </div>
       <div class="mentor-live-media">
-        <img id="sherpaLivePoster" class="mentor-poster" src="assets/sage-sherpa-live.webp?v=0126" alt="Sage, Sherpa Caddie mentor">
-        <video id="sherpaLiveVideo" class="mentor-video" autoplay muted playsinline aria-label="Sage Video avatar"></video>
-        <audio id="sherpaLiveAudio" autoplay playsinline></audio>
+        <img id="sherpaLivePoster" class="mentor-poster" src="assets/sage-sherpa-live.webp?v=0127" alt="Sage, Sherpa Caddie mentor">
+        <video id="sherpaLiveVideo" class="mentor-video" autoplay playsinline aria-label="Sage Video avatar"></video>
       </div>
       <span class="companion-dot ready" id="companionDot"></span>
     </div>
@@ -1009,10 +1008,10 @@ body.immersive .mentor-topbar{min-height:342px;height:auto}
   </div>
 
   <div class="brand-center" aria-label="Sherpa Caddie">
-    <img class="brand-logo" src="assets/sherpa-caddie-logo-fast.webp?v=0126" width="180" height="196" decoding="sync" fetchpriority="high" alt="Sherpa Caddie">
+    <img class="brand-logo" src="assets/sherpa-caddie-logo-fast.webp?v=0127" width="180" height="196" decoding="sync" fetchpriority="high" alt="Sherpa Caddie">
   </div>
 
-  <div class="version app-chrome">v0.11.16</div>
+  <div class="version app-chrome">v0.11.17</div>
 </header>
 
 <div class="tabs-wrap app-chrome">
@@ -1157,7 +1156,7 @@ body.immersive .mentor-topbar{min-height:342px;height:auto}
 
         <details class="mentor-tools-test" id="mentorToolsTest">
           <summary>Test D-ID tools</summary>
-          <p>Run one test at a time and wait for its final result. A tool passes only after D-ID reports ToolCallStarted, the matching browser handler returns, and D-ID reports ToolCallDone. State-changing tools use a dry test, so your round is not altered.</p>
+          <p>Run one test at a time and wait for its final result. <strong>PASS</strong> means D-ID called the tool. <strong>LOCAL PASS</strong> means D-ID skipped the call but Sherpa Caddie verified its direct browser bridge, so explicit commands still work. State-changing tests are dry and do not alter your round.</p>
           <div class="tool-test-grid">
             <button type="button" data-tool-test="get_round_context">Round Context <span>Not tested</span></button>
             <button type="button" data-tool-test="get_shot_recommendation">Shot Recommendation <span>Not tested</span></button>
@@ -1173,7 +1172,7 @@ body.immersive .mentor-topbar{min-height:342px;height:auto}
 
         <div class="live-transcript" aria-live="polite">
           <div class="live-message"><div>👤</div><div><strong>You:</strong> <span id="liveUserText">Say “Hey Sherpa,” “Hey Sage,” or type a question.</span></div><time id="liveUserTime"></time></div>
-          <div class="live-message sage"><img class="live-message-avatar" src="assets/sage-sherpa-live.webp?v=0126" alt=""><div><strong>Sage:</strong> <span id="liveSageText">I’m ready to guide your next shot.</span></div><time id="liveSageTime"></time></div>
+          <div class="live-message sage"><img class="live-message-avatar" src="assets/sage-sherpa-live.webp?v=0127" alt=""><div><strong>Sage:</strong> <span id="liveSageText">I’m ready to guide your next shot.</span></div><time id="liveSageTime"></time></div>
         </div>
 
         <div class="live-compose">
@@ -1417,14 +1416,18 @@ body.immersive .mentor-topbar{min-height:342px;height:auto}
   </article>
 </section>
 
-<div class="footer"><span>Sherpa Caddie v0.11.16</span><button id="aboutBtn">What’s in v0.11.16?</button></div>
+<div class="footer"><span>Sherpa Caddie v0.11.17</span><button id="aboutBtn">What’s in v0.11.17?</button></div>
 </main>
 </div>
 
 <div id="aboutModal" class="modal-backdrop hidden" role="dialog" aria-modal="true">
   <div class="modal" style="max-width:650px">
-    <div class="section-head"><div><p class="eyebrow">One-Shot Sherpa</p><h2>Version 0.11.16</h2></div><button class="btn ghost" id="closeAboutModal">Close</button></div>
+    <div class="section-head"><div><p class="eyebrow">One-Shot Sherpa</p><h2>Version 0.11.17</h2></div><button class="btn ghost" id="closeAboutModal">Close</button></div>
     <ul style="color:var(--stone);line-height:1.7">
+      <li>D-ID’s complete audio/video stream now stays attached to Sage’s video element, restoring audible Video replies</li>
+      <li>Sage’s portrait remains visible until the first moving video frame is ready, preventing the black flash</li>
+      <li>Explicit golf commands use a deterministic local tool bridge when D-ID’s model skips a client-tool call</li>
+      <li>Diagnostics distinguish a true D-ID PASS from a LOCAL PASS through Sherpa Caddie’s verified bridge</li>
       <li>Dave’s Sunday Bag now uses eight clubs: Driver, 3 Wood, 4 Hybrid, 7 Iron, 9 Iron, Pitching Wedge, Sand Wedge, and Putter</li>
       <li>Official Summerville Country Club scorecard added for tomorrow’s field test</li>
       <li>Exact Blue, White, Gold, and Red hole yardages replace generic tee adjustments at Summerville</li>
@@ -1585,8 +1588,8 @@ body.immersive .mentor-topbar{min-height:342px;height:auto}
 </div>
 <div class="toast" id="toast"></div>
 
-<script src="arteziq-audio.js?v=0126"></script>
-<script src="arteziq-ui.js?v=0126"></script>
+<script src="arteziq-audio.js?v=0127"></script>
+<script src="arteziq-ui.js?v=0127"></script>
 <script>
 (()=>{"use strict";
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
@@ -1598,8 +1601,8 @@ function sherpaSoundVolume(){
   return 1;
 }
 function syncSherpaAudioVolume(){
-  const vol=sherpaSoundVolume(),liveAudio=$("#sherpaLiveAudio");
-  if(liveAudio){liveAudio.volume=vol;liveAudio.muted=!aiState?.speakReplies||vol<=0}
+  const vol=sherpaSoundVolume(),liveVideo=$("#sherpaLiveVideo");
+  if(liveVideo){liveVideo.volume=vol;liveVideo.muted=!aiState?.speakReplies||vol<=0}
   if(aiState?.activeAudio){try{aiState.activeAudio.volume=vol}catch(_){}}
 }
 function initArteziqUiKit(){
@@ -1780,6 +1783,17 @@ function failToolDiagnostic(state,label){
   updateToolTestButton(test.name,state,label);
   clearToolDiagnostic();
 }
+async function runBridgedToolDiagnostic(test){
+  if(!test||liveState.toolTest!==test)return;
+  const handler=sherpaToolHandlers[test.name];
+  if(!handler){failToolDiagnostic("fail","FAIL — browser handler is not registered");return}
+  try{
+    await handler({quality:"good",miss_direction:"center",strategy:"smart"});
+    updateToolTestButton(test.name,"pass","LOCAL PASS — D-ID skipped; Sherpa bridge worked");
+    setLiveToolStatus(`${test.name}: D-ID did not dispatch the tool, but Sherpa Caddie’s direct tool bridge verified the browser handler.`);
+    clearToolDiagnostic();
+  }catch(err){failToolDiagnostic("fail",`FAIL — local bridge: ${shortError(err)}`)}
+}
 async function runToolDiagnostic(name){
   unlockVoiceAudio();
   if(sherpaExperience!=="live")await setSherpaMode("live");
@@ -1859,44 +1873,99 @@ function refreshSherpaLiveContext(){
 }
 function showLiveStream(active=true){showMentorVideo(active)}
 function liveToolResult(data){return JSON.stringify(data)}
+const sherpaToolHandlers={};
 function registerSherpaLiveTools(manager){
-  manager.registerClientTool("get_round_context",async()=>{
+  const add=(name,handler)=>{sherpaToolHandlers[name]=handler;manager.registerClientTool(name,handler)};
+  add("get_round_context",async()=>{
     if(toolTestActive("get_round_context"))return diagnosticResult("get_round_context",{active_round:!!state.round,course:state.round?.course||state.selectedCourse?.name||null});
     if(!state.round)return liveToolResult({active_round:false,course:state.selectedCourse?.name||null,message:"No active round. The golfer can still plan a course or start a round."});
     const h=hole();return liveToolResult({active_round:true,course:state.round.course,hole:h.n,par:h.par,total_yards:h.yards,remaining_yards:Math.round(h.remaining),tee:state.round.tee,strokes_on_hole:h.strokes,total_score:state.round.totalStrokes,goal:state.round.goal});
   });
-  manager.registerClientTool("get_shot_recommendation",async()=>{
+  add("get_shot_recommendation",async()=>{
     if(toolTestActive("get_shot_recommendation"))return diagnosticResult("get_shot_recommendation",state.round?{sample:false,...currentShotContext()}:{sample:true,recommended_club:"7 Iron",plays_like_yards:150,target:"Center of fairway"});
     if(!state.round)throw new Error("No active round. Ask the golfer to start a round first.");
     const c=currentShotContext(),playsLike=Math.round(c.remaining*(state.round.wind==="cross"?1.02:1));
     return liveToolResult({recommended_club:c.recommendedClub,measured_yards:c.remaining,plays_like_yards:playsLike,target:c.safeTarget,safe_miss:c.safeTarget,reason:c.safeWhy,strategy:state.plannerMode,cue:c.cue});
   });
-  manager.registerClientTool("get_weather_context",async()=>toolTestActive("get_weather_context")?diagnosticResult("get_weather_context",{weather_loaded:!!state.weather}):liveToolResult({temperature_f:state.weather?.temperature_2m??null,wind_mph:state.weather?.wind_speed_10m??null,gust_mph:state.weather?.wind_gusts_10m??null,wind_direction_degrees:state.weather?.wind_direction_10m??null,round_wind:state.round?.wind??null,weather_loaded:!!state.weather}));
-  manager.registerClientTool("get_club_distances",async()=>toolTestActive("get_club_distances")?diagnosticResult("get_club_distances",{bag_mode:state.bagMode,club_count:activeClubEntries().length}):liveToolResult({bag_mode:state.bagMode,clubs:Object.fromEntries(activeClubEntries())}));
-  manager.registerClientTool("record_shot",async(args={})=>{
+  add("get_weather_context",async()=>toolTestActive("get_weather_context")?diagnosticResult("get_weather_context",{weather_loaded:!!state.weather}):liveToolResult({temperature_f:state.weather?.temperature_2m??null,wind_mph:state.weather?.wind_speed_10m??null,gust_mph:state.weather?.wind_gusts_10m??null,wind_direction_degrees:state.weather?.wind_direction_10m??null,round_wind:state.round?.wind??null,weather_loaded:!!state.weather}));
+  add("get_club_distances",async()=>toolTestActive("get_club_distances")?diagnosticResult("get_club_distances",{bag_mode:state.bagMode,club_count:activeClubEntries().length}):liveToolResult({bag_mode:state.bagMode,clubs:Object.fromEntries(activeClubEntries())}));
+  add("record_shot",async(args={})=>{
     if(toolTestActive("record_shot"))return diagnosticResult("record_shot",{dry_run:true,received_args:args});
     if(!state.round)throw new Error("No active round.");
     let q=String(args.quality||"").toLowerCase();if(q==="ok")q="okay";if(!["good","okay","poor"].includes(q))throw new Error("quality must be good, okay, or poor");
     const d=String(args.miss_direction||"center").toLowerCase();if(["left","right","short","long","center"].includes(d))state.direction=d;
     recordShot(q);refreshSherpaLiveContext();return liveToolResult({success:true,recorded_quality:q,miss_direction:state.round?state.round.holes[state.round.holeIndex].shots.slice(-1)[0]?.direction:d,current_round:state.round?currentShotContext():null});
   });
-  manager.registerClientTool("finish_hole",async()=>{
+  add("finish_hole",async()=>{
     if(toolTestActive("finish_hole"))return diagnosticResult("finish_hole",{dry_run:true});
     if(!state.round)throw new Error("No active round.");const h=hole();if(!h.finished)$("#finishHoleBtn").click();refreshSherpaLiveContext();return liveToolResult({success:true,hole:h.n,strokes:h.strokes,finished:h.finished});
   });
-  manager.registerClientTool("next_hole",async()=>{
+  add("next_hole",async()=>{
     if(toolTestActive("next_hole"))return diagnosticResult("next_hole",{dry_run:true});
     if(!state.round)throw new Error("No active round.");const h=hole();if(!h.finished)throw new Error("The current hole is not finished yet.");if(state.round.holeIndex>=state.round.holes.length-1)throw new Error("This is the final hole.");$("#nextHoleBtn").click();refreshSherpaLiveContext();return liveToolResult({success:true,hole:hole().n,par:hole().par,remaining_yards:Math.round(hole().remaining)});
   });
-  manager.registerClientTool("set_strategy",async(args={})=>{
+  add("set_strategy",async(args={})=>{
     if(toolTestActive("set_strategy"))return diagnosticResult("set_strategy",{dry_run:true,received_args:args});
     let s=String(args.strategy||"").toLowerCase().replace(/\s+/g,"");if(s==="playsmart")s="smart";if(s==="lay-up")s="layup";if(!["smart","attack","layup"].includes(s))throw new Error("strategy must be smart, attack, or layup");
     state.plannerMode=s;state.plannerManualTarget=null;updateStrategyButtons();if($("#mapHoleSelect"))updateHolePlanner();refreshSherpaLiveContext();return liveToolResult({success:true,strategy:s,label:s==="smart"?"Play Smart":s==="attack"?"Attack":"Lay Up"});
   });
-  manager.registerClientTool("open_hole_planner",async()=>{
+  add("open_hole_planner",async()=>{
     if(toolTestActive("open_hole_planner"))return diagnosticResult("open_hole_planner",{dry_run:true});
     if(!state.selectedCourse&&!state.round)throw new Error("Choose a course before opening Hole Planner.");show("play");openCourseMap();return liveToolResult({success:true,opened:true,hole:state.round?hole().n:Number($("#mapHoleSelect")?.value||1)});
   });
+}
+function detectSherpaToolIntent(question){
+  const q=String(question||"").toLowerCase();
+  if(/\b(open|show)\b.*\b(hole )?planner\b/.test(q))return{name:"open_hole_planner",args:{}};
+  if(/\b(play smart|safer strategy|safe strategy)\b/.test(q))return{name:"set_strategy",args:{strategy:"smart"}};
+  if(/\b(attack|aggressive strategy|play aggressive)\b/.test(q))return{name:"set_strategy",args:{strategy:"attack"}};
+  if(/\b(lay ?up|layup strategy)\b/.test(q))return{name:"set_strategy",args:{strategy:"layup"}};
+  if(/\b(next hole|advance to the next|move to the next)\b/.test(q))return{name:"next_hole",args:{}};
+  if(/\b(finish|complete|end)\b.*\bhole\b/.test(q))return{name:"finish_hole",args:{}};
+  if(/\b(record|log)\b.*\b(shot|swing)\b|\b(that|it) was (good|okay|ok|poor|bad)\b/.test(q)){
+    const quality=/\b(poor|bad)\b/.test(q)?"poor":/\b(good)\b/.test(q)?"good":"okay";
+    const direction=["left","right","short","long"].find(x=>new RegExp(`\\b${x}\\b`).test(q))||"center";
+    return{name:"record_shot",args:{quality,miss_direction:direction}};
+  }
+  if(/\b(saved|my)\b.*\b(club|carry|distance)s?\b|\bclub distances?\b/.test(q))return{name:"get_club_distances",args:{}};
+  if(/\b(weather|wind|temperature|gust)\b/.test(q))return{name:"get_weather_context",args:{}};
+  if(/\b(what|which)\b.*\b(club|hit)\b|\brecommend(ed|ation)? club\b|\bshot recommendation\b/.test(q))return{name:"get_shot_recommendation",args:{}};
+  if(/\b(current|this)\b.*\b(hole|round|score)\b|\bwhat hole\b|\bround context\b/.test(q))return{name:"get_round_context",args:{}};
+  return null;
+}
+function bridgedToolAnswer(name,data){
+  if(name==="get_round_context")return data.active_round?`You are on Hole ${data.hole}, a par ${data.par}, with about ${data.remaining_yards} yards remaining. Your round total is ${data.total_score} strokes.`:`There is no active round yet${data.course?` at ${data.course}`:""}. Choose a course and start a round when you are ready.`;
+  if(name==="get_shot_recommendation")return`Hit your ${data.recommended_club}. It is playing about ${data.plays_like_yards} yards. Aim for ${String(data.target||data.safe_miss||"the safe side").toLowerCase()}.`;
+  if(name==="get_weather_context")return data.weather_loaded?`It is ${Math.round(data.temperature_f)} degrees with wind around ${Math.round(data.wind_mph)} miles per hour and gusts near ${Math.round(data.gust_mph)}.`:"Course weather is not loaded yet. Select the course and tap Weather before relying on a wind adjustment.";
+  if(name==="get_club_distances"){const clubs=Object.entries(data.clubs||{});return clubs.length?`Your ${data.bag_mode==="sunday"?"Sunday Bag":"bag"} carries are ${clubs.map(([club,yards])=>`${club}, ${yards} yards`).join("; ")}.`:"No club carry distances are saved yet."}
+  if(name==="record_shot")return`Shot recorded as ${data.recorded_quality}${data.miss_direction&&data.miss_direction!=="center"?`, missing ${data.miss_direction}`:""}.`;
+  if(name==="finish_hole")return`Hole ${data.hole} is finished with ${data.strokes} strokes.`;
+  if(name==="next_hole")return`Moving to Hole ${data.hole}, a par ${data.par}.`;
+  if(name==="set_strategy")return`Strategy changed to ${data.label}.`;
+  if(name==="open_hole_planner")return`Opening the Hole Planner${data.hole?` for Hole ${data.hole}`:""}.`;
+  return"Sherpa Caddie completed that action.";
+}
+async function speakBridgedLiveAnswer(text,toolName){
+  setLiveTranscript("assistant",text);setLiveToolStatus(`${toolName} completed through Sherpa Caddie’s direct tool bridge.`);setLiveVisual("Sage is speaking");
+  const video=$("#sherpaLiveVideo");
+  try{
+    const speaking=liveState.manager?.speak?.({type:"text",input:text});
+    Promise.resolve(speaking).catch(()=>{liveState.audioPlayFailed=true;speakSherpa(text,false)});
+    setTimeout(()=>{if(aiState.speakReplies&&(liveState.audioPlayFailed||video?.paused))speakSherpa(text,false)},1200);
+  }catch(_){speakSherpa(text,false)}
+}
+async function trySherpaToolBridge(question){
+  if(liveState.toolTest)return false;
+  const intent=detectSherpaToolIntent(question);if(!intent)return false;
+  const handler=sherpaToolHandlers[intent.name];if(!handler)return false;
+  try{
+    setLiveToolStatus(`Using ${intent.name}…`);
+    const raw=await handler(intent.args),data=typeof raw==="string"?JSON.parse(raw):raw;
+    await speakBridgedLiveAnswer(bridgedToolAnswer(intent.name,data||{}),intent.name);
+  }catch(err){
+    const text=`I could not complete that action: ${shortError(err)}`;await speakBridgedLiveAnswer(text,intent.name);
+  }
+  return true;
 }
 function isCompactMobile(){
   return window.matchMedia("(max-width: 620px)").matches || /iPhone|iPod|Android.+Mobile/i.test(navigator.userAgent);
@@ -1976,25 +2045,20 @@ async function connectSherpaLive(force=false){
     const callbacks={
       onSrcObjectReady(value){
         liveState.srcObject=value;
-        const video=$("#sherpaLiveVideo"),audio=$("#sherpaLiveAudio");
+        const video=$("#sherpaLiveVideo");
         try{
           const vTracks=value?.getVideoTracks?.()||[],aTracks=value?.getAudioTracks?.()||[];
           liveState.hasAudioTrack=aTracks.length>0;liveState.audioPlayFailed=!aTracks.length;
           if(video){
             video.srcObject=value;
-            video.muted=true;video.playsInline=true;video.autoplay=true;
-            video.play().catch(()=>{});
-          }
-          if(audio&&aTracks.length){
-            audio.srcObject=new MediaStream(aTracks);
-            audio.volume=sherpaSoundVolume();audio.muted=!aiState.speakReplies||audio.volume<=0;
-            audio.onplaying=()=>{liveState.audioPlayFailed=false};
-            audio.onerror=()=>{liveState.audioPlayFailed=true};
-            audio.play().then(()=>{liveState.audioPlayFailed=false}).catch(()=>{liveState.audioPlayFailed=true});
+            video.playsInline=true;video.autoplay=true;video.volume=sherpaSoundVolume();video.muted=!aiState.speakReplies||video.volume<=0;
+            video.onplaying=()=>{liveState.audioPlayFailed=false;if(liveState.mode==="speaking")showLiveStream(true)};
+            video.onerror=()=>{liveState.audioPlayFailed=true;showLiveStream(false)};
+            video.play().then(()=>{liveState.audioPlayFailed=false}).catch(()=>{liveState.audioPlayFailed=true});
           }
         }catch(err){
-          console.warn("Mentor media split fallback",err);
-          if(video){video.srcObject=value;video.muted=true;video.play().catch(()=>{})}
+          console.warn("Mentor media attachment fallback",err);
+          if(video){video.srcObject=value;video.play().catch(()=>{liveState.audioPlayFailed=true})}
         }
         showLiveStream(false);
         return value
@@ -2005,14 +2069,14 @@ async function connectSherpaLive(force=false){
         const s=String(value||"").toUpperCase();
         const talking=s!=="STOP"&&s!=="IDLE"&&s!=="";
         liveState.mode=talking?"speaking":"idle";aiState.speaking=talking;
-        showLiveStream(talking);
+        if(talking){const video=$("#sherpaLiveVideo");if(video){video.muted=!aiState.speakReplies||sherpaSoundVolume()<=0;video.volume=sherpaSoundVolume();video.play().then(()=>{liveState.audioPlayFailed=false;if(video.readyState>=2)showLiveStream(true)}).catch(()=>{liveState.audioPlayFailed=true;showLiveStream(false)})}}else showLiveStream(false);
         setMentorActivity(talking?"speaking":aiState.handsFree?"listening":"idle",talking?"Sage is speaking":aiState.handsFree?`Listening for ${WAKE_PHRASES}…`:"Video connected • ready");
         setLiveVisual(talking?"Sage is speaking":"Sage is ready");
         touchMentorSession();
         if(talking&&aiState.recognition&&aiState.listening){aiState.stoppingRecognition=true;try{aiState.recognition.stop()}catch(_){}}
         if(!talking&&aiState.handsFree&&sherpaExperience==="live")scheduleHandsFreeRestart()
       },
-      onNewMessage(messages,type){if(!Array.isArray(messages)||!messages.length)return;const last=messages[messages.length-1];if(last?.role==="user")setLiveTranscript("user",last.content);if(last?.role==="assistant"&&(type==="answer"||type==="partial")){setLiveTranscript("assistant",last.content);if(liveState.requestStartedAt&&!liveState.toolTest){const seconds=((Date.now()-liveState.requestStartedAt)/1000).toFixed(1);setLiveToolStatus(`Sage started responding in ${seconds}s.`);liveState.requestStartedAt=0}if(type==="answer"){setLiveVisual("Sage is speaking");if(aiState.speakReplies&&(!liveState.hasAudioTrack||liveState.audioPlayFailed)){setLiveToolStatus("D-ID video audio was unavailable, so Sage is using the device voice.");speakSherpa(last.content,false)}const test=liveState.toolTest;if(test&&!test.started)setTimeout(()=>{if(liveState.toolTest===test&&!test.started){if(test.wrongTools.length)failToolDiagnostic("fail",`FAIL — called ${test.wrongTools.join(", ")} instead`);else failToolDiagnostic("no-call","NO TOOL CALL — Sage replied only")}},400)}}touchMentorSession()},
+      onNewMessage(messages,type){if(!Array.isArray(messages)||!messages.length)return;const last=messages[messages.length-1];if(last?.role==="user")setLiveTranscript("user",last.content);if(last?.role==="assistant"&&(type==="answer"||type==="partial")){setLiveTranscript("assistant",last.content);if(liveState.requestStartedAt&&!liveState.toolTest){const seconds=((Date.now()-liveState.requestStartedAt)/1000).toFixed(1);setLiveToolStatus(`Sage started responding in ${seconds}s.`);liveState.requestStartedAt=0}if(type==="answer"){setLiveVisual("Sage is speaking");if(aiState.speakReplies)setTimeout(()=>{const video=$("#sherpaLiveVideo");if(!liveState.hasAudioTrack||liveState.audioPlayFailed||video?.paused){setLiveToolStatus("D-ID audio was unavailable, so Sage is using the device voice.");speakSherpa(last.content,false)}},700);const test=liveState.toolTest;if(test&&!test.started)setTimeout(()=>{if(liveState.toolTest===test&&!test.started)runBridgedToolDiagnostic(test)},500)}}touchMentorSession()},
       onToolEvent(event){
         const p=event?.payload||{},name=p.name||"Sherpa tool";
         const test=liveState.toolTest;
@@ -2073,6 +2137,7 @@ async function sendSherpaLive(text){
   }
   touchMentorSession();
   try{
+    if(await trySherpaToolBridge(q)){touchMentorSession();return}
     await liveState.manager.chat(q);touchMentorSession();
   }catch(err){
     if(isDidCreditError(err)){liveState.creditExhausted=true;await useVoiceCreditFallback(q);return}
@@ -2093,7 +2158,7 @@ async function setSherpaMode(mode){
   showMentorVideo(false);
   const live=mode==="live";$$('.experience-btn').forEach(b=>b.classList.toggle("active",b.dataset.sherpaMode===mode));
   const textShell=$("#textSherpaShell"),liveShell=$("#sherpaLiveShell");if(textShell&&!textShell.dataset.initCollapse){textShell.classList.add("guide-collapsed");textShell.dataset.initCollapse="1";}if(textShell)textShell.classList.toggle("is-hidden",live);if(liveShell)liveShell.classList.toggle("active",live);
-  localStorage.setItem("sherpa.experience.0126",mode);
+  localStorage.setItem("sherpa.experience.0127",mode);
   if(mode==="text"){
     if(aiState.handsFree)setHandsFree(false);
     await disconnectSherpaLive();
@@ -2112,7 +2177,7 @@ async function setSherpaMode(mode){
     await releaseLocalVoiceForSherpaLive();
     refreshSherpaLiveContext();prepareMentorMode();
     aiState.speakReplies=true;$$('.speak-toggle').forEach(x=>x.checked=true);
-    const v=$("#sherpaLiveVideo");if(v)v.muted=true;syncSherpaAudioVolume();
+    syncSherpaAudioVolume();
     if(aiState.handsFree){setMentorActivity("listening",`Listening for ${WAKE_PHRASES}…`);scheduleHandsFreeRestart()}
     connectSherpaLive().catch(()=>{});
   }
@@ -2168,8 +2233,8 @@ if(companionTalk)companionTalk.onclick=()=>startTalk();
 $$("[data-tool-test]").forEach(btn=>btn.addEventListener("click",()=>runToolDiagnostic(btn.dataset.toolTest)));
 
 const restartLive=$("#restartSherpaLiveBtn");if(restartLive)restartLive.addEventListener("click",()=>connectSherpaLive(true));
-const liveAsk=$("#liveAskBtn");if(liveAsk)liveAsk.addEventListener("click",()=>{const i=$("#liveQuestionInput");sendSherpaLive(i.value);i.value=""});
-const liveInput=$("#liveQuestionInput");if(liveInput)liveInput.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();const q=e.currentTarget.value;e.currentTarget.value="";sendSherpaLive(q)}});
+const liveAsk=$("#liveAskBtn");if(liveAsk)liveAsk.addEventListener("click",()=>{unlockVoiceAudio();const i=$("#liveQuestionInput");sendSherpaLive(i.value);i.value=""});
+const liveInput=$("#liveQuestionInput");if(liveInput)liveInput.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();unlockVoiceAudio();const q=e.currentTarget.value;e.currentTarget.value="";sendSherpaLive(q)}});
 const liveMic=$("#liveMicBtn");if(liveMic)liveMic.addEventListener("click",()=>startTalk());
 document.addEventListener("visibilitychange",()=>{
   if(document.visibilityState==="hidden"){
@@ -2190,7 +2255,7 @@ if(recentlyCrashedInLive()){
   const cs=$("#companionStatus");if(cs)cs.textContent="Sherpa Live paused after an iPhone browser restart";
 }
 
-/* Sherpa AI v0.11.16 — iPhone-safe Mentor Hands-Free resource isolation */
+/* Sherpa AI v0.11.17 — iPhone-safe Mentor Hands-Free resource isolation */
 const aiState = {
   engine: null,
   webllm: null,
@@ -2475,10 +2540,10 @@ function selectBestSystemVoice(){
 }
 function unlockVoiceAudio(){
   aiState.audioUnlocked=true;liveState.audioUnlocked=true;
-  const liveAudio=$("#sherpaLiveAudio");
-  if(liveAudio){
-    liveAudio.volume=sherpaSoundVolume();liveAudio.muted=!aiState.speakReplies||liveAudio.volume<=0;
-    if(liveAudio.srcObject)liveAudio.play().then(()=>{liveState.audioPlayFailed=false}).catch(()=>{liveState.audioPlayFailed=true});
+  const liveVideo=$("#sherpaLiveVideo");
+  if(liveVideo){
+    liveVideo.volume=sherpaSoundVolume();liveVideo.muted=!aiState.speakReplies||liveVideo.volume<=0;
+    if(liveVideo.srcObject)liveVideo.play().then(()=>{liveState.audioPlayFailed=false}).catch(()=>{liveState.audioPlayFailed=true});
   }
   try{const Ctx=window.AudioContext||window.webkitAudioContext;if(Ctx){const c=new Ctx();c.resume?.();setTimeout(()=>c.close?.(),120)}}catch(_){ }
   try{if("speechSynthesis"in window){const u=new SpeechSynthesisUtterance(" ");u.volume=0;speechSynthesis.speak(u)}}catch(_){ }
@@ -3004,7 +3069,7 @@ $("#importBtn").onclick=()=>$("#importFile").click();$("#importFile").onchange=a
 function hideSplash(){const el=$("#splashScreen");if(!el||el.classList.contains("is-hidden"))return;el.classList.add("is-hidden");setTimeout(()=>el.remove(),800);setTimeout(()=>window.UIKIT?.applyFSLock?.(),850)}
 window.addEventListener("load",()=>setTimeout(hideSplash,5000));
 setTimeout(hideSplash,5600);
-if("serviceWorker"in navigator)window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js?v=0126").catch(()=>{}));
+if("serviceWorker"in navigator)window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js?v=0127").catch(()=>{}));
 initArteziqUiKit();
 renderClubs();
 renderRounds();

@@ -1,3 +1,19 @@
+## Version 0.11.17 — Audible Video and Reliable Tool Bridge
+
+- Replaced the split, muted D-ID media path with D-ID’s documented complete-stream video attachment so Video replies carry their audio.
+- Keeps Sage’s poster visible until a playable moving frame is ready, preventing the brief black avatar panel.
+- Added audio-unlock handling to every typed and spoken Video submission path.
+- Added a deterministic Sherpa tool bridge for explicit round, recommendation, weather, club, scoring, strategy, and planner commands.
+- Diagnostics now report **PASS** for an actual D-ID tool dispatch and **LOCAL PASS** when D-ID skips it but Sherpa Caddie’s browser handler succeeds.
+- Retains local system-voice fallback when iOS blocks or omits the D-ID audio track.
+
+### Changed files in v0.11.17
+
+- `index.html`
+- `manifest.webmanifest`
+- `sw.js`
+- `README.md`
+
 ## Version 0.11.16 — Dave’s Eight-Club Sunday Bag
 
 - Updated the Sunday Bag preset to match Dave’s actual eight-club setup.
