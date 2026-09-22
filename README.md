@@ -1,3 +1,18 @@
+## Version 0.11.20 — Responsive Weather Control
+
+- Makes the PLAY weather control visibly respond while current conditions are loading.
+- Renames the control to **Refresh Weather** so its purpose is clear.
+- Adds direct confirmation for successful updates and useful messages for missing course coordinates, offline use, and request failures.
+- Extends the request timeout, validates the returned weather data, and prevents overlapping weather requests.
+- Shows the time of the latest successful weather update.
+
+### Changed files in v0.11.20
+
+- `index.html`
+- `manifest.webmanifest`
+- `sw.js`
+- `README.md`
+
 ## Version 0.11.19 — Clear Shot Assessment and Review Management
 
 - Renames End Round to End Game.

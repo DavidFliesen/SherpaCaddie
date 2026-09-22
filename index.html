@@ -5,14 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#18311C">
 <meta name="description" content="Sherpa Caddie — one-shot-at-a-time golf guidance combining a caddie, coach and mentor.">
-<link rel="manifest" href="manifest.webmanifest?v=0129">
-<link rel="icon" href="icons/favicon.png?v=0129" type="image/png">
-<link rel="apple-touch-icon" href="icons/icon-192.png?v=0129">
-<link rel="preload" as="image" href="assets/sherpa-caddie-logo-fast.webp?v=0129" type="image/webp" fetchpriority="high">
-<title>Sherpa Caddie v0.11.19</title>
+<link rel="manifest" href="manifest.webmanifest?v=0130">
+<link rel="icon" href="icons/favicon.png?v=0130" type="image/png">
+<link rel="apple-touch-icon" href="icons/icon-192.png?v=0130">
+<link rel="preload" as="image" href="assets/sherpa-caddie-logo-fast.webp?v=0130" type="image/webp" fetchpriority="high">
+<title>Sherpa Caddie v0.11.20</title>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
   crossorigin="">
-<link rel="stylesheet" href="arteziq-ui.css?v=0129">
+<link rel="stylesheet" href="arteziq-ui.css?v=0130">
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
   crossorigin=""></script>
 <style>
@@ -834,7 +834,7 @@ body.immersive .brand-center{display:flex!important}
   body.immersive .mentor-topbar{height:132px}
 }
 
-/* v0.11.19 — resilient Video sessions and accessible on-course recording */
+/* v0.11.20 — resilient Video sessions, weather feedback, and accessible on-course recording */
 .mentor-topbar{
   min-height:342px;height:auto;grid-template-columns:250px minmax(0,1fr) 112px;gap:18px;
   padding-top:16px;padding-bottom:16px;align-items:stretch
@@ -910,7 +910,7 @@ body.immersive .mentor-topbar{min-height:342px;height:auto}
   body.immersive .mentor-topbar{min-height:366px;height:auto}
 }
 
-/* v0.11.19 — compact, full-width mobile Sage flow */
+/* v0.11.20 — compact, full-width mobile Sage flow */
 .console-heading{display:grid;gap:8px;min-width:0}
 @media(max-width:760px){
   .mentor-topbar{
@@ -975,14 +975,14 @@ body.immersive .mentor-topbar{min-height:342px;height:auto}
     <div class="splash-rings" aria-hidden="true"></div>
     <div class="splash-logo-stage" aria-hidden="true">
       <div class="splash-logo-glow"></div>
-      <img class="splash-logo" src="assets/sherpa-caddie-logo-fast.webp?v=0129" decoding="async" alt="Sherpa Caddie">
+      <img class="splash-logo" src="assets/sherpa-caddie-logo-fast.webp?v=0130" decoding="async" alt="Sherpa Caddie">
     </div>
     <div class="splash-title">Sherpa Caddie</div>
     <div class="splash-subtitle">Your guide. Your game. Your best round.</div>
     <div class="splash-path" aria-hidden="true"><span></span><i></i></div>
     <div class="splash-caption">Walking your game plan into place…</div>
   </div>
-  <div class="splash-footer">ARTEZIQ • Sherpa Caddie • v0.11.19</div>
+  <div class="splash-footer">ARTEZIQ • Sherpa Caddie • v0.11.20</div>
 </div>
 <div class="app">
 <header class="topbar mentor-topbar" data-mode="text">
@@ -999,7 +999,7 @@ body.immersive .mentor-topbar{min-height:342px;height:auto}
         <div class="mentor-wave" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
       </div>
       <div class="mentor-live-media">
-        <img id="sherpaLivePoster" class="mentor-poster" src="assets/sage-sherpa-live.webp?v=0129" alt="Sage, Sherpa Caddie mentor">
+        <img id="sherpaLivePoster" class="mentor-poster" src="assets/sage-sherpa-live.webp?v=0130" alt="Sage, Sherpa Caddie mentor">
         <video id="sherpaLiveVideo" class="mentor-video" autoplay playsinline aria-label="Sage Video avatar"></video>
       </div>
       <span class="companion-dot ready" id="companionDot"></span>
@@ -1032,10 +1032,10 @@ body.immersive .mentor-topbar{min-height:342px;height:auto}
   </div>
 
   <div class="brand-center" aria-label="Sherpa Caddie">
-    <img class="brand-logo" src="assets/sherpa-caddie-logo-fast.webp?v=0129" width="180" height="196" decoding="sync" fetchpriority="high" alt="Sherpa Caddie">
+    <img class="brand-logo" src="assets/sherpa-caddie-logo-fast.webp?v=0130" width="180" height="196" decoding="sync" fetchpriority="high" alt="Sherpa Caddie">
   </div>
 
-  <div class="version app-chrome">v0.11.19</div>
+  <div class="version app-chrome">v0.11.20</div>
 </header>
 
 <div class="tabs-wrap app-chrome">
@@ -1196,7 +1196,7 @@ body.immersive .mentor-topbar{min-height:342px;height:auto}
 
         <div class="live-transcript" aria-live="polite">
           <div class="live-message"><div>👤</div><div><strong>You:</strong> <span id="liveUserText">Say “Hey Sherpa,” “Hey Sage,” or type a question.</span></div><time id="liveUserTime"></time></div>
-          <div class="live-message sage"><img class="live-message-avatar" src="assets/sage-sherpa-live.webp?v=0129" alt=""><div><strong>Sage:</strong> <span id="liveSageText">I’m ready to guide your next shot.</span></div><time id="liveSageTime"></time></div>
+          <div class="live-message sage"><img class="live-message-avatar" src="assets/sage-sherpa-live.webp?v=0130" alt=""><div><strong>Sage:</strong> <span id="liveSageText">I’m ready to guide your next shot.</span></div><time id="liveSageTime"></time></div>
         </div>
 
         <div class="live-compose">
@@ -1275,7 +1275,7 @@ body.immersive .mentor-topbar{min-height:342px;height:auto}
         </div>
         <div class="start-actions">
           <button class="btn tan" id="planMapBtn">Plan Course Map</button>
-          <button class="btn secondary" id="refreshWeatherBtn">Weather</button>
+          <button class="btn secondary" id="refreshWeatherBtn" type="button" aria-live="polite">Refresh Weather</button>
           <button class="btn primary" id="startRoundBtn">Start Round</button>
         </div>
       </article>
@@ -1453,14 +1453,15 @@ body.immersive .mentor-topbar{min-height:342px;height:auto}
   </article>
 </section>
 
-<div class="footer"><span>Sherpa Caddie v0.11.19</span><button id="aboutBtn">What’s in v0.11.19?</button></div>
+<div class="footer"><span>Sherpa Caddie v0.11.20</span><button id="aboutBtn">What’s in v0.11.20?</button></div>
 </main>
 </div>
 
 <div id="aboutModal" class="modal-backdrop hidden" role="dialog" aria-modal="true">
   <div class="modal" style="max-width:650px">
-    <div class="section-head"><div><p class="eyebrow">One-Shot Sherpa</p><h2>Version 0.11.19</h2></div><button class="btn ghost" id="closeAboutModal">Close</button></div>
+    <div class="section-head"><div><p class="eyebrow">One-Shot Sherpa</p><h2>Version 0.11.20</h2></div><button class="btn ghost" id="closeAboutModal">Close</button></div>
     <ul style="color:var(--stone);line-height:1.7">
+      <li>Refresh Weather now shows loading, success, offline, missing-location, and failure feedback directly on PLAY</li>
       <li>End Round is now labeled End Game</li>
       <li>All available clubs wrap into visible rows instead of hiding behind horizontal scrolling</li>
       <li>Shot assessment is separated into Distance—Good, Short, or Long—and Aim—Center, Left, or Right</li>
@@ -1637,8 +1638,8 @@ body.immersive .mentor-topbar{min-height:342px;height:auto}
 </div>
 <div class="toast" id="toast"></div>
 
-<script src="arteziq-audio.js?v=0129"></script>
-<script src="arteziq-ui.js?v=0129"></script>
+<script src="arteziq-audio.js?v=0130"></script>
+<script src="arteziq-ui.js?v=0130"></script>
 <script>
 (()=>{"use strict";
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
@@ -2241,7 +2242,7 @@ async function setSherpaMode(mode){
   showMentorVideo(false);
   const live=mode==="live";$$('.experience-btn').forEach(b=>b.classList.toggle("active",b.dataset.sherpaMode===mode));
   const textShell=$("#textSherpaShell"),liveShell=$("#sherpaLiveShell");if(textShell&&!textShell.dataset.initCollapse){textShell.classList.add("guide-collapsed");textShell.dataset.initCollapse="1";}if(textShell)textShell.classList.toggle("is-hidden",live);if(liveShell)liveShell.classList.toggle("active",live);
-  localStorage.setItem("sherpa.experience.0129",mode);
+  localStorage.setItem("sherpa.experience.0130",mode);
   if(mode==="text"){
     if(aiState.handsFree)setHandsFree(false);
     await disconnectSherpaLive();
@@ -2338,7 +2339,7 @@ if(recentlyCrashedInLive()){
   const cs=$("#companionStatus");if(cs)cs.textContent="Sherpa Live paused after an iPhone browser restart";
 }
 
-/* Sherpa AI v0.11.19 — iPhone-safe Mentor Hands-Free resource isolation */
+/* Sherpa AI v0.11.20 — iPhone-safe Mentor Hands-Free resource isolation */
 const aiState = {
   engine: null,
   webllm: null,
@@ -3013,12 +3014,52 @@ function selectCourse(c,load=true){
    if(card)card.scrollIntoView({behavior:"smooth",block:"start"});
  });
 }
-async function loadWeather(){
- if(!state.coords){$("#weatherNote").textContent="No verified course coordinates available. Select a mapped course before loading weather.";return}
- $("#weatherNote").textContent="Loading conditions at the course…";
- try{const u=`https://api.open-meteo.com/v1/forecast?latitude=${state.coords.lat}&longitude=${state.coords.lon}&current=temperature_2m,wind_speed_10m,wind_direction_10m,wind_gusts_10m,precipitation&temperature_unit=fahrenheit&wind_speed_unit=mph`;const d=await fetchJSONTimeout(u,{},6000);state.weather=d.current;$("#tempStat").textContent=`${Math.round(d.current.temperature_2m)}°F`;$("#windStat").textContent=`${Math.round(d.current.wind_speed_10m)} mph`;$("#gustStat").textContent=`${Math.round(d.current.wind_gusts_10m)} mph`;$("#weatherNote").textContent=d.current.precipitation>0?"Wet conditions at the selected course — favor control and extra margin.":"Conditions loaded at the selected course location.";refreshSherpaLiveContext()}catch{$("#weatherNote").textContent="Weather could not be loaded. Sherpa can still guide the round.";refreshSherpaLiveContext()}
+let weatherLoading=false;
+async function loadWeather(options={}){
+ const manual=options?.manual===true,btn=$("#refreshWeatherBtn"),note=$("#weatherNote");
+ if(weatherLoading){if(manual)toast("Weather is already updating");return}
+ if(!state.selectedCourse){
+   note.textContent="Choose a mapped golf course before loading its weather.";
+   if(manual)toast("Choose a golf course first");
+   return;
+ }
+ if(!state.coords){
+   note.textContent="This course does not have verified coordinates. Choose it from the search results before loading weather.";
+   if(manual)toast("Weather needs a mapped course location");
+   return;
+ }
+ if(!navigator.onLine){
+   note.textContent=state.weather?"Offline — showing the last conditions loaded for this course.":"Weather needs an internet connection. Scoring and shot recording still work offline.";
+   if(manual)toast("You are offline — live weather is unavailable");
+   return;
+ }
+ weatherLoading=true;
+ const oldLabel=btn.textContent;
+ btn.disabled=true;btn.setAttribute("aria-busy","true");btn.textContent="Updating…";
+ note.textContent="Loading current conditions at the selected course…";
+ if(manual)toast("Updating course weather…");
+ try{
+   const u=`https://api.open-meteo.com/v1/forecast?latitude=${encodeURIComponent(state.coords.lat)}&longitude=${encodeURIComponent(state.coords.lon)}&current=temperature_2m,wind_speed_10m,wind_direction_10m,wind_gusts_10m,precipitation&temperature_unit=fahrenheit&wind_speed_unit=mph&timezone=auto`;
+   const d=await fetchJSONTimeout(u,{cache:"no-store"},12000),current=d?.current;
+   if(!current||!Number.isFinite(Number(current.temperature_2m))||!Number.isFinite(Number(current.wind_speed_10m)))throw new Error("Weather service returned incomplete conditions");
+   state.weather=current;
+   $("#tempStat").textContent=`${Math.round(current.temperature_2m)}°F`;
+   $("#windStat").textContent=`${Math.round(current.wind_speed_10m)} mph`;
+   $("#gustStat").textContent=Number.isFinite(Number(current.wind_gusts_10m))?`${Math.round(current.wind_gusts_10m)} mph`:"—";
+   const updated=new Date().toLocaleTimeString([],{hour:"numeric",minute:"2-digit"});
+   note.textContent=(Number(current.precipitation)>0?"Wet conditions — favor control and extra margin.":"Current conditions loaded.")+` Updated ${updated}.`;
+   refreshSherpaLiveContext();
+   if(manual)toast("Weather updated");
+ }catch(err){
+   console.warn("Weather update failed",err);
+   note.textContent=state.weather?"Could not refresh weather — showing the last loaded conditions.":"Weather could not be loaded. Check the connection and try again; Sherpa can still guide the round.";
+   refreshSherpaLiveContext();
+   if(manual)toast("Weather could not be updated");
+ }finally{
+   weatherLoading=false;btn.disabled=false;btn.removeAttribute("aria-busy");btn.textContent=oldLabel||"Refresh Weather";
+ }
 }
-$("#refreshWeatherBtn").onclick=loadWeather;
+$("#refreshWeatherBtn").addEventListener("click",()=>loadWeather({manual:true}));
 
 /* Course planning map — upgraded Hole Planner */
 function clamp(n,min,max){return Math.max(min,Math.min(max,n))}
@@ -3161,13 +3202,13 @@ function finishRound(){state.round.finished=new Date().toISOString();state.round
 function deleteSavedRound(index){const r=state.rounds[index];if(!r)return;if(!confirm(`Delete the saved game at ${r.course||"this course"}? This cannot be undone.`))return;state.rounds.splice(index,1);save();renderRounds();toast("Saved game deleted")}
 function renderRounds(){const l=$("#roundList"),clear=$("#clearAllRoundsBtn");l.innerHTML="";if(clear)clear.disabled=!state.rounds.length;if(!state.rounds.length){l.innerHTML='<div class="round-item"><div><h3>No saved games yet.</h3><p>Completed games stay on this device until you delete them or clear browser data.</p></div></div>';return}state.rounds.forEach((r,index)=>{const played=r.holes.filter(h=>h.finished||h.shots.length).length,par=r.holes.slice(0,played).reduce((s,h)=>s+h.par,0),diff=r.totalStrokes-par;const el=document.createElement("div"),info=document.createElement("div"),actions=document.createElement("div"),score=document.createElement("div"),del=document.createElement("button");el.className="round-item";info.innerHTML=`<h3>${r.course}</h3><p>${new Date(r.started).toLocaleDateString()} • ${played} holes • ${r.tee} tees</p>`;actions.className="round-actions";score.className="round-score";score.textContent=`${r.totalStrokes}${played?` (${diff>=0?"+":""}${diff})`:""}`;del.className="btn danger delete-round-btn";del.type="button";del.textContent="Delete";del.setAttribute("aria-label",`Delete saved game at ${r.course}`);del.onclick=()=>deleteSavedRound(index);actions.append(score,del);el.append(info,actions);l.appendChild(el)})}
 $("#clearAllRoundsBtn").onclick=()=>{if(!state.rounds.length)return;if(!confirm(`Delete all ${state.rounds.length} saved games? This cannot be undone.`))return;state.rounds=[];save();renderRounds();toast("All saved games deleted")};
-$("#exportBtn").onclick=()=>{const b=new Blob([JSON.stringify({version:"0.11.19",bagMode:state.bagMode,clubs:state.clubs,rounds:state.rounds},null,2)],{type:"application/json"}),a=document.createElement("a");a.href=URL.createObjectURL(b);a.download=`sherpa-caddie-data-${new Date().toISOString().slice(0,10)}.json`;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),500)};
+$("#exportBtn").onclick=()=>{const b=new Blob([JSON.stringify({version:"0.11.20",bagMode:state.bagMode,clubs:state.clubs,rounds:state.rounds},null,2)],{type:"application/json"}),a=document.createElement("a");a.href=URL.createObjectURL(b);a.download=`sherpa-caddie-data-${new Date().toISOString().slice(0,10)}.json`;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),500)};
 $("#importBtn").onclick=()=>$("#importFile").click();$("#importFile").onchange=async e=>{const f=e.target.files[0];if(!f)return;try{const d=JSON.parse(await f.text());if(d.clubs)state.clubs=d.clubs;if(d.bagMode)state.bagMode=d.bagMode;if(d.rounds)state.rounds=d.rounds;save();renderClubs();renderRounds();toast("Data imported")}catch{toast("Could not import that file")}e.target.value=""};
 
 function hideSplash(){const el=$("#splashScreen");if(!el||el.classList.contains("is-hidden"))return;el.classList.add("is-hidden");setTimeout(()=>el.remove(),800);setTimeout(()=>window.UIKIT?.applyFSLock?.(),850)}
 window.addEventListener("load",()=>setTimeout(hideSplash,5000));
 setTimeout(hideSplash,5600);
-if("serviceWorker"in navigator)window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js?v=0129").catch(()=>{}));
+if("serviceWorker"in navigator)window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js?v=0130").catch(()=>{}));
 initArteziqUiKit();
 renderClubs();
 renderRounds();
