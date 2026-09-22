@@ -5,14 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#18311C">
 <meta name="description" content="Sherpa Caddie — one-shot-at-a-time golf guidance combining a caddie, coach and mentor.">
-<link rel="manifest" href="manifest.webmanifest?v=0128">
-<link rel="icon" href="icons/favicon.png?v=0128" type="image/png">
-<link rel="apple-touch-icon" href="icons/icon-192.png?v=0128">
-<link rel="preload" as="image" href="assets/sherpa-caddie-logo-fast.webp?v=0128" type="image/webp" fetchpriority="high">
-<title>Sherpa Caddie v0.11.18</title>
+<link rel="manifest" href="manifest.webmanifest?v=0129">
+<link rel="icon" href="icons/favicon.png?v=0129" type="image/png">
+<link rel="apple-touch-icon" href="icons/icon-192.png?v=0129">
+<link rel="preload" as="image" href="assets/sherpa-caddie-logo-fast.webp?v=0129" type="image/webp" fetchpriority="high">
+<title>Sherpa Caddie v0.11.19</title>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
   crossorigin="">
-<link rel="stylesheet" href="arteziq-ui.css?v=0128">
+<link rel="stylesheet" href="arteziq-ui.css?v=0129">
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
   crossorigin=""></script>
 <style>
@@ -229,18 +229,15 @@ main{width:min(1160px,calc(100% - 28px));margin:0 auto;padding-bottom:18px}
 .shot-panel{padding:13px 15px}
 .shot-grid{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(280px,.9fr);gap:14px}
 .shot-grid>div{min-width:0}
-.club-strip{display:flex;gap:6px;width:100%;max-width:100%;overflow-x:auto;padding-bottom:6px;-webkit-overflow-scrolling:touch}
+.club-strip{display:flex;flex-wrap:wrap;gap:7px;width:100%;max-width:100%;overflow:visible;padding-bottom:4px}
 .club-choice{border:1px solid var(--line);background:#fff;border-radius:8px;padding:8px 9px;white-space:nowrap;font-weight:800;color:var(--navy)}
 .club-choice.active{background:var(--forest);color:#fff;border-color:var(--forest)}
-.quality-row{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-top:5px}
-.quality{border:1px solid var(--line);border-radius:8px;padding:11px;font-weight:900}
-.quality.good{background:var(--good);color:var(--forest)}
-.quality.okay{background:var(--okay);color:#6E561B}
-.quality.poor{background:var(--poor);color:#833B2F}
-.direction-row{display:flex;gap:6px;flex-wrap:wrap;margin-top:7px}
-.dir{border:1px solid var(--line);background:#fff;color:var(--stone);border-radius:8px;padding:7px 9px;font-weight:800}
-.dir.active{background:#FFF7EB;border-color:var(--tan);color:var(--navy)}
-.quality{opacity:.7}.quality.active{opacity:1;outline:3px solid rgba(24,49,28,.22);border-color:var(--forest)}
+.assessment-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:5px}
+.assessment-group{min-width:0;border:1px solid var(--line);border-radius:10px;padding:9px;background:#fbfaf7}
+.assessment-title{margin:0 0 7px;color:var(--forest);font-size:.78rem;font-weight:900;letter-spacing:.08em;text-transform:uppercase}
+.distance-row,.aim-row{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+.shot-option{border:1px solid var(--line);background:#fff;color:var(--navy);border-radius:8px;padding:11px 6px;font-weight:900;opacity:.72}
+.shot-option.active{opacity:1;outline:3px solid rgba(24,49,28,.2);border-color:var(--forest);background:#edf4ea;color:var(--forest)}
 .shot-entry-help{margin:8px 0 0;color:var(--stone);font-size:.82rem;line-height:1.35}
 .shot-actions{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:8px;align-items:center;margin-top:10px}
 .record-shot-btn{min-height:48px;font-size:1rem}
@@ -257,9 +254,8 @@ main{width:min(1160px,calc(100% - 28px));margin:0 auto;padding-bottom:18px}
 }
 @media(max-width:520px){
   .shot-panel{padding:11px 9px}
-  .quality-row{gap:5px}.quality{padding:12px 5px}
-  .direction-row{display:grid;grid-template-columns:repeat(3,minmax(0,1fr))}
-  .dir{padding:9px 4px}
+  .assessment-grid{grid-template-columns:1fr}
+  .shot-option{padding:12px 4px}
   .shot-actions{grid-template-columns:1fr}
   .shot-scoreline,.record-shot-btn{grid-column:auto}
   .round-bottom{align-items:stretch;flex-direction:column-reverse}
@@ -285,6 +281,9 @@ main{width:min(1160px,calc(100% - 28px));margin:0 auto;padding-bottom:18px}
 .round-item h3{margin:0;color:var(--forest);font-size:.98rem}
 .round-item p{margin:2px 0 0;color:var(--stone);font-size:.82rem}
 .round-score{align-self:center;font-weight:900}
+.round-actions{display:flex;align-items:center;gap:8px}.delete-round-btn{padding:7px 10px}
+.review-actions{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:7px}
+@media(max-width:620px){.round-item{grid-template-columns:1fr}.round-actions{justify-content:space-between}.review-actions{justify-content:stretch}.review-actions .btn{flex:1}}
 
 /* Club setup modal rather than another top-level scrolling screen */
 .modal-backdrop{position:fixed;inset:0;background:rgba(11,32,51,.45);z-index:50;display:grid;place-items:center;padding:18px}
@@ -515,7 +514,7 @@ main{padding-top:14px;padding-bottom:30px}
   .tabs{width:100%;max-width:100%}
   main{width:calc(100% - 20px);max-width:100%;margin-left:auto;margin-right:auto}
   .play-grid,.plan,.shot-grid,.summary-grid,.learn-grid{min-width:0}
-  .club-strip{width:100%;max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .club-strip{width:100%;max-width:100%;overflow:visible}
 }
 @media(max-width:620px){
   body{font-size:16px}
@@ -545,7 +544,6 @@ main{padding-top:14px;padding-bottom:30px}
   .shot-panel{padding:11px 10px;overflow:hidden}
   .club-strip{gap:6px;padding-bottom:5px}
   .club-choice{flex:0 0 auto;padding:8px 10px}
-  .quality-row,.direction-row{max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}
   .ask,.course-card,.selected-card{padding:12px}
   .experience-tabs{grid-template-columns:repeat(3,minmax(0,1fr));width:100%;min-width:0}
   .experience-btn{min-width:0;padding:9px 4px;font-size:.78rem}
@@ -836,7 +834,7 @@ body.immersive .brand-center{display:flex!important}
   body.immersive .mentor-topbar{height:132px}
 }
 
-/* v0.11.18 — resilient Video sessions and accessible on-course recording */
+/* v0.11.19 — resilient Video sessions and accessible on-course recording */
 .mentor-topbar{
   min-height:342px;height:auto;grid-template-columns:250px minmax(0,1fr) 112px;gap:18px;
   padding-top:16px;padding-bottom:16px;align-items:stretch
@@ -912,7 +910,7 @@ body.immersive .mentor-topbar{min-height:342px;height:auto}
   body.immersive .mentor-topbar{min-height:366px;height:auto}
 }
 
-/* v0.11.18 — compact, full-width mobile Sage flow */
+/* v0.11.19 — compact, full-width mobile Sage flow */
 .console-heading{display:grid;gap:8px;min-width:0}
 @media(max-width:760px){
   .mentor-topbar{
@@ -977,14 +975,14 @@ body.immersive .mentor-topbar{min-height:342px;height:auto}
     <div class="splash-rings" aria-hidden="true"></div>
     <div class="splash-logo-stage" aria-hidden="true">
       <div class="splash-logo-glow"></div>
-      <img class="splash-logo" src="assets/sherpa-caddie-logo-fast.webp?v=0128" decoding="async" alt="Sherpa Caddie">
+      <img class="splash-logo" src="assets/sherpa-caddie-logo-fast.webp?v=0129" decoding="async" alt="Sherpa Caddie">
     </div>
     <div class="splash-title">Sherpa Caddie</div>
     <div class="splash-subtitle">Your guide. Your game. Your best round.</div>
     <div class="splash-path" aria-hidden="true"><span></span><i></i></div>
     <div class="splash-caption">Walking your game plan into place…</div>
   </div>
-  <div class="splash-footer">ARTEZIQ • Sherpa Caddie • v0.11.18</div>
+  <div class="splash-footer">ARTEZIQ • Sherpa Caddie • v0.11.19</div>
 </div>
 <div class="app">
 <header class="topbar mentor-topbar" data-mode="text">
@@ -1001,7 +999,7 @@ body.immersive .mentor-topbar{min-height:342px;height:auto}
         <div class="mentor-wave" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
       </div>
       <div class="mentor-live-media">
-        <img id="sherpaLivePoster" class="mentor-poster" src="assets/sage-sherpa-live.webp?v=0128" alt="Sage, Sherpa Caddie mentor">
+        <img id="sherpaLivePoster" class="mentor-poster" src="assets/sage-sherpa-live.webp?v=0129" alt="Sage, Sherpa Caddie mentor">
         <video id="sherpaLiveVideo" class="mentor-video" autoplay playsinline aria-label="Sage Video avatar"></video>
       </div>
       <span class="companion-dot ready" id="companionDot"></span>
@@ -1034,10 +1032,10 @@ body.immersive .mentor-topbar{min-height:342px;height:auto}
   </div>
 
   <div class="brand-center" aria-label="Sherpa Caddie">
-    <img class="brand-logo" src="assets/sherpa-caddie-logo-fast.webp?v=0128" width="180" height="196" decoding="sync" fetchpriority="high" alt="Sherpa Caddie">
+    <img class="brand-logo" src="assets/sherpa-caddie-logo-fast.webp?v=0129" width="180" height="196" decoding="sync" fetchpriority="high" alt="Sherpa Caddie">
   </div>
 
-  <div class="version app-chrome">v0.11.18</div>
+  <div class="version app-chrome">v0.11.19</div>
 </header>
 
 <div class="tabs-wrap app-chrome">
@@ -1046,7 +1044,7 @@ body.immersive .mentor-topbar{min-height:342px;height:auto}
   <button class="tab" data-view="play" aria-label="Play — plan or start a round"><span class="tab-icon">🏌️</span><span class="tab-label">Play</span></button>
   <button class="tab" data-view="clubs" aria-label="Clubs — set up your golf bag"><span class="tab-icon">🏑</span><span class="tab-label">Clubs</span></button>
   <button class="tab" data-view="learn" aria-label="Learn — golf skills, rules and strategy"><span class="tab-icon">🧭</span><span class="tab-label">Learn</span></button>
-  <button class="tab" data-view="review" aria-label="Review — review saved rounds"><span class="tab-icon">📒</span><span class="tab-label">Review</span></button>
+  <button class="tab" data-view="review" aria-label="Review — review saved games"><span class="tab-icon">📒</span><span class="tab-label">Review</span></button>
 </nav>
 </div>
 
@@ -1198,7 +1196,7 @@ body.immersive .mentor-topbar{min-height:342px;height:auto}
 
         <div class="live-transcript" aria-live="polite">
           <div class="live-message"><div>👤</div><div><strong>You:</strong> <span id="liveUserText">Say “Hey Sherpa,” “Hey Sage,” or type a question.</span></div><time id="liveUserTime"></time></div>
-          <div class="live-message sage"><img class="live-message-avatar" src="assets/sage-sherpa-live.webp?v=0128" alt=""><div><strong>Sage:</strong> <span id="liveSageText">I’m ready to guide your next shot.</span></div><time id="liveSageTime"></time></div>
+          <div class="live-message sage"><img class="live-message-avatar" src="assets/sage-sherpa-live.webp?v=0129" alt=""><div><strong>Sage:</strong> <span id="liveSageText">I’m ready to guide your next shot.</span></div><time id="liveSageTime"></time></div>
         </div>
 
         <div class="live-compose">
@@ -1317,20 +1315,26 @@ body.immersive .mentor-topbar{min-height:342px;height:auto}
           <div class="club-strip" id="clubStrip"></div>
         </div>
         <div>
-          <p class="eyebrow">How did you hit it?</p>
-          <div class="quality-row">
-            <button class="quality good active" data-quality="good">Good</button>
-            <button class="quality okay" data-quality="okay">Okay</button>
-            <button class="quality poor" data-quality="poor">Poor</button>
+          <p class="eyebrow">Shot result</p>
+          <div class="assessment-grid">
+            <div class="assessment-group">
+              <p class="assessment-title">Distance</p>
+              <div class="distance-row">
+                <button class="shot-option distance-option active" data-distance="good" aria-pressed="true">Good</button>
+                <button class="shot-option distance-option" data-distance="short" aria-pressed="false">Short</button>
+                <button class="shot-option distance-option" data-distance="long" aria-pressed="false">Long</button>
+              </div>
+            </div>
+            <div class="assessment-group">
+              <p class="assessment-title">Aim</p>
+              <div class="aim-row">
+                <button class="shot-option aim-option active" data-aim="center" aria-pressed="true">Center</button>
+                <button class="shot-option aim-option" data-aim="left" aria-pressed="false">Left</button>
+                <button class="shot-option aim-option" data-aim="right" aria-pressed="false">Right</button>
+              </div>
+            </div>
           </div>
-          <div class="direction-row">
-            <button class="dir active" data-dir="center">Center</button>
-            <button class="dir" data-dir="left">Left</button>
-            <button class="dir" data-dir="right">Right</button>
-            <button class="dir" data-dir="short">Short</button>
-            <button class="dir" data-dir="long">Long</button>
-          </div>
-          <p class="shot-entry-help">Choose the club, result and direction, then tap Record Shot. Nothing is counted until you record it.</p>
+          <p class="shot-entry-help">Choose one Distance result and one Aim result, then tap Record Shot. Nothing is counted until you record it.</p>
         </div>
       </div>
       <div class="shot-actions">
@@ -1341,7 +1345,7 @@ body.immersive .mentor-topbar{min-height:342px;height:auto}
       </div>
       <div class="reset-message" id="resetMessage">Every shot is a new start.</div>
       <div class="round-bottom">
-        <button class="btn danger" id="endRoundBtn">End Round</button>
+        <button class="btn danger" id="endRoundBtn">End Game</button>
         <div style="display:flex;gap:7px">
           <button class="btn ghost" id="finishHoleBtn">Finish Hole</button>
           <button class="btn primary" id="nextHoleBtn" disabled>Next Hole</button>
@@ -1396,7 +1400,7 @@ body.immersive .mentor-topbar{min-height:342px;height:auto}
       <article class="card learn-category">
         <h3>🗺️ Playing the Course</h3><p>Make the next shot easier before trying to make it spectacular.</p>
         <details class="learn-topic"><summary>🎯 Focus on this shot</summary><p>You are not playing the entire course in your head. Make one decision for the shot in front of you, then reset.</p></details>
-        <details class="learn-topic"><summary>🏑 Take enough club</summary><p>Many poor shots come from forcing too little club. A smoother swing with enough club is often the higher-percentage choice.</p></details>
+        <details class="learn-topic"><summary>🏑 Take enough club</summary><p>Many distance misses come from forcing too little club. A smoother swing with enough club is often the higher-percentage choice.</p></details>
         <details class="learn-topic"><summary>🧭 Read the safe miss</summary><p>Do not automatically attack the flag. Look for the widest useful landing area and the side that keeps the biggest trouble out of play.</p></details>
         <details class="learn-topic"><summary>💨 Wind and conditions</summary><p>Into the wind usually needs more club and a controlled swing. Helping wind can reduce the effective distance. Wet ground reduces roll; firm ground adds it.</p></details>
         <details class="learn-topic"><summary>⚠️ Hazards and layups</summary><p>Know what distance brings trouble into play. A layup is not surrender—it is choosing a position that gives you a better next shot.</p></details>
@@ -1425,7 +1429,7 @@ body.immersive .mentor-topbar{min-height:342px;height:auto}
       <article class="card learn-category">
         <h3>📐 Hole Strategy</h3><p>Think backward from the easiest next shot.</p>
         <details class="learn-topic"><summary>3️⃣ Par 3 strategy</summary><p>Choose enough club to reach the safe part of the green. Center-green targets beat tucked pins when trouble surrounds the flag.</p></details>
-        <details class="learn-topic"><summary>4️⃣ Par 4 strategy</summary><p>The tee shot should set up a comfortable approach. Maximum distance is not automatically the best choice if it brings hazards or a poor angle into play.</p></details>
+        <details class="learn-topic"><summary>4️⃣ Par 4 strategy</summary><p>The tee shot should set up a comfortable approach. Maximum distance is not automatically the best choice if it brings hazards or a difficult angle into play.</p></details>
         <details class="learn-topic"><summary>5️⃣ Par 5 strategy</summary><p>Decide whether the hole is realistically reachable or a three-shot hole. If laying up, choose the distance you want for the following approach.</p></details>
         <details class="learn-topic"><summary>📊 Play your own game</summary><p>Good strategy depends on your actual carry distances and typical misses, not another golfer’s clubs or yardages.</p></details>
       </article>
@@ -1436,32 +1440,37 @@ body.immersive .mentor-topbar{min-height:342px;height:auto}
 <section id="review" class="view">
   <div class="summary-grid">
     <article class="card summary"><p class="eyebrow">What worked</p><h3>Smarter targets</h3><p>Choosing the safer side helps keep the ball in play and the next shot manageable.</p></article>
-    <article class="card summary"><p class="eyebrow">What cost strokes</p><h3>Too little club</h3><p>Most poor shots happened when you selected too little club.</p></article>
+    <article class="card summary"><p class="eyebrow">What cost strokes</p><h3>Too little club</h3><p>Most distance misses happened when you selected too little club.</p></article>
     <article class="card summary"><p class="eyebrow">Next-round focus</p><h3>Commit to the shot</h3><p>Pick the target, take one practice swing, and commit.</p></article>
   </div>
   <article class="card rounds-card">
     <div class="section-head">
-      <div><p class="eyebrow">Stored only on this device</p><h2>My rounds</h2></div>
-      <div><button class="btn ghost" id="importBtn">Import</button> <button class="btn secondary" id="exportBtn">Export All</button></div>
+      <div><p class="eyebrow">Stored only on this device</p><h2>Saved games</h2></div>
+      <div class="review-actions"><button class="btn ghost" id="importBtn">Import</button><button class="btn secondary" id="exportBtn">Export All</button><button class="btn danger" id="clearAllRoundsBtn">Delete All</button></div>
     </div>
     <input id="importFile" type="file" accept="application/json,.json" hidden>
     <div class="round-list" id="roundList"></div>
   </article>
 </section>
 
-<div class="footer"><span>Sherpa Caddie v0.11.18</span><button id="aboutBtn">What’s in v0.11.18?</button></div>
+<div class="footer"><span>Sherpa Caddie v0.11.19</span><button id="aboutBtn">What’s in v0.11.19?</button></div>
 </main>
 </div>
 
 <div id="aboutModal" class="modal-backdrop hidden" role="dialog" aria-modal="true">
   <div class="modal" style="max-width:650px">
-    <div class="section-head"><div><p class="eyebrow">One-Shot Sherpa</p><h2>Version 0.11.18</h2></div><button class="btn ghost" id="closeAboutModal">Close</button></div>
+    <div class="section-head"><div><p class="eyebrow">One-Shot Sherpa</p><h2>Version 0.11.19</h2></div><button class="btn ghost" id="closeAboutModal">Close</button></div>
     <ul style="color:var(--stone);line-height:1.7">
+      <li>End Round is now labeled End Game</li>
+      <li>All available clubs wrap into visible rows instead of hiding behind horizontal scrolling</li>
+      <li>Shot assessment is separated into Distance—Good, Short, or Long—and Aim—Center, Left, or Right</li>
+      <li>The negative Poor result has been removed from the shot-entry experience</li>
+      <li>REVIEW can delete one saved game or delete all saved games with confirmation</li>
       <li>Failed or expired D-ID WebSocket sessions are fully discarded and retried once with a clean Agent session</li>
       <li>Local golf-tool results use Sage’s D-ID voice and animation in Video mode, with a clearly identified local-voice fallback</li>
       <li>Sage’s portrait stays visible until a genuine moving video frame is ready, preventing black-frame flashes</li>
       <li>The PLAY shot recorder now stays inside the screen on iPhone, iPad, Android, and desktop widths</li>
-      <li>Shots are recorded only after choosing club, quality and direction and tapping the explicit Record Shot button</li>
+      <li>Shots are recorded only after choosing club, distance and aim and tapping the explicit Record Shot button</li>
       <li>New Penalty and Undo Last controls make on-course score correction clear</li>
       <li>Finish Hole no longer silently adds an unexplained stroke</li>
       <li>D-ID’s complete audio/video stream now stays attached to Sage’s video element, restoring audible Video replies</li>
@@ -1628,8 +1637,8 @@ body.immersive .mentor-topbar{min-height:342px;height:auto}
 </div>
 <div class="toast" id="toast"></div>
 
-<script src="arteziq-audio.js?v=0128"></script>
-<script src="arteziq-ui.js?v=0128"></script>
+<script src="arteziq-audio.js?v=0129"></script>
+<script src="arteziq-ui.js?v=0129"></script>
 <script>
 (()=>{"use strict";
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
@@ -1939,9 +1948,13 @@ function registerSherpaLiveTools(manager){
   add("record_shot",async(args={})=>{
     if(toolTestActive("record_shot"))return diagnosticResult("record_shot",{dry_run:true,received_args:args});
     if(!state.round)throw new Error("No active round.");
-    let q=String(args.quality||"").toLowerCase();if(q==="ok")q="okay";if(!["good","okay","poor"].includes(q))throw new Error("quality must be good, okay, or poor");
-    const d=String(args.miss_direction||"center").toLowerCase();if(["left","right","short","long","center"].includes(d))state.direction=d;
-    recordShot(q);refreshSherpaLiveContext();return liveToolResult({success:true,recorded_quality:q,miss_direction:state.round?state.round.holes[state.round.holeIndex].shots.slice(-1)[0]?.direction:d,current_round:state.round?currentShotContext():null});
+    let distance=String(args.distance_result||args.distance||args.quality||"good").toLowerCase();
+    let aim=String(args.aim_result||args.aim||args.miss_direction||"center").toLowerCase();
+    if(distance==="okay"||distance==="ok")distance="good";if(distance==="poor"||distance==="bad")distance="short";
+    if(["short","long"].includes(aim)&&!args.distance_result&&!args.distance){distance=aim;aim="center"}
+    if(!["good","short","long"].includes(distance))throw new Error("distance result must be good, short, or long");
+    if(!["center","left","right"].includes(aim))aim="center";
+    recordShot(distance,aim);refreshSherpaLiveContext();return liveToolResult({success:true,recorded_distance:distance,recorded_aim:aim,recorded_quality:distance,miss_direction:aim,current_round:state.round?currentShotContext():null});
   });
   add("finish_hole",async()=>{
     if(toolTestActive("finish_hole"))return diagnosticResult("finish_hole",{dry_run:true});
@@ -1969,10 +1982,10 @@ function detectSherpaToolIntent(question){
   if(/\b(lay ?up|layup strategy)\b/.test(q))return{name:"set_strategy",args:{strategy:"layup"}};
   if(/\b(next hole|advance to the next|move to the next)\b/.test(q))return{name:"next_hole",args:{}};
   if(/\b(finish|complete|end)\b.*\bhole\b/.test(q))return{name:"finish_hole",args:{}};
-  if(/\b(record|log)\b.*\b(shot|swing)\b|\b(that|it) was (good|okay|ok|poor|bad)\b/.test(q)){
-    const quality=/\b(poor|bad)\b/.test(q)?"poor":/\b(good)\b/.test(q)?"good":"okay";
-    const direction=["left","right","short","long"].find(x=>new RegExp(`\\b${x}\\b`).test(q))||"center";
-    return{name:"record_shot",args:{quality,miss_direction:direction}};
+  if(/\b(record|log)\b.*\b(shot|swing)\b|\b(that|it) was (good|short|long)\b/.test(q)){
+    const distance=["short","long"].find(x=>new RegExp(`\\b${x}\\b`).test(q))||"good";
+    const aim=["left","right"].find(x=>new RegExp(`\\b${x}\\b`).test(q))||"center";
+    return{name:"record_shot",args:{distance_result:distance,aim_result:aim}};
   }
   if(/\b(saved|my)\b.*\b(club|carry|distance)s?\b|\bclub distances?\b/.test(q))return{name:"get_club_distances",args:{}};
   if(/\b(weather|wind|temperature|gust)\b/.test(q))return{name:"get_weather_context",args:{}};
@@ -1985,7 +1998,7 @@ function bridgedToolAnswer(name,data){
   if(name==="get_shot_recommendation")return`Hit your ${data.recommended_club}. It is playing about ${data.plays_like_yards} yards. Aim for ${String(data.target||data.safe_miss||"the safe side").toLowerCase()}.`;
   if(name==="get_weather_context")return data.weather_loaded?`It is ${Math.round(data.temperature_f)} degrees with wind around ${Math.round(data.wind_mph)} miles per hour and gusts near ${Math.round(data.gust_mph)}.`:"Course weather is not loaded yet. Select the course and tap Weather before relying on a wind adjustment.";
   if(name==="get_club_distances"){const clubs=Object.entries(data.clubs||{});return clubs.length?`Your ${data.bag_mode==="sunday"?"Sunday Bag":"bag"} carries are ${clubs.map(([club,yards])=>`${club}, ${yards} yards`).join("; ")}.`:"No club carry distances are saved yet."}
-  if(name==="record_shot")return`Shot recorded as ${data.recorded_quality}${data.miss_direction&&data.miss_direction!=="center"?`, missing ${data.miss_direction}`:""}.`;
+  if(name==="record_shot")return`Shot recorded. Distance: ${data.recorded_distance||data.recorded_quality||"good"}. Aim: ${data.recorded_aim||data.miss_direction||"center"}.`;
   if(name==="finish_hole")return`Hole ${data.hole} is finished with ${data.strokes} strokes.`;
   if(name==="next_hole")return`Moving to Hole ${data.hole}, a par ${data.par}.`;
   if(name==="set_strategy")return`Strategy changed to ${data.label}.`;
@@ -2228,7 +2241,7 @@ async function setSherpaMode(mode){
   showMentorVideo(false);
   const live=mode==="live";$$('.experience-btn').forEach(b=>b.classList.toggle("active",b.dataset.sherpaMode===mode));
   const textShell=$("#textSherpaShell"),liveShell=$("#sherpaLiveShell");if(textShell&&!textShell.dataset.initCollapse){textShell.classList.add("guide-collapsed");textShell.dataset.initCollapse="1";}if(textShell)textShell.classList.toggle("is-hidden",live);if(liveShell)liveShell.classList.toggle("active",live);
-  localStorage.setItem("sherpa.experience.0128",mode);
+  localStorage.setItem("sherpa.experience.0129",mode);
   if(mode==="text"){
     if(aiState.handsFree)setHandsFree(false);
     await disconnectSherpaLive();
@@ -2325,7 +2338,7 @@ if(recentlyCrashedInLive()){
   const cs=$("#companionStatus");if(cs)cs.textContent="Sherpa Live paused after an iPhone browser restart";
 }
 
-/* Sherpa AI v0.11.18 — iPhone-safe Mentor Hands-Free resource isolation */
+/* Sherpa AI v0.11.19 — iPhone-safe Mentor Hands-Free resource isolation */
 const aiState = {
   engine: null,
   webllm: null,
@@ -2790,9 +2803,10 @@ function clubFromSpeech(q){
 async function handleRoundVoiceCommand(command){
   const q=normalizeAnswerText(command), h=state.round?hole():null;
   if(!h)return false;
-  if(/^(good|great)( shot| one)?$|record.*good/.test(q)){recordShot("good");speakLocal("Good shot recorded. New shot, fresh start.");return true}
-  if(/^(okay|ok)( shot| one)?$|record.*(okay|ok)/.test(q)){recordShot("okay");speakLocal("Okay shot recorded. Focus on the next target.");return true}
-  if(/^(poor|bad)( shot| one)?$|record.*(poor|bad)/.test(q)){recordShot("poor");speakLocal("Poor shot recorded. Leave it behind and start fresh.");return true}
+  if(/\brecord\b.*\b(shot|swing)\b|^(good|short|long)( shot| one)?$/.test(q)){
+    const distance=/\blong\b/.test(q)?"long":/\bshort\b/.test(q)?"short":"good",aim=/\bleft\b/.test(q)?"left":/\bright\b/.test(q)?"right":"center";
+    recordShot(distance,aim);speakLocal(`Shot recorded. Distance ${distance}. Aim ${aim}. New shot, fresh start.`);return true
+  }
   if(/finish( the)? hole|hole finished/.test(q)){$("#finishHoleBtn").click();speakLocal("Hole finished. The next tee is a fresh start.");return true}
   if(/next hole/.test(q)){if(h.finished){$("#nextHoleBtn").click();speakLocal(`Moving to Hole ${hole().n}.`)}else speakLocal("Finish this hole first, then I can move you to the next one.");return true}
   const club=clubFromSpeech(q);if(club&&/(use|select|choose|hit|club)/.test(q)){state.selectedClub=club;renderShot();speakLocal(`${club} selected.`);return true}
@@ -3122,34 +3136,38 @@ function renderShot(){
 function renderClubStrip(){
  const order=activeClubNames(),s=$("#clubStrip");s.innerHTML="";order.forEach(n=>{const b=document.createElement("button");b.className="club-choice"+(n===state.selectedClub?" active":"");b.textContent=n;b.onclick=()=>{state.selectedClub=n;renderShot()};s.appendChild(b)})
 }
-$$(".dir").forEach(b=>b.onclick=()=>{state.direction=b.dataset.dir;$$(".dir").forEach(x=>x.classList.toggle("active",x===b))});
-let shotEntryQuality="good";
-$$(".quality").forEach(b=>b.onclick=()=>{shotEntryQuality=b.dataset.quality;$$(".quality").forEach(x=>x.classList.toggle("active",x===b));$("#resetMessage").textContent=`Ready to record a ${shotEntryQuality} shot ${state.direction==="center"?"on line":state.direction}.`;});
-$("#recordShotBtn").onclick=()=>recordShot(shotEntryQuality);
-function recordShot(q){
- const h=hole();if(h.finished){toast("This hole is already finished.");return}const club=state.selectedClub||recClub(h.remaining),base=state.clubs[club]||50,f=q==="good"?1:q==="okay"?.82:.62;
- let travel=Math.max(4,Math.round(base*f));if(state.direction==="short")travel=Math.max(4,travel-12);if(state.direction==="long")travel+=8;
- h.strokes++;state.round.totalStrokes++;h.remaining=Math.max(0,h.remaining-travel);h.shots.push({club,quality:q,direction:state.direction,travel,at:new Date().toISOString()});
- $("#resetMessage").textContent=q==="poor"?"Leave that shot behind. The next shot is a new start.":"Good reset. Focus only on the shot you are on.";
- state.selectedClub=null;state.direction="center";shotEntryQuality="good";$$(".dir").forEach(x=>x.classList.toggle("active",x.dataset.dir==="center"));$$(".quality").forEach(x=>x.classList.toggle("active",x.dataset.quality==="good"));save();renderShot()
+let shotEntryDistance="good",shotEntryAim="center";
+function updateShotAssessmentMessage(){$("#resetMessage").textContent=`Ready to record — Distance: ${shotEntryDistance}. Aim: ${shotEntryAim}.`}
+$$(".distance-option").forEach(b=>b.onclick=()=>{shotEntryDistance=b.dataset.distance;$$(".distance-option").forEach(x=>{const active=x===b;x.classList.toggle("active",active);x.setAttribute("aria-pressed",String(active))});updateShotAssessmentMessage()});
+$$(".aim-option").forEach(b=>b.onclick=()=>{shotEntryAim=b.dataset.aim;state.direction=shotEntryAim;$$(".aim-option").forEach(x=>{const active=x===b;x.classList.toggle("active",active);x.setAttribute("aria-pressed",String(active))});updateShotAssessmentMessage()});
+$("#recordShotBtn").onclick=()=>recordShot(shotEntryDistance,shotEntryAim);
+function recordShot(distance="good",aim="center"){
+ const h=hole();if(h.finished){toast("This hole is already finished.");return}if(!["good","short","long"].includes(distance))distance="good";if(!["center","left","right"].includes(aim))aim="center";
+ const club=state.selectedClub||recClub(h.remaining),base=state.clubs[club]||50,f=distance==="short"?.82:distance==="long"?1.08:1;
+ const travel=Math.max(4,Math.round(base*f));
+ h.strokes++;state.round.totalStrokes++;h.remaining=Math.max(0,h.remaining-travel);h.shots.push({club,distance,aim,quality:distance,direction:aim,travel,at:new Date().toISOString()});
+ $("#resetMessage").textContent=`Recorded — Distance: ${distance}. Aim: ${aim}. Focus only on the next shot.`;
+ state.selectedClub=null;state.direction="center";shotEntryDistance="good";shotEntryAim="center";$$(".distance-option").forEach(x=>{const active=x.dataset.distance==="good";x.classList.toggle("active",active);x.setAttribute("aria-pressed",String(active))});$$(".aim-option").forEach(x=>{const active=x.dataset.aim==="center";x.classList.toggle("active",active);x.setAttribute("aria-pressed",String(active))});save();renderShot()
 }
 function recordPenalty(){const h=hole();if(h.finished){toast("This hole is already finished.");return}h.strokes++;state.round.totalStrokes++;h.shots.push({club:null,quality:"penalty",direction:null,travel:0,penalty:true,at:new Date().toISOString()});$("#resetMessage").textContent="Penalty stroke recorded. Breathe, choose the next target, and continue.";save();renderShot()}
 function undoLastShot(){const h=hole();if(h.finished||!h.shots.length){toast("There is no recorded shot to undo.");return}const last=h.shots.pop();h.strokes=Math.max(0,h.strokes-1);state.round.totalStrokes=Math.max(0,state.round.totalStrokes-1);h.remaining=Math.min(h.yards,h.remaining+Number(last.travel||0));state.selectedClub=last.club||state.selectedClub;$("#resetMessage").textContent=last.penalty?"Penalty removed.":"Last shot removed. Check the club, result, and direction before recording again.";save();renderShot()}
 $("#penaltyShotBtn").onclick=recordPenalty;$("#undoShotBtn").onclick=undoLastShot;
 $("#finishHoleBtn").onclick=()=>{const h=hole();if(h.finished)return;if(h.strokes<1){toast("Record at least one shot before finishing the hole.");$("#resetMessage").textContent="Record each stroke first, then tap Finish Hole.";return}h.remaining=0;h.finished=true;$("#resetMessage").textContent=(h.strokes>h.par?"Bad holes happen. Leave it here. ":"Hole complete. ")+"The next tee is a fresh start.";save();renderShot()};
 $("#nextHoleBtn").onclick=()=>{const h=hole();if(!h.finished)return;if(state.round.holeIndex<state.round.holes.length-1){state.round.holeIndex++;state.selectedClub=null;save();renderShot();$("#resetMessage").textContent="Every shot is a new start."}else finishRound()};
-$("#endRoundBtn").onclick=()=>{if(confirm("End this round and save what you have recorded?"))finishRound()};
-function finishRound(){state.round.finished=new Date().toISOString();state.rounds.unshift(state.round);state.round=null;save();hideRoundMode();renderRounds();show("review");toast("Round saved")}
+$("#endRoundBtn").onclick=()=>{if(confirm("End this game and save what you have recorded?"))finishRound()};
+function finishRound(){state.round.finished=new Date().toISOString();state.rounds.unshift(state.round);state.round=null;save();hideRoundMode();renderRounds();show("review");toast("Game saved")}
 
 /* Rounds/export */
-function renderRounds(){const l=$("#roundList");l.innerHTML="";if(!state.rounds.length){l.innerHTML='<div class="round-item"><div><h3>No saved rounds yet.</h3><p>Finished rounds stay on this device until you export or clear browser data.</p></div></div>';return}state.rounds.forEach(r=>{const played=r.holes.filter(h=>h.finished||h.shots.length).length,par=r.holes.slice(0,played).reduce((s,h)=>s+h.par,0),diff=r.totalStrokes-par;const el=document.createElement("div");el.className="round-item";el.innerHTML=`<div><h3>${r.course}</h3><p>${new Date(r.started).toLocaleDateString()} • ${played} holes • ${r.tee} tees</p></div><div class="round-score">${r.totalStrokes}${played?` (${diff>=0?"+":""}${diff})`:""}</div>`;l.appendChild(el)})}
-$("#exportBtn").onclick=()=>{const b=new Blob([JSON.stringify({version:"0.11.18",bagMode:state.bagMode,clubs:state.clubs,rounds:state.rounds},null,2)],{type:"application/json"}),a=document.createElement("a");a.href=URL.createObjectURL(b);a.download=`sherpa-caddie-data-${new Date().toISOString().slice(0,10)}.json`;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),500)};
+function deleteSavedRound(index){const r=state.rounds[index];if(!r)return;if(!confirm(`Delete the saved game at ${r.course||"this course"}? This cannot be undone.`))return;state.rounds.splice(index,1);save();renderRounds();toast("Saved game deleted")}
+function renderRounds(){const l=$("#roundList"),clear=$("#clearAllRoundsBtn");l.innerHTML="";if(clear)clear.disabled=!state.rounds.length;if(!state.rounds.length){l.innerHTML='<div class="round-item"><div><h3>No saved games yet.</h3><p>Completed games stay on this device until you delete them or clear browser data.</p></div></div>';return}state.rounds.forEach((r,index)=>{const played=r.holes.filter(h=>h.finished||h.shots.length).length,par=r.holes.slice(0,played).reduce((s,h)=>s+h.par,0),diff=r.totalStrokes-par;const el=document.createElement("div"),info=document.createElement("div"),actions=document.createElement("div"),score=document.createElement("div"),del=document.createElement("button");el.className="round-item";info.innerHTML=`<h3>${r.course}</h3><p>${new Date(r.started).toLocaleDateString()} • ${played} holes • ${r.tee} tees</p>`;actions.className="round-actions";score.className="round-score";score.textContent=`${r.totalStrokes}${played?` (${diff>=0?"+":""}${diff})`:""}`;del.className="btn danger delete-round-btn";del.type="button";del.textContent="Delete";del.setAttribute("aria-label",`Delete saved game at ${r.course}`);del.onclick=()=>deleteSavedRound(index);actions.append(score,del);el.append(info,actions);l.appendChild(el)})}
+$("#clearAllRoundsBtn").onclick=()=>{if(!state.rounds.length)return;if(!confirm(`Delete all ${state.rounds.length} saved games? This cannot be undone.`))return;state.rounds=[];save();renderRounds();toast("All saved games deleted")};
+$("#exportBtn").onclick=()=>{const b=new Blob([JSON.stringify({version:"0.11.19",bagMode:state.bagMode,clubs:state.clubs,rounds:state.rounds},null,2)],{type:"application/json"}),a=document.createElement("a");a.href=URL.createObjectURL(b);a.download=`sherpa-caddie-data-${new Date().toISOString().slice(0,10)}.json`;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),500)};
 $("#importBtn").onclick=()=>$("#importFile").click();$("#importFile").onchange=async e=>{const f=e.target.files[0];if(!f)return;try{const d=JSON.parse(await f.text());if(d.clubs)state.clubs=d.clubs;if(d.bagMode)state.bagMode=d.bagMode;if(d.rounds)state.rounds=d.rounds;save();renderClubs();renderRounds();toast("Data imported")}catch{toast("Could not import that file")}e.target.value=""};
 
 function hideSplash(){const el=$("#splashScreen");if(!el||el.classList.contains("is-hidden"))return;el.classList.add("is-hidden");setTimeout(()=>el.remove(),800);setTimeout(()=>window.UIKIT?.applyFSLock?.(),850)}
 window.addEventListener("load",()=>setTimeout(hideSplash,5000));
 setTimeout(hideSplash,5600);
-if("serviceWorker"in navigator)window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js?v=0128").catch(()=>{}));
+if("serviceWorker"in navigator)window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js?v=0129").catch(()=>{}));
 initArteziqUiKit();
 renderClubs();
 renderRounds();

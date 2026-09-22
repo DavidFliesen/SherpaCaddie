@@ -1,13 +1,13 @@
-## Version 0.11.18 — On-Course Reliability and Recording
+## Version 0.11.19 — Clear Shot Assessment and Review Management
 
-- Rebuilds failed D-ID WebSocket/session connections from a clean Agent Manager and retries once.
-- Keeps Sage’s portrait visible until a valid streamed frame is ready.
-- Sends deterministic local tool answers through D-ID speech and animation in Video mode when available, with local speech as the fallback.
-- Reflows the PLAY shot recorder so club, quality, direction, and actions remain accessible at phone and tablet widths.
-- Adds an explicit Record Shot button plus Penalty and Undo Last controls.
-- Finish Hole now uses the strokes actually recorded instead of silently adding another stroke.
+- Renames End Round to End Game.
+- Wraps every available club into visible rows without horizontal scrolling.
+- Separates shot assessment into Distance: Good, Short, Long and Aim: Center, Left, Right.
+- Removes the negative Poor choice from shot entry.
+- Preserves compatibility with the existing D-ID `record_shot` tool arguments.
+- Adds Delete to every saved game and Delete All to REVIEW, both with confirmation.
 
-### Changed files in v0.11.18
+### Changed files in v0.11.19
 
 - `index.html`
 - `manifest.webmanifest`
