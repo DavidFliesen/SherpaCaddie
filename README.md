@@ -1,13 +1,13 @@
-## Version 0.11.17 — Audible Video and Reliable Tool Bridge
+## Version 0.11.18 — On-Course Reliability and Recording
 
-- Replaced the split, muted D-ID media path with D-ID’s documented complete-stream video attachment so Video replies carry their audio.
-- Keeps Sage’s poster visible until a playable moving frame is ready, preventing the brief black avatar panel.
-- Added audio-unlock handling to every typed and spoken Video submission path.
-- Added a deterministic Sherpa tool bridge for explicit round, recommendation, weather, club, scoring, strategy, and planner commands.
-- Diagnostics now report **PASS** for an actual D-ID tool dispatch and **LOCAL PASS** when D-ID skips it but Sherpa Caddie’s browser handler succeeds.
-- Retains local system-voice fallback when iOS blocks or omits the D-ID audio track.
+- Rebuilds failed D-ID WebSocket/session connections from a clean Agent Manager and retries once.
+- Keeps Sage’s portrait visible until a valid streamed frame is ready.
+- Sends deterministic local tool answers through D-ID speech and animation in Video mode when available, with local speech as the fallback.
+- Reflows the PLAY shot recorder so club, quality, direction, and actions remain accessible at phone and tablet widths.
+- Adds an explicit Record Shot button plus Penalty and Undo Last controls.
+- Finish Hole now uses the strokes actually recorded instead of silently adding another stroke.
 
-### Changed files in v0.11.17
+### Changed files in v0.11.18
 
 - `index.html`
 - `manifest.webmanifest`
