@@ -1,3 +1,22 @@
+## Version 0.12.0 — Plan Before, Reflect After
+
+- Removes the live swing-by-swing and shot-result tracking workflow from PLAY.
+- Rebuilds PLAY around pre-game planning: course, weather, tees, goal, mental focus, strategy, and Hole Planner.
+- Places Dave’s Sunday Bag and Full Bag choices directly beneath the pre-game planning section.
+- Adds a post-game REVIEW designed to take less than one minute.
+- Supports a single overall score or optional hole-by-hole scores for 9 or 18 holes.
+- Accepts short typed or dictated takeaways about what felt good and what was difficult.
+- Gives a Sage coaching review that recognizes positives first and then recommends one practical improvement.
+- Keeps saved reviews on the device with individual delete, Delete All, import, and export controls.
+- Updates Sage and D-ID context toward preparation, practice, mental-game coaching, and post-game learning.
+
+### Changed files in v0.12.0
+
+- `index.html`
+- `manifest.webmanifest`
+- `sw.js`
+- `README.md`
+
 ## Version 0.11.20 — Responsive Weather Control
 
 - Makes the PLAY weather control visibly respond while current conditions are loading.
