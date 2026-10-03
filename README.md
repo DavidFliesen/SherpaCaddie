@@ -1,3 +1,20 @@
+## Version 0.12.3 — Unified Sage Mode Cards
+
+- Removes the duplicate Sherpa Caddie logo from the upper-right of the persistent header.
+- Rebuilds Text as a branded Sherpa Caddie card with a clear message icon and TEXT label.
+- Rebuilds Voice as a matching branded card with a microphone, VOICE label, and animated speaking/listening dots.
+- Keeps Video connected to the existing Sage portrait and D-ID video stream.
+- Lets the conversation panel use the reclaimed header space on tablets and larger screens.
+- Combines the two former mobile left-column squares into one continuous mode card.
+- Preserves all GUIDE, LEARN, PLAN, CLUBS, and REVIEW behavior from v0.12.2.
+
+### Changed files in v0.12.3
+
+- `index.html`
+- `manifest.webmanifest`
+- `sw.js`
+- `README.md`
+
 ## Version 0.12.2 — Clear Short Game and Long Game Coaching
 
 - Gives Short Game practice a putting-green color identity in both the selection card and expanded coaching session.

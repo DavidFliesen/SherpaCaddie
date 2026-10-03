@@ -5,14 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#18311C">
 <meta name="description" content="Sherpa Caddie — one-shot-at-a-time golf guidance combining a caddie, coach and mentor.">
-<link rel="manifest" href="manifest.webmanifest?v=0133">
-<link rel="icon" href="icons/favicon.png?v=0133" type="image/png">
-<link rel="apple-touch-icon" href="icons/icon-192.png?v=0133">
-<link rel="preload" as="image" href="assets/sherpa-caddie-logo-fast.webp?v=0133" type="image/webp" fetchpriority="high">
-<title>Sherpa Caddie v0.12.2</title>
+<link rel="manifest" href="manifest.webmanifest?v=0134">
+<link rel="icon" href="icons/favicon.png?v=0134" type="image/png">
+<link rel="apple-touch-icon" href="icons/icon-192.png?v=0134">
+<link rel="preload" as="image" href="assets/sherpa-caddie-logo-fast.webp?v=0134" type="image/webp" fetchpriority="high">
+<title>Sherpa Caddie v0.12.3</title>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
   crossorigin="">
-<link rel="stylesheet" href="arteziq-ui.css?v=0133">
+<link rel="stylesheet" href="arteziq-ui.css?v=0134">
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
   crossorigin=""></script>
 <style>
@@ -975,6 +975,71 @@ body.immersive .mentor-topbar{min-height:342px;height:auto}
 #sherpaLiveShell .live-compose,
 #sherpaLiveShell .live-transcript{display:none!important}
 
+/* v0.12.3 — one unified Sage mode card; no duplicate corner logo */
+.mentor-topbar{
+  grid-template-columns:250px minmax(0,1fr);
+  padding-right:max(72px,calc((100vw - 1160px)/2));
+}
+.brand-center{display:none!important}
+.mentor-symbol{
+  justify-content:flex-start;padding:10px 10px 8px;color:var(--forest);
+  background:linear-gradient(180deg,#fffdf7 0%,#f4efe5 100%)
+}
+.mentor-mode-logo{display:block;width:100%;height:calc(100% - 64px);min-height:0;object-fit:contain;object-position:center}
+.mentor-mode-footer{
+  width:100%;min-height:54px;margin-top:auto;display:flex;align-items:center;justify-content:center;gap:7px;
+  color:var(--forest);border-top:1px solid rgba(29,77,42,.14);padding:7px 3px 1px
+}
+.mentor-mode-footer strong{font-size:clamp(1rem,2vw,1.55rem);font-weight:800;letter-spacing:.035em}
+.mentor-symbol .mentor-mode-icon{width:32px;height:32px;flex:0 0 32px;filter:none}
+.mentor-typing,.mentor-wave{
+  position:static;inset:auto;z-index:auto;width:auto;height:22px;min-width:31px;margin-left:2px;
+  border-radius:0;background:transparent;opacity:.32;transform:none;transition:opacity .18s
+}
+.mentor-typing{gap:4px}
+.mentor-typing span{width:7px;height:7px;background:var(--olive);animation:none}
+.mentor-stage[data-mode="text"].is-typing .mentor-typing{opacity:1}
+.mentor-stage[data-mode="text"].is-typing .mentor-typing span{animation:mentorDot .85s infinite ease-in-out}
+.mentor-stage[data-mode="text"].is-typing .mentor-typing span:nth-child(2){animation-delay:.13s}
+.mentor-stage[data-mode="text"].is-typing .mentor-typing span:nth-child(3){animation-delay:.26s}
+.mentor-wave{display:flex;align-items:center;justify-content:center;gap:4px;opacity:.38}
+.mentor-wave i{width:8px;height:8px;border-radius:50%;background:var(--olive);animation:none}
+.mentor-stage[data-mode="voice"] .mentor-wave{opacity:.38;transform:none}
+.mentor-stage[data-mode="voice"].is-listening .mentor-wave,
+.mentor-stage[data-mode="voice"].is-speaking .mentor-wave{opacity:1}
+.mentor-stage[data-mode="voice"].is-listening .mentor-wave i,
+.mentor-stage[data-mode="voice"].is-speaking .mentor-wave i{animation:mentorVoiceDot .72s infinite ease-in-out}
+.mentor-wave i:nth-child(2){animation-delay:.09s}.mentor-wave i:nth-child(3){animation-delay:.18s}.mentor-wave i:nth-child(4){animation-delay:.27s}
+@keyframes mentorVoiceDot{0%,100%{transform:translateY(0) scale(.72);opacity:.42}50%{transform:translateY(-5px) scale(1);opacity:1}}
+body.immersive .brand-center{display:none!important}
+
+@media(min-width:761px) and (max-width:1180px){
+  .mentor-topbar{grid-template-columns:290px minmax(0,1fr);padding-right:58px}
+}
+@media(max-width:760px){
+  .mentor-topbar{
+    grid-template-columns:128px minmax(0,1fr);
+    grid-template-rows:128px 128px auto auto auto
+  }
+  .mentor-dock{grid-column:1;grid-row:1/3;width:128px;height:264px;margin:0}
+  .mentor-stage{width:128px;height:264px;border-radius:21px}
+  .mentor-mode-logo{height:calc(100% - 72px)}
+  .mentor-mode-footer{min-height:64px;display:grid;grid-template-columns:28px 1fr;grid-template-rows:auto auto;gap:0 4px;padding:7px 2px 2px}
+  .mentor-symbol .mentor-mode-icon{width:26px;height:26px;grid-row:1/3;align-self:center}
+  .mentor-mode-footer strong{font-size:1.02rem;align-self:end}
+  .mentor-typing,.mentor-wave{grid-column:2;align-self:start;justify-content:flex-start;height:20px;margin:0}
+}
+@media(max-width:420px){
+  .mentor-topbar{grid-template-columns:116px minmax(0,1fr);grid-template-rows:116px 116px auto auto auto}
+  .mentor-dock,.mentor-stage{width:116px;height:238px}
+  .mentor-stage{border-radius:18px}
+  .mentor-mode-logo{height:calc(100% - 68px)}
+  .mentor-mode-footer{min-height:60px;grid-template-columns:25px 1fr;padding-left:1px;padding-right:1px}
+  .mentor-symbol .mentor-mode-icon{width:24px;height:24px}
+  .mentor-mode-footer strong{font-size:.92rem}
+  .mentor-wave i{width:7px;height:7px}
+}
+
 </style>
 </head>
 <body>
@@ -983,31 +1048,37 @@ body.immersive .mentor-topbar{min-height:342px;height:auto}
     <div class="splash-rings" aria-hidden="true"></div>
     <div class="splash-logo-stage" aria-hidden="true">
       <div class="splash-logo-glow"></div>
-      <img class="splash-logo" src="assets/sherpa-caddie-logo-fast.webp?v=0133" decoding="async" alt="Sherpa Caddie">
+      <img class="splash-logo" src="assets/sherpa-caddie-logo-fast.webp?v=0134" decoding="async" alt="Sherpa Caddie">
     </div>
     <div class="splash-title">Sherpa Caddie</div>
     <div class="splash-subtitle">Your guide. Your game. Your best round.</div>
     <div class="splash-path" aria-hidden="true"><span></span><i></i></div>
     <div class="splash-caption">Walking your game plan into place…</div>
   </div>
-  <div class="splash-footer">ARTEZIQ • Sherpa Caddie • v0.12.2</div>
+  <div class="splash-footer">ARTEZIQ • Sherpa Caddie • v0.12.3</div>
 </div>
 <div class="app">
 <header class="topbar mentor-topbar" data-mode="text">
   <div class="mentor-dock" id="mentorDock">
     <div class="mentor-stage" id="mentorStage" data-mode="text" role="img" aria-label="Sage Text mode ready">
       <div class="mentor-symbol mentor-symbol-text" aria-hidden="true">
-        <span class="mentor-symbol-word">TEXT</span>
-        <svg viewBox="0 0 64 64" focusable="false"><path d="M12 13h40a7 7 0 0 1 7 7v22a7 7 0 0 1-7 7H30L18 58v-9h-6a7 7 0 0 1-7-7V20a7 7 0 0 1 7-7Z" fill="none" stroke="currentColor" stroke-width="4" stroke-linejoin="round"/><path d="M17 26h30M17 36h20" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round"/></svg>
-        <div class="mentor-typing" aria-hidden="true"><span></span><span></span><span></span></div>
+        <img class="mentor-mode-logo" src="assets/sherpa-caddie-logo-fast.webp?v=0134" alt="">
+        <div class="mentor-mode-footer">
+          <svg class="mentor-mode-icon" viewBox="0 0 64 64" focusable="false"><path d="M12 13h40a7 7 0 0 1 7 7v22a7 7 0 0 1-7 7H30L18 58v-9h-6a7 7 0 0 1-7-7V20a7 7 0 0 1 7-7Z" fill="none" stroke="currentColor" stroke-width="4" stroke-linejoin="round"/><path d="M17 26h30M17 36h20" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round"/></svg>
+          <strong>TEXT</strong>
+          <div class="mentor-typing" aria-hidden="true"><span></span><span></span><span></span></div>
+        </div>
       </div>
       <div class="mentor-symbol mentor-symbol-voice" aria-hidden="true">
-        <span class="mentor-symbol-word">VOICE</span>
-        <svg viewBox="0 0 64 64" focusable="false"><rect x="23" y="8" width="18" height="31" rx="9" fill="none" stroke="currentColor" stroke-width="4"/><path d="M15 31a17 17 0 0 0 34 0M32 48v9M23 57h18" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round"/></svg>
-        <div class="mentor-wave" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+        <img class="mentor-mode-logo" src="assets/sherpa-caddie-logo-fast.webp?v=0134" alt="">
+        <div class="mentor-mode-footer">
+          <svg class="mentor-mode-icon" viewBox="0 0 64 64" focusable="false"><rect x="23" y="8" width="18" height="31" rx="9" fill="none" stroke="currentColor" stroke-width="4"/><path d="M15 31a17 17 0 0 0 34 0M32 48v9M23 57h18" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round"/></svg>
+          <strong>VOICE</strong>
+          <div class="mentor-wave" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+        </div>
       </div>
       <div class="mentor-live-media">
-        <img id="sherpaLivePoster" class="mentor-poster" src="assets/sage-sherpa-live.webp?v=0133" alt="Sage, Sherpa Caddie mentor">
+        <img id="sherpaLivePoster" class="mentor-poster" src="assets/sage-sherpa-live.webp?v=0134" alt="Sage, Sherpa Caddie mentor">
         <video id="sherpaLiveVideo" class="mentor-video" autoplay playsinline aria-label="Sage Video avatar"></video>
       </div>
       <span class="companion-dot ready" id="companionDot"></span>
@@ -1039,11 +1110,7 @@ body.immersive .mentor-topbar{min-height:342px;height:auto}
     <div class="console-hint" id="companionControlHint">Type a question above, then tap Ask.</div>
   </div>
 
-  <div class="brand-center" aria-label="Sherpa Caddie">
-    <img class="brand-logo" src="assets/sherpa-caddie-logo-fast.webp?v=0133" width="180" height="196" decoding="sync" fetchpriority="high" alt="Sherpa Caddie">
-  </div>
-
-  <div class="version app-chrome">v0.12.2</div>
+  <div class="version app-chrome">v0.12.3</div>
 </header>
 
 <div class="tabs-wrap app-chrome">
@@ -1201,7 +1268,7 @@ body.immersive .mentor-topbar{min-height:342px;height:auto}
 
         <div class="live-transcript" aria-live="polite">
           <div class="live-message"><div>👤</div><div><strong>You:</strong> <span id="liveUserText">Say “Hey Sherpa,” “Hey Sage,” or type a question.</span></div><time id="liveUserTime"></time></div>
-          <div class="live-message sage"><img class="live-message-avatar" src="assets/sage-sherpa-live.webp?v=0133" alt=""><div><strong>Sage:</strong> <span id="liveSageText">I’m ready to help you learn, practice, plan, or review.</span></div><time id="liveSageTime"></time></div>
+          <div class="live-message sage"><img class="live-message-avatar" src="assets/sage-sherpa-live.webp?v=0134" alt=""><div><strong>Sage:</strong> <span id="liveSageText">I’m ready to help you learn, practice, plan, or review.</span></div><time id="liveSageTime"></time></div>
         </div>
 
         <div class="live-compose">
@@ -1471,14 +1538,18 @@ body.immersive .mentor-topbar{min-height:342px;height:auto}
   </article>
 </section>
 
-<div class="footer"><span>Sherpa Caddie v0.12.2</span><button id="aboutBtn">What’s in v0.12.2?</button></div>
+<div class="footer"><span>Sherpa Caddie v0.12.3</span><button id="aboutBtn">What’s in v0.12.3?</button></div>
 </main>
 </div>
 
 <div id="aboutModal" class="modal-backdrop hidden" role="dialog" aria-modal="true">
   <div class="modal" style="max-width:650px">
-    <div class="section-head"><div><p class="eyebrow">One-Shot Sherpa</p><h2>Version 0.12.2</h2></div><button class="btn ghost" id="closeAboutModal">Close</button></div>
+    <div class="section-head"><div><p class="eyebrow">One-Shot Sherpa</p><h2>Version 0.12.3</h2></div><button class="btn ghost" id="closeAboutModal">Close</button></div>
     <ul style="color:var(--stone);line-height:1.7">
+      <li>The duplicate Sherpa Caddie logo has been removed from the upper-right of the header</li>
+      <li>Text and Voice now use matching branded Sage cards in the left display</li>
+      <li>Voice uses animated dots to show when Sage is listening or speaking</li>
+      <li>Video keeps the existing Sage portrait and live D-ID stream</li>
       <li>The five tabs are now GUIDE, LEARN, PLAN, CLUBS, and REVIEW</li>
       <li>Short Game uses a distinct putting-green color identity throughout selection and coaching</li>
       <li>Long Game uses a distinct range-blue color identity throughout selection and coaching</li>
@@ -1601,8 +1672,8 @@ body.immersive .mentor-topbar{min-height:342px;height:auto}
 </div>
 <div class="toast" id="toast"></div>
 
-<script src="arteziq-audio.js?v=0133"></script>
-<script src="arteziq-ui.js?v=0133"></script>
+<script src="arteziq-audio.js?v=0134"></script>
+<script src="arteziq-ui.js?v=0134"></script>
 <script>
 (()=>{"use strict";
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
@@ -3160,7 +3231,7 @@ $("#importBtn").onclick=()=>$("#importFile").click();$("#importFile").onchange=a
 function hideSplash(){const el=$("#splashScreen");if(!el||el.classList.contains("is-hidden"))return;el.classList.add("is-hidden");setTimeout(()=>el.remove(),800);setTimeout(()=>window.UIKIT?.applyFSLock?.(),850)}
 window.addEventListener("load",()=>setTimeout(hideSplash,5000));
 setTimeout(hideSplash,5600);
-if("serviceWorker"in navigator)window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js?v=0133").catch(()=>{}));
+if("serviceWorker"in navigator)window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js?v=0134").catch(()=>{}));
 initArteziqUiKit();
 renderClubs();
 renderRounds();
