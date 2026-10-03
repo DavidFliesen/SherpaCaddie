@@ -1,3 +1,18 @@
+## Version 0.12.2 — Clear Short Game and Long Game Coaching
+
+- Gives Short Game practice a putting-green color identity in both the selection card and expanded coaching session.
+- Gives Long Game practice a range-blue color identity in both the selection card and expanded coaching session.
+- Adds a persistent Short Game / Putting Green or Long Game / Driving Range badge inside the active session.
+- Adds a prominent **How to Play Better** heading between guided practice and the lesson library.
+- Preserves all GUIDE, PLAN, CLUBS, and REVIEW behavior from v0.12.1.
+
+### Changed files in v0.12.2
+
+- `index.html`
+- `manifest.webmanifest`
+- `sw.js`
+- `README.md`
+
 ## Version 0.12.1 — Learn, Practice, Plan
 
 - Reorders navigation to GUIDE, LEARN, PLAN, CLUBS, and REVIEW.
