@@ -1,3 +1,21 @@
+## Version 0.12.1 — Learn, Practice, Plan
+
+- Reorders navigation to GUIDE, LEARN, PLAN, CLUBS, and REVIEW.
+- Renames PLAY to PLAN and keeps it exclusively focused on preparing for a future golf game.
+- Moves LEARN to the second tab and adds guided Putting Green and Driving Range coaching sessions.
+- Adds Putting Green focus choices for distance control, start line, short-putt confidence, and routine.
+- Adds Driving Range focus choices for contact, direction, tempo, and club-distance gapping.
+- Gives each practice session a focused checklist with visible progress and a clear completion message.
+- Expands CLUBS with plain-English equipment lessons covering woods, hybrids, irons, club numbers, wedges, loft, shopping, and fitting.
+- Preserves the quick post-game REVIEW and all v0.12.0 removal of live shot tracking.
+
+### Changed files in v0.12.1
+
+- `index.html`
+- `manifest.webmanifest`
+- `sw.js`
+- `README.md`
+
 ## Version 0.12.0 — Plan Before, Reflect After
 
 - Removes the live swing-by-swing and shot-result tracking workflow from PLAY.

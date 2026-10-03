@@ -1,16 +1,16 @@
-const CACHE="sherpa-caddie-v0.12.0";
+const CACHE="sherpa-caddie-v0.12.1";
 const APP_FILES=[
   "./",
-  "./index.html?v=0131",
-  "./manifest.webmanifest?v=0131",
-  "./arteziq-ui.css?v=0131",
-  "./arteziq-audio.js?v=0131",
-  "./arteziq-ui.js?v=0131",
-  "./assets/sherpa-caddie-logo-fast.webp?v=0131",
-  "./assets/sage-sherpa-live.webp?v=0131",
-  "./icons/icon-192.png?v=0131",
-  "./icons/icon-512.png?v=0131",
-  "./icons/favicon.png?v=0131"
+  "./index.html?v=0132",
+  "./manifest.webmanifest?v=0132",
+  "./arteziq-ui.css?v=0132",
+  "./arteziq-audio.js?v=0132",
+  "./arteziq-ui.js?v=0132",
+  "./assets/sherpa-caddie-logo-fast.webp?v=0132",
+  "./assets/sage-sherpa-live.webp?v=0132",
+  "./icons/icon-192.png?v=0132",
+  "./icons/icon-512.png?v=0132",
+  "./icons/favicon.png?v=0132"
 ];
 
 self.addEventListener("install", event => {
@@ -48,7 +48,7 @@ self.addEventListener("fetch", event => {
   // Page navigation: network first, app shell only as true offline fallback.
   if(request.mode === "navigate"){
     event.respondWith(
-      fetch(request).catch(() => caches.match("./index.html?v=0131"))
+      fetch(request).catch(() => caches.match("./index.html?v=0132"))
     );
     return;
   }

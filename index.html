@@ -5,14 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#18311C">
 <meta name="description" content="Sherpa Caddie — one-shot-at-a-time golf guidance combining a caddie, coach and mentor.">
-<link rel="manifest" href="manifest.webmanifest?v=0131">
-<link rel="icon" href="icons/favicon.png?v=0131" type="image/png">
-<link rel="apple-touch-icon" href="icons/icon-192.png?v=0131">
-<link rel="preload" as="image" href="assets/sherpa-caddie-logo-fast.webp?v=0131" type="image/webp" fetchpriority="high">
-<title>Sherpa Caddie v0.12.0</title>
+<link rel="manifest" href="manifest.webmanifest?v=0132">
+<link rel="icon" href="icons/favicon.png?v=0132" type="image/png">
+<link rel="apple-touch-icon" href="icons/icon-192.png?v=0132">
+<link rel="preload" as="image" href="assets/sherpa-caddie-logo-fast.webp?v=0132" type="image/webp" fetchpriority="high">
+<title>Sherpa Caddie v0.12.1</title>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
   crossorigin="">
-<link rel="stylesheet" href="arteziq-ui.css?v=0131">
+<link rel="stylesheet" href="arteziq-ui.css?v=0132">
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
   crossorigin=""></script>
 <style>
@@ -184,7 +184,7 @@ main{width:min(1160px,calc(100% - 28px));margin:0 auto;padding-bottom:18px}
 }
 .ask-status{margin-right:auto;color:var(--stone);font-size:.78rem}
 
-/* PLAY pre-round */
+/* PLAN — future game preparation */
 .play-grid{display:grid;grid-template-columns:1.08fr .92fr;gap:13px}
 .course-card,.selected-card{padding:16px}
 .section-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;margin-bottom:10px}
@@ -462,9 +462,11 @@ main{padding-top:14px;padding-bottom:30px}
 .tee-help{margin-top:8px;padding:9px 10px;border-radius:10px;background:rgba(248,243,234,.94);color:var(--navy);border:1px solid rgba(255,255,255,.35);font-size:.79rem;line-height:1.4}
 .tee-help strong{color:var(--forest)!important}.tee-help details{margin-top:5px}.tee-help summary{cursor:pointer;font-weight:850;color:var(--forest)}.tee-help p{margin:6px 0 0;color:var(--stone)}
 .learn-hub{display:grid;gap:12px}.learn-intro{background:linear-gradient(112deg,#17391f,#2c5b36);border:0;color:#fff}.learn-intro h2{color:#fff}.learn-intro p{margin:6px 0 0;color:#e8dfd0;line-height:1.45}
+.practice-coach{padding:17px 18px;background:linear-gradient(150deg,#fffaf0,#eef4ea)}.practice-coach>h2{margin:0;color:var(--forest);font-family:Georgia,"Times New Roman",serif}.practice-coach>.muted{margin:6px 0 13px}.practice-paths{display:grid;grid-template-columns:1fr 1fr;gap:12px}.practice-path{padding:15px;border:1px solid var(--line);border-radius:15px;background:#fff;box-shadow:var(--shadow)}.practice-path h3{margin:0 0 5px;color:var(--forest);font-size:1.14rem}.practice-path p{margin:0 0 11px;color:var(--stone);font-size:.87rem;line-height:1.42}.practice-options{display:grid;grid-template-columns:1fr 112px;gap:8px;margin-bottom:10px}.practice-options label{font-size:.75rem;font-weight:850;color:var(--forest)}.practice-options select{display:block;width:100%;margin-top:4px;padding:9px;border:1px solid var(--line);border-radius:9px;background:#fff;color:var(--navy)}.practice-session{margin-top:13px;padding:15px;border-radius:14px;background:linear-gradient(145deg,#17391f,#2d5b36);color:#fff}.practice-session h3{margin:0 0 6px;font-family:Georgia,"Times New Roman",serif;font-size:1.3rem}.practice-session p{margin:5px 0;color:#ecdfcb;line-height:1.45}.practice-checklist{display:grid;gap:7px;margin:11px 0}.practice-step{display:flex;align-items:flex-start;gap:9px;padding:9px 10px;border:1px solid rgba(255,255,255,.22);border-radius:10px;background:rgba(255,255,255,.08);color:#fff;text-align:left;font-weight:750}.practice-step.done{background:rgba(223,238,213,.2);text-decoration:line-through}.practice-progress{font-weight:850;color:#efd19b!important}.club-school{padding:16px 18px}.club-school h2{margin:0;color:var(--forest)}.club-school>p{margin:5px 0 12px}.club-school-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:9px}.club-school details{padding:11px 12px;border:1px solid var(--line);border-radius:11px;background:#fff}.club-school summary{cursor:pointer;font-weight:900;color:var(--forest)}.club-school details p{margin:7px 0 0;color:var(--stone);font-size:.85rem;line-height:1.48}
 .learn-categories{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.learn-category{padding:14px 16px}.learn-category h3{margin:0 0 4px;color:var(--forest);font-size:1.08rem}.learn-category>p{margin:0 0 9px;color:var(--stone);font-size:.84rem;line-height:1.35}
 .learn-topic{border-top:1px solid var(--line);padding:8px 0}.learn-topic:first-of-type{border-top:0}.learn-topic summary{cursor:pointer;list-style:none;font-weight:850;color:var(--navy);display:flex;align-items:center;gap:7px}.learn-topic summary::-webkit-details-marker{display:none}.learn-topic summary:after{content:"+";margin-left:auto;color:var(--tan);font-size:1.15rem}.learn-topic[open] summary:after{content:"−"}.learn-topic p{margin:7px 0 0 27px;color:var(--stone);font-size:.84rem;line-height:1.45}
 @media(max-width:850px){.tab{gap:4px}.tab-label{font-size:.8rem}.learn-categories{grid-template-columns:1fr 1fr}}
+@media(max-width:720px){.practice-paths,.club-school-grid{grid-template-columns:1fr}.practice-options{grid-template-columns:1fr 105px}}
 @media(max-width:620px){.tab{flex-direction:column;gap:2px;padding:7px 2px}.tab-icon{font-size:1rem}.tab-label{font-size:.62rem}.bag-presets,.learn-categories{grid-template-columns:1fr}.clubs-actions{justify-content:stretch}.clubs-actions .modal-note{width:100%}.clubs-actions .btn{flex:1}}
 
 @media(max-width:850px){.topbar{height:98px}.brand-badge{width:92px;height:92px;padding:8px}.brand-logo{width:72px;height:72px}.brand-text h1{font-size:1.55rem}}
@@ -981,14 +983,14 @@ body.immersive .mentor-topbar{min-height:342px;height:auto}
     <div class="splash-rings" aria-hidden="true"></div>
     <div class="splash-logo-stage" aria-hidden="true">
       <div class="splash-logo-glow"></div>
-      <img class="splash-logo" src="assets/sherpa-caddie-logo-fast.webp?v=0131" decoding="async" alt="Sherpa Caddie">
+      <img class="splash-logo" src="assets/sherpa-caddie-logo-fast.webp?v=0132" decoding="async" alt="Sherpa Caddie">
     </div>
     <div class="splash-title">Sherpa Caddie</div>
     <div class="splash-subtitle">Your guide. Your game. Your best round.</div>
     <div class="splash-path" aria-hidden="true"><span></span><i></i></div>
     <div class="splash-caption">Walking your game plan into place…</div>
   </div>
-  <div class="splash-footer">ARTEZIQ • Sherpa Caddie • v0.12.0</div>
+  <div class="splash-footer">ARTEZIQ • Sherpa Caddie • v0.12.1</div>
 </div>
 <div class="app">
 <header class="topbar mentor-topbar" data-mode="text">
@@ -1005,7 +1007,7 @@ body.immersive .mentor-topbar{min-height:342px;height:auto}
         <div class="mentor-wave" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
       </div>
       <div class="mentor-live-media">
-        <img id="sherpaLivePoster" class="mentor-poster" src="assets/sage-sherpa-live.webp?v=0131" alt="Sage, Sherpa Caddie mentor">
+        <img id="sherpaLivePoster" class="mentor-poster" src="assets/sage-sherpa-live.webp?v=0132" alt="Sage, Sherpa Caddie mentor">
         <video id="sherpaLiveVideo" class="mentor-video" autoplay playsinline aria-label="Sage Video avatar"></video>
       </div>
       <span class="companion-dot ready" id="companionDot"></span>
@@ -1038,18 +1040,18 @@ body.immersive .mentor-topbar{min-height:342px;height:auto}
   </div>
 
   <div class="brand-center" aria-label="Sherpa Caddie">
-    <img class="brand-logo" src="assets/sherpa-caddie-logo-fast.webp?v=0131" width="180" height="196" decoding="sync" fetchpriority="high" alt="Sherpa Caddie">
+    <img class="brand-logo" src="assets/sherpa-caddie-logo-fast.webp?v=0132" width="180" height="196" decoding="sync" fetchpriority="high" alt="Sherpa Caddie">
   </div>
 
-  <div class="version app-chrome">v0.12.0</div>
+  <div class="version app-chrome">v0.12.1</div>
 </header>
 
 <div class="tabs-wrap app-chrome">
 <nav class="tabs" aria-label="Main sections">
   <button class="tab active" data-view="guide" aria-label="Guide — talk with Sherpa"><span class="tab-icon">🏔️</span><span class="tab-label">Guide</span></button>
-  <button class="tab" data-view="play" aria-label="Play — plan or start a round"><span class="tab-icon">🏌️</span><span class="tab-label">Play</span></button>
-  <button class="tab" data-view="clubs" aria-label="Clubs — set up your golf bag"><span class="tab-icon">🏑</span><span class="tab-label">Clubs</span></button>
   <button class="tab" data-view="learn" aria-label="Learn — golf skills, rules and strategy"><span class="tab-icon">🧭</span><span class="tab-label">Learn</span></button>
+  <button class="tab" data-view="play" aria-label="Plan — prepare for a future golf game"><span class="tab-icon">🏌️</span><span class="tab-label">Plan</span></button>
+  <button class="tab" data-view="clubs" aria-label="Clubs — understand and set up your golf bag"><span class="tab-icon">🏑</span><span class="tab-label">Clubs</span></button>
   <button class="tab" data-view="review" aria-label="Review — review saved games"><span class="tab-icon">📒</span><span class="tab-label">Review</span></button>
 </nav>
 </div>
@@ -1199,7 +1201,7 @@ body.immersive .mentor-topbar{min-height:342px;height:auto}
 
         <div class="live-transcript" aria-live="polite">
           <div class="live-message"><div>👤</div><div><strong>You:</strong> <span id="liveUserText">Say “Hey Sherpa,” “Hey Sage,” or type a question.</span></div><time id="liveUserTime"></time></div>
-          <div class="live-message sage"><img class="live-message-avatar" src="assets/sage-sherpa-live.webp?v=0131" alt=""><div><strong>Sage:</strong> <span id="liveSageText">I’m ready to help you prepare, practice, or review a game.</span></div><time id="liveSageTime"></time></div>
+          <div class="live-message sage"><img class="live-message-avatar" src="assets/sage-sherpa-live.webp?v=0132" alt=""><div><strong>Sage:</strong> <span id="liveSageText">I’m ready to help you learn, practice, plan, or review.</span></div><time id="liveSageTime"></time></div>
         </div>
 
         <div class="live-compose">
@@ -1219,7 +1221,7 @@ body.immersive .mentor-topbar{min-height:342px;height:auto}
     <div class="play-grid">
       <article class="card course-card">
         <div class="section-head">
-          <div><p class="eyebrow">Plan your day</p><h2>Choose a golf course</h2></div>
+          <div><p class="eyebrow">Plan a future game</p><h2>Choose the golf course</h2></div>
         </div>
         <button class="btn primary big-action" id="nearMeBtn">📍 Find Courses Near Me</button>
         <div class="divider">or</div>
@@ -1235,13 +1237,13 @@ body.immersive .mentor-topbar{min-height:342px;height:auto}
       </article>
 
       <article class="card selected-card">
-        <p class="eyebrow">Selected course</p>
+        <p class="eyebrow">Game-planning details</p>
         <h2 class="selected-name" id="selectedCourseName">No course selected</h2>
         <p class="muted" id="selectedCourseLocation">Choose a course on the left.</p>
         <p class="muted" id="courseDataNote" style="font-size:.8rem;font-weight:800;margin:6px 0 0"></p>
 
         <div class="weather-box">
-          <strong style="color:var(--forest)">Playing conditions</strong>
+          <strong style="color:var(--forest)">Expected course conditions</strong>
           <div class="weather-grid">
             <div class="weather-stat"><span>TEMP</span><strong id="tempStat">—</strong></div>
             <div class="weather-stat"><span>WIND</span><strong id="windStat">—</strong></div>
@@ -1313,6 +1315,19 @@ body.immersive .mentor-topbar{min-height:342px;height:auto}
       </div>
       <div class="bag-note" id="bagDescription">Full Bag is selected.</div>
     </article>
+    <article class="card club-school">
+      <p class="eyebrow">Understand your equipment</p>
+      <h2>Club terminology and capability</h2>
+      <p class="muted">Open any question for a plain-English explanation before choosing or buying equipment.</p>
+      <div class="club-school-grid">
+        <details open><summary>Wood, hybrid, or iron—what is the difference?</summary><p><strong>Woods</strong> have larger heads and longer shafts for distance, especially from the tee or a good fairway lie. <strong>Irons</strong> have smaller heads and offer more control for approach shots. <strong>Hybrids</strong> combine wood-like forgiveness with iron-like length and are often easier to launch than long irons.</p></details>
+        <details><summary>What do higher club numbers do?</summary><p>As the number rises, the club usually becomes shorter and has more loft. A 9-iron normally flies higher and a shorter distance than a 7-iron. Lower numbers normally go farther, but they can be harder to hit consistently.</p></details>
+        <details><summary>What are the different wedges?</summary><p><strong>Pitching wedge</strong> handles fuller short approaches. <strong>Gap wedge</strong> fills the distance between pitching and sand wedges. <strong>Sand wedge</strong> adds loft and bounce for bunkers and many short shots. <strong>Lob wedge</strong> launches highest for specialized shots but can be less forgiving.</p></details>
+        <details><summary>Why do some wedges use names and others degrees?</summary><p>The degree is the club’s <strong>loft</strong>—the angle that helps determine launch and distance. Names such as pitching, gap, sand, and lob describe a general role, but their exact lofts vary by manufacturer. Degree labels such as 52°, 56°, and 60° make the spacing more precise.</p></details>
+        <details><summary>How should I shop for new clubs?</summary><p>Start with the problem you want to solve: easier launch, more forgiveness, better distance gaps, or improved feel. Compare clubs using normal swings, not only your best strike. A well-chosen used club can be better value than a new club that does not fit your swing.</p></details>
+        <details><summary>What is the value of getting fitted?</summary><p>A fitting checks length, lie angle, shaft, loft, grip, launch, and distance gaps so the clubs work with your normal swing. Ask a local golf-course professional, independent club fitter, golf retailer, or manufacturer fitting event. Request a basic bag or gapping evaluation if you do not need a full fitting.</p></details>
+      </div>
+    </article>
     <article class="card clubs-editor">
       <div class="section-head">
         <div><p class="eyebrow">Personal carry distances</p><h2>How far do your clubs carry?</h2></div>
@@ -1332,8 +1347,34 @@ body.immersive .mentor-topbar{min-height:342px;height:auto}
   <div class="learn-hub">
     <article class="card learn-intro">
       <p class="eyebrow" style="color:#d7b77f">Learn with Sherpa</p>
-      <h2>Golf explained one useful idea at a time</h2>
-      <p>Use these short lessons before a round or open one when something comes up on the course. Learn covers getting started, shot planning, short game, rules, etiquette, and the mental game.</p>
+      <h2>Learn it. Practice it. Take it to the course.</h2>
+      <p>Build the short game and long game through focused coaching sessions, then use the lesson library to understand strategy, rules, etiquette, and the mental game.</p>
+    </article>
+    <article class="card practice-coach">
+      <p class="eyebrow">Practice with purpose</p>
+      <h2>Practice to perfect before ever playing a game!</h2>
+      <p class="muted">Choose one coaching session. Sage gives you a simple sequence, one focus at a time, without turning practice into a complicated assessment.</p>
+      <div class="practice-paths">
+        <section class="practice-path">
+          <h3>⛳ The Short Game</h3>
+          <p>A Putting Green coaching session for start line, speed, short-putt confidence, and useful distance control.</p>
+          <div class="practice-options">
+            <label>Today’s focus<select id="puttingFocus"><option value="distance">Distance control</option><option value="start-line">Start line</option><option value="short-putts">Short-putt confidence</option><option value="routine">Putting routine</option></select></label>
+            <label>Time<select id="puttingMinutes"><option value="10">10 min</option><option value="20" selected>20 min</option><option value="30">30 min</option></select></label>
+          </div>
+          <button class="btn primary" type="button" data-start-practice="putting">Start Putting Session</button>
+        </section>
+        <section class="practice-path">
+          <h3>🏌️ The Long Game</h3>
+          <p>A Driving Range coaching session for contact, direction, tempo, club confidence, and dependable carry distances.</p>
+          <div class="practice-options">
+            <label>Today’s focus<select id="rangeFocus"><option value="contact">Solid contact</option><option value="direction">Direction and target</option><option value="tempo">Tempo and balance</option><option value="gapping">Club-distance gapping</option></select></label>
+            <label>Time<select id="rangeMinutes"><option value="15">15 min</option><option value="30" selected>30 min</option><option value="45">45 min</option></select></label>
+          </div>
+          <button class="btn primary" type="button" data-start-practice="range">Start Range Session</button>
+        </section>
+      </div>
+      <div class="practice-session hidden" id="practiceSession" aria-live="polite"></div>
     </article>
     <div class="learn-categories">
       <article class="card learn-category">
@@ -1425,23 +1466,22 @@ body.immersive .mentor-topbar{min-height:342px;height:auto}
   </article>
 </section>
 
-<div class="footer"><span>Sherpa Caddie v0.12.0</span><button id="aboutBtn">What’s in v0.12.0?</button></div>
+<div class="footer"><span>Sherpa Caddie v0.12.1</span><button id="aboutBtn">What’s in v0.12.1?</button></div>
 </main>
 </div>
 
 <div id="aboutModal" class="modal-backdrop hidden" role="dialog" aria-modal="true">
   <div class="modal" style="max-width:650px">
-    <div class="section-head"><div><p class="eyebrow">One-Shot Sherpa</p><h2>Version 0.12.0</h2></div><button class="btn ghost" id="closeAboutModal">Close</button></div>
+    <div class="section-head"><div><p class="eyebrow">One-Shot Sherpa</p><h2>Version 0.12.1</h2></div><button class="btn ghost" id="closeAboutModal">Close</button></div>
     <ul style="color:var(--stone);line-height:1.7">
-      <li>PLAY is now dedicated to pre-game planning—course, weather, tees, goal, mental focus, and Hole Planner</li>
-      <li>Sunday Bag and Full Bag preparation now appears directly beneath the pre-game plan</li>
-      <li>All live swing, club, shot-result, and hole-by-hole tracking has been removed from the playing experience</li>
-      <li>REVIEW adds a post-game check-in designed to take less than one minute</li>
-      <li>Enter either one overall score or optional hole-by-hole scores for 9 or 18 holes</li>
-      <li>Add short comments by typing or dictation, then receive Sage’s encouraging coach-style review</li>
-      <li>Sage recognizes positives first, then offers one useful improvement and one clear next-game focus</li>
-      <li>Saved game reviews can be deleted individually, deleted together, exported, or imported</li>
-      <li>D-ID context now emphasizes planning, practice, the mental game, clubs, weather, and post-game learning</li>
+      <li>The five tabs are now GUIDE, LEARN, PLAN, CLUBS, and REVIEW</li>
+      <li>LEARN moves into the second tab position as the main coaching and practice area</li>
+      <li>Putting Green coaching covers distance control, start line, short-putt confidence, and routine</li>
+      <li>Driving Range coaching covers contact, direction, tempo, and club-distance gapping</li>
+      <li>Each practice session supplies a focused checklist and simple progress feedback</li>
+      <li>PLAY is renamed PLAN and is exclusively for preparing a future game using course, weather, tees, strategy, and bag information</li>
+      <li>CLUBS adds plain-English lessons about woods, hybrids, irons, club numbers, wedges, loft, shopping, and fitting</li>
+      <li>REVIEW retains the quick post-game score, comments, and encouraging Sage assessment</li>
     </ul>
   </div>
 </div>
@@ -1552,8 +1592,8 @@ body.immersive .mentor-topbar{min-height:342px;height:auto}
 </div>
 <div class="toast" id="toast"></div>
 
-<script src="arteziq-audio.js?v=0131"></script>
-<script src="arteziq-ui.js?v=0131"></script>
+<script src="arteziq-audio.js?v=0132"></script>
+<script src="arteziq-ui.js?v=0132"></script>
 <script>
 (()=>{"use strict";
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
@@ -1647,6 +1687,33 @@ $$(".bag-preset").forEach(b=>b.onclick=()=>{saveVisibleClubInputs();state.bagMod
 $$("[data-open-view]").forEach(b=>b.onclick=()=>show(b.dataset.openView));
 $("#saveClubsBtn").onclick=()=>{saveVisibleClubInputs();save();renderClubs();toast("Club distances saved")};
 $("#resetClubsBtn").onclick=()=>{activeClubNames().forEach(n=>state.clubs[n]=CLUBS[n]);renderClubs();save();toast("Current bag distances reset")};
+
+/* Guided practice — focused sessions without swing-by-swing assessment */
+const PRACTICE_FOCUS={
+ putting:{
+  distance:["Warm up with five relaxed putts and notice the roll.","Putt three balls each from 15, 25, and 35 feet. Try to finish inside a three-foot circle.","Repeat the distance that gave you the most trouble without changing your tempo.","Finish with five putts to different holes, judging speed before direction."],
+  "start-line":["Choose a straight six-foot putt and make five relaxed strokes.","Create a gate just wider than the ball about one foot ahead. Roll ten balls through it.","Move to a slightly breaking putt and keep the same committed start line.","Finish by choosing five new putts and saying the start line before each stroke."],
+  "short-putts":["Make five putts from two feet to settle your setup and tempo.","Move around the hole at three feet. Make one from each of eight positions.","Repeat any missed position once—no punishment and no rapid-fire retries.","Finish by making three in a row from your most comfortable three-foot spot."],
+  routine:["Choose one ball and rehearse your read, aim, look, and roll routine.","Use the same routine for six putts from different directions.","Add gentle pressure: step away and restart if you skip part of the routine.","Finish with three putts where success means following the routine, not making the putt."]
+ },
+ range:{
+  contact:["Warm up with short wedge swings and finish in balance.","Hit ten balls with a comfortable mid-iron, brushing the ground in the same place.","Alternate a wedge and mid-iron while keeping the same easy tempo.","Finish with five target shots using the club that produced the best contact."],
+  direction:["Choose one wide target and hit five easy wedge shots toward it.","Use a mid-iron and check alignment before each of ten balls.","Change targets every three shots so every ball has a clear purpose.","Finish with five simulated tee shots to a fairway-width target."],
+  tempo:["Make five slow rehearsal swings and hold the finish.","Hit ten balls at about three-quarter effort with a balanced finish.","Alternate one rehearsal swing and one ball without speeding up.","Finish with five normal shots while keeping the same unhurried transition."],
+  gapping:["Warm up without measuring your first five shots.","Hit five normal shots with each selected club and ignore obvious mishits.","Record the typical carry—not the longest result—for each club.","Review the gaps and mark any area that needs another club or more practice."]
+ }
+};
+function startPracticeSession(type){
+ const isPutting=type==="putting",focus=$(isPutting?"#puttingFocus":"#rangeFocus").value,minutes=Number($(isPutting?"#puttingMinutes":"#rangeMinutes").value),steps=PRACTICE_FOCUS[type][focus],title=isPutting?"Putting Green Coaching":"Driving Range Coaching",thought=isPutting?"See the roll, choose the speed, and make one committed stroke.":"Choose the target, swing in balance, and let the club do the work.";
+ const box=$("#practiceSession");box.dataset.practiceType=type;box.innerHTML=`<p class="eyebrow" style="color:#efd19b">${minutes}-minute guided practice</p><h3>${title}</h3><p><strong>Today’s one thought:</strong> ${thought}</p><div class="practice-checklist">${steps.map((step,i)=>`<button class="practice-step" type="button" data-practice-step="${i}"><span>○</span><span><strong>Step ${i+1}</strong><br>${step}</span></button>`).join("")}</div><p class="practice-progress">0 of ${steps.length} steps complete</p><button class="btn secondary" type="button" data-restart-practice>Start Over</button>`;box.classList.remove("hidden");box.scrollIntoView({behavior:"smooth",block:"nearest"});setQuickAnswer?.(`Sage: ${title} is ready. Focus on one step at a time.`);toast(`${title} started`)
+}
+$$('[data-start-practice]').forEach(b=>b.addEventListener("click",()=>startPracticeSession(b.dataset.startPractice)));
+$("#practiceSession").addEventListener("click",e=>{
+ const restart=e.target.closest("[data-restart-practice]");if(restart){startPracticeSession($("#practiceSession").dataset.practiceType);return}
+ const step=e.target.closest("[data-practice-step]");if(!step)return;step.classList.toggle("done");step.querySelector("span").textContent=step.classList.contains("done")?"✓":"○";
+ const all=$$("#practiceSession .practice-step"),done=all.filter(x=>x.classList.contains("done")).length,progress=$("#practiceSession .practice-progress");progress.textContent=done===all.length?"Session complete—take the best feeling with you and stop before tired swings take over.":`${done} of ${all.length} steps complete`;
+ if(done===all.length){setQuickAnswer?.("Sage: Good work. You practiced with a purpose and finished with one clear lesson.");toast("Practice session complete")}
+});
 
 /* About */
 $("#aboutBtn").onclick=()=>$("#aboutModal").classList.remove("hidden");$("#closeAboutModal").onclick=()=>$("#aboutModal").classList.add("hidden");
@@ -1886,7 +1953,7 @@ function detectSherpaToolIntent(question){
   return null;
 }
 function bridgedToolAnswer(name,data){
-  if(name==="get_round_context")return`Sherpa Caddie does not track your game while you play. ${data.course?`Your selected planning course is ${data.course}. `:""}Use PLAY before the game and REVIEW afterward.`;
+  if(name==="get_round_context")return`Sherpa Caddie does not track your game while you play. ${data.course?`Your selected planning course is ${data.course}. `:""}Use PLAN before the game and REVIEW afterward.`;
   if(name==="get_shot_recommendation")return`For pre-game planning, favor the largest safe landing area and choose enough club for a comfortable swing. Give me a specific distance if you want a club recommendation.`;
   if(name==="get_weather_context")return data.weather_loaded?`It is ${Math.round(data.temperature_f)} degrees with wind around ${Math.round(data.wind_mph)} miles per hour and gusts near ${Math.round(data.gust_mph)}.`:"Course weather is not loaded yet. Select the course and tap Weather before relying on a wind adjustment.";
   if(name==="get_club_distances"){const clubs=Object.entries(data.clubs||{});return clubs.length?`Your ${data.bag_mode==="sunday"?"Sunday Bag":"bag"} carries are ${clubs.map(([club,yards])=>`${club}, ${yards} yards`).join("; ")}.`:"No club carry distances are saved yet."}
@@ -3084,7 +3151,7 @@ $("#importBtn").onclick=()=>$("#importFile").click();$("#importFile").onchange=a
 function hideSplash(){const el=$("#splashScreen");if(!el||el.classList.contains("is-hidden"))return;el.classList.add("is-hidden");setTimeout(()=>el.remove(),800);setTimeout(()=>window.UIKIT?.applyFSLock?.(),850)}
 window.addEventListener("load",()=>setTimeout(hideSplash,5000));
 setTimeout(hideSplash,5600);
-if("serviceWorker"in navigator)window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js?v=0131").catch(()=>{}));
+if("serviceWorker"in navigator)window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js?v=0132").catch(()=>{}));
 initArteziqUiKit();
 renderClubs();
 renderRounds();
