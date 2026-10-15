@@ -1,18 +1,15 @@
 /*
  * ARTEZIQ Feedback — Sherpa Caddie PUBLIC configuration.
  *
- * Fill in the Supabase publishable key and Sherpa Caddie's Public ingest key
- * from the ARTEZIQ Feedback dashboard. These are browser-safe public values.
- * Never place a service-role key, Management API token, GitHub token, or
- * password in this file.
- *
- * Until both placeholders are replaced, Sherpa Caddie continues normally and
- * the Ladybug launcher stays hidden.
+ * These are the browser-safe public values for Sherpa Caddie's active
+ * ARTEZIQ Feedback app record.
+ * Never replace either value with a service-role key, Management API token,
+ * GitHub token, or password.
  */
 export const LADYBUG_CONFIG = {
   supabaseUrl: 'https://mehsjriwijsyquhmrzkh.supabase.co',
-  publishableKey: 'REPLACE_WITH_SUPABASE_PUBLISHABLE_KEY',
-  appKey: 'REPLACE_WITH_SHERPA_CADDIE_PUBLIC_INGEST_KEY',
+  publishableKey: 'sb_publishable_GJzFbU63AAgok24gxPrnSA_FL0H3kfu',
+  appKey: '1c95828f-b883-4cd8-9486-d7a16ff50b2b',
   slug: 'sherpa-caddie',
   iconUrl: 'ladybug/assets/ladybug-feedback-icon-256.png',
   bottomOffsetPx: 16,
