@@ -5,18 +5,19 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#18311C">
 <meta name="description" content="Sherpa Caddie — one-shot-at-a-time golf guidance combining a caddie, coach and mentor.">
-<link rel="manifest" href="manifest.webmanifest?v=0134">
-<link rel="icon" href="icons/favicon.png?v=0134" type="image/png">
-<link rel="apple-touch-icon" href="icons/icon-192.png?v=0134">
-<link rel="preload" as="image" href="assets/sherpa-caddie-logo-fast.webp?v=0134" type="image/webp" fetchpriority="high">
-<title>Sherpa Caddie v0.12.3</title>
+<link rel="manifest" href="manifest.webmanifest?v=0135">
+<link rel="icon" href="icons/favicon.png?v=0135" type="image/png">
+<link rel="apple-touch-icon" href="icons/icon-192.png?v=0135">
+<link rel="preload" as="image" href="assets/sherpa-caddie-logo-fast.webp?v=0135" type="image/webp" fetchpriority="high">
+<title>Sherpa Caddie v0.12.4</title>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
   crossorigin="">
-<link rel="stylesheet" href="arteziq-ui.css?v=0134">
+<link rel="stylesheet" href="arteziq-ui.css?v=0135">
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
   crossorigin=""></script>
 <style>
 :root{
+  --tx:1;
   --forest:#18311C;
   --fairway:#436240;
   --meadow:#869250;
@@ -304,6 +305,7 @@ main{width:min(1160px,calc(100% - 28px));margin:0 auto;padding-bottom:18px}
 /* Small footer keeps About/version out of the play navigation */
 .footer{display:flex;justify-content:center;gap:12px;color:var(--stone);font-size:.78rem;padding:7px 0 0}
 .footer button{border:0;background:transparent;color:var(--fairway);font-weight:850;padding:0}
+.has-ladybug .footer{padding-bottom:calc(72px + env(safe-area-inset-bottom,0px))}
 
 
 /* COURSE PLANNING MAP */
@@ -1048,21 +1050,21 @@ body.immersive .brand-center{display:none!important}
     <div class="splash-rings" aria-hidden="true"></div>
     <div class="splash-logo-stage" aria-hidden="true">
       <div class="splash-logo-glow"></div>
-      <img class="splash-logo" src="assets/sherpa-caddie-logo-fast.webp?v=0134" decoding="async" alt="Sherpa Caddie">
+      <img class="splash-logo" src="assets/sherpa-caddie-logo-fast.webp?v=0135" decoding="async" alt="Sherpa Caddie">
     </div>
     <div class="splash-title">Sherpa Caddie</div>
     <div class="splash-subtitle">Your guide. Your game. Your best round.</div>
     <div class="splash-path" aria-hidden="true"><span></span><i></i></div>
     <div class="splash-caption">Walking your game plan into place…</div>
   </div>
-  <div class="splash-footer">ARTEZIQ • Sherpa Caddie • v0.12.3</div>
+  <div class="splash-footer">ARTEZIQ • Sherpa Caddie • v0.12.4</div>
 </div>
 <div class="app">
 <header class="topbar mentor-topbar" data-mode="text">
   <div class="mentor-dock" id="mentorDock">
     <div class="mentor-stage" id="mentorStage" data-mode="text" role="img" aria-label="Sage Text mode ready">
       <div class="mentor-symbol mentor-symbol-text" aria-hidden="true">
-        <img class="mentor-mode-logo" src="assets/sherpa-caddie-logo-fast.webp?v=0134" alt="">
+        <img class="mentor-mode-logo" src="assets/sherpa-caddie-logo-fast.webp?v=0135" alt="">
         <div class="mentor-mode-footer">
           <svg class="mentor-mode-icon" viewBox="0 0 64 64" focusable="false"><path d="M12 13h40a7 7 0 0 1 7 7v22a7 7 0 0 1-7 7H30L18 58v-9h-6a7 7 0 0 1-7-7V20a7 7 0 0 1 7-7Z" fill="none" stroke="currentColor" stroke-width="4" stroke-linejoin="round"/><path d="M17 26h30M17 36h20" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round"/></svg>
           <strong>TEXT</strong>
@@ -1070,7 +1072,7 @@ body.immersive .brand-center{display:none!important}
         </div>
       </div>
       <div class="mentor-symbol mentor-symbol-voice" aria-hidden="true">
-        <img class="mentor-mode-logo" src="assets/sherpa-caddie-logo-fast.webp?v=0134" alt="">
+        <img class="mentor-mode-logo" src="assets/sherpa-caddie-logo-fast.webp?v=0135" alt="">
         <div class="mentor-mode-footer">
           <svg class="mentor-mode-icon" viewBox="0 0 64 64" focusable="false"><rect x="23" y="8" width="18" height="31" rx="9" fill="none" stroke="currentColor" stroke-width="4"/><path d="M15 31a17 17 0 0 0 34 0M32 48v9M23 57h18" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round"/></svg>
           <strong>VOICE</strong>
@@ -1078,7 +1080,7 @@ body.immersive .brand-center{display:none!important}
         </div>
       </div>
       <div class="mentor-live-media">
-        <img id="sherpaLivePoster" class="mentor-poster" src="assets/sage-sherpa-live.webp?v=0134" alt="Sage, Sherpa Caddie mentor">
+        <img id="sherpaLivePoster" class="mentor-poster" src="assets/sage-sherpa-live.webp?v=0135" alt="Sage, Sherpa Caddie mentor">
         <video id="sherpaLiveVideo" class="mentor-video" autoplay playsinline aria-label="Sage Video avatar"></video>
       </div>
       <span class="companion-dot ready" id="companionDot"></span>
@@ -1110,7 +1112,7 @@ body.immersive .brand-center{display:none!important}
     <div class="console-hint" id="companionControlHint">Type a question above, then tap Ask.</div>
   </div>
 
-  <div class="version app-chrome">v0.12.3</div>
+  <div class="version app-chrome">v0.12.4</div>
 </header>
 
 <div class="tabs-wrap app-chrome">
@@ -1268,7 +1270,7 @@ body.immersive .brand-center{display:none!important}
 
         <div class="live-transcript" aria-live="polite">
           <div class="live-message"><div>👤</div><div><strong>You:</strong> <span id="liveUserText">Say “Hey Sherpa,” “Hey Sage,” or type a question.</span></div><time id="liveUserTime"></time></div>
-          <div class="live-message sage"><img class="live-message-avatar" src="assets/sage-sherpa-live.webp?v=0134" alt=""><div><strong>Sage:</strong> <span id="liveSageText">I’m ready to help you learn, practice, plan, or review.</span></div><time id="liveSageTime"></time></div>
+          <div class="live-message sage"><img class="live-message-avatar" src="assets/sage-sherpa-live.webp?v=0135" alt=""><div><strong>Sage:</strong> <span id="liveSageText">I’m ready to help you learn, practice, plan, or review.</span></div><time id="liveSageTime"></time></div>
         </div>
 
         <div class="live-compose">
@@ -1538,14 +1540,17 @@ body.immersive .brand-center{display:none!important}
   </article>
 </section>
 
-<div class="footer"><span>Sherpa Caddie v0.12.3</span><button id="aboutBtn">What’s in v0.12.3?</button></div>
+<div class="footer"><span>Sherpa Caddie v0.12.4</span><button id="aboutBtn">What’s in v0.12.4?</button></div>
 </main>
 </div>
 
 <div id="aboutModal" class="modal-backdrop hidden" role="dialog" aria-modal="true">
   <div class="modal" style="max-width:650px">
-    <div class="section-head"><div><p class="eyebrow">One-Shot Sherpa</p><h2>Version 0.12.3</h2></div><button class="btn ghost" id="closeAboutModal">Close</button></div>
+    <div class="section-head"><div><p class="eyebrow">One-Shot Sherpa</p><h2>Version 0.12.4</h2></div><button class="btn ghost" id="closeAboutModal">Close</button></div>
     <ul style="color:var(--stone);line-height:1.7">
+      <li>ARTEZIQ Ladybug feedback is available from the floating lower-right button after its two public keys are configured</li>
+      <li>The report menu includes tester sign-in, report type and severity, screenshot capture, optional diagnostics, and a clear confirmation</li>
+      <li>Screenshots automatically hide course/location, review comments, and Sage conversation text for privacy</li>
       <li>The duplicate Sherpa Caddie logo has been removed from the upper-right of the header</li>
       <li>Text and Voice now use matching branded Sage cards in the left display</li>
       <li>Voice uses animated dots to show when Sage is listening or speaking</li>
@@ -1672,11 +1677,32 @@ body.immersive .brand-center{display:none!important}
 </div>
 <div class="toast" id="toast"></div>
 
-<script src="arteziq-audio.js?v=0134"></script>
-<script src="arteziq-ui.js?v=0134"></script>
+<script src="arteziq-audio.js?v=0135"></script>
+<script src="arteziq-ui.js?v=0135"></script>
 <script>
 (()=>{"use strict";
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+
+/* ARTEZIQ Ladybug feedback hooks.
+   This small queue lets Sherpa record meaningful, non-identifying workflow
+   events before the optional feedback module finishes loading. Never place a
+   course name, location, question, review comment, score, or voice text here. */
+window.__anTrackQ=window.__anTrackQ||[];
+window.anTrack=window.anTrack||function(name,details){
+  try{if(window.__anTrackQ.length<50)window.__anTrackQ.push([name,details])}catch(_){ }
+};
+window.anFeedbackContext=function(){
+  let screen="Guide";
+  try{
+    if(!$("#mapModal")?.classList.contains("hidden"))screen="Hole Planner";
+    else if(!$("#aboutModal")?.classList.contains("hidden"))screen="About";
+    else{
+      const active=$(".view.active")?.id;
+      screen=({guide:"Guide",learn:"Learn",play:"Plan",clubs:"Clubs",review:"Review"})[active]||"Guide";
+    }
+  }catch(_){ }
+  return{appVersion:"0.12.4",buildNumber:"0135",screen};
+};
 
 function sherpaSoundVolume(){
   try{
@@ -1748,6 +1774,7 @@ function show(view){
   if(view==="review"){if(!$("#reviewCourse").value&&state.selectedCourse?.name)$("#reviewCourse").value=state.selectedCourse.name;renderRounds()}
   if(view==="clubs")renderClubs();
   if(view==="play"&&state.selectedCourse)refreshSherpaLiveContext()
+  window.anTrack("screen_view",{data:{screen:({guide:"guide",learn:"learn",play:"plan",clubs:"clubs",review:"review"})[view]||"other"}});
 }
 $$(".tab").forEach(b=>b.onclick=()=>show(b.dataset.view));$$("[data-go]").forEach(b=>b.onclick=()=>show(b.dataset.go));
 
@@ -1785,14 +1812,14 @@ const PRACTICE_FOCUS={
 };
 function startPracticeSession(type){
  const isPutting=type==="putting",focus=$(isPutting?"#puttingFocus":"#rangeFocus").value,minutes=Number($(isPutting?"#puttingMinutes":"#rangeMinutes").value),steps=PRACTICE_FOCUS[type][focus],title=isPutting?"Putting Green Coaching":"Driving Range Coaching",area=isPutting?"Short Game • Putting Green":"Long Game • Driving Range",icon=isPutting?"⛳":"🏌️",thought=isPutting?"See the roll, choose the speed, and make one committed stroke.":"Choose the target, swing in balance, and let the club do the work.";
- const box=$("#practiceSession");box.dataset.practiceType=type;box.className=`practice-session ${isPutting?"putting-session":"range-session"}`;box.innerHTML=`<div class="practice-area-label">${icon} ${area}</div><p class="eyebrow" style="color:#ffe0a3">${minutes}-minute guided practice</p><h3>${title}</h3><p><strong>Today’s one thought:</strong> ${thought}</p><div class="practice-checklist">${steps.map((step,i)=>`<button class="practice-step" type="button" data-practice-step="${i}"><span>○</span><span><strong>Step ${i+1}</strong><br>${step}</span></button>`).join("")}</div><p class="practice-progress">0 of ${steps.length} steps complete</p><button class="btn secondary" type="button" data-restart-practice>Start Over</button>`;box.scrollIntoView({behavior:"smooth",block:"nearest"});setQuickAnswer?.(`Sage: ${title} is ready. Focus on one step at a time.`);toast(`${title} started`)
+ const box=$("#practiceSession");box.dataset.practiceType=type;box.className=`practice-session ${isPutting?"putting-session":"range-session"}`;box.innerHTML=`<div class="practice-area-label">${icon} ${area}</div><p class="eyebrow" style="color:#ffe0a3">${minutes}-minute guided practice</p><h3>${title}</h3><p><strong>Today’s one thought:</strong> ${thought}</p><div class="practice-checklist">${steps.map((step,i)=>`<button class="practice-step" type="button" data-practice-step="${i}"><span>○</span><span><strong>Step ${i+1}</strong><br>${step}</span></button>`).join("")}</div><p class="practice-progress">0 of ${steps.length} steps complete</p><button class="btn secondary" type="button" data-restart-practice>Start Over</button>`;box.scrollIntoView({behavior:"smooth",block:"nearest"});setQuickAnswer?.(`Sage: ${title} is ready. Focus on one step at a time.`);toast(`${title} started`);window.anTrack("practice_started",{data:{area:type,focus,minutes}})
 }
 $$('[data-start-practice]').forEach(b=>b.addEventListener("click",()=>startPracticeSession(b.dataset.startPractice)));
 $("#practiceSession").addEventListener("click",e=>{
  const restart=e.target.closest("[data-restart-practice]");if(restart){startPracticeSession($("#practiceSession").dataset.practiceType);return}
  const step=e.target.closest("[data-practice-step]");if(!step)return;step.classList.toggle("done");step.querySelector("span").textContent=step.classList.contains("done")?"✓":"○";
  const all=$$("#practiceSession .practice-step"),done=all.filter(x=>x.classList.contains("done")).length,progress=$("#practiceSession .practice-progress");progress.textContent=done===all.length?"Session complete—take the best feeling with you and stop before tired swings take over.":`${done} of ${all.length} steps complete`;
- if(done===all.length){setQuickAnswer?.("Sage: Good work. You practiced with a purpose and finished with one clear lesson.");toast("Practice session complete")}
+ if(done===all.length){setQuickAnswer?.("Sage: Good work. You practiced with a purpose and finished with one clear lesson.");toast("Practice session complete");window.anTrack("practice_completed",{data:{area:$("#practiceSession").dataset.practiceType||"unknown",steps:all.length}})}
 });
 
 /* About */
@@ -2302,6 +2329,7 @@ async function setSherpaMode(mode){
     connectSherpaLive().catch(()=>{});
   }
   updateCompanionUI();
+  window.anTrack("sage_mode_changed",{data:{mode:mode==="live"?"video":mode}});
 }
 $$('.experience-btn').forEach(b=>b.addEventListener('click',()=>setSherpaMode(b.dataset.sherpaMode)));
 
@@ -3004,6 +3032,7 @@ function selectCourse(c,load=true){
  updateCourseDataNote();
  if(state.coords&&load)loadWeather();else if(!state.coords)$("#weatherNote").textContent="No verified course coordinates are available yet.";
  hydrateSelectedCourse();refreshSherpaLiveContext();
+ window.anTrack("course_selected",{data:{mapped:Boolean(state.coords),source:c.source?"database":"unknown"}});
  requestAnimationFrame(()=>{
    const card=document.querySelector(".selected-card");
    if(card)card.scrollIntoView({behavior:"smooth",block:"start"});
@@ -3044,6 +3073,7 @@ async function loadWeather(options={}){
    const updated=new Date().toLocaleTimeString([],{hour:"numeric",minute:"2-digit"});
    note.textContent=(Number(current.precipitation)>0?"Wet conditions — favor control and extra margin.":"Current conditions loaded.")+` Updated ${updated}.`;
    refreshSherpaLiveContext();
+   window.anTrack("weather_loaded",{data:{manual:Boolean(manual),wet:Number(current.precipitation)>0}});
    if(manual)toast("Weather updated");
  }catch(err){
    console.warn("Weather update failed",err);
@@ -3134,6 +3164,7 @@ function buildPreGamePlan(){
  const holes=Number($("#plannedHoles").value||9),tee=$("#teeChoice").value,goal=$("#roundGoal").value,focus=$("#preGameFocus").value.trim();
  const wind=Number(state.weather?.wind_speed_10m||0),gust=Number(state.weather?.wind_gusts_10m||0);
  state.preGamePlan={course:state.selectedCourse.name,holes,tee,goal,focus,strategy:strategyName(),bagMode:state.bagMode,clubs:activeClubNames(),created:new Date().toISOString()};
+ window.anTrack("game_plan_created",{data:{holes,bag:state.bagMode,strategy:state.plannerMode,weatherLoaded:Boolean(state.weather)}});
  const box=$("#preGamePlan"),goalText=goal==="score"?"Play patiently for the best score your normal game produces.":goal==="practice"?"Treat the game as a learning experience without analyzing every swing.":"Enjoy the game and let the score take care of itself.";
  box.innerHTML=`<h3>Sage’s ${holes}-hole game plan</h3><p><strong>Strategy:</strong> ${escapeHTML(state.preGamePlan.strategy)}.</p><p><strong>Conditions:</strong> ${wind?`${Math.round(wind)} mph wind${gust?`, gusting to ${Math.round(gust)} mph`:""}`:"Load weather before leaving if you want a conditions check."}</p><p><strong>Bag:</strong> ${state.bagMode==="sunday"?"Dave’s Sunday Bag":"Full Bag"} — ${activeClubNames().length} clubs.</p><p><strong>Goal:</strong> ${escapeHTML(goalText)}</p><p><strong>One thought:</strong> ${escapeHTML(focus||"Choose a clear target, make a committed swing, and let the result go.")}</p><p class="muted" style="margin-bottom:0">This plan is for before the game. Sherpa will not ask you to record shots while playing.</p>`;
  box.classList.remove("hidden");refreshSherpaLiveContext();toast("Pre-game plan ready");
@@ -3193,6 +3224,7 @@ $("#postGameForm").addEventListener("submit",e=>{
  if(postGameScoreMode==="holes"){holeScores=$$("#holeScoreGrid input").map(x=>Number(x.value));if(holeScores.some(x=>!Number.isFinite(x)||x<1)){toast(`Enter a score for all ${holes} holes`);return}totalScore=holeScores.reduce((a,b)=>a+b,0)}
  if(!course){toast("Enter where you played");return}if(!Number.isFinite(totalScore)||totalScore<1){toast("Enter the score");return}
  const review={type:"postgame",id:`review-${Date.now()}`,course,date,holes,scoreMode:postGameScoreMode,totalScore,holeScores,comments,created:new Date().toISOString()};review.assessment=assessmentFor(review);state.rounds.unshift(review);save();renderRounds();renderLatestAssessment(review);
+ window.anTrack("game_review_saved",{data:{holes,scoreMode:postGameScoreMode,hasComments:Boolean(comments)}});
  const a=review.assessment,box=$("#sagePostGameReview");box.innerHTML=`<h3>Sage’s review</h3><p><strong>What you did right:</strong> ${escapeHTML(a.strengthText)}</p><p><strong>What to work on:</strong> ${escapeHTML(a.lessonText)}</p><p><strong>For next time:</strong> ${escapeHTML(a.focusText)}</p>`;box.classList.remove("hidden");box.scrollIntoView({behavior:"smooth",block:"nearest"});
  e.target.reset();$("#reviewDate").value=localDateValue();$("#reviewHoles").value=String(holes);setPostGameScoreMode("total");renderHoleScoreInputs();toast("Game review saved");
 });
@@ -3231,12 +3263,70 @@ $("#importBtn").onclick=()=>$("#importFile").click();$("#importFile").onchange=a
 function hideSplash(){const el=$("#splashScreen");if(!el||el.classList.contains("is-hidden"))return;el.classList.add("is-hidden");setTimeout(()=>el.remove(),800);setTimeout(()=>window.UIKIT?.applyFSLock?.(),850)}
 window.addEventListener("load",()=>setTimeout(hideSplash,5000));
 setTimeout(hideSplash,5600);
-if("serviceWorker"in navigator)window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js?v=0134").catch(()=>{}));
+if("serviceWorker"in navigator)window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js?v=0135").catch(()=>{}));
 initArteziqUiKit();
 renderClubs();
 renderRounds();
 show("guide");updateCompanionUI();setMentorActivity("idle","Text ready • type below");
 })();
+</script>
+
+<!-- ARTEZIQ LADYBUG FEEDBACK. The connector remains dormant until the two
+     browser-safe public values in ladybug/ladybug-config.js are configured. -->
+<script type="module">
+const LB=document.documentElement;
+let lbStep="ladybug/ladybug-config.js";
+try{
+  const {LADYBUG_CONFIG:cfg,ladybugConfigured}=await import("./ladybug/ladybug-config.js");
+  if(!ladybugConfigured(cfg)){
+    LB.dataset.ladybug="unconfigured";
+    console.info("[Ladybug] not configured yet — add the public keys in ladybug/ladybug-config.js to enable feedback.");
+  }else{
+    lbStep="ladybug/ladybug-auth.js";
+    const {createFeedbackAuth}=await import("./ladybug/ladybug-auth.js");
+    lbStep="ladybug/ladybug-feedback.js";
+    const {createLadybugFeedback}=await import("./ladybug/ladybug-feedback.js");
+    lbStep="mounting the launcher";
+    const auth=createFeedbackAuth({supabaseUrl:cfg.supabaseUrl,publishableKey:cfg.publishableKey});
+    const ladybug=createLadybugFeedback({
+      supabaseUrl:cfg.supabaseUrl,
+      publishableKey:cfg.publishableKey,
+      appKey:cfg.appKey,
+      slug:cfg.slug,
+      appName:"Sherpa Caddie",
+      sessionIdPrefix:"SC",
+      iconUrl:cfg.iconUrl,
+      bottomOffsetPx:cfg.bottomOffsetPx,
+      bottomOffsetPhonePx:cfg.bottomOffsetPhonePx,
+      auth,
+      getAccessToken:(force)=>auth.getAccessToken(force),
+      getContext:()=>window.anFeedbackContext(),
+      maskSelectors:[
+        "#courseSearch","#selectedCourseName","#selectedCourseLocation",
+        "#reviewCourse","#reviewComments","#companionQuestion","#quickAnswer",
+        "#liveQuestionInput",".live-transcript","input[type=password]"
+      ],
+      mapSelectors:["#courseMap"],
+    });
+    ladybug.mount();
+    document.documentElement.classList.add("has-ladybug");
+    const queued=window.__anTrackQ||[];
+    window.anTrack=(name,details)=>{try{ladybug.track(name,details)}catch(_){ }};
+    queued.forEach(([name,details])=>window.anTrack(name,details));
+    window.__anTrackQ=[];
+    window.ArteziqFeedback=ladybug;
+    LB.dataset.ladybug="ready";
+  }
+}catch(error){
+  LB.dataset.ladybug="error:"+lbStep;
+  console.warn("[Ladybug] feedback did not load ("+lbStep+"); Sherpa Caddie continues without it.",error&&error.message);
+  if(/[?&]ladybug=debug\b/.test(location.search)){
+    const chip=document.createElement("div");
+    chip.textContent="Ladybug failed: "+lbStep+(error&&error.message?" — "+error.message:"");
+    chip.style.cssText="position:fixed;right:12px;bottom:12px;max-width:80vw;z-index:2147483000;background:#7a1212;color:#fff;font:12px/1.4 system-ui,sans-serif;padding:8px 10px;border-radius:8px;box-shadow:0 4px 14px #0008";
+    document.body.appendChild(chip);
+  }
+}
 </script>
 </body>
 </html>

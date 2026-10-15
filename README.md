@@ -1,3 +1,29 @@
+## Version 0.12.4 — ARTEZIQ Ladybug Feedback
+
+- Adds the same centralized ARTEZIQ Ladybug feedback experience used by Angler's Navigator.
+- Gives authorized testers an in-app sign-in, report form, type and severity choices, screenshot capture, attachment upload, optional Tester Mode diagnostics, and a clear sent confirmation.
+- Masks course/location details, post-game comments, and Sage conversation text from screenshots for privacy.
+- Reports the current Sherpa screen as GUIDE, LEARN, PLAN, CLUBS, REVIEW, Hole Planner, or About.
+- Records only non-identifying workflow diagnostics such as tab changes, Sage mode, practice completion, course-selection status, weather availability, plan creation, and review creation.
+- Keeps Ladybug dormant and non-disruptive until Sherpa Caddie's public Feedback keys are added.
+- Adds `LADYBUG-SETUP-SHERPA.md` with the exact one-time activation and test steps.
+- Preserves all Sage, D-ID, practice, planning, club, and review behavior from v0.12.3.
+
+### Changed files in v0.12.4
+
+- `index.html`
+- `manifest.webmanifest`
+- `sw.js`
+- `README.md`
+- `LADYBUG-SETUP-SHERPA.md`
+- `ladybug/ladybug-config.js`
+- `ladybug/ladybug-auth.js`
+- `ladybug/ladybug-feedback.js`
+- `ladybug/assets/ladybug-feedback-icon.png`
+- `ladybug/assets/ladybug-feedback-icon-256.png`
+- `ladybug/vendor/html2canvas.min.js`
+- `ladybug/vendor/html2canvas.LICENSE.txt`
+
 ## Version 0.12.3 — Unified Sage Mode Cards
 
 - Removes the duplicate Sherpa Caddie logo from the upper-right of the persistent header.
