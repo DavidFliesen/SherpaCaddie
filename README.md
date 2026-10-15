@@ -1,3 +1,20 @@
+## Version 0.12.5 — Ladybug Activated
+
+- Activates the Ladybug feedback launcher with Sherpa Caddie's public ingest key from the ARTEZIQ Feedback dashboard.
+- Uses the shared browser-safe Supabase publishable key already used by the other ARTEZIQ app integrations.
+- Retains slug `sherpa-caddie`, report prefix `SC`, privacy masks, screenshots, attachments, tester sign-in, and Tester Mode diagnostics from v0.12.4.
+- Refreshes the PWA cache so installed iPhone and iPad copies fetch the configured Ladybug module.
+
+### Changed files in v0.12.5
+
+- `index.html`
+- `manifest.webmanifest`
+- `sw.js`
+- `README.md`
+- `LADYBUG-SETUP-SHERPA.md`
+- `ladybug/ladybug-config.js`
+- the remaining `ladybug` folder files are included so the complete integration can be uploaded together.
+
 ## Version 0.12.4 — ARTEZIQ Ladybug Feedback
 
 - Adds the same centralized ARTEZIQ Ladybug feedback experience used by Angler's Navigator.

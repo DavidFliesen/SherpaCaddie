@@ -1,6 +1,6 @@
 # Sherpa Caddie — Ladybug activation
 
-Sherpa Caddie v0.12.4 contains the same ARTEZIQ Ladybug feedback experience used by Angler's Navigator:
+Sherpa Caddie v0.12.5 contains the same ARTEZIQ Ladybug feedback experience used by Angler's Navigator:
 
 - tester sign-in inside the report panel;
 - bug, suggestion, question, and other report types;
@@ -10,19 +10,19 @@ Sherpa Caddie v0.12.4 contains the same ARTEZIQ Ladybug feedback experience used
 - clear sent/failed/offline messages;
 - privacy masks for course/location, review comments, and Sage conversation text.
 
-## One-time activation
+## Configuration included
 
-1. In the ARTEZIQ Feedback dashboard, add or open **Sherpa Caddie**.
-2. Use the slug **`sherpa-caddie`**.
-3. Use the launch URL **`https://davidfliesen.github.io/SherpaCaddie/`**.
-4. Use the allowed web origin **`https://davidfliesen.github.io`** without a trailing slash.
-5. Copy the dashboard's **Supabase publishable key** and Sherpa Caddie's **Public ingest key**.
-6. Open `ladybug/ladybug-config.js` and replace only these two placeholders:
-   - `REPLACE_WITH_SUPABASE_PUBLISHABLE_KEY`
-   - `REPLACE_WITH_SHERPA_CADDIE_PUBLIC_INGEST_KEY`
-7. Upload the complete `ladybug` folder. Do not omit `assets` or `vendor`.
+The release already contains the browser-safe public values required to display the Ladybug:
 
-The Ladybug stays hidden when either public value is missing, so an incomplete configuration cannot interfere with Sherpa Caddie.
+- slug: **`sherpa-caddie`**;
+- report prefix: **`SC`** (configured in the Feedback dashboard);
+- public ingest key: **`1c95828f-b883-4cd8-9486-d7a16ff50b2b`**;
+- allowed origin: **`https://davidfliesen.github.io`**;
+- launch URL: **`https://davidfliesen.github.io/SherpaCaddie/`**.
+
+Upload the complete `ladybug` folder with the four root replacement files. Do not omit `assets` or `vendor`.
+
+The Ladybug will now mount automatically. The configuration guard still keeps it hidden if a future edit removes or damages either public value.
 
 ## Quick test
 
