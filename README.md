@@ -1,3 +1,24 @@
+## Version 0.12.6 — Garmin Round Review Phase 1
+
+- Adds a post-game Garmin import workflow in REVIEW for FIT, CSV, and JSON files.
+- Keeps imported data on the golfer's device and previews the course, date, holes, score, and available detail before use.
+- Uses Garmin data to prefill the existing quick review; missing details remain editable instead of blocking the review.
+- Adds three short coaching prompts: what felt best, where the golfer struggled, and their headspace.
+- Stores Garmin source metadata with the saved review so Sage can distinguish imported rounds from manually entered reviews.
+- Adds a versioned Garmin data adapter so a future authorized Garmin Connect sync can feed the same review format.
+- Documents Phase 2 secure Garmin Connect synchronization and possible Phase 3 Garmin Golf API access without using unofficial credential scraping.
+- Adds a responsive comparison of the Approach S44, S50, S70 42 mm, and S70 47 mm under CLUBS.
+- Adds official Garmin purchase links plus an honest notice that they are not affiliate links until ARTEZIQ is approved and supplies its own tracking URLs.
+- Preserves Ladybug feedback, Sage Text/Voice/Video, planning, practice, club setup, and saved-review deletion/export behavior.
+
+### Changed files in v0.12.6
+
+- `index.html`
+- `garmin-round-import.js` (new)
+- `manifest.webmanifest`
+- `sw.js`
+- `README.md`
+
 ## Version 0.12.5 — Ladybug Activated
 
 - Activates the Ladybug feedback launcher with Sherpa Caddie's public ingest key from the ARTEZIQ Feedback dashboard.
