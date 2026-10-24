@@ -1,3 +1,20 @@
+## Version 0.12.10 — Full-Screen Navigation and Technology Flow
+
+- Keeps all six main tabs visible when Sherpa Caddie enters full-screen or immersive mode.
+- Reorders TECHNOLOGY so the Golf Technology introduction appears first.
+- Places Garmin Golf Watches and Garmin Round Review together as one visually grouped window.
+- Moves the additional product categories below the Garmin window.
+- Renames “Sherpa Technology Picks” to the neutral “Golf Technology Options.”
+- Keeps the corrected `assets/technology/` folder and all existing product filenames unchanged.
+- Bumps the PWA cache so iPad, iPhone, Android, and installed copies receive the changes.
+
+### Changed files in v0.12.10
+
+- `index.html`
+- `manifest.webmanifest`
+- `sw.js`
+- `README.md`
+
 ## Version 0.12.9 — Curated Golf Technology Picks
 
 - Adds three carefully limited technology categories beyond Garmin watches: Bushnell laser rangefinders, the Rapsodo MLM2PRO launch monitor, and Arccos Smart Sensors.
