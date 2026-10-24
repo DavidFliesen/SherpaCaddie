@@ -1,3 +1,24 @@
+## Version 0.12.7 — Garmin Technology Hub
+
+- Moves the Garmin watch comparison out of CLUBS and into a dedicated TECHNOLOGY tab between PLAN and CLUBS.
+- Moves Garmin Round Review import into the same TECHNOLOGY hub, then sends recognized round data to the short form in REVIEW.
+- Adds a dedicated image column with official Garmin product imagery for the Approach S44, S50, S70 42 mm, and S70 47 mm.
+- Keeps the official Garmin product links and transparent non-affiliate purchase notice.
+- Adds all four product images to the PWA cache so the comparison remains visual after the updated app has loaded once.
+- Preserves Garmin FIT/CSV/JSON import, Ladybug feedback, Sage Text/Voice/Video, planning, practice, club setup, and saved-review behavior.
+
+### Changed files in v0.12.7
+
+- `index.html`
+- `garmin-round-import.js` (included unchanged so the Garmin import package remains complete)
+- `manifest.webmanifest`
+- `sw.js`
+- `README.md`
+- `assets/garmin/approach-s44.webp` (new)
+- `assets/garmin/approach-s50.webp` (new)
+- `assets/garmin/approach-s70-42.webp` (new)
+- `assets/garmin/approach-s70-47.webp` (new)
+
 ## Version 0.12.6 — Garmin Round Review Phase 1
 
 - Adds a post-game Garmin import workflow in REVIEW for FIT, CSV, and JSON files.
