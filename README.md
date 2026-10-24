@@ -1,3 +1,39 @@
+## Version 0.12.9 — Curated Golf Technology Picks
+
+- Adds three carefully limited technology categories beyond Garmin watches: Bushnell laser rangefinders, the Rapsodo MLM2PRO launch monitor, and Arccos Smart Sensors.
+- Recommends Bushnell Tour V7 Shift as the practical rangefinder pick, with Pro X3+LINK clearly labeled as the premium option.
+- Connects Rapsodo practice measurements to Driving Range coaching and saved club distances.
+- Connects automatic Arccos tracking to Sherpa’s post-game REVIEW direction without reintroducing manual shot logging.
+- Explains the best use, Sherpa fit, and ongoing membership considerations for every recommendation.
+- Adds official product imagery as optimized local WebP files for faster, more dependable PWA display.
+- Adds a visible affiliate disclosure while accurately stating that the current manufacturer links are not yet commission-tracked.
+- Records anonymous product-link selections through the existing Ladybug telemetry bridge when it is configured.
+
+### Changed files in v0.12.9
+
+- `index.html`
+- `manifest.webmanifest`
+- `sw.js`
+- `README.md`
+- `assets/technology/bushnell-tour-v7-shift.webp`
+- `assets/technology/bushnell-pro-x3-link.webp`
+- `assets/technology/rapsodo-mlm2pro.webp`
+- `assets/technology/arccos-smart-sensors.webp`
+
+## Version 0.12.8 — Technology Header Contrast Fix
+
+- Fixes the TECHNOLOGY introduction card so its dark-green background cannot be overridden by the shared light card style.
+- Gives the “Golf Technology” label, headline, and explanatory text explicit high-contrast colors across iPad, iPhone, Android, and desktop layouts.
+- Bumps the PWA cache so installed copies receive the corrected header styling.
+- Preserves all v0.12.7 Garmin watch images, comparison, purchase links, and round-import behavior.
+
+### Changed files in v0.12.8
+
+- `index.html`
+- `manifest.webmanifest`
+- `sw.js`
+- `README.md`
+
 ## Version 0.12.7 — Garmin Technology Hub
 
 - Moves the Garmin watch comparison out of CLUBS and into a dedicated TECHNOLOGY tab between PLAN and CLUBS.
