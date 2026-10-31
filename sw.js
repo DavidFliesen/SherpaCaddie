@@ -1,8 +1,8 @@
-const CACHE="sherpa-caddie-v0.12.10";
+const CACHE="sherpa-caddie-v0.12.11";
 const APP_FILES=[
   "./",
-  "./index.html?v=0141",
-  "./manifest.webmanifest?v=0141",
+  "./index.html?v=0142",
+  "./manifest.webmanifest?v=0142",
   "./arteziq-ui.css?v=0141",
   "./arteziq-audio.js?v=0141",
   "./arteziq-ui.js?v=0141",
@@ -69,7 +69,7 @@ self.addEventListener("fetch", event => {
   // Page navigation: network first, app shell only as true offline fallback.
   if(request.mode === "navigate"){
     event.respondWith(
-      fetch(request).catch(() => caches.match("./index.html?v=0141"))
+      fetch(request).catch(() => caches.match("./index.html?v=0142"))
     );
     return;
   }

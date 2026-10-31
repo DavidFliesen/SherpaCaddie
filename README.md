@@ -1,3 +1,18 @@
+## Version 0.12.11 — Complete, Readable Technology Options
+
+- Keeps each product image constrained to its media area so it cannot cover the brand, model, description, or detail list below it.
+- Restores the fully visible Rapsodo MLM2PRO name, description, and practice-data guidance.
+- Restores the fully visible Arccos Smart Sensors name, description, Best For guidance, and post-game information.
+- Enlarges all three option-card headings, descriptions, detail text, and pill-shaped labels for easier reading.
+- Preserves the v0.12.10 Technology page order, combined Garmin Watches and Round Review group, full-screen tabs, and existing asset filenames.
+
+### Changed files in v0.12.11
+
+- `index.html`
+- `manifest.webmanifest`
+- `sw.js`
+- `README.md`
+
 ## Version 0.12.10 — Full-Screen Navigation and Technology Flow
 
 - Keeps all six main tabs visible when Sherpa Caddie enters full-screen or immersive mode.
