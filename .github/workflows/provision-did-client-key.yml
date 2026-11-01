@@ -32,8 +32,11 @@ jobs:
 
           cat > /tmp/key-request.json <<'JSON'
           {
-            "allowed_domains": ["https://davidfliesen.github.io"],
-            "name": "Sherpa Caddie GitHub Pages"
+          "allowed_domains": [
+            "https://davidfliesen.github.io", 
+            "https://sherpacaddie.pages.dev"
+          ],
+          "name": "Sherpa Caddie GitHub and Cloudflare Pages"
           }
           JSON
 
