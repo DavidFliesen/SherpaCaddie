@@ -1,5 +1,5 @@
 ## Version 0.12.11 — Complete, Readable Technology Options
-
+Cloudflare deployment refreshed for D-ID video support.
 - Keeps each product image constrained to its media area so it cannot cover the brand, model, description, or detail list below it.
 - Restores the fully visible Rapsodo MLM2PRO name, description, and practice-data guidance.
 - Restores the fully visible Arccos Smart Sensors name, description, Best For guidance, and post-game information.
