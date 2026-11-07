@@ -1,16 +1,16 @@
-import { DEMO } from "./demo.mjs?v=0143";
-import { createPortrait } from "./portrait.mjs?v=0143";
-import { SageSessionController } from "./session-controller.mjs?v=0143";
-import { createAppTools } from "./tool-registry.mjs?v=0143";
+import { DEMO } from "./demo.mjs?v=0144";
+import { createPortrait } from "./portrait.mjs?v=0144";
+import { SageSessionController } from "./session-controller.mjs?v=0144";
+import { createAppTools } from "./tool-registry.mjs?v=0144";
 
-const AUDIO_URL = new URL("../assets/sage-local/practice.mp3?v=0143", import.meta.url);
+const AUDIO_URL = new URL("../assets/sage-local/practice.mp3?v=0144", import.meta.url);
 const TAB_PROMPT = "What tab am I on";
 
 function normalize(question) {
   return question.trim().replace(/\s+/g, " ").replace(/[.!?]+$/, "").toLowerCase();
 }
 
-function createPlayback(portrait, onFallback, initialVolume) {
+function createPlayback(portrait, onFallback, initialVolume, preparePlayback, releasePlayback) {
   let current;
   let volume = initialVolume;
 
@@ -20,6 +20,7 @@ function createPlayback(portrait, onFallback, initialVolume) {
     current = undefined;
     audio.cleanup?.();
     audio.context.close().catch(() => {});
+    releasePlayback();
     portrait.release();
   }
 
@@ -111,9 +112,16 @@ function createPlayback(portrait, onFallback, initialVolume) {
       signal.throwIfAborted();
       const Context = window.AudioContext || window.webkitAudioContext;
       if (!Context) throw new Error("Web Audio is unavailable.");
-      const context = new Context({ latencyHint: "interactive" });
-      current = { context, paused: false };
-      const ready = context.resume();
+      const routeReady = preparePlayback(signal);
+      let context;
+      try {
+        context = new Context({ latencyHint: "interactive" });
+      } catch (error) {
+        releasePlayback();
+        throw error;
+      }
+      current = { context, signal, paused: false };
+      const ready = Promise.all([context.resume(), routeReady]);
       current.ready = ready;
       ready.catch(() => {});
     },
@@ -127,7 +135,7 @@ function createPlayback(portrait, onFallback, initialVolume) {
         audio.pauseFrames();
         await audio.context.suspend();
       } else {
-        await audio.context.resume();
+        await Promise.all([preparePlayback(audio.signal), audio.context.resume()]);
         audio.paused = false;
         audio.resumeFrames();
       }
@@ -142,9 +150,9 @@ function createPlayback(portrait, onFallback, initialVolume) {
 }
 
 export function createLocalSage(options) {
-  const { poster, canvas, isAllowed, getRoute, onState, onAnswer, onFallback, onError, volume, practicePrompt } = options;
+  const { poster, canvas, isAllowed, getRoute, onState, onAnswer, onFallback, onError, volume, practicePrompt, preparePlayback, releasePlayback } = options;
   const practiceIntent = normalize(practicePrompt);
-  const avatar = createPlayback(createPortrait(poster, canvas), onFallback, volume);
+  const avatar = createPlayback(createPortrait(poster, canvas), onFallback, volume, preparePlayback, releasePlayback);
   const tools = createAppTools({ isAllowed, getRoute });
   const controller = new SageSessionController({
     behavior: "Phase 1 scripted demonstration.",
