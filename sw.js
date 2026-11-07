@@ -1,8 +1,14 @@
-const CACHE="sherpa-caddie-v0.12.11";
+const CACHE="sherpa-caddie-v0.12.12";
 const APP_FILES=[
   "./",
-  "./index.html?v=0142",
-  "./manifest.webmanifest?v=0142",
+  "./index.html?v=0143",
+  "./manifest.webmanifest?v=0143",
+  "./sage-local/index.mjs?v=0143",
+  "./sage-local/session-controller.mjs?v=0143",
+  "./sage-local/tool-registry.mjs?v=0143",
+  "./sage-local/portrait.mjs?v=0143",
+  "./sage-local/demo.mjs?v=0143",
+  "./assets/sage-local/practice.mp3?v=0143",
   "./arteziq-ui.css?v=0141",
   "./arteziq-audio.js?v=0141",
   "./arteziq-ui.js?v=0141",
@@ -34,7 +40,7 @@ self.addEventListener("install", event => {
 
 self.addEventListener("activate", event => {
   event.waitUntil(
-    caches.keys().then(keys => Promise.all(keys.filter(key => key !== CACHE).map(key => caches.delete(key))))
+    caches.keys().then(keys => Promise.all(keys.filter(key => key.startsWith("sherpa-caddie-") && key !== CACHE).map(key => caches.delete(key))))
   );
   self.clients.claim();
 });
@@ -69,7 +75,7 @@ self.addEventListener("fetch", event => {
   // Page navigation: network first, app shell only as true offline fallback.
   if(request.mode === "navigate"){
     event.respondWith(
-      fetch(request).catch(() => caches.match("./index.html?v=0142"))
+      fetch(request).catch(() => caches.match("./index.html?v=0143"))
     );
     return;
   }

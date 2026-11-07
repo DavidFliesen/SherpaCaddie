@@ -1,3 +1,13 @@
+## Version 0.12.12 — Sage Local Phase 1
+
+- Adds an opt-in **Local Sage (Experimental)** mode with one offline spoken practice tip, audio-clock lip sync, and Pause and Stop controls.
+- Adds **ACA · ARTEZIQ Conversational Avatar** and **DCA · D-ID Conversational Avatar** in Settings so both can be tried with the same prefilled question.
+- Adds one validated, read-only tool for the active app tab. Speech and portrait failures leave a readable reply or an audio-only fallback.
+- Stops outgoing playback, animation and legacy Video sessions when leaving a mode or hiding the app. Shows v0.12.12 in both footers.
+- Packages full replacement files and automated tests for this scripted milestone.
+
+Open **Settings → Local Sage experiment** to compare ACA and DCA. The normal app opens in Text mode. The experiment also accepts `?sageLocal=1` on a test URL. See the [integration map](docs/SAGE_LOCAL_INTEGRATION.md), [test instructions and results](docs/SAGE_LOCAL_TESTING.md), and [voice provenance](docs/SAGE_LOCAL_VOICE_PROVENANCE.md).
+
 ## Version 0.12.11 — Complete, Readable Technology Options
 Cloudflare deployment refreshed for D-ID video support.
 Cloudflare Git connection restored.

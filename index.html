@@ -5,11 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#18311C">
 <meta name="description" content="Sherpa Caddie — one-shot-at-a-time golf guidance combining a caddie, coach and mentor.">
-<link rel="manifest" href="manifest.webmanifest?v=0142">
+<link rel="manifest" href="manifest.webmanifest?v=0143">
 <link rel="icon" href="icons/favicon.png?v=0141" type="image/png">
 <link rel="apple-touch-icon" href="icons/icon-192.png?v=0141">
 <link rel="preload" as="image" href="assets/sherpa-caddie-logo-fast.webp?v=0141" type="image/webp" fetchpriority="high">
-<title>Sherpa Caddie v0.12.11</title>
+<title>Sherpa Caddie v0.12.12</title>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
   crossorigin="">
 <link rel="stylesheet" href="arteziq-ui.css?v=0141">
@@ -294,7 +294,7 @@ main{width:min(1160px,calc(100% - 28px));margin:0 auto;padding-bottom:18px}
 .technology-page{display:grid;gap:14px}.technology-intro{padding:20px;background:linear-gradient(135deg,#17391f,#2f653b);color:#fff}.technology-intro .eyebrow{color:#e5c48b}.technology-intro h2{margin:0 0 7px;font-family:Georgia,"Times New Roman",serif;font-size:clamp(1.55rem,3vw,2.25rem)}.technology-intro p:last-child{margin-bottom:0;max-width:820px;line-height:1.55}.watch-card{padding:17px 18px}.watch-table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:13px;background:#fff}.watch-table{width:100%;border-collapse:collapse;min-width:1040px}.watch-table th,.watch-table td{padding:11px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:middle}.watch-table th{background:var(--forest);color:#fff;font-size:.78rem}.watch-table td.watch-name{font-weight:900;color:var(--forest)}.watch-table tr:last-child td{border-bottom:0}.watch-image-col{width:154px}.watch-image-cell{width:154px;padding:8px!important;background:#fff}.watch-image{display:block;width:136px;height:136px;object-fit:contain;margin:auto;border-radius:12px}.watch-buy{display:inline-flex;margin-top:8px;text-decoration:none;background:var(--tan);color:var(--navy);font-weight:900;padding:8px 11px;border-radius:8px}.watch-buy:hover,.watch-buy:focus-visible{filter:brightness(.96);outline:3px solid rgba(196,157,92,.28);outline-offset:2px}.affiliate-note,.roadmap-note{margin:10px 0 0;padding:10px 12px;border-left:4px solid var(--tan);border-radius:9px;background:#f8efe0;color:var(--stone);font-size:.82rem;line-height:1.45}.garmin-roadmap{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}.garmin-roadmap div{border:1px solid var(--line);border-radius:10px;padding:10px;background:#fff}.garmin-roadmap strong{display:block;color:var(--forest);margin-bottom:3px}
 @media(max-width:760px){.reflection-grid,.garmin-steps,.garmin-roadmap{grid-template-columns:1fr}.garmin-preview-grid{grid-template-columns:1fr 1fr}.garmin-import-head{display:block}.phase-badge{margin-top:8px}}
 
-/* v0.12.11 — readable, unclipped technology recommendations */
+/* v0.12.12 — readable, unclipped technology recommendations */
 .curated-tech-card{padding:18px}
 .curated-tech-head{display:flex;align-items:end;justify-content:space-between;gap:16px;margin-bottom:12px}
 .curated-tech-head h2{margin:0}.curated-tech-head .muted{max-width:650px;margin:0}
@@ -708,7 +708,8 @@ main{padding-top:14px;padding-bottom:30px}
 .mentor-symbol,.mentor-live-media{position:absolute;inset:0;display:none}
 .mentor-stage[data-mode="text"] .mentor-symbol-text,
 .mentor-stage[data-mode="voice"] .mentor-symbol-voice,
-.mentor-stage[data-mode="live"] .mentor-live-media{display:flex}
+.mentor-stage[data-mode="live"] .mentor-live-media,
+.mentor-stage[data-mode="local"] .mentor-live-media{display:flex}
 .mentor-symbol{
   align-items:center;justify-content:center;flex-direction:column;color:#fff;
   background:radial-gradient(circle at 50% 30%,#46704d 0%,#21472b 54%,#122e1b 100%)
@@ -1084,6 +1085,41 @@ body.immersive .brand-center{display:none!important}
   .mentor-wave i{width:7px;height:7px}
 }
 
+/* Local Sage adds a full-width option below the existing mode row. */
+.mentor-mode-row [data-companion-mode="local"]{grid-column:1/-1}
+.mentor-topbar[data-mode="local"] .header-talk,
+.mentor-topbar[data-mode="local"] .header-handsfree,
+#sageLocalControls[hidden],#sageLocalFace[hidden]{display:none!important}
+.mentor-topbar[data-mode="local"] .sherpa-console-actions{grid-template-columns:1fr 1fr}
+#sageLocalControls{display:flex;gap:5px;min-width:0}
+#sageLocalControls button{flex:1;min-width:0;padding-inline:4px}
+#sageLocalControls button:disabled{opacity:.65;cursor:default}
+#sageLocalFace{z-index:3;pointer-events:none}
+#scAvatarCompare[hidden]{display:none}
+#scAvatarCompare{display:grid;gap:6px;margin:0 0 12px;padding:0 0 0 12px}
+#scAvatarCompare p{margin:0;color:var(--ui-muted);font-size:12px}
+#scAvatarCompare button{text-align:left;white-space:normal}
+#scAvatarCompare button[aria-pressed="true"]{outline:2px solid var(--fairway);outline-offset:-2px}
+#scAvatarCompare button:disabled{opacity:.6}
+@media(min-width:761px) and (max-height:500px) and (orientation:landscape){
+  .mentor-topbar[data-mode="local"],
+  body.immersive .mentor-topbar[data-mode="local"]{
+    min-height:0;grid-template-columns:192px minmax(0,1fr);padding-block:8px
+  }
+  .mentor-topbar[data-mode="local"] .mentor-dock,
+  .mentor-topbar[data-mode="local"] .mentor-stage{width:192px;height:245px}
+  .mentor-topbar[data-mode="local"] .mentor-conversation{
+    min-height:0;grid-template-rows:repeat(5,auto);align-content:start;gap:5px;padding-block:6px
+  }
+  .mentor-topbar[data-mode="local"] .mentor-mode-row{
+    grid-template-columns:repeat(3,minmax(0,1fr)) minmax(140px,1.8fr)
+  }
+  .mentor-topbar[data-mode="local"] [data-companion-mode="local"]{grid-column:auto}
+  .mentor-topbar[data-mode="local"]+.tabs-wrap{
+    padding-right:calc(76px + env(safe-area-inset-right,0px))
+  }
+}
+
 </style>
 </head>
 <body>
@@ -1099,7 +1135,7 @@ body.immersive .brand-center{display:none!important}
     <div class="splash-path" aria-hidden="true"><span></span><i></i></div>
     <div class="splash-caption">Walking your game plan into place…</div>
   </div>
-  <div class="splash-footer">ARTEZIQ • Sherpa Caddie • v0.12.11</div>
+  <div class="splash-footer">ARTEZIQ • Sherpa Caddie • v0.12.12</div>
 </div>
 <div class="app">
 <header class="topbar mentor-topbar" data-mode="text">
@@ -1123,6 +1159,7 @@ body.immersive .brand-center{display:none!important}
       </div>
       <div class="mentor-live-media">
         <img id="sherpaLivePoster" class="mentor-poster" src="assets/sage-sherpa-live.webp?v=0141" alt="Sage, Sherpa Caddie mentor">
+        <canvas id="sageLocalFace" class="mentor-poster" width="0" height="0" hidden aria-hidden="true"></canvas>
         <video id="sherpaLiveVideo" class="mentor-video" autoplay playsinline aria-label="Sage Video avatar"></video>
       </div>
       <span class="companion-dot ready" id="companionDot"></span>
@@ -1136,6 +1173,7 @@ body.immersive .brand-center{display:none!important}
         <button type="button" class="companion-mode active" data-companion-mode="text">Text</button>
         <button type="button" class="companion-mode" data-companion-mode="voice">Voice</button>
         <button type="button" class="companion-mode" data-companion-mode="live">Video</button>
+        <button type="button" class="companion-mode" data-companion-mode="local" hidden>Local Sage (Experimental)</button>
       </div>
     </div>
     <div class="console-question">
@@ -1145,6 +1183,10 @@ body.immersive .brand-center{display:none!important}
     <div class="sherpa-console-actions">
       <button type="button" class="quick-ask" id="companionSendBtn">Ask Sage</button>
       <button type="button" class="quick-talk header-talk" id="companionTalkBtn" aria-label="Tap once to talk to Sage">🎙️ Talk</button>
+      <div id="sageLocalControls" hidden>
+        <button type="button" class="quick-talk" id="sageLocalPause" disabled aria-label="Pause Local Sage">Pause</button>
+        <button type="button" class="quick-talk" id="sageLocalStop" disabled aria-label="Stop Local Sage">Stop</button>
+      </div>
       <label class="header-handsfree switch-row compact"><span>Hands-Free wake words</span><input class="handsfree-toggle" type="checkbox" aria-label="Hands-Free wake-word listening"><i aria-hidden="true"></i></label>
     </div>
     <div class="console-answer">
@@ -1154,7 +1196,7 @@ body.immersive .brand-center{display:none!important}
     <div class="console-hint" id="companionControlHint">Type a question above, then tap Ask.</div>
   </div>
 
-  <div class="version app-chrome">v0.12.11</div>
+  <div class="version app-chrome">v0.12.12</div>
 </header>
 
 <div class="tabs-wrap app-chrome">
@@ -1704,14 +1746,15 @@ body.immersive .brand-center{display:none!important}
   </article>
 </section>
 
-<div class="footer"><span>ARTEZIQ • Sherpa Caddie • v0.12.11</span><button id="aboutBtn">What’s in v0.12.11?</button></div>
+<div class="footer"><span>ARTEZIQ • Sherpa Caddie • v0.12.12</span><button id="aboutBtn">What’s in v0.12.12?</button></div>
 </main>
 </div>
 
 <div id="aboutModal" class="modal-backdrop hidden" role="dialog" aria-modal="true">
   <div class="modal" style="max-width:650px">
-    <div class="section-head"><div><p class="eyebrow">One-Shot Sherpa</p><h2>Version 0.12.11</h2></div><button class="btn ghost" id="closeAboutModal">Close</button></div>
+    <div class="section-head"><div><p class="eyebrow">One-Shot Sherpa</p><h2>Version 0.12.12</h2></div><button class="btn ghost" id="closeAboutModal">Close</button></div>
     <ul style="color:var(--stone);line-height:1.7">
+      <li>Compare ARTEZIQ and D-ID conversational avatars from Settings using the same practice question</li>
       <li>The six main navigation tabs remain visible and usable in full-screen mode</li>
       <li>Golf Technology Options now keeps every product image inside its media area so names, descriptions, and details stay fully visible</li>
       <li>Rapsodo MLM2PRO and Arccos Smart Sensors again show their complete brand, model, description, and Best For information</li>
@@ -1880,7 +1923,7 @@ window.anFeedbackContext=function(){
       screen=({guide:"Guide",learn:"Learn",play:"Plan",technology:"Technology",clubs:"Clubs",review:"Review"})[active]||"Guide";
     }
   }catch(_){ }
-  return{appVersion:"0.12.11",buildNumber:"0142",screen};
+  return{appVersion:"0.12.12",buildNumber:"0143",screen};
 };
 
 function sherpaSoundVolume(){
@@ -1893,6 +1936,7 @@ function syncSherpaAudioVolume(){
   const vol=sherpaSoundVolume(),liveVideo=$("#sherpaLiveVideo");
   if(liveVideo){liveVideo.volume=vol;liveVideo.muted=!aiState?.speakReplies||vol<=0}
   if(aiState?.activeAudio){try{aiState.activeAudio.volume=vol}catch(_){}}
+  localSage?.setVolume(aiState?.speakReplies?vol:0);
 }
 function initArteziqUiKit(){
   if(!window.AUDIO||!window.UIKIT)return;
@@ -1902,15 +1946,35 @@ function initArteziqUiKit(){
   }catch(_){ }
   AUDIO.init({dir:"assets/audio/",prefix:"sc_",music:{},sfx:{}});
   UIKIT.init({prefix:"sc_",extraSettingsHTML:
-    '<div id="scAudioNote">Sound level also controls Sage’s spoken Voice and Video replies. Sherpa Caddie does not currently use background music.</div>'+
-    '<div class="ui-switchrow"><div class="ui-txt"><h4>Spoken replies</h4><p>Let Sage answer aloud in Voice and Video modes.</p></div><button class="ui-switch" id="scSpokenReplies" type="button" role="switch" aria-checked="true"></button></div>'+
+    '<div id="scAudioNote">Sound level also controls Sage’s spoken replies. Sherpa Caddie does not currently use background music.</div>'+
+    '<div class="ui-switchrow"><div class="ui-txt"><h4>Spoken replies</h4><p>Let Sage answer aloud in Voice, Video, and Local Sage.</p></div><button class="ui-switch" id="scSpokenReplies" type="button" role="switch" aria-checked="true"></button></div>'+
     '<div class="ui-switchrow"><div class="ui-txt"><h4>Hands-Free listening</h4><p>Listen for Sherpa, Hey Sherpa, Sage, or Hey Sage.</p></div><button class="ui-switch" id="scHandsFree" type="button" role="switch" aria-checked="false"></button></div>'+
+    '<div class="ui-switchrow"><div class="ui-txt"><h4>Local Sage experiment</h4><p>Show the scripted portrait demo in Sage’s mode selector.</p></div><button class="ui-switch" id="scLocalSage" type="button" role="switch" aria-label="Local Sage experiment" aria-checked="false"></button></div>'+
+    '<div id="scAvatarCompare" role="group" aria-label="Compare conversational avatars" hidden>'+
+      '<p>Choose an avatar to try the same practice question.</p>'+
+      '<button class="btn secondary" id="scAvatarACA" type="button" aria-pressed="false" disabled>ACA · ARTEZIQ Conversational Avatar</button>'+
+      '<button class="btn secondary" id="scAvatarDCA" type="button" aria-pressed="false">DCA · D-ID Conversational Avatar</button>'+
+    '</div>'+
     '<div class="ui-switchrow"><div class="ui-txt"><h4>Advanced Guide controls</h4><p>Show the local model, voice and diagnostic controls on GUIDE.</p></div><button class="ui-switch" id="scAdvanced" type="button" role="switch" aria-checked="false"></button></div>'
   });
 
-  const spoken=$("#scSpokenReplies"),hf=$("#scHandsFree"),adv=$("#scAdvanced");
+  const spoken=$("#scSpokenReplies"),hf=$("#scHandsFree"),adv=$("#scAdvanced"),local=$("#scLocalSage");
   function paintSwitch(el,on){if(!el)return;el.classList.toggle("on",!!on);el.setAttribute("aria-checked",on?"true":"false")}
   paintSwitch(spoken,aiState.speakReplies);paintSwitch(hf,aiState.handsFree);paintSwitch(adv,!$("#textSherpaShell")?.classList.contains("guide-collapsed"));
+  paintSwitch(local,localSageEnabled);
+  if(local)local.onclick=()=>{
+    localSageEnabled=!localSageEnabled;
+    try{localStorage.setItem("sherpa.sageLocalExperimental",localSageEnabled?"1":"0")}catch(_){}
+    paintSwitch(local,localSageEnabled);
+    syncLocalSageFlag();
+  };
+  function compareAvatar(mode){
+    $("#uiSetClose").click();
+    setSherpaMode(mode);
+    $("#companionQuestion").value=SAGE_COMPARISON_PROMPT;
+  }
+  $("#scAvatarACA").onclick=()=>compareAvatar("local");
+  $("#scAvatarDCA").onclick=()=>compareAvatar("live");
   if(spoken)spoken.onclick=()=>{aiState.speakReplies=!aiState.speakReplies;$$('.speak-toggle').forEach(x=>x.checked=aiState.speakReplies);paintSwitch(spoken,aiState.speakReplies);syncSherpaAudioVolume();updateVoiceModeUI()};
   if(hf)hf.onclick=()=>{setHandsFree(!aiState.handsFree);paintSwitch(hf,aiState.handsFree)};
   if(adv)adv.onclick=()=>{const shell=$("#textSherpaShell");if(!shell)return;const show=shell.classList.contains("guide-collapsed");shell.classList.toggle("guide-collapsed",!show);paintSwitch(adv,show)};
@@ -1947,6 +2011,7 @@ const state={
 function save(){localStorage.setItem(KEY.clubs,JSON.stringify(state.clubs));localStorage.setItem(KEY.rounds,JSON.stringify(state.rounds));localStorage.setItem(KEY.bag,state.bagMode)}
 function toast(m){const t=$("#toast");t.textContent=m;t.classList.add("show");clearTimeout(toast.t);toast.t=setTimeout(()=>t.classList.remove("show"),1700)}
 function show(view){
+  if(sherpaExperience==="local"&&$(".tab.active")?.dataset.view!==view)localSage?.cancel();
   $$(".view").forEach(v=>v.classList.toggle("active",v.id===view));
   $$(".tab").forEach(t=>t.classList.toggle("active",t.dataset.view===view));
   window.scrollTo(0,0);
@@ -2013,10 +2078,16 @@ const DID_SDK_URLS=[
   "https://esm.sh/@d-id/client-sdk@2.0.6?bundle"
 ];
 let sherpaExperience="text";
+let sherpaModeRevision=0;
+let voiceRevision=0;
+let localSage=null;
+const SAGE_COMPARISON_PROMPT="Give me a quick practice tip?";
+const localSageQuery=new URLSearchParams(location.search).get("sageLocal");
+let localSageEnabled=localSageQuery==="1"||
+  (localSageQuery!=="0"&&localStorage.getItem("sherpa.sageLocalExperimental")==="1");
 const MENTOR_IDLE_MS=90000;
-const MENTOR_HIDDEN_MS=15000;
 const WAKE_PHRASES='“Sherpa,” “Hey Sherpa,” “Sage,” or “Hey Sage”';
-const liveState={sdk:null,manager:null,srcObject:null,connecting:false,connected:false,creditExhausted:false,needsFreshSession:false,connection:"disconnected",connectivity:"UNKNOWN",lastUser:"",lastSage:"",tool:"",mode:"idle",config:null,sdkSource:"",toolTest:null,requestPending:false,audioUnlocked:false,hasAudioTrack:false,audioPlayFailed:false,didSpeechStarted:false,speakFallbackTimer:null,idleTimer:null,hiddenTimer:null,lastActivity:0,connectStartedAt:0,requestStartedAt:0};
+const liveState={sdk:null,manager:null,srcObject:null,connecting:false,connected:false,creditExhausted:false,needsFreshSession:false,connection:"disconnected",connectivity:"UNKNOWN",lastUser:"",lastSage:"",tool:"",mode:"idle",config:null,sdkSource:"",toolTest:null,requestPending:false,request:null,generation:0,connectAttempt:null,audioUnlocked:false,hasAudioTrack:false,audioPlayFailed:false,didSpeechStarted:false,speakFallbackTimer:null,idleTimer:null,lastActivity:0,connectStartedAt:0,requestStartedAt:0};
 const mentorUiState={kind:"idle",message:"Text ready • type below"};
 
 async function loadDidConfig(force=false){
@@ -2108,6 +2179,7 @@ async function runBridgedToolDiagnostic(test){
   if(!handler){failToolDiagnostic("fail","FAIL — browser handler is not registered");return}
   try{
     await handler({quality:"good",miss_direction:"center",strategy:"smart"});
+    if(liveState.toolTest!==test)return;
     updateToolTestButton(test.name,"pass","LOCAL PASS — D-ID skipped; Sherpa bridge worked");
     setLiveToolStatus(`${test.name}: D-ID did not dispatch the tool, but Sherpa Caddie’s direct tool bridge verified the browser handler.`);
     clearToolDiagnostic();
@@ -2124,6 +2196,7 @@ async function runToolDiagnostic(name){
   setToolDiagnosticLock(true,name);
   updateToolTestButton(name,"testing","Connecting Video…");
   await connectSherpaLive();
+  if(sherpaExperience!=="live"||document.hidden)return;
   if(!liveState.connected){updateToolTestButton(name,"fail",liveState.creditExhausted?"BLOCKED — D-ID credits exhausted":"FAIL — Video not connected");setToolDiagnosticLock(false);return}
   const test={name,started:false,handlerRan:false,done:false,wrongTools:[],timeoutId:null};
   liveState.toolTest=test;
@@ -2157,7 +2230,9 @@ function isRecoverableDidConnectionError(err){return isInvalidDidSessionError(er
 async function useVoiceCreditFallback(question){
   const q=String(question||"").trim();
   const notice="D-ID avatar credits have run out, so I switched from Video to Voice. I can still help without the animated avatar.";
+  const revision=sherpaModeRevision+1;
   await setSherpaMode("voice");
+  if(revision!==sherpaModeRevision||document.hidden)return;
   const guidance=q?fallbackGolfAnswer(q):"Type a question or tap Talk and I’ll continue helping in Voice mode.";
   const response=`${notice} ${guidance}`;
   setSherpaReply("Sage — Voice fallback",response);setMentorActivity("speaking","Voice fallback • no D-ID credits used");
@@ -2187,13 +2262,21 @@ function clearBridgedSpeakFallback(){if(liveState.speakFallbackTimer){clearTimeo
 function showLiveStream(active=true){
   const video=$("#sherpaLiveVideo");
   if(!active||!video){showMentorVideo(false);return}
-  const reveal=()=>{if(sherpaExperience==="live"&&liveState.mode==="speaking"&&video.readyState>=2&&video.videoWidth>0&&!video.paused)showMentorVideo(true)};
+  const generation=liveState.generation;
+  const reveal=()=>{if(isCurrentDid(generation)&&liveState.mode==="speaking"&&video.readyState>=2&&video.videoWidth>0&&!video.paused)showMentorVideo(true)};
   if(typeof video.requestVideoFrameCallback==="function")video.requestVideoFrameCallback(reveal);else setTimeout(reveal,140);
 }
 function liveToolResult(data){return JSON.stringify(data)}
 const sherpaToolHandlers={};
-function registerSherpaLiveTools(manager){
-  const add=(name,handler)=>{sherpaToolHandlers[name]=handler;manager.registerClientTool(name,handler)};
+function registerSherpaLiveTools(manager,generation){
+  const add=(name,handler)=>{
+    const guarded=args=>{
+      if(!isCurrentDid(generation))return liveToolResult({success:false,message:"The Video session ended."});
+      return handler(args);
+    };
+    sherpaToolHandlers[name]=handler;
+    manager.registerClientTool(name,guarded);
+  };
   add("get_round_context",async()=>{
     if(toolTestActive("get_round_context"))return diagnosticResult("get_round_context",{live_tracking:false,course:state.selectedCourse?.name||null});
     return liveToolResult({live_tracking:false,course:state.selectedCourse?.name||null,pre_game_plan:state.preGamePlan,latest_review:latestPostGameReview(),message:"Sherpa Caddie does not track a game while it is being played. Use pre-game planning or save a post-game review."});
@@ -2248,32 +2331,41 @@ function bridgedToolAnswer(name,data){
   if(name==="open_hole_planner")return`Opening the Hole Planner${data.hole?` for Hole ${data.hole}`:""}.`;
   return"Sherpa Caddie completed that action.";
 }
-async function speakBridgedLiveAnswer(text,toolName){
-  setLiveTranscript("assistant",text);setLiveToolStatus(`${toolName} completed through Sherpa Caddie’s direct tool bridge.`);setLiveVisual("Sage is speaking");
+async function speakBridgedLiveAnswer(text,toolName,ok){
+  const generation=liveState.generation;
+  if(!isCurrentDid(generation))return;
+  setLiveTranscript("assistant",text);
+  setLiveToolStatus(ok?`${toolName} returned a result.`:`${toolName} could not complete.`);setLiveVisual("Sage is speaking");
   showLiveStream(false);clearBridgedSpeakFallback();liveState.didSpeechStarted=false;
   if(!aiState.speakReplies){setMentorActivity("idle","Answer ready • spoken replies are off");return}
   try{
     if(!liveState.connected||!liveState.manager?.speak)throw new Error("D-ID Video is not connected");
     await Promise.resolve(liveState.manager.speak({type:"text",input:text}));
+    if(!isCurrentDid(generation))return;
     liveState.speakFallbackTimer=setTimeout(()=>{
-      if(!liveState.didSpeechStarted){setLiveToolStatus(`${toolName} completed. D-ID did not start audio, so Sage is using the local voice.`);showLiveStream(false);speakSherpa(text,false)}
+      if(!isCurrentDid(generation))return;
+      if(!liveState.didSpeechStarted){setLiveToolStatus(`D-ID did not start audio, so Sage is using the local voice.`);showLiveStream(false);speakSherpa(text,false)}
       clearBridgedSpeakFallback();
     },8000);
   }catch(err){
+    if(!isCurrentDid(generation))return;
     if(isRecoverableDidConnectionError(err))liveState.needsFreshSession=true;
-    setLiveToolStatus(`${toolName} completed. Video speech was unavailable, so Sage is using the local voice.`);showLiveStream(false);speakSherpa(text,false)
+    setLiveToolStatus(`Video speech was unavailable, so Sage is using the local voice.`);showLiveStream(false);speakSherpa(text,false)
   }
 }
 async function trySherpaToolBridge(question){
   if(liveState.toolTest)return false;
+  const generation=liveState.generation;
   const intent=detectSherpaToolIntent(question);if(!intent)return false;
   const handler=sherpaToolHandlers[intent.name];if(!handler)return false;
   try{
     setLiveToolStatus(`Using ${intent.name}…`);
     const raw=await handler(intent.args),data=typeof raw==="string"?JSON.parse(raw):raw;
-    await speakBridgedLiveAnswer(bridgedToolAnswer(intent.name,data||{}),intent.name);
+    if(isCurrentDid(generation)){
+      await speakBridgedLiveAnswer(bridgedToolAnswer(intent.name,data||{}),intent.name,data?.success!==false);
+    }
   }catch(err){
-    const text=`I could not complete that action: ${shortError(err)}`;await speakBridgedLiveAnswer(text,intent.name);
+    if(isCurrentDid(generation))await speakBridgedLiveAnswer(`I could not complete that action: ${shortError(err)}`,intent.name,false);
   }
   return true;
 }
@@ -2281,25 +2373,20 @@ function isCompactMobile(){
   return window.matchMedia("(max-width: 620px)").matches || /iPhone|iPod|Android.+Mobile/i.test(navigator.userAgent);
 }
 async function releaseLocalAiForSherpaLive(){
-  if(typeof aiState!=="undefined")aiState.llmLoadToken=(aiState.llmLoadToken||0)+1;
-  try{
-    if(aiState?.engine&&typeof aiState.engine.unload==="function")await aiState.engine.unload();
-  }catch(_){}
-  if(typeof aiState!=="undefined"){
-    aiState.engine=null;
-    aiState.llmReady=false;
-    aiState.loadingLLM=false;
-  }
-  if(typeof llmBadge!=="undefined"&&llmBadge)setBadge(llmBadge,"Local AI paused for Sherpa Live","warn");
+  const engine=aiState.engine;
+  aiState.llmLoadToken++;
+  aiState.engine=null;
+  aiState.llmReady=false;
+  aiState.loadingLLM=false;
+  setBadge(llmBadge,sherpaExperience==="local"?"Scripted demo • no model":"Local AI paused for Sherpa Live","warn");
+  try{await engine?.unload?.()}catch(_){}
 }
 async function releaseLocalVoiceForSherpaLive(){
-  if(typeof aiState==="undefined")return;
-  aiState.ttsLoadToken=(aiState.ttsLoadToken||0)+1;
-  try{if(aiState.activeAudio){aiState.activeAudio.pause();aiState.activeAudio.src=""}}catch(_){}
-  aiState.activeAudio=null;
-  try{if(aiState.tts&&typeof aiState.tts.dispose==="function")await aiState.tts.dispose()}catch(_){}
+  const tts=aiState.tts;
+  aiState.ttsLoadToken++;
   aiState.tts=null;aiState.ttsReady=false;aiState.ttsLoading=false;aiState.ttsFailed=false;
-  try{if("speechSynthesis" in window)speechSynthesis.cancel()}catch(_){}
+  stopActiveVoice();
+  try{await tts?.dispose?.()}catch(_){}
 }
 function armLiveCrashGuard(){
   try{sessionStorage.setItem("sherpaLiveStartedAt",String(Date.now()))}catch(_){}
@@ -2315,7 +2402,6 @@ function recentlyCrashedInLive(){
 }
 function clearMentorTimers(){
   if(liveState.idleTimer){clearTimeout(liveState.idleTimer);liveState.idleTimer=null}
-  if(liveState.hiddenTimer){clearTimeout(liveState.hiddenTimer);liveState.hiddenTimer=null}
 }
 function touchMentorSession(){
   liveState.lastActivity=Date.now();
@@ -2332,37 +2418,72 @@ function prepareMentorMode(){
     setMentorActivity("idle","Video ready • tap Talk or Ask");
     setLiveState("Ready");setLiveConnection("Connects when needed");setLiveVisual("Sage is ready");
   setLiveToolStatus("Video is preparing Sage. D-ID pauses after inactivity to limit usage.");
-    loadDidConfig().catch(()=>{});
   }
 }
-async function resetDidTransport(){
+function isCurrentDid(generation){
+  return liveState.generation===generation&&sherpaExperience==="live"&&!document.hidden;
+}
+async function closeDidManager(manager){
+  if(!manager)return;
+  let timer;
+  try{
+    await Promise.race([Promise.resolve(manager.disconnect()),new Promise(resolve=>{timer=setTimeout(resolve,1800)})]);
+  }catch(_){}finally{clearTimeout(timer)}
+}
+async function resetDidTransport(keepAttempt=false){
+  liveState.generation++;
+  if(!keepAttempt){liveState.connectAttempt=null;liveState.connecting=false;}
   clearBridgedSpeakFallback();
   const manager=liveState.manager,stream=liveState.srcObject,video=$("#sherpaLiveVideo");
   liveState.manager=null;liveState.srcObject=null;liveState.connected=false;liveState.connection="disconnected";liveState.hasAudioTrack=false;liveState.audioPlayFailed=false;liveState.didSpeechStarted=false;
+  liveState.mode="idle";aiState.speaking=false;
   try{stream?.getTracks?.().forEach(track=>track.stop())}catch(_){}
-  if(video){try{video.pause()}catch(_){}try{video.srcObject=null;video.removeAttribute("src");video.load()}catch(_){}}
-  showLiveStream(false);
-  if(manager){try{await Promise.race([Promise.resolve(manager.disconnect()),new Promise(resolve=>setTimeout(resolve,1800))])}catch(_){}}
-}
-async function connectSherpaLive(force=false,recoveryAttempt=0){
-  if(liveState.connecting){
-    await new Promise(resolve=>{const started=Date.now(),poll=setInterval(()=>{if(!liveState.connecting||Date.now()-started>20000){clearInterval(poll);resolve()}},100)});
-    return;
+  if(video){
+    video.onplaying=video.onerror=null;
+    try{video.pause();video.srcObject=null;video.removeAttribute("src");video.load()}catch(_){}
   }
+  showLiveStream(false);
+  await closeDidManager(manager);
+}
+function connectSherpaLive(force=false){
+  if(sherpaExperience!=="live"||document.hidden)return Promise.resolve();
+  if(liveState.connectAttempt)return liveState.connectAttempt;
+  const attempt=connectDidAttempt(force,0);
+  liveState.connectAttempt=attempt;
+  const clear=()=>{
+    if(liveState.connectAttempt===attempt){
+      liveState.connectAttempt=null;
+      liveState.connecting=false;
+    }
+  };
+  attempt.then(clear,clear);
+  return attempt;
+}
+async function connectDidAttempt(force,recoveryAttempt){
+  const teardown=force||liveState.needsFreshSession||(!liveState.connected&&liveState.manager)?resetDidTransport(true):null;
+  const generation=liveState.generation;
+  if(teardown)await teardown;
+  if(!isCurrentDid(generation))return;
   await releaseLocalAiForSherpaLive();
-  if(force||liveState.needsFreshSession||(!liveState.connected&&liveState.manager))await resetDidTransport();
+  if(!isCurrentDid(generation))return;
   if(liveState.connected&&liveState.manager){touchMentorSession();return}
   armLiveCrashGuard();liveState.connecting=true;liveState.connectStartedAt=Date.now();setLiveState("Connecting…");setLiveConnection("Connecting…");setLiveVisual("Connecting Sage…");setLiveToolStatus("Starting and warming a secure D-ID session…");
   try{
     const cfg=await loadDidConfig(force);
+    if(!isCurrentDid(generation))return;
     if(!cfg.clientKey){
       throw new Error("Sherpa Live is not provisioned yet. Run the GitHub action “Provision D-ID client key” once, then reload the app.");
     }
     const sdk=await loadDidSdk();
+    if(!isCurrentDid(generation))return;
     const create=sdk.createAgentManager||sdk.default?.createAgentManager;
     const video=$("#sherpaLiveVideo");
     const callbacks={
       onSrcObjectReady(value){
+        if(!isCurrentDid(generation)){
+          value?.getTracks?.().forEach(track=>track.stop());
+          return value;
+        }
         liveState.srcObject=value;
         const video=$("#sherpaLiveVideo");
         try{
@@ -2371,9 +2492,9 @@ async function connectSherpaLive(force=false,recoveryAttempt=0){
           if(video){
             video.srcObject=value;
             video.playsInline=true;video.autoplay=true;video.volume=sherpaSoundVolume();video.muted=!aiState.speakReplies||video.volume<=0;
-            video.onplaying=()=>{liveState.audioPlayFailed=false;if(liveState.mode==="speaking")showLiveStream(true)};
-            video.onerror=()=>{liveState.audioPlayFailed=true;showLiveStream(false)};
-            video.play().then(()=>{liveState.audioPlayFailed=false}).catch(()=>{liveState.audioPlayFailed=true});
+            video.onplaying=()=>{if(!isCurrentDid(generation))return;liveState.audioPlayFailed=false;if(liveState.mode==="speaking")showLiveStream(true)};
+            video.onerror=()=>{if(!isCurrentDid(generation))return;liveState.audioPlayFailed=true;showLiveStream(false)};
+            video.play().then(()=>{if(isCurrentDid(generation))liveState.audioPlayFailed=false}).catch(()=>{if(isCurrentDid(generation))liveState.audioPlayFailed=true});
           }
         }catch(err){
           console.warn("Mentor media attachment fallback",err);
@@ -2382,21 +2503,21 @@ async function connectSherpaLive(force=false,recoveryAttempt=0){
         showLiveStream(false);
         return value
       },
-      onConnectionStateChange(stateName){liveState.connection=String(stateName||"").toLowerCase();liveState.connected=liveState.connection==="connected";if(liveState.connected){const seconds=liveState.connectStartedAt?((Date.now()-liveState.connectStartedAt)/1000).toFixed(1):null;setLiveState("Live","connected");setLiveConnection(seconds?`Connected • ${seconds}s warmup`:"Connected","good");setLiveVisual("Sage is ready");setLiveToolStatus("Live tools ready — Sage can use Sherpa’s real round data and controls.");setMentorActivity(aiState.handsFree?"listening":"idle",aiState.handsFree?`Listening for ${WAKE_PHRASES}…`:"Video connected • ready");touchMentorSession()}else if(["fail","closed"].includes(liveState.connection)){setLiveState("Connection issue","error");setLiveConnection(liveState.connection,"weak");setLiveVisual("Tap Reconnect");setMentorActivity("error","Video connection needs attention")}else{setLiveState(stateName||"Connecting…");setLiveConnection(stateName||"Connecting…")}},
-      onConnectivityStateChange(value){liveState.connectivity=String(value||"UNKNOWN");setLiveConnection(liveState.connectivity==="STRONG"?"Connected":liveState.connectivity==="WEAK"?"Weak connection":"Connected",liveState.connectivity==="WEAK"?"weak":"good")},
-      onVideoStateChange(value){
+      onConnectionStateChange(stateName){if(!isCurrentDid(generation))return;liveState.connection=String(stateName||"").toLowerCase();liveState.connected=liveState.connection==="connected";if(liveState.connected){const seconds=liveState.connectStartedAt?((Date.now()-liveState.connectStartedAt)/1000).toFixed(1):null;setLiveState("Live","connected");setLiveConnection(seconds?`Connected • ${seconds}s warmup`:"Connected","good");setLiveVisual("Sage is ready");setLiveToolStatus("Live tools ready — Sage can use Sherpa’s real round data and controls.");setMentorActivity(aiState.handsFree?"listening":"idle",aiState.handsFree?`Listening for ${WAKE_PHRASES}…`:"Video connected • ready");touchMentorSession()}else if(["fail","closed"].includes(liveState.connection)){setLiveState("Connection issue","error");setLiveConnection(liveState.connection,"weak");setLiveVisual("Tap Reconnect");setMentorActivity("error","Video connection needs attention")}else{setLiveState(stateName||"Connecting…");setLiveConnection(stateName||"Connecting…")}},
+      onConnectivityStateChange(value){if(!isCurrentDid(generation))return;liveState.connectivity=String(value||"UNKNOWN");setLiveConnection(liveState.connectivity==="STRONG"?"Connected":liveState.connectivity==="WEAK"?"Weak connection":"Connected",liveState.connectivity==="WEAK"?"weak":"good")},
+      onVideoStateChange(value){if(!isCurrentDid(generation))return;
         const s=String(value||"").toUpperCase();
         const talking=s!=="STOP"&&s!=="IDLE"&&s!=="";
         liveState.mode=talking?"speaking":"idle";aiState.speaking=talking;
-        if(talking){liveState.didSpeechStarted=true;clearBridgedSpeakFallback();const video=$("#sherpaLiveVideo");if(video){video.muted=!aiState.speakReplies||sherpaSoundVolume()<=0;video.volume=sherpaSoundVolume();video.play().then(()=>{liveState.audioPlayFailed=false;showLiveStream(true)}).catch(()=>{liveState.audioPlayFailed=true;showLiveStream(false)})}}else showLiveStream(false);
+        if(talking){liveState.didSpeechStarted=true;clearBridgedSpeakFallback();const video=$("#sherpaLiveVideo");if(video){video.muted=!aiState.speakReplies||sherpaSoundVolume()<=0;video.volume=sherpaSoundVolume();video.play().then(()=>{if(isCurrentDid(generation)){liveState.audioPlayFailed=false;showLiveStream(true)}}).catch(()=>{if(isCurrentDid(generation)){liveState.audioPlayFailed=true;showLiveStream(false)}})}}else showLiveStream(false);
         setMentorActivity(talking?"speaking":aiState.handsFree?"listening":"idle",talking?"Sage is speaking":aiState.handsFree?`Listening for ${WAKE_PHRASES}…`:"Video connected • ready");
         setLiveVisual(talking?"Sage is speaking":"Sage is ready");
         touchMentorSession();
         if(talking&&aiState.recognition&&aiState.listening){aiState.stoppingRecognition=true;try{aiState.recognition.stop()}catch(_){}}
         if(!talking&&aiState.handsFree&&sherpaExperience==="live")scheduleHandsFreeRestart()
       },
-      onNewMessage(messages,type){if(!Array.isArray(messages)||!messages.length)return;const last=messages[messages.length-1];if(last?.role==="user")setLiveTranscript("user",last.content);if(last?.role==="assistant"&&(type==="answer"||type==="partial")){setLiveTranscript("assistant",last.content);if(liveState.requestStartedAt&&!liveState.toolTest){const seconds=((Date.now()-liveState.requestStartedAt)/1000).toFixed(1);setLiveToolStatus(`Sage started responding in ${seconds}s.`);liveState.requestStartedAt=0}if(type==="answer"){setLiveVisual("Sage is speaking");if(aiState.speakReplies){clearBridgedSpeakFallback();liveState.speakFallbackTimer=setTimeout(()=>{if(!liveState.didSpeechStarted){setLiveToolStatus("D-ID did not start audio, so Sage is using the local voice.");showLiveStream(false);speakSherpa(last.content,false)}clearBridgedSpeakFallback()},8000)}const test=liveState.toolTest;if(test&&!test.started)setTimeout(()=>{if(liveState.toolTest===test&&!test.started)runBridgedToolDiagnostic(test)},500)}}touchMentorSession()},
-      onToolEvent(event){
+      onNewMessage(messages,type){if(!isCurrentDid(generation))return;if(!Array.isArray(messages)||!messages.length)return;const last=messages[messages.length-1];if(last?.role==="user")setLiveTranscript("user",last.content);if(last?.role==="assistant"&&(type==="answer"||type==="partial")){setLiveTranscript("assistant",last.content);if(liveState.requestStartedAt&&!liveState.toolTest){const seconds=((Date.now()-liveState.requestStartedAt)/1000).toFixed(1);setLiveToolStatus(`Sage started responding in ${seconds}s.`);liveState.requestStartedAt=0}if(type==="answer"){setLiveVisual("Sage is speaking");if(aiState.speakReplies){clearBridgedSpeakFallback();liveState.speakFallbackTimer=setTimeout(()=>{if(!isCurrentDid(generation))return;if(!liveState.didSpeechStarted){setLiveToolStatus("D-ID did not start audio, so Sage is using the local voice.");showLiveStream(false);speakSherpa(last.content,false)}clearBridgedSpeakFallback()},8000)}const test=liveState.toolTest;if(test&&!test.started)setTimeout(()=>{if(liveState.toolTest===test&&!test.started)runBridgedToolDiagnostic(test)},500)}}touchMentorSession()},
+      onToolEvent(event){if(!isCurrentDid(generation))return;
         const p=event?.payload||{},name=p.name||"Sherpa tool";
         const test=liveState.toolTest;
         touchMentorSession();
@@ -2407,7 +2528,7 @@ async function connectSherpaLive(force=false,recoveryAttempt=0){
             else{test.wrongTools.push(name);setLiveToolStatus(`Diagnostic expected ${test.name}, but Sage called ${name}.`)}
           }
         }else if(event?.type==="ToolCallDone"){
-          setLiveToolStatus(`${name} completed.`);refreshSherpaLiveContext();
+          setLiveToolStatus(`${name} returned a result.`);refreshSherpaLiveContext();
           if(test&&test.name===name){
             if(test.started&&test.handlerRan){const ms=Number(p.duration_ms||0);updateToolTestButton(name,"pass",`PASS — ToolCallDone${ms?` • ${ms} ms`:""}`);clearToolDiagnostic()}
             else failToolDiagnostic("fail",test.started?"FAIL — browser handler not confirmed":"FAIL — missing ToolCallStarted");
@@ -2417,29 +2538,41 @@ async function connectSherpaLive(force=false,recoveryAttempt=0){
           if(test&&test.name===name)failToolDiagnostic("fail",`FAIL — ToolCallError${p.error?`: ${shortError(p.error)}`:""}`);
         }
       },
-      onError(error,errorData){console.error("D-ID Sherpa Live error",error,errorData);const source=error||errorData,msg=friendlyLiveError(source),credits=isDidCreditError(source),recoverable=isRecoverableDidConnectionError(source);liveState.creditExhausted=credits;if(recoverable){liveState.connected=false;liveState.needsFreshSession=true;showLiveStream(false);setLiveState("Session reset needed","error");setLiveConnection("Will reconnect cleanly","weak");setLiveToolStatus("The D-ID connection failed. The next Video request will discard it and create a completely fresh session.");if(liveState.toolTest)failToolDiagnostic("fail",`FAIL — D-ID connection: ${shortError(source)}`);return}setLiveState(credits?"Credits exhausted":"Video unavailable","error");setLiveConnection("Needs attention","weak");setLiveVisual("Video unavailable");setLiveToolStatus(msg);setQuickAnswer(msg);setMentorActivity("error",msg);if(liveState.toolTest)failToolDiagnostic("fail",`FAIL — D-ID error: ${shortError(source)}`)}
+      onError(error,errorData){if(!isCurrentDid(generation))return;console.error("D-ID Sherpa Live error",error,errorData);const source=error||errorData,msg=friendlyLiveError(source),credits=isDidCreditError(source),recoverable=isRecoverableDidConnectionError(source);liveState.creditExhausted=credits;liveState.transportError=source||new Error(msg);if(!liveState.connecting)resetDidTransport();if(recoverable){liveState.connected=false;liveState.needsFreshSession=true;showLiveStream(false);setLiveState("Session reset needed","error");setLiveConnection("Will reconnect cleanly","weak");setLiveToolStatus("The D-ID connection failed. The next Video request will discard it and create a completely fresh session.");if(liveState.toolTest)failToolDiagnostic("fail",`FAIL — D-ID connection: ${shortError(source)}`);return}setLiveState(credits?"Credits exhausted":"Video unavailable","error");setLiveConnection("Needs attention","weak");setLiveVisual("Video unavailable");setLiveToolStatus(msg);setQuickAnswer(msg);setMentorActivity("error",msg);if(liveState.toolTest)failToolDiagnostic("fail",`FAIL — D-ID error: ${shortError(source)}`)}
     };
     const liveResolution=window.innerWidth<=480?240:window.innerWidth<=820?360:720;
-    liveState.manager=await create(cfg.agentId,{
+    liveState.transportError=null;
+    const manager=await create(cfg.agentId,{
       auth:{type:"key",clientKey:cfg.clientKey},
       callbacks,
       streamOptions:{compatibilityMode:(/Safari/i.test(navigator.userAgent)&&!/Chrome|CriOS|Android/i.test(navigator.userAgent))?"on":"auto",streamWarmup:true,outputResolution:liveResolution}
     });
-    registerSherpaLiveTools(liveState.manager);
-    await liveState.manager.connect();
+    if(!isCurrentDid(generation)){await closeDidManager(manager);return;}
+    liveState.manager=manager;
+    registerSherpaLiveTools(manager,generation);
+    await manager.connect();
+    if(!isCurrentDid(generation)){await closeDidManager(manager);return;}
+    if(liveState.transportError)throw liveState.transportError;
     liveState.creditExhausted=false;liveState.needsFreshSession=false;liveState.connected=true;setLiveState("Live","connected");setLiveConnection("Connected","good");setLiveVisual("Sage is ready");refreshSherpaLiveContext();touchMentorSession();
   }catch(err){
+    if(!isCurrentDid(generation))return;
     console.error("Sherpa Live connect failed",err);const recoverable=isRecoverableDidConnectionError(err);liveState.creditExhausted=isDidCreditError(err);liveState.connected=false;
-    await resetDidTransport();
-    if(recoverable&&recoveryAttempt<1){liveState.connecting=false;liveState.needsFreshSession=true;setLiveState("Retrying…");setLiveConnection("Creating a fresh session…","weak");setLiveToolStatus("The first D-ID connection failed. Sherpa Caddie is resetting it and retrying once…");await new Promise(resolve=>setTimeout(resolve,700));return await connectSherpaLive(true,recoveryAttempt+1)}
+    const reset=resetDidTransport(true),nextGeneration=liveState.generation;
+    await reset;
+    if(!isCurrentDid(nextGeneration))return;
+    if(recoverable&&recoveryAttempt<1){liveState.connecting=false;liveState.needsFreshSession=true;setLiveState("Retrying…");setLiveConnection("Creating a fresh session…","weak");setLiveToolStatus("The first D-ID connection failed. Sherpa Caddie is resetting it and retrying once…");await new Promise(resolve=>setTimeout(resolve,700));if(isCurrentDid(nextGeneration))return await connectDidAttempt(true,recoveryAttempt+1);return}
     const msg=friendlyLiveError(err);liveState.needsFreshSession=recoverable;setLiveState(liveState.creditExhausted?"Credits exhausted":"Video unavailable","error");setLiveConnection("Disconnected","weak");setLiveVisual("Video unavailable");setLiveToolStatus(msg);setQuickAnswer(msg);setMentorActivity("error",msg)
   }
-  finally{liveState.connecting=false}
 }
 async function disconnectSherpaLive(reason="manual"){
   clearMentorTimers();clearLiveCrashGuard();
-  await resetDidTransport();liveState.needsFreshSession=false;
-  if(reason==="idle"||reason==="hidden"){
+  liveState.request=null;liveState.requestPending=false;
+  clearToolDiagnostic();
+  liveState.needsFreshSession=false;
+  const reset=resetDidTransport(),generation=liveState.generation;
+  await reset;
+  if(generation!==liveState.generation)return;
+  if(sherpaExperience==="live"&&(reason==="idle"||reason==="hidden")){
     setLiveState("Paused");setLiveConnection("Paused to save resources");setLiveVisual("Reconnects when needed");
     setMentorActivity("paused",reason==="hidden"?"Video paused in background":"Video paused • tap Talk or Ask");
   }else{
@@ -2447,73 +2580,124 @@ async function disconnectSherpaLive(reason="manual"){
   }
 }
 async function sendSherpaLive(text){
+  if(sherpaExperience!=="live"||document.hidden)return;
   const q=String(text||"").trim();if(!q)return;
   if(liveState.requestPending){toast("Sage is still answering. Please wait.");return}
-  liveState.requestPending=true;
+  const request={};
+  const active=()=>liveState.request===request&&sherpaExperience==="live"&&!document.hidden;
+  liveState.request=request;liveState.requestPending=true;
   liveState.requestStartedAt=Date.now();
   liveState.didSpeechStarted=false;clearBridgedSpeakFallback();
   setLiveTranscript("user",q);setLiveVisual("Sage is thinking…");setMentorActivity("thinking","Sage is thinking…");
   if(aiState.recognition&&aiState.listening){aiState.stoppingRecognition=true;try{aiState.recognition.stop()}catch(_){}}
-  if(liveState.needsFreshSession)await connectSherpaLive(true);
-  else if(!liveState.connected||!liveState.manager)await connectSherpaLive();
-  if(!liveState.connected||!liveState.manager){
-    if(liveState.creditExhausted){await useVoiceCreditFallback(q);liveState.requestPending=false;if(!liveState.toolTest)setToolDiagnosticLock(false);return}
-    if(await trySherpaToolBridge(q)){liveState.requestPending=false;if(!liveState.toolTest)setToolDiagnosticLock(false);return}
-    setLiveTranscript("assistant","I could not connect to Video. Tap Reconnect and try again.");liveState.requestPending=false;if(!liveState.toolTest)setToolDiagnosticLock(false);return
-  }
-  touchMentorSession();
   try{
-    if(await trySherpaToolBridge(q)){touchMentorSession();return}
-    await liveState.manager.chat(q);touchMentorSession();
+    if(liveState.needsFreshSession)await connectSherpaLive(true);
+    else if(!liveState.connected||!liveState.manager)await connectSherpaLive();
+    if(!active())return;
+    if(liveState.creditExhausted){await useVoiceCreditFallback(q);return;}
+    if(await trySherpaToolBridge(q)){if(active())touchMentorSession();return;}
+    if(!active())return;
+    if(!liveState.connected||!liveState.manager){
+      setLiveTranscript("assistant","I could not connect to Video. Select Video to reconnect or use Text or Voice.");
+      return;
+    }
+    await liveState.manager.chat(q);
+    if(active())touchMentorSession();
   }catch(err){
-    if(isDidCreditError(err)){liveState.creditExhausted=true;await useVoiceCreditFallback(q);return}
+    if(!active())return;
+    if(isDidCreditError(err)){liveState.creditExhausted=true;await useVoiceCreditFallback(q);return;}
     if(isRecoverableDidConnectionError(err)){
       setLiveState("Reconnecting…");setLiveConnection("Creating a fresh session…");setLiveToolStatus("The previous D-ID session expired. Reconnecting and retrying once…");
       liveState.connected=false;liveState.needsFreshSession=true;
       await connectSherpaLive(true);
+      if(!active())return;
       if(liveState.connected&&liveState.manager){
         try{await liveState.manager.chat(q);touchMentorSession();return}catch(retryErr){err=retryErr}
       }
     }
-    setLiveState("Live error","error");setLiveTranscript("assistant",`I couldn't send that to Sage: ${shortError(err)}`);setMentorActivity("error","Video could not answer");if(liveState.toolTest)failToolDiagnostic("fail",`FAIL — request error: ${shortError(err)}`);if(aiState.handsFree)scheduleHandsFreeRestart()
-  }
-  finally{liveState.requestPending=false;if(!liveState.toolTest)setToolDiagnosticLock(false)}
-}
-async function setSherpaMode(mode){
-  if(!["text","voice","live"].includes(mode))mode="text";sherpaExperience=mode;const stage=$("#mentorStage"),topbar=$(".mentor-topbar");if(stage)stage.dataset.mode=mode;if(topbar)topbar.dataset.mode=mode;
-  showMentorVideo(false);
-  const live=mode==="live";$$('.experience-btn').forEach(b=>b.classList.toggle("active",b.dataset.sherpaMode===mode));
-  const textShell=$("#textSherpaShell"),liveShell=$("#sherpaLiveShell");if(textShell&&!textShell.dataset.initCollapse){textShell.classList.add("guide-collapsed");textShell.dataset.initCollapse="1";}if(textShell)textShell.classList.toggle("is-hidden",live);if(liveShell)liveShell.classList.toggle("active",live);
-  localStorage.setItem("sherpa.experience.0130",mode);
-  if(mode==="text"){
-    if(aiState.handsFree)setHandsFree(false);
-    await disconnectSherpaLive();
-    setMentorActivity("idle","Text ready • type below");
-    if(!isCompactMobile()&&!aiState.llmReady&&!aiState.loadingLLM)loadSherpaLLM(false);
-  }
-  else if(mode==="voice"){
-    await disconnectSherpaLive();
-    if(!isCompactMobile()&&!aiState.llmReady&&!aiState.loadingLLM)loadSherpaLLM(false);
-    aiState.speakReplies=true;$$('.speak-toggle').forEach(x=>x.checked=true);
-    setMentorActivity(aiState.handsFree?"listening":"idle",aiState.handsFree?`Listening for ${WAKE_PHRASES}…`:"Voice ready • tap Talk or enable Hands-Free");
+    if(!active())return;
+    resetDidTransport();
+    setLiveState("Live error","error");
+    setLiveTranscript("assistant",`I couldn't send that to Sage: ${shortError(err)}`);
+    setMentorActivity("error","Video could not answer");
+    if(liveState.toolTest)failToolDiagnostic("fail",`FAIL — request error: ${shortError(err)}`);
     if(aiState.handsFree)scheduleHandsFreeRestart();
+  }finally{
+    if(liveState.request===request){
+      liveState.request=null;liveState.requestPending=false;
+      if(!liveState.toolTest)setToolDiagnosticLock(false);
+    }
   }
-  else{
-    await releaseLocalAiForSherpaLive();
-    await releaseLocalVoiceForSherpaLive();
-    refreshSherpaLiveContext();prepareMentorMode();
-    aiState.speakReplies=true;$$('.speak-toggle').forEach(x=>x.checked=true);
-    syncSherpaAudioVolume();
-    if(aiState.handsFree){setMentorActivity("listening",`Listening for ${WAKE_PHRASES}…`);scheduleHandsFreeRestart()}
-    connectSherpaLive().catch(()=>{});
+}
+
+async function setSherpaMode(mode){
+  if(!["text","voice","live"].includes(mode)&&!(mode==="local"&&localSageEnabled&&localSage))mode="text";
+  const revision=++sherpaModeRevision,previous=sherpaExperience;
+  if(previous==="local")localSage.cancel();
+  sherpaExperience=mode;
+  stopActiveVoice();
+  if(mode==="local"){
+    if(aiState.recognition){
+      const recognition=aiState.recognition;
+      recognition.onstart=recognition.onresult=recognition.onerror=recognition.onend=null;
+      try{recognition.abort()}catch(_){}
+      aiState.recognition=null;
+    }
+    aiState.listening=aiState.stoppingRecognition=aiState.manualVoicePending=false;
+    aiState.handsFree=false;
   }
+  updateVoiceModeUI();
+  showMentorVideo(false);
+  const live=mode==="live", local=mode==="local";
+  $$('.experience-btn').forEach(b=>b.classList.toggle("active",b.dataset.sherpaMode===mode));
+  const textShell=$("#textSherpaShell"),liveShell=$("#sherpaLiveShell");
+  if(textShell&&!textShell.dataset.initCollapse){textShell.classList.add("guide-collapsed");textShell.dataset.initCollapse="1";}
+  if(textShell)textShell.classList.toggle("is-hidden",live||local);
+  if(liveShell)liveShell.classList.toggle("active",live);
+  if(!local)localStorage.setItem("sherpa.experience.0130",mode);
+  if(mode==="text"&&aiState.handsFree)setHandsFree(false);
+  if(mode==="voice"||live){
+    aiState.speakReplies=true;
+    $$('.speak-toggle').forEach(x=>x.checked=true);
+  }
+  if(local)setMentorActivity("idle","Local Sage • scripted demo");
+  else if(live)prepareMentorMode();
+  else if(mode==="voice")setMentorActivity(aiState.handsFree?"listening":"idle",aiState.handsFree?`Listening for ${WAKE_PHRASES}…`:"Voice ready • tap Talk or enable Hands-Free");
+  else setMentorActivity("idle","Text ready • type below");
   updateCompanionUI();
-  window.anTrack("sage_mode_changed",{data:{mode:mode==="live"?"video":mode}});
+  syncSherpaAudioVolume();
+  const teardown=live?Promise.resolve():disconnectSherpaLive();
+  if(local){
+    releaseLocalAiForSherpaLive();
+    releaseLocalVoiceForSherpaLive();
+    if(previous!=="local"){
+      $("#companionQuestion").value=SAGE_COMPARISON_PROMPT;
+      setQuickAnswer("Tap Ask Sage to play the scripted practice tip.");
+    }
+  }
+  await teardown;
+  if(revision!==sherpaModeRevision)return;
+  if(live){
+    await releaseLocalVoiceForSherpaLive();
+    if(revision!==sherpaModeRevision||document.hidden)return;
+    if(aiState.handsFree)scheduleHandsFreeRestart();
+    connectSherpaLive().catch(()=>{});
+  }else if(!local){
+    if(!localSageEnabled&&!isCompactMobile()&&!aiState.llmReady&&!aiState.loadingLLM)loadSherpaLLM(false);
+    if(mode==="voice"&&aiState.handsFree)scheduleHandsFreeRestart();
+  }
+  window.anTrack("sage_mode_changed",{data:{mode:live?"video":mode}});
 }
 $$('.experience-btn').forEach(b=>b.addEventListener('click',()=>setSherpaMode(b.dataset.sherpaMode)));
 
 function updateCompanionUI(){
-  $$(".companion-mode").forEach(b=>b.classList.toggle("active",b.dataset.companionMode===sherpaExperience));
+  $$(".companion-mode").forEach(b=>{
+    const active=b.dataset.companionMode===sherpaExperience;
+    b.classList.toggle("active",active);
+    b.setAttribute("aria-pressed",String(active));
+  });
+  $("#sageLocalControls").hidden=sherpaExperience!=="local";
+  updateAvatarComparison();
   const status=$("#companionStatus"),dot=$("#companionDot"),stage=$("#mentorStage");
   if(stage)stage.dataset.mode=sherpaExperience;
   const topbar=$(".mentor-topbar");if(topbar)topbar.dataset.mode=sherpaExperience;
@@ -2525,7 +2709,10 @@ function updateCompanionUI(){
 }
 function updateCompanionControls(){
   const hint=$("#companionControlHint"),input=$("#companionQuestion");if(!hint||!input)return;
-  if(sherpaExperience==="text"){
+  if(sherpaExperience==="local"){
+    hint.textContent="Try the practice tip or type “What tab am I on?”";
+    input.placeholder=SAGE_COMPARISON_PROMPT;
+  }else if(sherpaExperience==="text"){
     hint.textContent="Type your question, then tap Ask Sage.";input.placeholder="Type your golf question for Sage…";
   }else if(aiState.handsFree){
     hint.textContent=`Listening for ${WAKE_PHRASES}. You can also type and tap Ask Sage.`;input.placeholder=sherpaExperience==="live"?"Type a question for Video Sage…":"Type a question for Voice Sage…";
@@ -2536,9 +2723,17 @@ function updateCompanionControls(){
 $$(".companion-mode").forEach(b=>b.addEventListener("click",async()=>{await setSherpaMode(b.dataset.companionMode);updateCompanionUI()}));
 const companionSend=$("#companionSendBtn"),companionInput=$("#companionQuestion"),companionTalk=$("#companionTalkBtn");
 async function submitCompanionQuestion(){
-  unlockVoiceAudio();
+  const revision=sherpaModeRevision;
   const q=(companionInput?.value||"").trim();if(!q)return;
   if(companionInput)companionInput.value="";
+  if(sherpaExperience==="local"){
+    if(document.hidden)return;
+    setQuickAnswer("Sage is preparing your demo…");
+    localSage.setVolume(aiState.speakReplies?sherpaSoundVolume():0);
+    await localSage.ask(q,aiState.speakReplies);
+    return;
+  }
+  unlockVoiceAudio();
   setQuickAnswer("Sage is thinking…");
   if(sherpaExperience==="live"){
     setMentorActivity("typing","Sage is thinking…");
@@ -2546,6 +2741,7 @@ async function submitCompanionQuestion(){
   }else{
     setMentorActivity("typing","Sage is thinking…");
     await askSherpaAI(q,{voice:sherpaExperience==="voice"});
+    if(revision!==sherpaModeRevision)return;
     const title=$("#answerTitle")?.textContent||"Sage",body=$("#answerText")?.textContent||"";
     setQuickAnswer(`${title}: ${body}`.trim());
   }
@@ -2557,24 +2753,99 @@ if(companionInput){
   companionInput.addEventListener("input",()=>{if(sherpaExperience!=="text")return;if(companionInput.value.trim())setMentorActivity("typing","Typing…");else if(!(typeof aiState!=="undefined"&&aiState.speaking))setMentorActivity("idle","Text ready • type below")});
 }
 if(companionTalk)companionTalk.onclick=()=>startTalk();
+const localPause=$("#sageLocalPause"),localStop=$("#sageLocalStop");
+let localPlaybackState="idle";
+let localAudioOnly=false;
+function setLocalSageActivity(state){
+  if(sherpaExperience!=="local")return;
+  localPlaybackState=state;
+  if(state==="retrieving")localAudioOnly=false;
+  const speaking=state==="speaking",paused=state==="paused";
+  const busy=["retrieving","deciding","executing_tool","composing","synthesizing"].includes(state);
+  localPause.disabled=!(speaking||paused);
+  localPause.textContent=paused?"Resume":"Pause";
+  localPause.setAttribute("aria-label",paused?"Resume Local Sage":"Pause Local Sage");
+  localStop.disabled=!(busy||speaking||paused);
+  if(speaking)setMentorActivity("speaking",localAudioOnly?"Local Sage • audio only":"Local Sage is speaking");
+  else if(paused)setMentorActivity("paused","Local Sage is paused");
+  else if(busy)setMentorActivity("thinking","Local Sage is preparing");
+  else if(state==="cancelled")setMentorActivity("idle","Local Sage stopped");
+  else if(state==="idle")setMentorActivity("idle","Local Sage • scripted demo");
+}
+localStop.onclick=()=>localSage.cancel();
+localPause.onclick=async()=>{
+  const revision=sherpaModeRevision,state=localPlaybackState;
+  const paused=state!=="paused";
+  try{
+    if(await localSage.setPaused(paused)&&revision===sherpaModeRevision&&state===localPlaybackState){
+      setLocalSageActivity(paused?"paused":"speaking");
+    }
+  }catch(_){
+    if(revision===sherpaModeRevision&&state===localPlaybackState)localSage.cancel();
+  }
+};
+function updateAvatarComparison(){
+  const group=$("#scAvatarCompare");
+  if(!group)return;
+  group.hidden=!localSageEnabled;
+  const aca=$("#scAvatarACA"),dca=$("#scAvatarDCA");
+  aca.disabled=!localSage;
+  aca.setAttribute("aria-pressed",String(sherpaExperience==="local"));
+  dca.setAttribute("aria-pressed",String(sherpaExperience==="live"));
+}
+function syncLocalSageFlag(){
+  updateAvatarComparison();
+  const button=$('[data-companion-mode="local"]');
+  if(!localSageEnabled){
+    if(sherpaExperience==="local")setSherpaMode("text");
+    button.hidden=true;
+    return;
+  }
+  if(localSage){button.hidden=false;return;}
+  import("./sage-local/index.mjs?v=0143").then(({createLocalSage})=>{
+    if(!localSageEnabled||localSage)return;
+    localSage=createLocalSage({
+      poster:$("#sherpaLivePoster"),canvas:$("#sageLocalFace"),volume:sherpaSoundVolume(),
+      practicePrompt:SAGE_COMPARISON_PROMPT,
+      isAllowed:()=>sherpaExperience==="local"&&!document.hidden,
+      getRoute:()=>$(".tab.active")?.dataset.view,
+      onState:setLocalSageActivity,
+      onAnswer:text=>setQuickAnswer(`Sage: ${text}`),
+      onFallback:()=>{
+        localAudioOnly=true;
+        setMentorActivity("speaking","Local Sage • audio only");
+      },
+      onError:(code,message)=>{
+        if(sherpaExperience!=="local")return;
+        setSherpaMode("text");
+        setMentorActivity("error",message);
+        if($("#quickAnswer").textContent.startsWith("Sage is preparing"))setQuickAnswer(message);
+      },
+    });
+    button.hidden=false;
+    updateAvatarComparison();
+  }).catch(()=>{
+    if(localSageEnabled)toast("Local Sage could not load. Text and Voice are available.");
+  });
+}
+
 $$("[data-tool-test]").forEach(btn=>btn.addEventListener("click",()=>runToolDiagnostic(btn.dataset.toolTest)));
 
 const restartLive=$("#restartSherpaLiveBtn");if(restartLive)restartLive.addEventListener("click",()=>connectSherpaLive(true));
 const liveAsk=$("#liveAskBtn");if(liveAsk)liveAsk.addEventListener("click",()=>{unlockVoiceAudio();const i=$("#liveQuestionInput");sendSherpaLive(i.value);i.value=""});
 const liveInput=$("#liveQuestionInput");if(liveInput)liveInput.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();unlockVoiceAudio();const q=e.currentTarget.value;e.currentTarget.value="";sendSherpaLive(q)}});
 const liveMic=$("#liveMicBtn");if(liveMic)liveMic.addEventListener("click",()=>startTalk());
+function suspendSage(){
+  if(sherpaExperience==="local")localSage?.cancel();
+  if(sherpaExperience==="live")disconnectSherpaLive("hidden");
+  stopActiveVoice();
+  if(aiState.recognition&&aiState.listening){aiState.stoppingRecognition=true;try{aiState.recognition.stop()}catch(_){}}
+}
 document.addEventListener("visibilitychange",()=>{
-  if(document.visibilityState==="hidden"){
-    if(aiState.recognition&&aiState.listening){aiState.stoppingRecognition=true;try{aiState.recognition.stop()}catch(_){}}
-    if(liveState.connected){
-      if(liveState.hiddenTimer)clearTimeout(liveState.hiddenTimer);
-      liveState.hiddenTimer=setTimeout(()=>{if(document.visibilityState==="hidden"&&liveState.connected)disconnectSherpaLive("hidden")},MENTOR_HIDDEN_MS);
-    }
-  }else{
-    if(liveState.hiddenTimer){clearTimeout(liveState.hiddenTimer);liveState.hiddenTimer=null}
-    if(aiState.handsFree&&(sherpaExperience==="voice"||sherpaExperience==="live"))scheduleHandsFreeRestart();
-  }
+  if(document.hidden)suspendSage();
+  else if(aiState.handsFree&&(sherpaExperience==="voice"||sherpaExperience==="live"))scheduleHandsFreeRestart();
 });
+window.addEventListener("pagehide",suspendSage);
 refreshSherpaLiveContext();
 if(recentlyCrashedInLive()){
   clearLiveCrashGuard();
@@ -2722,7 +2993,7 @@ function chooseModelId(webllm){
 }
 
 async function loadSherpaLLM(force=false){
-  if(aiState.loadingLLM) return;
+  if(sherpaExperience==="local"||aiState.loadingLLM) return;
   if(aiState.llmReady && !force) return;
 
   const loadToken=++aiState.llmLoadToken;
@@ -2734,14 +3005,14 @@ async function loadSherpaLLM(force=false){
 
   try{
     await getWebGPUAdapter();
-    if(loadToken!==aiState.llmLoadToken||sherpaExperience==="live")return;
+    if(loadToken!==aiState.llmLoadToken||sherpaExperience==="live"||sherpaExperience==="local")return;
     const hasF16 = aiState.adapterFeatures.has("shader-f16");
     setBadge(deviceBadge, hasF16 ? "WebGPU + shader-f16" : "WebGPU ready", "ready");
 
     // Official WebLLM docs specify esm.run for CDN delivery.
     askStatus.textContent = "Loading the WebLLM library…";
     const webllm = await import("https://esm.run/@mlc-ai/web-llm");
-    if(loadToken!==aiState.llmLoadToken||sherpaExperience==="live")return;
+    if(loadToken!==aiState.llmLoadToken||sherpaExperience==="live"||sherpaExperience==="local")return;
     aiState.webllm = webllm;
 
     const modelId = chooseModelId(webllm);
@@ -2757,14 +3028,14 @@ async function loadSherpaLLM(force=false){
 
     const engine = await webllm.CreateMLCEngine(modelId, {
       initProgressCallback: (report) => {
-        if(loadToken!==aiState.llmLoadToken||sherpaExperience==="live")return;
+        if(loadToken!==aiState.llmLoadToken||sherpaExperience==="live"||sherpaExperience==="local")return;
         const progress = typeof report.progress === "number" ? report.progress : 0;
         setProgress(Math.round(progress * 100));
         if(report.text) askStatus.textContent = report.text;
       }
     });
 
-    if(loadToken!==aiState.llmLoadToken||sherpaExperience==="live"){
+    if(loadToken!==aiState.llmLoadToken||sherpaExperience==="live"||sherpaExperience==="local"){
       try{await engine.unload?.()}catch(_){}
       return;
     }
@@ -2778,7 +3049,7 @@ async function loadSherpaLLM(force=false){
     askStatus.textContent = `Sherpa AI is ready with ${modelId}.`;
     setSherpaReply("Sherpa AI is ready", "Ask about a club, target, hazard, planning decision, or the shot in front of you.");
   }catch(err){
-    if(loadToken!==aiState.llmLoadToken||sherpaExperience==="live")return;
+    if(loadToken!==aiState.llmLoadToken||sherpaExperience==="live"||sherpaExperience==="local")return;
     console.error("Sherpa AI load error:", err);
     const wasBetter=modelSelect.value==="better";
     aiState.llmReady=false;setProgress(0);
@@ -2846,14 +3117,14 @@ function unlockVoiceAudio(){
 }
 async function warmNaturalVoice(){
   if(aiState.ttsReady||aiState.ttsLoading||aiState.ttsFailed||aiState.ttsVoice==="system")return aiState.ttsReady;
-  if(sherpaExperience==="live")return false;
+  if(sherpaExperience==="live"||sherpaExperience==="local")return false;
   const loadToken=++aiState.ttsLoadToken;
   aiState.ttsLoading=true;
   setBadge(voiceBadge,"Natural voice warming up…","warn");
   try{
     const mod=await import("https://esm.sh/kokoro-js@1.2.1?bundle");
     const tts=await mod.KokoroTTS.from_pretrained("onnx-community/Kokoro-82M-v1.0-ONNX",{dtype:"q4",device:"wasm"});
-    if(loadToken!==aiState.ttsLoadToken||sherpaExperience==="live"){
+    if(loadToken!==aiState.ttsLoadToken||sherpaExperience==="live"||sherpaExperience==="local"){
       try{await tts.dispose?.()}catch(_){}
       return false;
     }
@@ -2862,7 +3133,7 @@ async function warmNaturalVoice(){
     setBadge(voiceBadge,aiState.handsFree?"Hands-Free • natural voice":"Natural voice ready","ready");
     return true;
   }catch(err){
-    if(loadToken!==aiState.ttsLoadToken||sherpaExperience==="live")return false;
+    if(loadToken!==aiState.ttsLoadToken||sherpaExperience==="live"||sherpaExperience==="local")return false;
     console.warn("Kokoro voice unavailable; using system voice",err);
     aiState.ttsFailed=true;aiState.ttsReady=false;
     setBadge(voiceBadge,"Voice ready • system fallback","ready");
@@ -2870,7 +3141,15 @@ async function warmNaturalVoice(){
   }finally{if(loadToken===aiState.ttsLoadToken)aiState.ttsLoading=false}
 }
 function stopActiveVoice(){
-  try{if(aiState.activeAudio){aiState.activeAudio.pause();aiState.activeAudio.src="";aiState.activeAudio=null}}catch(_){ }
+  voiceRevision++;
+  const player=aiState.activeAudio;
+  aiState.activeAudio=null;
+  if(player){
+    player.onended=player.onerror=null;
+    const url=player.src;
+    try{player.pause();player.removeAttribute("src");player.load()}catch(_){}
+    URL.revokeObjectURL(url);
+  }
   try{if("speechSynthesis"in window)speechSynthesis.cancel()}catch(_){ }
   aiState.speaking=false;
 }
@@ -2878,37 +3157,53 @@ function finishSpeaking(resumeHandsFree=true){
   aiState.speaking=false;aiState.activeAudio=null;setMentorActivity(aiState.handsFree?"listening":"idle",aiState.handsFree?`Listening for ${WAKE_PHRASES}…`:(sherpaExperience==="voice"?"Voice ready • tap Talk":sherpaExperience==="live"?"Video ready • tap Talk or Ask":"Text ready • type below"));
   if(resumeHandsFree&&aiState.handsFree)scheduleHandsFreeRestart();
 }
-async function playNaturalVoice(text,resumeHandsFree=true){
+async function playNaturalVoice(text,resumeHandsFree=true,revision=voiceRevision){
   if(!aiState.ttsReady||!aiState.tts)return false;
   try{
     const audio=await aiState.tts.generate(text,{voice:aiState.ttsVoice||"af_heart"});
+    if(revision!==voiceRevision||document.hidden)return false;
     let blob=null;
     if(typeof audio.toBlob==="function")blob=audio.toBlob();
     else if(audio.buffer)blob=new Blob([audio.buffer],{type:"audio/wav"});
     if(!blob)return false;
     const url=URL.createObjectURL(blob),player=new Audio(url);player.volume=sherpaSoundVolume();aiState.activeAudio=player;
-    player.onended=()=>{URL.revokeObjectURL(url);finishSpeaking(resumeHandsFree)};
-    player.onerror=()=>{URL.revokeObjectURL(url);finishSpeaking(resumeHandsFree)};
-    await player.play();return true;
+    const done=()=>{
+      URL.revokeObjectURL(url);
+      if(revision===voiceRevision)finishSpeaking(resumeHandsFree);
+    };
+    player.onended=player.onerror=done;
+    try{await player.play();return true;}
+    catch(error){
+      URL.revokeObjectURL(url);
+      if(aiState.activeAudio===player)aiState.activeAudio=null;
+      throw error;
+    }
   }catch(err){console.warn("Natural Sherpa voice failed",err);return false}
 }
 async function speakSherpa(text,resumeHandsFree=true){
+  if(sherpaExperience==="local"||document.hidden)return;
+  const modeRevision=sherpaModeRevision;
   if(!aiState.speakReplies){if(resumeHandsFree&&aiState.handsFree)scheduleHandsFreeRestart();return}
   aiState.speaking=true;setMentorActivity("speaking","Speaking…");
   if(aiState.recognition&&aiState.listening){aiState.stoppingRecognition=true;try{aiState.recognition.stop()}catch(_){}}
   stopActiveVoice();aiState.speaking=true;
+  const revision=voiceRevision;
   if(!isCompactMobile()&&aiState.ttsVoice!=="system"){
     if(!aiState.ttsReady&&!aiState.ttsFailed)await warmNaturalVoice();
-    if(await playNaturalVoice(text,resumeHandsFree))return;
+    if(revision!==voiceRevision||modeRevision!==sherpaModeRevision||document.hidden)return;
+    if(await playNaturalVoice(text,resumeHandsFree,revision))return;
+    if(revision!==voiceRevision||modeRevision!==sherpaModeRevision||document.hidden)return;
   }
   if(!("speechSynthesis" in window)){finishSpeaking(resumeHandsFree);return}
   speechSynthesis.cancel();
   const u=new SpeechSynthesisUtterance(text),voice=selectBestSystemVoice();if(voice)u.voice=voice;
   u.rate=.96;u.pitch=1.0;u.volume=sherpaSoundVolume();
-  u.onend=()=>finishSpeaking(resumeHandsFree);u.onerror=()=>finishSpeaking(resumeHandsFree);
+  u.onend=()=>{if(revision===voiceRevision)finishSpeaking(resumeHandsFree)};u.onerror=()=>{if(revision===voiceRevision)finishSpeaking(resumeHandsFree)};
   speechSynthesis.speak(u);
 }
 async function askSherpaAI(questionOverride=null, options={}){
+  if(sherpaExperience==="local")return;
+  const revision=sherpaModeRevision;
   const question=(questionOverride ?? $("#questionInput").value).trim();
   if(!question){setSherpaReply("Ask Sherpa something","Type a question, tap Talk, or turn on Hands-Free Caddie.");return}
   if(isCompactMobile()){
@@ -2918,12 +3213,14 @@ async function askSherpaAI(questionOverride=null, options={}){
     return;
   }
   if(!aiState.llmReady) await loadSherpaLLM();
+  if(revision!==sherpaModeRevision)return;
   if(!aiState.llmReady||!aiState.engine){
     const fb=fallbackGolfAnswer(question);setSherpaReply("Sherpa says",fb);if(options.voice)speakSherpa(fb);return;
   }
   askBtn.disabled=true;initAiBtn.disabled=true;setMentorActivity("typing","Sage is thinking…");setSherpaReply("Sherpa is thinking…","Using the current golf context.");askStatus.textContent="Generating an answer on this device…";
   try{
     const text=await generateSherpaText(question);
+    if(revision!==sherpaModeRevision)return;
     aiState.history.push({role:"user",content:question},{role:"assistant",content:text});
     if(aiState.history.length>8)aiState.history=aiState.history.slice(-8);
     const parts=text.split(/(?<=[.!?])\s+/), first=parts[0]||"";
@@ -2932,13 +3229,20 @@ async function askSherpaAI(questionOverride=null, options={}){
     setSherpaReply(title,body);askStatus.textContent="Sherpa answered locally on this device.";
     if(options.voice) speakSherpa(text);
   }catch(err){
+    if(revision!==sherpaModeRevision)return;
     console.error("Sherpa answer error:",err);const fb=fallbackGolfAnswer(question);setSherpaReply("Sherpa says",fb);askStatus.textContent=`Local model problem: ${shortError(err)} — using Sherpa app guidance.`;if(options.voice)speakSherpa(fb);
-  }finally{askBtn.disabled=false;initAiBtn.disabled=false;if(sherpaExperience==="text")setMentorActivity("idle","Text ready • type below")}
+  }finally{askBtn.disabled=false;initAiBtn.disabled=false;if(revision===sherpaModeRevision&&sherpaExperience==="text")setMentorActivity("idle","Text ready • type below")}
 }
 
 /* Voice + Hands-Free Caddie. The first activation is always a user gesture.
    In hands-free mode Sherpa listens for the wake phrase "Sherpa" and pauses while speaking. */
 function updateVoiceModeUI(){
+  const settingsHandsFree=$("#scHandsFree");
+  if(settingsHandsFree){
+    settingsHandsFree.disabled=sherpaExperience==="local";
+    settingsHandsFree.classList.toggle("on",aiState.handsFree);
+    settingsHandsFree.setAttribute("aria-checked",String(aiState.handsFree));
+  }
   $$(".handsfree-toggle").forEach(x=>x.checked=aiState.handsFree);
   $$(".speak-toggle").forEach(x=>x.checked=aiState.speakReplies);
   const home=$("#homeVoiceModeStatus"), round=$("#roundVoiceModeStatus");
@@ -3041,6 +3345,7 @@ async function processHandsFreeUtterance(spoken){
   }finally{aiState.processingVoice=false}
 }
 function setHandsFree(on){
+  if(sherpaExperience==="local")return;
   if(on&&sherpaExperience==="text"){setSherpaMode("voice").then(()=>setHandsFree(true));return}
   aiState.handsFree=!!on;
   if(!aiState.handsFree){
@@ -3059,6 +3364,7 @@ function setHandsFree(on){
   startRecognition(true);
 }
 function startTalk(){
+  if(sherpaExperience==="local")return;
   unlockVoiceAudio();
   if(sherpaExperience==="live"&&!liveState.connected)connectSherpaLive().catch(()=>{});
   if(aiState.handsFree){
@@ -3100,7 +3406,7 @@ modelSelect.addEventListener("change",()=>{
 setBadge(deviceBadge, navigator.gpu ? "WebGPU detected" : "WebGPU not detected", navigator.gpu ? "ready" : "err");
 setupVoice();
 setTimeout(()=>{
-  if(!isCompactMobile()&&navigator.gpu&&!aiState.llmReady&&!aiState.loadingLLM&&sherpaExperience!=="live")loadSherpaLLM(false);
+  if(!localSageEnabled&&!isCompactMobile()&&navigator.gpu&&!aiState.llmReady&&!aiState.loadingLLM&&sherpaExperience!=="live")loadSherpaLLM(false);
   else if(isCompactMobile()&&llmBadge&&!aiState.llmReady)setBadge(llmBadge,"Phone-safe guidance • no model download","ready");
 },900);
 /* Course discovery — OpenGolf-first, with resilient fallbacks */
@@ -3460,18 +3766,19 @@ function renderRounds(){
  })
 }
 $("#clearAllRoundsBtn").onclick=()=>{if(!state.rounds.length)return;if(!confirm(`Delete all ${state.rounds.length} saved game reviews? This cannot be undone.`))return;state.rounds=[];save();renderRounds();toast("All saved game reviews deleted")};
-$("#exportBtn").onclick=()=>{const b=new Blob([JSON.stringify({version:"0.12.11",bagMode:state.bagMode,clubs:state.clubs,rounds:state.rounds},null,2)],{type:"application/json"}),a=document.createElement("a");a.href=URL.createObjectURL(b);a.download=`sherpa-caddie-data-${new Date().toISOString().slice(0,10)}.json`;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),500)};
+$("#exportBtn").onclick=()=>{const b=new Blob([JSON.stringify({version:"0.12.12",bagMode:state.bagMode,clubs:state.clubs,rounds:state.rounds},null,2)],{type:"application/json"}),a=document.createElement("a");a.href=URL.createObjectURL(b);a.download=`sherpa-caddie-data-${new Date().toISOString().slice(0,10)}.json`;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),500)};
 $("#importBtn").onclick=()=>$("#importFile").click();$("#importFile").onchange=async e=>{const f=e.target.files[0];if(!f)return;try{const d=JSON.parse(await f.text());if(d.clubs)state.clubs=d.clubs;if(d.bagMode)state.bagMode=d.bagMode;if(d.rounds)state.rounds=d.rounds;save();renderClubs();renderRounds();toast("Data imported")}catch{toast("Could not import that file")}e.target.value=""};
 
 function hideSplash(){const el=$("#splashScreen");if(!el||el.classList.contains("is-hidden"))return;el.classList.add("is-hidden");setTimeout(()=>el.remove(),800);setTimeout(()=>window.UIKIT?.applyFSLock?.(),850)}
 window.addEventListener("load",()=>setTimeout(hideSplash,5000));
 setTimeout(hideSplash,5600);
-if("serviceWorker"in navigator)window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js?v=0142").catch(()=>{}));
+if("serviceWorker"in navigator)window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js?v=0143").catch(()=>{}));
 document.querySelectorAll("[data-tech-product]").forEach(link=>link.addEventListener("click",()=>window.anTrack("technology_product_opened",{data:{product:link.dataset.techProduct}})));
 initArteziqUiKit();
 renderClubs();
 renderRounds();
 show("guide");updateCompanionUI();setMentorActivity("idle","Text ready • type below");
+syncLocalSageFlag();
 })();
 </script>
 
