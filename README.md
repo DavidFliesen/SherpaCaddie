@@ -1,3 +1,20 @@
+## Version 0.12.15 — ACA voice, pacing, and facial animation
+
+Apply the changed-files ZIP over v0.12.14. Reopen Sherpa Caddie and confirm **v0.12.15** in the footer.
+
+- Replaces the short practice-tip recording with a 16-second response rendered in the Kokoro `af_heart` test voice. The five sentences include short pauses.
+- Blends mouth shapes between phonemes and adds subtle head motion, phrase nods, and blinks. Reduced Motion keeps lip sync and suppresses the head motion and blinks.
+- Keeps the longer answer scrollable in phone landscape so the navigation tabs remain visible.
+- Packages the rendered speech and timing cues for offline playback. [Voice provenance and regeneration](docs/SAGE_LOCAL_VOICE_PROVENANCE.md)
+
+To compare on iPad, open **Settings → Local Sage experiment → ACA** and tap **Play ACA demo**. Then switch to **DCA** and use the prefilled practice-tip question. Compare the gaps between sentences, closed-mouth moments during pauses, and the scale of the head and eye movements. ACA plays one scripted demo.
+
+### Verification for v0.12.15
+
+All 25 unit tests and 10 Chromium browser scenarios passed. The checks covered continuous mouth-pose blending, Reduced Motion, portrait rendering, native media playback in the iPad code path, pause and resume, the phone landscape layout, and cached offline playback. The voice and facial movement still need comparison on the physical iPad.
+
+Serve the patched source with `python3 -m http.server 8765`. In another terminal with Playwright Chromium installed, run `node --test tests/sage-local.test.mjs tests/sage-local.browser.mjs`.
+
 ## Version 0.12.14 — ACA audio and lip-sync demo
 
 Apply the changed-files ZIP over v0.12.12 or v0.12.13. Reopen the app and confirm **v0.12.14** in the footer.

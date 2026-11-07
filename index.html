@@ -5,11 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#18311C">
 <meta name="description" content="Sherpa Caddie — one-shot-at-a-time golf guidance combining a caddie, coach and mentor.">
-<link rel="manifest" href="manifest.webmanifest?v=0145">
+<link rel="manifest" href="manifest.webmanifest?v=0146">
 <link rel="icon" href="icons/favicon.png?v=0141" type="image/png">
 <link rel="apple-touch-icon" href="icons/icon-192.png?v=0141">
 <link rel="preload" as="image" href="assets/sherpa-caddie-logo-fast.webp?v=0141" type="image/webp" fetchpriority="high">
-<title>Sherpa Caddie v0.12.14</title>
+<title>Sherpa Caddie v0.12.15</title>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
   crossorigin="">
 <link rel="stylesheet" href="arteziq-ui.css?v=0141">
@@ -1117,6 +1117,7 @@ body.immersive .brand-center{display:none!important}
     grid-template-columns:repeat(3,minmax(0,1fr)) minmax(140px,1.8fr)
   }
   .mentor-topbar[data-mode="local"] [data-companion-mode="local"]{grid-column:auto}
+  .mentor-topbar[data-mode="local"] .quick-answer{max-height:60px}
   .mentor-topbar[data-mode="local"]+.tabs-wrap{
     padding-right:calc(76px + env(safe-area-inset-right,0px))
   }
@@ -1137,7 +1138,7 @@ body.immersive .brand-center{display:none!important}
     <div class="splash-path" aria-hidden="true"><span></span><i></i></div>
     <div class="splash-caption">Walking your game plan into place…</div>
   </div>
-  <div class="splash-footer">ARTEZIQ • Sherpa Caddie • v0.12.14</div>
+  <div class="splash-footer">ARTEZIQ • Sherpa Caddie • v0.12.15</div>
 </div>
 <div class="app">
 <header class="topbar mentor-topbar" data-mode="text">
@@ -1198,7 +1199,7 @@ body.immersive .brand-center{display:none!important}
     <div class="console-hint"><button type="button" id="sageLocalDemo" hidden>▶ Play ACA demo</button><span id="companionControlHint">Type a question above, then tap Ask.</span></div>
   </div>
 
-  <div class="version app-chrome">v0.12.14</div>
+  <div class="version app-chrome">v0.12.15</div>
 </header>
 
 <div class="tabs-wrap app-chrome">
@@ -1748,13 +1749,13 @@ body.immersive .brand-center{display:none!important}
   </article>
 </section>
 
-<div class="footer"><span>ARTEZIQ • Sherpa Caddie • v0.12.14</span><button id="aboutBtn">What’s in v0.12.14?</button></div>
+<div class="footer"><span>ARTEZIQ • Sherpa Caddie • v0.12.15</span><button id="aboutBtn">What’s in v0.12.15?</button></div>
 </main>
 </div>
 
 <div id="aboutModal" class="modal-backdrop hidden" role="dialog" aria-modal="true">
   <div class="modal" style="max-width:650px">
-    <div class="section-head"><div><p class="eyebrow">One-Shot Sherpa</p><h2>Version 0.12.14</h2></div><button class="btn ghost" id="closeAboutModal">Close</button></div>
+    <div class="section-head"><div><p class="eyebrow">One-Shot Sherpa</p><h2>Version 0.12.15</h2></div><button class="btn ghost" id="closeAboutModal">Close</button></div>
     <ul style="color:var(--stone);line-height:1.7">
       <li>Compare ARTEZIQ and D-ID conversational avatars from Settings using the same practice question</li>
       <li>The six main navigation tabs remain visible and usable in full-screen mode</li>
@@ -1925,7 +1926,7 @@ window.anFeedbackContext=function(){
       screen=({guide:"Guide",learn:"Learn",play:"Plan",technology:"Technology",clubs:"Clubs",review:"Review"})[active]||"Guide";
     }
   }catch(_){ }
-  return{appVersion:"0.12.14",buildNumber:"0145",screen};
+  return{appVersion:"0.12.15",buildNumber:"0146",screen};
 };
 
 function sherpaSoundVolume(){
@@ -2819,7 +2820,7 @@ function syncLocalSageFlag(){
     return;
   }
   if(localSage){button.hidden=false;return;}
-  import("./sage-local/index.mjs?v=0145").then(({createLocalSage})=>{
+  import("./sage-local/index.mjs?v=0146").then(({createLocalSage})=>{
     if(!localSageEnabled||localSage)return;
     localSage=createLocalSage({
       poster:$("#sherpaLivePoster"),canvas:$("#sageLocalFace"),volume:sherpaSoundVolume(),
@@ -3851,13 +3852,13 @@ function renderRounds(){
  })
 }
 $("#clearAllRoundsBtn").onclick=()=>{if(!state.rounds.length)return;if(!confirm(`Delete all ${state.rounds.length} saved game reviews? This cannot be undone.`))return;state.rounds=[];save();renderRounds();toast("All saved game reviews deleted")};
-$("#exportBtn").onclick=()=>{const b=new Blob([JSON.stringify({version:"0.12.14",bagMode:state.bagMode,clubs:state.clubs,rounds:state.rounds},null,2)],{type:"application/json"}),a=document.createElement("a");a.href=URL.createObjectURL(b);a.download=`sherpa-caddie-data-${new Date().toISOString().slice(0,10)}.json`;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),500)};
+$("#exportBtn").onclick=()=>{const b=new Blob([JSON.stringify({version:"0.12.15",bagMode:state.bagMode,clubs:state.clubs,rounds:state.rounds},null,2)],{type:"application/json"}),a=document.createElement("a");a.href=URL.createObjectURL(b);a.download=`sherpa-caddie-data-${new Date().toISOString().slice(0,10)}.json`;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),500)};
 $("#importBtn").onclick=()=>$("#importFile").click();$("#importFile").onchange=async e=>{const f=e.target.files[0];if(!f)return;try{const d=JSON.parse(await f.text());if(d.clubs)state.clubs=d.clubs;if(d.bagMode)state.bagMode=d.bagMode;if(d.rounds)state.rounds=d.rounds;save();renderClubs();renderRounds();toast("Data imported")}catch{toast("Could not import that file")}e.target.value=""};
 
 function hideSplash(){const el=$("#splashScreen");if(!el||el.classList.contains("is-hidden"))return;el.classList.add("is-hidden");setTimeout(()=>el.remove(),800);setTimeout(()=>window.UIKIT?.applyFSLock?.(),850)}
 window.addEventListener("load",()=>setTimeout(hideSplash,5000));
 setTimeout(hideSplash,5600);
-if("serviceWorker"in navigator)window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js?v=0145").catch(()=>{}));
+if("serviceWorker"in navigator)window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js?v=0146").catch(()=>{}));
 document.querySelectorAll("[data-tech-product]").forEach(link=>link.addEventListener("click",()=>window.anTrack("technology_product_opened",{data:{product:link.dataset.techProduct}})));
 initArteziqUiKit();
 renderClubs();
