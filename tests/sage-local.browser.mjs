@@ -33,8 +33,8 @@ async function ask(page, question = sample) {
 
 async function load(page, url = flagUrl) {
   await page.goto(url);
-  assert.match(await page.locator(".splash-footer").textContent(), /v0\.12\.12/);
-  assert.match(await page.locator(".footer").textContent(), /v0\.12\.12/);
+  assert.match(await page.locator(".splash-footer").textContent(), /v0\.12\.13/);
+  assert.match(await page.locator(".footer").textContent(), /v0\.12\.13/);
   await page.locator("#splashScreen").waitFor({ state: "hidden" });
 }
 
@@ -67,6 +67,37 @@ async function probe(page) {
     document.addEventListener("click", event => {
       if (event.target.id === "companionSendBtn") window.sageTest.clicks.push(performance.now());
     }, true);
+  });
+}
+
+async function probeIPadAudio(page) {
+  await page.addInitScript(() => {
+    Object.defineProperty(navigator, "platform", { value: "MacIntel" });
+    Object.defineProperty(navigator, "maxTouchPoints", { value: 5 });
+    let type = "auto";
+    const events = [];
+    Object.defineProperty(navigator, "audioSession", { value: {
+      get type() { return type; },
+      set type(value) { type = value; events.push(value); },
+    } });
+    window.sageAudioRoute = { events, speech: [] };
+    localStorage.setItem("sherpa.voice.0110", "system");
+    window.SpeechRecognition = class {
+      start() {
+        events.push(`microphone:${type}`);
+        window.sageAudioRoute.finishCapture = () => {
+          events.push("microphone-ended");
+          this.onend?.();
+        };
+        this.onstart?.();
+      }
+      stop() { events.push("microphone-stop"); }
+      abort() { window.sageAudioRoute.finishCapture?.(); }
+    };
+    window.speechSynthesis.speak = utterance => {
+      if (utterance.text.trim()) window.sageAudioRoute.speech.push(type);
+      utterance.onend?.();
+    };
   });
 }
 
@@ -238,7 +269,32 @@ test("Sherpa Caddie Phase 1 in Chromium", async t => {
     assert.equal(await page.locator("#sherpaLiveVideo").isVisible(), false);
   });
 
-  await run("Settings compares ACA and mocked DCA with the same prompt and closes the outgoing session", phone, async page => {
+  await run("iPad requests media playback for ACA and waits for capture before Voice", tablet, async page => {
+    await probeIPadAudio(page);
+    await probe(page);
+    await load(page);
+    await mode(page, "local");
+    await ask(page);
+    await status(page, "is speaking");
+    assert.equal(await page.evaluate(() => navigator.audioSession.type), "playback");
+    await page.locator("#sageLocalStop").click();
+    assert.equal(await page.evaluate(() => navigator.audioSession.type), "auto");
+
+    await mode(page, "voice");
+    await page.locator("#companionTalkBtn").click();
+    assert.equal(await page.evaluate(() => navigator.audioSession.type), "play-and-record");
+    await ask(page);
+    await page.waitForFunction(() => window.sageAudioRoute.events.includes("microphone-stop"));
+    assert.equal(await page.evaluate(() => navigator.audioSession.type), "play-and-record");
+    assert.deepEqual(await page.evaluate(() => window.sageAudioRoute.speech), []);
+    await page.evaluate(() => window.sageAudioRoute.finishCapture());
+    await page.waitForFunction(() => window.sageAudioRoute.speech.length === 1);
+    assert.deepEqual(await page.evaluate(() => window.sageAudioRoute.speech), ["playback"]);
+    assert.equal(await page.evaluate(() => navigator.audioSession.type), "auto");
+  });
+
+  await run("Settings compares ACA and mocked DCA with the same prompt and closes the outgoing session", tablet, async page => {
+    await probeIPadAudio(page);
     await page.route("**/did-config.json?*", route => route.fulfill({
       json: { agentId: "test-agent", clientKey: "mock-client-key" },
     }));
@@ -262,6 +318,7 @@ test("Sherpa Caddie Phase 1 in Chromium", async t => {
             },
             async chat(question) {
               window.didTest.lastQuestion = question;
+              window.didTest.audioTypeAtChat = navigator.audioSession.type;
               window.didTest.chats++;
               options.callbacks.onNewMessage([{ role: "assistant", content: "Mock Video reply" }], "answer");
             },
@@ -277,7 +334,14 @@ test("Sherpa Caddie Phase 1 in Chromium", async t => {
     await status(page, "Video connected");
     assert.equal(await page.locator("#scAvatarDCA").getAttribute("aria-pressed"), "true");
     assert.equal(await page.locator("#companionQuestion").inputValue(), sample);
+    assert.equal(await page.evaluate(() => navigator.audioSession.type), "playback");
+    await page.locator("#companionTalkBtn").click();
     await page.locator("#companionSendBtn").click();
+    await page.waitForFunction(() => window.sageAudioRoute.events.includes("microphone-stop"));
+    assert.equal(await page.evaluate(() => window.didTest.chats), 0);
+    await page.evaluate(() => window.sageAudioRoute.finishCapture());
+    await page.waitForFunction(() => window.didTest.chats === 1);
+    assert.equal(await page.evaluate(() => window.didTest.audioTypeAtChat), "playback");
     assert.match(await page.locator("#quickAnswer").textContent(), /Mock Video reply/);
     assert.equal(await page.evaluate(() => window.didTest.lastQuestion), sample);
     await page.locator("#uiSetBtn").click();
@@ -285,6 +349,7 @@ test("Sherpa Caddie Phase 1 in Chromium", async t => {
     assert.equal(await page.locator("#scAvatarACA").getAttribute("aria-pressed"), "true");
     assert.equal(await page.locator("#companionQuestion").inputValue(), sample);
     await page.waitForFunction(() => window.didTest.closed === 1 && window.didTest.track.readyState === "ended");
+    assert.equal(await page.evaluate(() => navigator.audioSession.type), "auto");
     await checkPortrait(page);
     await mode(page, "live");
     await page.waitForFunction(() => window.didTest.opened === 2);
