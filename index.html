@@ -5,11 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#18311C">
 <meta name="description" content="Sherpa Caddie — one-shot-at-a-time golf guidance combining a caddie, coach and mentor.">
-<link rel="manifest" href="manifest.webmanifest?v=0144">
+<link rel="manifest" href="manifest.webmanifest?v=0145">
 <link rel="icon" href="icons/favicon.png?v=0141" type="image/png">
 <link rel="apple-touch-icon" href="icons/icon-192.png?v=0141">
 <link rel="preload" as="image" href="assets/sherpa-caddie-logo-fast.webp?v=0141" type="image/webp" fetchpriority="high">
-<title>Sherpa Caddie v0.12.13</title>
+<title>Sherpa Caddie v0.12.14</title>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
   crossorigin="">
 <link rel="stylesheet" href="arteziq-ui.css?v=0141">
@@ -1095,6 +1095,8 @@ body.immersive .brand-center{display:none!important}
 #sageLocalControls button{flex:1;min-width:0;padding-inline:4px}
 #sageLocalControls button:disabled{opacity:.65;cursor:default}
 #sageLocalFace{z-index:3;pointer-events:none}
+#sageLocalDemo[hidden]{display:none}
+#sageLocalDemo{margin-inline-end:8px;padding:5px 10px;border:0;border-radius:6px;background:var(--tan);color:var(--navy);font-weight:800}
 #scAvatarCompare[hidden]{display:none}
 #scAvatarCompare{display:grid;gap:6px;margin:0 0 12px;padding:0 0 0 12px}
 #scAvatarCompare p{margin:0;color:var(--ui-muted);font-size:12px}
@@ -1135,7 +1137,7 @@ body.immersive .brand-center{display:none!important}
     <div class="splash-path" aria-hidden="true"><span></span><i></i></div>
     <div class="splash-caption">Walking your game plan into place…</div>
   </div>
-  <div class="splash-footer">ARTEZIQ • Sherpa Caddie • v0.12.13</div>
+  <div class="splash-footer">ARTEZIQ • Sherpa Caddie • v0.12.14</div>
 </div>
 <div class="app">
 <header class="topbar mentor-topbar" data-mode="text">
@@ -1193,10 +1195,10 @@ body.immersive .brand-center{display:none!important}
       <span class="console-label">SAGE’S ANSWER</span>
       <div class="quick-answer" id="quickAnswer" aria-live="polite">Sage’s answer will appear here.</div>
     </div>
-    <div class="console-hint" id="companionControlHint">Type a question above, then tap Ask.</div>
+    <div class="console-hint"><button type="button" id="sageLocalDemo" hidden>▶ Play ACA demo</button><span id="companionControlHint">Type a question above, then tap Ask.</span></div>
   </div>
 
-  <div class="version app-chrome">v0.12.13</div>
+  <div class="version app-chrome">v0.12.14</div>
 </header>
 
 <div class="tabs-wrap app-chrome">
@@ -1746,13 +1748,13 @@ body.immersive .brand-center{display:none!important}
   </article>
 </section>
 
-<div class="footer"><span>ARTEZIQ • Sherpa Caddie • v0.12.13</span><button id="aboutBtn">What’s in v0.12.13?</button></div>
+<div class="footer"><span>ARTEZIQ • Sherpa Caddie • v0.12.14</span><button id="aboutBtn">What’s in v0.12.14?</button></div>
 </main>
 </div>
 
 <div id="aboutModal" class="modal-backdrop hidden" role="dialog" aria-modal="true">
   <div class="modal" style="max-width:650px">
-    <div class="section-head"><div><p class="eyebrow">One-Shot Sherpa</p><h2>Version 0.12.13</h2></div><button class="btn ghost" id="closeAboutModal">Close</button></div>
+    <div class="section-head"><div><p class="eyebrow">One-Shot Sherpa</p><h2>Version 0.12.14</h2></div><button class="btn ghost" id="closeAboutModal">Close</button></div>
     <ul style="color:var(--stone);line-height:1.7">
       <li>Compare ARTEZIQ and D-ID conversational avatars from Settings using the same practice question</li>
       <li>The six main navigation tabs remain visible and usable in full-screen mode</li>
@@ -1923,7 +1925,7 @@ window.anFeedbackContext=function(){
       screen=({guide:"Guide",learn:"Learn",play:"Plan",technology:"Technology",clubs:"Clubs",review:"Review"})[active]||"Guide";
     }
   }catch(_){ }
-  return{appVersion:"0.12.13",buildNumber:"0144",screen};
+  return{appVersion:"0.12.14",buildNumber:"0145",screen};
 };
 
 function sherpaSoundVolume(){
@@ -2679,7 +2681,7 @@ async function setSherpaMode(mode){
     releaseLocalVoiceForSherpaLive();
     if(previous!=="local"){
       $("#companionQuestion").value=SAGE_COMPARISON_PROMPT;
-      setQuickAnswer("Tap Ask Sage to play the scripted practice tip.");
+      setQuickAnswer("Tap Play ACA demo to hear and see the scripted practice tip.");
     }
   }
   await teardown;
@@ -2703,7 +2705,7 @@ function updateCompanionUI(){
     b.classList.toggle("active",active);
     b.setAttribute("aria-pressed",String(active));
   });
-  $("#sageLocalControls").hidden=sherpaExperience!=="local";
+  $("#sageLocalControls").hidden=$("#sageLocalDemo").hidden=sherpaExperience!=="local";
   updateAvatarComparison();
   const status=$("#companionStatus"),dot=$("#companionDot"),stage=$("#mentorStage");
   if(stage)stage.dataset.mode=sherpaExperience;
@@ -2717,7 +2719,7 @@ function updateCompanionUI(){
 function updateCompanionControls(){
   const hint=$("#companionControlHint"),input=$("#companionQuestion");if(!hint||!input)return;
   if(sherpaExperience==="local"){
-    hint.textContent="Try the practice tip or type “What tab am I on?”";
+    hint.textContent="One spoken practice tip. Try “What tab am I on?” for a written reply.";
     input.placeholder=SAGE_COMPARISON_PROMPT;
   }else if(sherpaExperience==="text"){
     hint.textContent="Type your question, then tap Ask Sage.";input.placeholder="Type your golf question for Sage…";
@@ -2734,10 +2736,7 @@ async function submitCompanionQuestion(){
   const q=(companionInput?.value||"").trim();if(!q)return;
   if(companionInput)companionInput.value="";
   if(sherpaExperience==="local"){
-    if(document.hidden)return;
-    setQuickAnswer("Sage is preparing your demo…");
-    localSage.setVolume(aiState.speakReplies?sherpaSoundVolume():0);
-    await localSage.ask(q,aiState.speakReplies);
+    await submitLocalSageQuestion(q);
     return;
   }
   if(sherpaExperience!=="text")unlockVoiceAudio();
@@ -2754,6 +2753,17 @@ async function submitCompanionQuestion(){
   }
   updateCompanionUI();
 }
+async function submitLocalSageQuestion(question){
+  if(sherpaExperience!=="local"||document.hidden)return;
+  const volume=sherpaSoundVolume(),speak=aiState.speakReplies&&volume>0;
+  setQuickAnswer("Sage is preparing your demo…");
+  localSage.setVolume(speak?volume:0);
+  await localSage.ask(question,speak);
+  if(sherpaExperience==="local"&&localPlaybackState==="idle"&&localSage.isPracticeQuestion(question)&&!speak){
+    setMentorActivity("idle",aiState.speakReplies?"Turn on app sound to play the ACA demo.":"Turn on Spoken replies in Settings to hear ACA.");
+  }
+}
+$("#sageLocalDemo").onclick=()=>submitLocalSageQuestion(SAGE_COMPARISON_PROMPT);
 if(companionSend)companionSend.onclick=submitCompanionQuestion;
 if(companionInput){
   companionInput.addEventListener("keydown",e=>{if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();submitCompanionQuestion()}});
@@ -2809,11 +2819,12 @@ function syncLocalSageFlag(){
     return;
   }
   if(localSage){button.hidden=false;return;}
-  import("./sage-local/index.mjs?v=0144").then(({createLocalSage})=>{
+  import("./sage-local/index.mjs?v=0145").then(({createLocalSage})=>{
     if(!localSageEnabled||localSage)return;
     localSage=createLocalSage({
       poster:$("#sherpaLivePoster"),canvas:$("#sageLocalFace"),volume:sherpaSoundVolume(),
       practicePrompt:SAGE_COMPARISON_PROMPT,
+      nativeMedia:isIOSVoiceDevice(),
       preparePlayback:prepareSagePlayback,
       releasePlayback:restoreSageAudioSession,
       isAllowed:()=>sherpaExperience==="local"&&!document.hidden,
@@ -2826,8 +2837,9 @@ function syncLocalSageFlag(){
       },
       onError:(code,message)=>{
         if(sherpaExperience!=="local")return;
-        setSherpaMode("text");
-        setMentorActivity("error",message);
+        setMentorActivity("error",code==="SAGE_AUDIO_UNAVAILABLE"||code==="SAGE_PREPARATION_TIMEOUT"
+          ?"ACA audio couldn’t start. Tap Play ACA demo to retry."
+          :message);
         if($("#quickAnswer").textContent.startsWith("Sage is preparing"))setQuickAnswer(message);
       },
     });
@@ -3839,13 +3851,13 @@ function renderRounds(){
  })
 }
 $("#clearAllRoundsBtn").onclick=()=>{if(!state.rounds.length)return;if(!confirm(`Delete all ${state.rounds.length} saved game reviews? This cannot be undone.`))return;state.rounds=[];save();renderRounds();toast("All saved game reviews deleted")};
-$("#exportBtn").onclick=()=>{const b=new Blob([JSON.stringify({version:"0.12.13",bagMode:state.bagMode,clubs:state.clubs,rounds:state.rounds},null,2)],{type:"application/json"}),a=document.createElement("a");a.href=URL.createObjectURL(b);a.download=`sherpa-caddie-data-${new Date().toISOString().slice(0,10)}.json`;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),500)};
+$("#exportBtn").onclick=()=>{const b=new Blob([JSON.stringify({version:"0.12.14",bagMode:state.bagMode,clubs:state.clubs,rounds:state.rounds},null,2)],{type:"application/json"}),a=document.createElement("a");a.href=URL.createObjectURL(b);a.download=`sherpa-caddie-data-${new Date().toISOString().slice(0,10)}.json`;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),500)};
 $("#importBtn").onclick=()=>$("#importFile").click();$("#importFile").onchange=async e=>{const f=e.target.files[0];if(!f)return;try{const d=JSON.parse(await f.text());if(d.clubs)state.clubs=d.clubs;if(d.bagMode)state.bagMode=d.bagMode;if(d.rounds)state.rounds=d.rounds;save();renderClubs();renderRounds();toast("Data imported")}catch{toast("Could not import that file")}e.target.value=""};
 
 function hideSplash(){const el=$("#splashScreen");if(!el||el.classList.contains("is-hidden"))return;el.classList.add("is-hidden");setTimeout(()=>el.remove(),800);setTimeout(()=>window.UIKIT?.applyFSLock?.(),850)}
 window.addEventListener("load",()=>setTimeout(hideSplash,5000));
 setTimeout(hideSplash,5600);
-if("serviceWorker"in navigator)window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js?v=0144").catch(()=>{}));
+if("serviceWorker"in navigator)window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js?v=0145").catch(()=>{}));
 document.querySelectorAll("[data-tech-product]").forEach(link=>link.addEventListener("click",()=>window.anTrack("technology_product_opened",{data:{product:link.dataset.techProduct}})));
 initArteziqUiKit();
 renderClubs();

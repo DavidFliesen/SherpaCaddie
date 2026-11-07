@@ -1,3 +1,17 @@
+## Version 0.12.14 — ACA audio and lip-sync demo
+
+Apply the changed-files ZIP over v0.12.12 or v0.12.13. Reopen the app and confirm **v0.12.14** in the footer.
+
+1. Open **Settings → Local Sage experiment → ACA**.
+2. Tap **Play ACA demo** below the answer area. The button plays the bundled practice tip and drives the Sage portrait from the audio clock. Keep **Spoken replies** and app sound on. On iPad or iPhone, use the device volume buttons to adjust playback if needed.
+3. If playback fails, ACA keeps the written tip visible and shows a retry message. Tap **Play ACA demo** again. Other typed questions may return text. Use DCA for a conversational avatar.
+
+iPad and iPhone use the native media player for the ACA demo. The service worker serves byte ranges from the cached clip so the native player can use it offline after the updated app has cached its assets.
+
+**Verification.** All 23 unit tests and 10 Chromium scenarios passed. The tests exercised native media playback and the portrait canvas with the iPad app branch enabled, pause and resume, the mute notice, retry after a missing audio asset, and offline playback with byte-range responses. Physical iPad Safari and AirPods verification is pending.
+
+Serve the patched source with `python3 -m http.server 8765`. In another terminal with Playwright Chromium installed, run `node --test tests/sage-local.test.mjs tests/sage-local.browser.mjs`.
+
 ## Version 0.12.13 — iPad and iPhone Sage audio routing
 
 Apply the changed-files ZIP over v0.12.12. Refresh the Safari tab or reopen the installed app and confirm **v0.12.13** in the footer.
