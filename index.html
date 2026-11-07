@@ -5,11 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#18311C">
 <meta name="description" content="Sherpa Caddie — one-shot-at-a-time golf guidance combining a caddie, coach and mentor.">
-<link rel="manifest" href="manifest.webmanifest?v=0143">
+<link rel="manifest" href="manifest.webmanifest?v=0144">
 <link rel="icon" href="icons/favicon.png?v=0141" type="image/png">
 <link rel="apple-touch-icon" href="icons/icon-192.png?v=0141">
 <link rel="preload" as="image" href="assets/sherpa-caddie-logo-fast.webp?v=0141" type="image/webp" fetchpriority="high">
-<title>Sherpa Caddie v0.12.12</title>
+<title>Sherpa Caddie v0.12.13</title>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
   crossorigin="">
 <link rel="stylesheet" href="arteziq-ui.css?v=0141">
@@ -1135,7 +1135,7 @@ body.immersive .brand-center{display:none!important}
     <div class="splash-path" aria-hidden="true"><span></span><i></i></div>
     <div class="splash-caption">Walking your game plan into place…</div>
   </div>
-  <div class="splash-footer">ARTEZIQ • Sherpa Caddie • v0.12.12</div>
+  <div class="splash-footer">ARTEZIQ • Sherpa Caddie • v0.12.13</div>
 </div>
 <div class="app">
 <header class="topbar mentor-topbar" data-mode="text">
@@ -1196,7 +1196,7 @@ body.immersive .brand-center{display:none!important}
     <div class="console-hint" id="companionControlHint">Type a question above, then tap Ask.</div>
   </div>
 
-  <div class="version app-chrome">v0.12.12</div>
+  <div class="version app-chrome">v0.12.13</div>
 </header>
 
 <div class="tabs-wrap app-chrome">
@@ -1746,13 +1746,13 @@ body.immersive .brand-center{display:none!important}
   </article>
 </section>
 
-<div class="footer"><span>ARTEZIQ • Sherpa Caddie • v0.12.12</span><button id="aboutBtn">What’s in v0.12.12?</button></div>
+<div class="footer"><span>ARTEZIQ • Sherpa Caddie • v0.12.13</span><button id="aboutBtn">What’s in v0.12.13?</button></div>
 </main>
 </div>
 
 <div id="aboutModal" class="modal-backdrop hidden" role="dialog" aria-modal="true">
   <div class="modal" style="max-width:650px">
-    <div class="section-head"><div><p class="eyebrow">One-Shot Sherpa</p><h2>Version 0.12.12</h2></div><button class="btn ghost" id="closeAboutModal">Close</button></div>
+    <div class="section-head"><div><p class="eyebrow">One-Shot Sherpa</p><h2>Version 0.12.13</h2></div><button class="btn ghost" id="closeAboutModal">Close</button></div>
     <ul style="color:var(--stone);line-height:1.7">
       <li>Compare ARTEZIQ and D-ID conversational avatars from Settings using the same practice question</li>
       <li>The six main navigation tabs remain visible and usable in full-screen mode</li>
@@ -1923,7 +1923,7 @@ window.anFeedbackContext=function(){
       screen=({guide:"Guide",learn:"Learn",play:"Plan",technology:"Technology",clubs:"Clubs",review:"Review"})[active]||"Guide";
     }
   }catch(_){ }
-  return{appVersion:"0.12.12",buildNumber:"0143",screen};
+  return{appVersion:"0.12.13",buildNumber:"0144",screen};
 };
 
 function sherpaSoundVolume(){
@@ -2443,6 +2443,7 @@ async function resetDidTransport(keepAttempt=false){
     try{video.pause();video.srcObject=null;video.removeAttribute("src");video.load()}catch(_){}
   }
   showLiveStream(false);
+  restoreSageAudioSession();
   await closeDidManager(manager);
 }
 function connectSherpaLive(force=false){
@@ -2485,6 +2486,7 @@ async function connectDidAttempt(force,recoveryAttempt){
           return value;
         }
         liveState.srcObject=value;
+        applySagePlayback();
         const video=$("#sherpaLiveVideo");
         try{
           const vTracks=value?.getVideoTracks?.()||[],aTracks=value?.getAudioTracks?.()||[];
@@ -2509,11 +2511,11 @@ async function connectDidAttempt(force,recoveryAttempt){
         const s=String(value||"").toUpperCase();
         const talking=s!=="STOP"&&s!=="IDLE"&&s!=="";
         liveState.mode=talking?"speaking":"idle";aiState.speaking=talking;
-        if(talking){liveState.didSpeechStarted=true;clearBridgedSpeakFallback();const video=$("#sherpaLiveVideo");if(video){video.muted=!aiState.speakReplies||sherpaSoundVolume()<=0;video.volume=sherpaSoundVolume();video.play().then(()=>{if(isCurrentDid(generation)){liveState.audioPlayFailed=false;showLiveStream(true)}}).catch(()=>{if(isCurrentDid(generation)){liveState.audioPlayFailed=true;showLiveStream(false)}})}}else showLiveStream(false);
+        if(talking){applySagePlayback();liveState.didSpeechStarted=true;clearBridgedSpeakFallback();const video=$("#sherpaLiveVideo");if(video){video.muted=!aiState.speakReplies||sherpaSoundVolume()<=0;video.volume=sherpaSoundVolume();video.play().then(()=>{if(isCurrentDid(generation)){liveState.audioPlayFailed=false;showLiveStream(true)}}).catch(()=>{if(isCurrentDid(generation)){liveState.audioPlayFailed=true;showLiveStream(false)}})}}else showLiveStream(false);
         setMentorActivity(talking?"speaking":aiState.handsFree?"listening":"idle",talking?"Sage is speaking":aiState.handsFree?`Listening for ${WAKE_PHRASES}…`:"Video connected • ready");
         setLiveVisual(talking?"Sage is speaking":"Sage is ready");
         touchMentorSession();
-        if(talking&&aiState.recognition&&aiState.listening){aiState.stoppingRecognition=true;try{aiState.recognition.stop()}catch(_){}}
+        if(talking)stopSageCapture();
         if(!talking&&aiState.handsFree&&sherpaExperience==="live")scheduleHandsFreeRestart()
       },
       onNewMessage(messages,type){if(!isCurrentDid(generation))return;if(!Array.isArray(messages)||!messages.length)return;const last=messages[messages.length-1];if(last?.role==="user")setLiveTranscript("user",last.content);if(last?.role==="assistant"&&(type==="answer"||type==="partial")){setLiveTranscript("assistant",last.content);if(liveState.requestStartedAt&&!liveState.toolTest){const seconds=((Date.now()-liveState.requestStartedAt)/1000).toFixed(1);setLiveToolStatus(`Sage started responding in ${seconds}s.`);liveState.requestStartedAt=0}if(type==="answer"){setLiveVisual("Sage is speaking");if(aiState.speakReplies){clearBridgedSpeakFallback();liveState.speakFallbackTimer=setTimeout(()=>{if(!isCurrentDid(generation))return;if(!liveState.didSpeechStarted){setLiveToolStatus("D-ID did not start audio, so Sage is using the local voice.");showLiveStream(false);speakSherpa(last.content,false)}clearBridgedSpeakFallback()},8000)}const test=liveState.toolTest;if(test&&!test.started)setTimeout(()=>{if(liveState.toolTest===test&&!test.started)runBridgedToolDiagnostic(test)},500)}}touchMentorSession()},
@@ -2589,8 +2591,10 @@ async function sendSherpaLive(text){
   liveState.requestStartedAt=Date.now();
   liveState.didSpeechStarted=false;clearBridgedSpeakFallback();
   setLiveTranscript("user",q);setLiveVisual("Sage is thinking…");setMentorActivity("thinking","Sage is thinking…");
-  if(aiState.recognition&&aiState.listening){aiState.stoppingRecognition=true;try{aiState.recognition.stop()}catch(_){}}
   try{
+    const playbackReady=prepareSagePlayback();
+    if(playbackReady)await playbackReady;
+    if(!active())return;
     if(liveState.needsFreshSession)await connectSherpaLive(true);
     else if(!liveState.connected||!liveState.manager)await connectSherpaLive();
     if(!active())return;
@@ -2639,8 +2643,10 @@ async function setSherpaMode(mode){
   if(mode==="local"){
     if(aiState.recognition){
       const recognition=aiState.recognition;
-      recognition.onstart=recognition.onresult=recognition.onerror=recognition.onend=null;
-      try{recognition.abort()}catch(_){}
+      recognition.onstart=recognition.onresult=recognition.onerror=null;
+      recognition.onend=()=>finishSageCapture(recognition);
+      stopSageCapture();
+      try{recognition.abort()}catch(_){finishSageCapture(recognition)}
       aiState.recognition=null;
     }
     aiState.listening=aiState.stoppingRecognition=aiState.manualVoicePending=false;
@@ -2656,6 +2662,7 @@ async function setSherpaMode(mode){
   if(liveShell)liveShell.classList.toggle("active",live);
   if(!local)localStorage.setItem("sherpa.experience.0130",mode);
   if(mode==="text"&&aiState.handsFree)setHandsFree(false);
+  if(mode==="text")stopSageCapture();
   if(mode==="voice"||live){
     aiState.speakReplies=true;
     $$('.speak-toggle').forEach(x=>x.checked=true);
@@ -2733,7 +2740,7 @@ async function submitCompanionQuestion(){
     await localSage.ask(q,aiState.speakReplies);
     return;
   }
-  unlockVoiceAudio();
+  if(sherpaExperience!=="text")unlockVoiceAudio();
   setQuickAnswer("Sage is thinking…");
   if(sherpaExperience==="live"){
     setMentorActivity("typing","Sage is thinking…");
@@ -2802,11 +2809,13 @@ function syncLocalSageFlag(){
     return;
   }
   if(localSage){button.hidden=false;return;}
-  import("./sage-local/index.mjs?v=0143").then(({createLocalSage})=>{
+  import("./sage-local/index.mjs?v=0144").then(({createLocalSage})=>{
     if(!localSageEnabled||localSage)return;
     localSage=createLocalSage({
       poster:$("#sherpaLivePoster"),canvas:$("#sageLocalFace"),volume:sherpaSoundVolume(),
       practicePrompt:SAGE_COMPARISON_PROMPT,
+      preparePlayback:prepareSagePlayback,
+      releasePlayback:restoreSageAudioSession,
       isAllowed:()=>sherpaExperience==="local"&&!document.hidden,
       getRoute:()=>$(".tab.active")?.dataset.view,
       onState:setLocalSageActivity,
@@ -2839,7 +2848,8 @@ function suspendSage(){
   if(sherpaExperience==="local")localSage?.cancel();
   if(sherpaExperience==="live")disconnectSherpaLive("hidden");
   stopActiveVoice();
-  if(aiState.recognition&&aiState.listening){aiState.stoppingRecognition=true;try{aiState.recognition.stop()}catch(_){}}
+  stopSageCapture();
+  restoreSageAudioSession();
 }
 document.addEventListener("visibilitychange",()=>{
   if(document.hidden)suspendSage();
@@ -2863,6 +2873,7 @@ const aiState = {
   conversation: [],
   lastAnswer: "",
   recognition: null,
+  capture: null,
   listening: false,
   manualVoicePending: false,
   handsFree: false,
@@ -3105,15 +3116,44 @@ function selectBestSystemVoice(){
   for(const name of preferred){const v=voices.find(x=>(x.name||"").toLowerCase().includes(name.toLowerCase()));if(v)return v}
   return voices.find(v=>v.localService)||voices[0]||null;
 }
+function setSageAudioSession(type){
+  if(!isIOSVoiceDevice())return;
+  try{
+    const session=navigator.audioSession;
+    if(session&&session.type!==type)session.type=type;
+  }catch(_){ /* The system's default route still works when this API is unavailable. */ }
+}
+function applySagePlayback(){
+  if(!aiState.capture&&!document.hidden)setSageAudioSession("playback");
+}
+function restoreSageAudioSession(){
+  if(!aiState.capture)setSageAudioSession("auto");
+}
+function prepareSagePlayback(signal){
+  const ended=stopSageCapture();
+  if(ended&&isIOSVoiceDevice()){
+    const modeRevision=sherpaModeRevision, speechRevision=voiceRevision;
+    return ended.then(()=>{
+      if(!signal?.aborted&&modeRevision===sherpaModeRevision&&speechRevision===voiceRevision)applySagePlayback();
+    });
+  }
+  applySagePlayback();
+}
 function unlockVoiceAudio(){
   aiState.audioUnlocked=true;liveState.audioUnlocked=true;
   const liveVideo=$("#sherpaLiveVideo");
+  if(sherpaExperience==="live"&&!aiState.capture)applySagePlayback();
   if(liveVideo){
     liveVideo.volume=sherpaSoundVolume();liveVideo.muted=!aiState.speakReplies||liveVideo.volume<=0;
-    if(liveVideo.srcObject)liveVideo.play().then(()=>{liveState.audioPlayFailed=false}).catch(()=>{liveState.audioPlayFailed=true});
+    if(liveVideo.srcObject&&!(isIOSVoiceDevice()&&aiState.capture))liveVideo.play().then(()=>{liveState.audioPlayFailed=false}).catch(()=>{liveState.audioPlayFailed=true});
   }
-  try{const Ctx=window.AudioContext||window.webkitAudioContext;if(Ctx){const c=new Ctx();c.resume?.();setTimeout(()=>c.close?.(),120)}}catch(_){ }
-  try{if("speechSynthesis"in window){const u=new SpeechSynthesisUtterance(" ");u.volume=0;speechSynthesis.speak(u)}}catch(_){ }
+  // Legacy gesture priming is still used for browser speech in Voice mode.
+  if(!isIOSVoiceDevice()){
+    try{const Ctx=window.AudioContext||window.webkitAudioContext;if(Ctx){const c=new Ctx();c.resume?.();setTimeout(()=>c.close?.(),120)}}catch(_){}
+  }
+  if(!aiState.capture&&(!isIOSVoiceDevice()||sherpaExperience==="voice")){
+    try{if("speechSynthesis"in window){const u=new SpeechSynthesisUtterance(" ");u.volume=0;speechSynthesis.speak(u)}}catch(_){}
+  }
 }
 async function warmNaturalVoice(){
   if(aiState.ttsReady||aiState.ttsLoading||aiState.ttsFailed||aiState.ttsVoice==="system")return aiState.ttsReady;
@@ -3155,6 +3195,7 @@ function stopActiveVoice(){
 }
 function finishSpeaking(resumeHandsFree=true){
   aiState.speaking=false;aiState.activeAudio=null;setMentorActivity(aiState.handsFree?"listening":"idle",aiState.handsFree?`Listening for ${WAKE_PHRASES}…`:(sherpaExperience==="voice"?"Voice ready • tap Talk":sherpaExperience==="live"?"Video ready • tap Talk or Ask":"Text ready • type below"));
+  if(sherpaExperience!=="live")restoreSageAudioSession();
   if(resumeHandsFree&&aiState.handsFree)scheduleHandsFreeRestart();
 }
 async function playNaturalVoice(text,resumeHandsFree=true,revision=voiceRevision){
@@ -3166,6 +3207,7 @@ async function playNaturalVoice(text,resumeHandsFree=true,revision=voiceRevision
     if(typeof audio.toBlob==="function")blob=audio.toBlob();
     else if(audio.buffer)blob=new Blob([audio.buffer],{type:"audio/wav"});
     if(!blob)return false;
+    applySagePlayback();
     const url=URL.createObjectURL(blob),player=new Audio(url);player.volume=sherpaSoundVolume();aiState.activeAudio=player;
     const done=()=>{
       URL.revokeObjectURL(url);
@@ -3185,9 +3227,11 @@ async function speakSherpa(text,resumeHandsFree=true){
   const modeRevision=sherpaModeRevision;
   if(!aiState.speakReplies){if(resumeHandsFree&&aiState.handsFree)scheduleHandsFreeRestart();return}
   aiState.speaking=true;setMentorActivity("speaking","Speaking…");
-  if(aiState.recognition&&aiState.listening){aiState.stoppingRecognition=true;try{aiState.recognition.stop()}catch(_){}}
   stopActiveVoice();aiState.speaking=true;
   const revision=voiceRevision;
+  const playbackReady=prepareSagePlayback();
+  if(playbackReady)await playbackReady;
+  if(revision!==voiceRevision||modeRevision!==sherpaModeRevision||document.hidden)return;
   if(!isCompactMobile()&&aiState.ttsVoice!=="system"){
     if(!aiState.ttsReady&&!aiState.ttsFailed)await warmNaturalVoice();
     if(revision!==voiceRevision||modeRevision!==sherpaModeRevision||document.hidden)return;
@@ -3199,6 +3243,7 @@ async function speakSherpa(text,resumeHandsFree=true){
   const u=new SpeechSynthesisUtterance(text),voice=selectBestSystemVoice();if(voice)u.voice=voice;
   u.rate=.96;u.pitch=1.0;u.volume=sherpaSoundVolume();
   u.onend=()=>{if(revision===voiceRevision)finishSpeaking(resumeHandsFree)};u.onerror=()=>{if(revision===voiceRevision)finishSpeaking(resumeHandsFree)};
+  applySagePlayback();
   speechSynthesis.speak(u);
 }
 async function askSherpaAI(questionOverride=null, options={}){
@@ -3281,6 +3326,7 @@ function setupVoice(){
   };
   recognition.onend=async()=>{
     const manual=aiState.manualVoicePending, source=sherpaExperience==="live"?$("#liveQuestionInput"):$("#questionInput"), text=(source?.value||"").trim();
+    finishSageCapture(recognition);
     aiState.listening=false;micBtn.classList.remove("listening");micBtn.textContent="🎙️ Talk";const lm=$("#liveMicBtn");if(lm){lm.classList.remove("listening");lm.textContent="🎙️ Talk";}
     if(aiState.stoppingRecognition){aiState.stoppingRecognition=false;updateVoiceModeUI();return}
     if(manual){aiState.manualVoicePending=false;setBadge(voiceBadge,"Voice ready","ready");if(text){if(source)source.value="";if(sherpaExperience==="live")await sendSherpaLive(text);else await askSherpaAI(text,{voice:true})}else updateVoiceModeUI();return}
@@ -3288,14 +3334,41 @@ function setupVoice(){
   };
   setBadge(voiceBadge,"Voice ready","ready");updateVoiceModeUI();return true;
 }
+function finishSageCapture(recognition){
+  const capture=aiState.capture;
+  if(capture?.recognition!==recognition)return;
+  aiState.capture=null;
+  clearTimeout(capture.timer);
+  if(!document.hidden&&(aiState.speaking||sherpaExperience==="live"&&liveState.srcObject))applySagePlayback();
+  else restoreSageAudioSession();
+  capture.resolve();
+}
+function stopSageCapture(){
+  const capture=aiState.capture;
+  if(!capture)return;
+  if(!aiState.stoppingRecognition){
+    aiState.stoppingRecognition=true;
+    // Bound the wait if the browser never reports end. Keep its capture state
+    // until the event arrives so we do not force playback during recording.
+    capture.timer=setTimeout(capture.resolve,1500);
+    try{capture.recognition.stop()}catch(_){finishSageCapture(capture.recognition)}
+  }
+  return capture.ended;
+}
 function startRecognition(handsFree=false){
   if(!setupVoice())return;
-  if(aiState.listening||aiState.speaking)return;
+  if(aiState.capture||aiState.listening||aiState.speaking)return;
+  const recognition=aiState.recognition,capture={recognition};
+  capture.ended=new Promise(resolve=>{capture.resolve=resolve});
+  aiState.capture=capture;
+  aiState.stoppingRecognition=false;
   try{
     aiState.recognition.continuous=!!handsFree&&!isIOSVoiceDevice();
     aiState.recognition.interimResults=!(handsFree&&sherpaExperience==="live"&&isIPhoneVoiceDevice());
-    aiState.recognition.start();
+    setSageAudioSession("play-and-record");
+    recognition.start();
   }catch(err){
+    finishSageCapture(recognition);
     if(!/already started/i.test(String(err))){askStatus.textContent=`Microphone could not start: ${shortError(err)}`;setMentorActivity("error","Tap Talk to re-arm the microphone")}
   }
 }
@@ -3350,7 +3423,7 @@ function setHandsFree(on){
   aiState.handsFree=!!on;
   if(!aiState.handsFree){
     aiState.manualVoicePending=false;aiState.restartingRecognition=false;
-    if(aiState.recognition&&aiState.listening){aiState.stoppingRecognition=true;try{aiState.recognition.stop()}catch(_){}}
+    stopSageCapture();
     setBadge(voiceBadge,"Voice ready","ready");
     setMentorActivity("idle",sherpaExperience==="live"?(liveState.connected?"Video connected • ready":"Video ready • tap Talk or Ask"):sherpaExperience==="voice"?"Voice ready • tap Talk":"Text ready • type below");
     updateVoiceModeUI();return;
@@ -3395,7 +3468,7 @@ $("#speakAnswerBtn").addEventListener("click", ()=>{
   const text=aiState.lastAnswer || `${answerTitle.textContent}. ${answerText.textContent}`;
   const previous=aiState.speakReplies;aiState.speakReplies=true;speakSherpa(text,false);aiState.speakReplies=previous;
 });
-$("#stopSpeakingBtn").addEventListener("click",()=>{stopActiveVoice();if(aiState.handsFree)scheduleHandsFreeRestart()});
+$("#stopSpeakingBtn").addEventListener("click",()=>{stopActiveVoice();restoreSageAudioSession();if(aiState.handsFree)scheduleHandsFreeRestart()});
 modelSelect.addEventListener("change",()=>{
   aiState.llmReady=false;
   if(aiState.engine){try{aiState.engine.unload?.()}catch(_){}aiState.engine=null}
@@ -3766,13 +3839,13 @@ function renderRounds(){
  })
 }
 $("#clearAllRoundsBtn").onclick=()=>{if(!state.rounds.length)return;if(!confirm(`Delete all ${state.rounds.length} saved game reviews? This cannot be undone.`))return;state.rounds=[];save();renderRounds();toast("All saved game reviews deleted")};
-$("#exportBtn").onclick=()=>{const b=new Blob([JSON.stringify({version:"0.12.12",bagMode:state.bagMode,clubs:state.clubs,rounds:state.rounds},null,2)],{type:"application/json"}),a=document.createElement("a");a.href=URL.createObjectURL(b);a.download=`sherpa-caddie-data-${new Date().toISOString().slice(0,10)}.json`;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),500)};
+$("#exportBtn").onclick=()=>{const b=new Blob([JSON.stringify({version:"0.12.13",bagMode:state.bagMode,clubs:state.clubs,rounds:state.rounds},null,2)],{type:"application/json"}),a=document.createElement("a");a.href=URL.createObjectURL(b);a.download=`sherpa-caddie-data-${new Date().toISOString().slice(0,10)}.json`;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),500)};
 $("#importBtn").onclick=()=>$("#importFile").click();$("#importFile").onchange=async e=>{const f=e.target.files[0];if(!f)return;try{const d=JSON.parse(await f.text());if(d.clubs)state.clubs=d.clubs;if(d.bagMode)state.bagMode=d.bagMode;if(d.rounds)state.rounds=d.rounds;save();renderClubs();renderRounds();toast("Data imported")}catch{toast("Could not import that file")}e.target.value=""};
 
 function hideSplash(){const el=$("#splashScreen");if(!el||el.classList.contains("is-hidden"))return;el.classList.add("is-hidden");setTimeout(()=>el.remove(),800);setTimeout(()=>window.UIKIT?.applyFSLock?.(),850)}
 window.addEventListener("load",()=>setTimeout(hideSplash,5000));
 setTimeout(hideSplash,5600);
-if("serviceWorker"in navigator)window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js?v=0143").catch(()=>{}));
+if("serviceWorker"in navigator)window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js?v=0144").catch(()=>{}));
 document.querySelectorAll("[data-tech-product]").forEach(link=>link.addEventListener("click",()=>window.anTrack("technology_product_opened",{data:{product:link.dataset.techProduct}})));
 initArteziqUiKit();
 renderClubs();

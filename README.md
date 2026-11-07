@@ -1,3 +1,24 @@
+## Version 0.12.13 — iPad and iPhone Sage audio routing
+
+Apply the changed-files ZIP over v0.12.12. Refresh the Safari tab or reopen the installed app and confirm **v0.12.13** in the footer.
+
+- ACA requests a media playback session before starting or resuming its clip.
+- Voice and DCA release browser microphone capture before requesting media playback on iPad and iPhone. DCA also requests playback when its audio stream arrives. The device chooses the audio output.
+- The service worker refreshes the cached app to build 0144.
+
+### Automated verification for v0.12.13
+
+All 23 unit tests and 10 Chromium browser scenarios passed. The routing scenarios emulate the iPad audio-session API and check ACA playback, Voice microphone handoff, and a mocked DCA session. The Bluetooth output still needs the device check below.
+
+Run from the source root with Node and Playwright Chromium installed. Serve the files with `python3 -m http.server 8765`, then run `node --test tests/sage-local.test.mjs tests/sage-local.browser.mjs` in a second terminal.
+
+### Check with AirPods
+
+1. With AirPods connected, play a short clip in Music or Podcasts. Check the selected output in Control Center under **Now Playing → Playback Destination**. [Apple’s iPad playback guide](https://support.apple.com/guide/ipad/play-audio-ipad-a-bluetooth-accessory-ipad913af4df/ipados)
+2. In Sherpa Caddie, turn off **Hands-Free**, choose ACA, and tap **Ask Sage** with the prefilled question. Confirm the sound comes through AirPods. Repeat in DCA with a typed question.
+3. In Voice or DCA, tap **Talk**, ask a question, and check the audio after the microphone closes. Repeat in Safari and in the Home Screen app if you use both.
+4. If audio still comes from the speaker, check the output shown in Control Center and record the Sage mode and whether you used **Ask Sage** or **Talk**.
+
 ## Version 0.12.12 — Sage Local Phase 1
 
 - Adds an opt-in **Local Sage (Experimental)** mode with one offline spoken practice tip, audio-clock lip sync, and Pause and Stop controls.
