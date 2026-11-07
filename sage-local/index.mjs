@@ -1,9 +1,10 @@
-import { DEMO } from "./demo.mjs?v=0144";
-import { createPortrait } from "./portrait.mjs?v=0144";
-import { SageSessionController } from "./session-controller.mjs?v=0144";
-import { createAppTools } from "./tool-registry.mjs?v=0144";
+import { createMediaPlayback } from "./media-playback.mjs?v=0145";
+import { DEMO } from "./demo.mjs?v=0145";
+import { createPortrait } from "./portrait.mjs?v=0145";
+import { SageSessionController } from "./session-controller.mjs?v=0145";
+import { createAppTools } from "./tool-registry.mjs?v=0145";
 
-const AUDIO_URL = new URL("../assets/sage-local/practice.mp3?v=0144", import.meta.url);
+const AUDIO_URL = new URL("../assets/sage-local/practice.mp3?v=0145", import.meta.url);
 const TAB_PROMPT = "What tab am I on";
 
 function normalize(question) {
@@ -150,9 +151,13 @@ function createPlayback(portrait, onFallback, initialVolume, preparePlayback, re
 }
 
 export function createLocalSage(options) {
-  const { poster, canvas, isAllowed, getRoute, onState, onAnswer, onFallback, onError, volume, practicePrompt, preparePlayback, releasePlayback } = options;
+  const { poster, canvas, isAllowed, getRoute, onState, onAnswer, onFallback, onError, volume, practicePrompt, preparePlayback, releasePlayback, nativeMedia } = options;
   const practiceIntent = normalize(practicePrompt);
-  const avatar = createPlayback(createPortrait(poster, canvas), onFallback, volume, preparePlayback, releasePlayback);
+  const isPracticeQuestion = question => normalize(question) === practiceIntent;
+  const portrait = createPortrait(poster, canvas);
+  const avatar = nativeMedia
+    ? createMediaPlayback(portrait, { url: AUDIO_URL.href, volume, preparePlayback, releasePlayback, onFallback })
+    : createPlayback(portrait, onFallback, volume, preparePlayback, releasePlayback);
   const tools = createAppTools({ isAllowed, getRoute });
   const controller = new SageSessionController({
     behavior: "Phase 1 scripted demonstration.",
@@ -175,13 +180,14 @@ export function createLocalSage(options) {
             text: result.ok ? `The active tab is ${result.data.tab}.` : result.userMessage,
           };
         }
-        return { type: "answer", text: `This experiment has one spoken demo. Try “${practicePrompt}” or switch to Text or Voice for other golf questions.` };
+        return { type: "answer", text: `Tap Play ACA demo to hear the scripted practice tip. For other golf questions, use Text, Voice, or DCA.` };
       },
     },
     tools,
     speech: {
       async synthesize(text, signal) {
         if (text !== DEMO.text) throw new Error("No audio is bundled for this answer.");
+        if (nativeMedia) return { durationMs: DEMO.durationMs, visemes: DEMO.visemes };
         const response = await fetch(AUDIO_URL, { signal });
         if (!response.ok) throw new Error("The demo audio is unavailable.");
         const audio = await response.blob();
@@ -192,8 +198,9 @@ export function createLocalSage(options) {
     avatar, onState, onAnswer, onFallback, onError,
   });
   return {
+    isPracticeQuestion,
     ask(question, speak) {
-      const animate = speak && normalize(question) === practiceIntent;
+      const animate = speak && isPracticeQuestion(question);
       return controller.ask(question, animate ? "video" : "text");
     },
     cancel: () => controller.cancel(),
