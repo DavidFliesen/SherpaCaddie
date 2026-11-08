@@ -1,10 +1,10 @@
-import { createMediaPlayback } from "./media-playback.mjs?v=0145";
-import { DEMO } from "./demo.mjs?v=0145";
-import { createPortrait } from "./portrait.mjs?v=0145";
-import { SageSessionController } from "./session-controller.mjs?v=0145";
-import { createAppTools } from "./tool-registry.mjs?v=0145";
+import { createMediaPlayback } from "./media-playback.mjs?v=0146";
+import { DEMO } from "./demo.mjs?v=0146";
+import { createPortrait } from "./portrait.mjs?v=0146";
+import { SageSessionController } from "./session-controller.mjs?v=0146";
+import { createAppTools } from "./tool-registry.mjs?v=0146";
 
-const AUDIO_URL = new URL("../assets/sage-local/practice.mp3?v=0145", import.meta.url);
+const AUDIO_URL = new URL("../assets/sage-local/practice.mp3?v=0146", import.meta.url);
 const TAB_PROMPT = "What tab am I on";
 
 function normalize(question) {
@@ -154,7 +154,7 @@ export function createLocalSage(options) {
   const { poster, canvas, isAllowed, getRoute, onState, onAnswer, onFallback, onError, volume, practicePrompt, preparePlayback, releasePlayback, nativeMedia } = options;
   const practiceIntent = normalize(practicePrompt);
   const isPracticeQuestion = question => normalize(question) === practiceIntent;
-  const portrait = createPortrait(poster, canvas);
+  const portrait = createPortrait(poster, canvas, DEMO);
   const avatar = nativeMedia
     ? createMediaPlayback(portrait, { url: AUDIO_URL.href, volume, preparePlayback, releasePlayback, onFallback })
     : createPlayback(portrait, onFallback, volume, preparePlayback, releasePlayback);
