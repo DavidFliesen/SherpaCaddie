@@ -2,7 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { SageSessionController } from "../sage-local/session-controller.mjs";
 import { RegisteredToolGateway, createAppTools } from "../sage-local/tool-registry.mjs";
-import { cueAt } from "../sage-local/portrait.mjs";
+import { cueAt, mouthShapeAt, portraitMotionAt } from "../sage-local/portrait.mjs";
 import { DEMO } from "../sage-local/demo.mjs";
 
 const makeSignal = () => new AbortController().signal;
@@ -302,4 +302,27 @@ test("timed visemes cover the clip and return to neutral outside it", () => {
     end = cue.endMs;
   }
   assert.ok(Math.abs(end - DEMO.durationMs) < 60);
+});
+
+
+test("mouth poses blend continuously and settle closed during the pause", () => {
+  const cues = [
+    { startMs: 0, endMs: 180, viseme: "open" },
+    { startMs: 180, endMs: 500, viseme: "closed" },
+  ];
+  assert.equal(mouthShapeAt(cues, 80)[0], 25);
+  assert.ok(mouthShapeAt(cues, 179)[0] > 0);
+  assert.ok(Math.abs(mouthShapeAt(cues, 179)[0] - mouthShapeAt(cues, 181)[0]) < 1);
+  assert.equal(mouthShapeAt(cues, 400)[0], 0);
+});
+
+test("phrase nods and blinks are bounded and respect reduced motion", () => {
+  assert.ok(DEMO.gestureMs.length > 3);
+  assert.ok(DEMO.blinkMs.length > 2);
+  const blink = DEMO.blinkMs[0];
+  assert.ok(portraitMotionAt(DEMO, blink, false).blink > .9);
+  assert.ok(portraitMotionAt(DEMO, DEMO.gestureMs[2], false).scale > 1);
+  const still = { x: 0, y: 0, tilt: 0, scale: 1, blink: 0 };
+  assert.deepEqual(portraitMotionAt(DEMO, blink, true), still);
+  assert.deepEqual(portraitMotionAt(DEMO, DEMO.durationMs, false), still);
 });

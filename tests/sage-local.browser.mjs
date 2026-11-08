@@ -1,7 +1,8 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { createRequire } from "node:module";
-import { mkdir } from "node:fs/promises";
+import { mkdir, stat } from "node:fs/promises";
+import { DEMO } from "../sage-local/demo.mjs";
 import { join } from "node:path";
 
 const { chromium } = createRequire(import.meta.url)("playwright");
@@ -9,7 +10,8 @@ const origin = process.env.SAGE_TEST_ORIGIN || "http://127.0.0.1:8765";
 const flagUrl = `${origin}/index.html?sageLocal=1`;
 const sample = "Give me a quick practice tip?";
 const tabQuestion = "What tab am I on?";
-const answer = /Pick one safe target/;
+const answer = /Try this on the range/;
+const clipBytes = (await stat(new URL("../assets/sage-local/practice.mp3", import.meta.url))).size;
 const localButton = '[data-companion-mode="local"]';
 const portrait = "#sherpaLivePoster";
 const canvas = "#sageLocalFace";
@@ -33,8 +35,8 @@ async function ask(page, question = sample) {
 
 async function load(page, url = flagUrl) {
   await page.goto(url);
-  assert.match(await page.locator(".splash-footer").textContent(), /v0\.12\.14/);
-  assert.match(await page.locator(".footer").textContent(), /v0\.12\.14/);
+  assert.match(await page.locator(".splash-footer").textContent(), /v0\.12\.15/);
+  assert.match(await page.locator(".footer").textContent(), /v0\.12\.15/);
   await page.locator("#splashScreen").waitFor({ state: "hidden" });
 }
 
@@ -180,13 +182,18 @@ test("Sherpa Caddie Phase 1 in Chromium", async t => {
           await checkPortrait(page);
           assert.match(await page.locator("#quickAnswer").textContent(), answer);
           if (resultDir) await page.screenshot({ path: join(resultDir, `${label}-${orientation}.png`) });
-          await status(page, "scripted demo");
+          if (label === "phone" && orientation === "portrait") {
+            await status(page, "scripted demo");
+          } else {
+            await page.locator("#sageLocalStop").click();
+            await status(page, "stopped");
+          }
           await checkPortrait(page);
           assert.equal(await page.locator(canvas).isVisible(), false);
           await page.waitForFunction(() => window.sageTest.contexts.every(ctx => ctx.state === "closed"));
           const measurement = await page.evaluate(() => window.sageTest.starts.at(-1));
           assert.ok(measurement.ms < 1500);
-          assert.ok(Math.abs(measurement.length - 4630) < 120);
+          assert.ok(Math.abs(measurement.length - DEMO.durationMs) < 120);
           subtest.diagnostic(`${orientation}: tap to Web Audio scheduling ${measurement.ms} ms, lead ${measurement.lead} ms, decoded clip ${measurement.length} ms`);
         }
         await page.locator("#uiFsBtn").click();
@@ -261,7 +268,7 @@ test("Sherpa Caddie Phase 1 in Chromium", async t => {
     await status(page, "audio only");
     await checkPortrait(page);
     assert.equal(await page.locator(canvas).isVisible(), false);
-    assert.equal(await page.evaluate(() => window.sageTest.starts.length), 1);
+    await page.waitForFunction(() => window.sageTest.starts.length === 1);
   });
 
   await run("missing speech asset preserves ACA and allows retry", phone, async page => {
@@ -401,14 +408,18 @@ test("Sherpa Caddie Phase 1 in Chromium", async t => {
       await page.waitForFunction(() => !!navigator.serviceWorker.controller);
       await context.setOffline(true);
       await load(page);
-      const ranges = await page.evaluate(async () => {
-        const url = "./assets/sage-local/practice.mp3?v=0145";
-        return Promise.all(["bytes=0-1", "bytes=-2", "bytes=23804-"].map(async range => {
+      const ranges = await page.evaluate(async size => {
+        const url = "./assets/sage-local/practice.mp3?v=0146";
+        return Promise.all(["bytes=0-1", "bytes=-2", `bytes=${size}-`].map(async range => {
           const response = await fetch(url, { headers: { Range: range } });
           return [response.status, response.headers.get("content-range"), (await response.arrayBuffer()).byteLength];
         }));
-      });
-      assert.deepEqual(ranges, [[206, "bytes 0-1/23804", 2], [206, "bytes 23802-23803/23804", 2], [416, "bytes */23804", 0]]);
+      }, clipBytes);
+      assert.deepEqual(ranges, [
+        [206, `bytes 0-1/${clipBytes}`, 2],
+        [206, `bytes ${clipBytes - 2}-${clipBytes - 1}/${clipBytes}`, 2],
+        [416, `bytes */${clipBytes}`, 0],
+      ]);
       await mode(page, "local");
       await page.locator("#sageLocalDemo").click();
       await status(page, "is speaking");
