@@ -1,10 +1,10 @@
-import { createMediaPlayback } from "./media-playback.mjs?v=0146";
-import { DEMO } from "./demo.mjs?v=0146";
-import { createPortrait } from "./portrait.mjs?v=0146";
-import { SageSessionController } from "./session-controller.mjs?v=0146";
-import { createAppTools } from "./tool-registry.mjs?v=0146";
+import { createMediaPlayback } from "./media-playback.mjs?v=0148";
+import { DEMO } from "./demo.mjs?v=0148";
+import { createPortrait } from "./portrait.mjs?v=0148";
+import { SageSessionController } from "./session-controller.mjs?v=0148";
+import { createAppTools } from "./tool-registry.mjs?v=0148";
 
-const AUDIO_URL = new URL("../assets/sage-local/practice.mp3?v=0146", import.meta.url);
+const AUDIO_URL = new URL("../assets/sage-local/practice.mp3?v=0148", import.meta.url);
 const TAB_PROMPT = "What tab am I on";
 
 function normalize(question) {

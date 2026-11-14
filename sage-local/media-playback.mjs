@@ -27,25 +27,41 @@ export function createMediaPlayback(portrait, { url, volume, preparePlayback, re
     signal.throwIfAborted();
     if (player.ended) return;
     if (player.error || player.paused) throw new Error("ACA demo audio could not play.");
-    if (!Number.isFinite(player.duration) || Math.abs(player.duration * 1000 - output.durationMs) > 250) {
+    if (Number.isFinite(player.duration) && Math.abs(player.duration * 1000 - output.durationMs) > 350) {
       throw new Error("ACA demo audio and timing assets do not match.");
     }
 
     return new Promise((resolve, reject) => {
       let frame;
-      const render = () => {
-        frame = undefined;
-        if (player.paused || player.ended) return;
+      let backupTimer;
+      let visualMs = Math.max(0, player.currentTime * 1000);
+      let lastSampleAt = performance.now();
+
+      const elapsedAt = now => {
+        const mediaMs = Math.max(0, player.currentTime * 1000);
+        visualMs = Math.max(mediaMs, visualMs + Math.max(0, now - lastSampleAt));
+        lastSampleAt = now;
+        return Math.min(output.durationMs - 1, visualMs);
+      };
+
+      const drawFrame = () => {
+        if (!animate || player.paused || player.ended) return;
         try {
-          portrait.draw(output.visemes, player.currentTime * 1000);
+          portrait.draw(output.visemes, elapsedAt(performance.now()));
         } catch (_) {
           portrait.showNeutral();
           onFallback("AVATAR_UNAVAILABLE");
           animate = false;
-          return;
+          clearInterval(backupTimer);
         }
+      };
+      const render = () => {
+        frame = undefined;
+        if (!animate || player.paused || player.ended) return;
+        drawFrame();
         frame = requestAnimationFrame(render);
       };
+      const mediaTick = () => drawFrame();
       const end = () => finish();
       const error = () => finish(new Error("ACA demo audio failed."));
       const abort = () => finish(signal.reason);
@@ -54,10 +70,13 @@ export function createMediaPlayback(portrait, { url, volume, preparePlayback, re
       };
       function finish(failure) {
         cancelAnimationFrame(frame);
+        clearInterval(backupTimer);
         signal.removeEventListener("abort", abort);
         player.removeEventListener("ended", end);
         player.removeEventListener("error", error);
         player.removeEventListener("pause", interrupted);
+        player.removeEventListener("timeupdate", mediaTick);
+        player.removeEventListener("playing", mediaTick);
         run.finish = undefined;
         run.resumeFrames = undefined;
         run.pauseFrames = undefined;
@@ -69,16 +88,25 @@ export function createMediaPlayback(portrait, { url, volume, preparePlayback, re
       run.finish = finish;
       run.pauseFrames = () => {
         cancelAnimationFrame(frame);
+        clearInterval(backupTimer);
         frame = undefined;
+        backupTimer = undefined;
         portrait.showNeutral();
       };
       run.resumeFrames = () => {
-        if (animate && frame === undefined) frame = requestAnimationFrame(render);
+        if (!animate || frame !== undefined) return;
+        visualMs = Math.max(0, player.currentTime * 1000);
+        lastSampleAt = performance.now();
+        drawFrame();
+        frame = requestAnimationFrame(render);
+        backupTimer = setInterval(drawFrame, 50);
       };
       signal.addEventListener("abort", abort, { once: true });
       player.addEventListener("ended", end);
       player.addEventListener("error", error);
       player.addEventListener("pause", interrupted);
+      player.addEventListener("timeupdate", mediaTick);
+      player.addEventListener("playing", mediaTick);
       started();
       run.resumeFrames();
     });

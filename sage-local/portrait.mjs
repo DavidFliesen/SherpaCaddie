@@ -63,10 +63,10 @@ export function portraitMotionAt({ durationMs, blinkMs, gestureMs }, elapsedMs, 
     return Math.max(max, phase > 0 && phase < 1 ? Math.sin(Math.PI * phase) ** 1.4 : 0);
   }, 0);
   return {
-    x: weight * (3.7 * Math.sin(1.05 * seconds) + .9 * Math.sin(2.25 * seconds)),
-    y: weight * (2.4 * Math.sin(1.32 * seconds) + 3.8 * nod),
-    tilt: weight * (.012 * Math.sin(.89 * seconds) - .007 * nod),
-    scale: 1 + .029 * weight,
+    x: weight * (1.5 * Math.sin(1.05 * seconds) + .4 * Math.sin(2.25 * seconds)),
+    y: weight * (.7 * Math.sin(1.32 * seconds) + 1.8 * nod),
+    tilt: weight * (.005 * Math.sin(.89 * seconds) - .003 * nod),
+    scale: 1,
     blink: blink * weight,
   };
 }
@@ -129,7 +129,7 @@ export function createPortrait(poster, canvas, timing) {
 
   return {
     async prepare(signal) {
-      await poster.decode();
+      if (!poster.complete || !poster.naturalWidth) await poster.decode();
       signal.throwIfAborted();
       if (poster.naturalWidth !== 720 || poster.naturalHeight !== 900) throw new Error("Sage portrait size changed.");
       canvas.width = 720;
@@ -155,11 +155,11 @@ export function createPortrait(poster, canvas, timing) {
         ctx.rotate(tilt);
         ctx.scale(scale, scale);
         ctx.translate(-360, -450);
-        ctx.drawImage(poster, 0, 0);
       }
+      ctx.drawImage(poster, 0, 0);
       drawMouth(shape);
       drawBlink(blink);
-      canvas.hidden = reduce && shape[0] < .7;
+      canvas.hidden = false;
     },
     showNeutral,
     release() {
