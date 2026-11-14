@@ -35,9 +35,25 @@ async function ask(page, question = sample) {
 
 async function load(page, url = flagUrl) {
   await page.goto(url);
-  assert.match(await page.locator(".splash-footer").textContent(), /v0\.12\.15/);
-  assert.match(await page.locator(".footer").textContent(), /v0\.12\.15/);
+  assert.match(await page.locator(".splash-footer").textContent(), /v0\.13\.0/);
+  assert.match(await page.locator(".footer").textContent(), /v0\.13\.0/);
   await page.locator("#splashScreen").waitFor({ state: "hidden" });
+}
+
+async function assertPortraitChanges(page) {
+  const distinct = await page.evaluate(async () => {
+    const canvas = document.querySelector("#sageLocalFace");
+    const signatures = [];
+    for (let sample = 0; sample < 6; sample += 1) {
+      const pixels = canvas.getContext("2d").getImageData(250, 210, 270, 250).data;
+      let hash = 2166136261;
+      for (let index = 0; index < pixels.length; index += 113) hash = Math.imul(hash ^ pixels[index], 16777619);
+      signatures.push(hash >>> 0);
+      await new Promise(resolve => setTimeout(resolve, 90));
+    }
+    return new Set(signatures).size;
+  });
+  assert.ok(distinct > 1, "ACA portrait frames should change while speech plays");
 }
 
 async function checkPortrait(page) {
@@ -179,6 +195,7 @@ test("Sherpa Caddie Phase 1 in Chromium", async t => {
           await ask(page);
           await status(page, "is speaking");
           await page.locator(canvas).waitFor();
+          await assertPortraitChanges(page);
           await checkPortrait(page);
           assert.match(await page.locator("#quickAnswer").textContent(), answer);
           if (resultDir) await page.screenshot({ path: join(resultDir, `${label}-${orientation}.png`) });
@@ -284,6 +301,7 @@ test("Sherpa Caddie Phase 1 in Chromium", async t => {
     await page.locator("#sageLocalDemo").click();
     await status(page, "is speaking");
     await page.locator(canvas).waitFor();
+    await assertPortraitChanges(page);
   });
 
   await run("iPad requests media playback for ACA and waits for capture before Voice", tablet, async page => {
@@ -409,7 +427,7 @@ test("Sherpa Caddie Phase 1 in Chromium", async t => {
       await context.setOffline(true);
       await load(page);
       const ranges = await page.evaluate(async size => {
-        const url = "./assets/sage-local/practice.mp3?v=0146";
+        const url = "./assets/sage-local/practice.mp3?v=0148";
         return Promise.all(["bytes=0-1", "bytes=-2", `bytes=${size}-`].map(async range => {
           const response = await fetch(url, { headers: { Range: range } });
           return [response.status, response.headers.get("content-range"), (await response.arrayBuffer()).byteLength];

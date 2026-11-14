@@ -2,7 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { SageSessionController } from "../sage-local/session-controller.mjs";
 import { RegisteredToolGateway, createAppTools } from "../sage-local/tool-registry.mjs";
-import { cueAt, mouthShapeAt, portraitMotionAt } from "../sage-local/portrait.mjs";
+import { createPortrait, cueAt, mouthShapeAt, portraitMotionAt } from "../sage-local/portrait.mjs";
 import { DEMO } from "../sage-local/demo.mjs";
 
 const makeSignal = () => new AbortController().signal;
@@ -316,13 +316,40 @@ test("mouth poses blend continuously and settle closed during the pause", () => 
   assert.equal(mouthShapeAt(cues, 400)[0], 0);
 });
 
-test("phrase nods and blinks are bounded and respect reduced motion", () => {
+test("phrase nods and blinks are bounded without whole-image zoom", () => {
   assert.ok(DEMO.gestureMs.length > 3);
   assert.ok(DEMO.blinkMs.length > 2);
   const blink = DEMO.blinkMs[0];
   assert.ok(portraitMotionAt(DEMO, blink, false).blink > .9);
-  assert.ok(portraitMotionAt(DEMO, DEMO.gestureMs[2], false).scale > 1);
+  const gesture = portraitMotionAt(DEMO, DEMO.gestureMs[2], false);
+  assert.equal(gesture.scale, 1);
+  assert.ok(Math.abs(gesture.x) + Math.abs(gesture.y) + Math.abs(gesture.tilt) > 0);
   const still = { x: 0, y: 0, tilt: 0, scale: 1, blink: 0 };
   assert.deepEqual(portraitMotionAt(DEMO, blink, true), still);
   assert.deepEqual(portraitMotionAt(DEMO, DEMO.durationMs, false), still);
+});
+
+test("reduced-motion lip sync paints a complete visible portrait frame", async () => {
+  const originalMatchMedia = globalThis.matchMedia;
+  globalThis.matchMedia = () => ({ matches: true });
+  const calls = [];
+  const gradient = { addColorStop() {} };
+  const context = {
+    setTransform() {}, clearRect() {}, translate() {}, rotate() {}, scale() {},
+    createLinearGradient() { return gradient; }, fillRect() {},
+    drawImage(...args) { calls.push(args); },
+  };
+  const poster = { complete: true, naturalWidth: 720, naturalHeight: 900, async decode() {} };
+  const canvas = { hidden: true, width: 0, height: 0, getContext() { return context; } };
+  try {
+    const portrait = createPortrait(poster, canvas, DEMO);
+    await portrait.prepare(makeSignal());
+    const speakingAt = DEMO.visemes.find(cue => cue.viseme !== "closed").startMs + 10;
+    portrait.draw(DEMO.visemes, speakingAt);
+    assert.equal(canvas.hidden, false);
+    assert.ok(calls.some(args => args.length === 3 && args[0] === poster && args[1] === 0 && args[2] === 0));
+  } finally {
+    if (originalMatchMedia) globalThis.matchMedia = originalMatchMedia;
+    else delete globalThis.matchMedia;
+  }
 });
