@@ -5,11 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#18311C">
 <meta name="description" content="Sherpa Caddie — one-shot-at-a-time golf guidance combining a caddie, coach and mentor.">
-<link rel="manifest" href="manifest.webmanifest?v=0146">
+<link rel="manifest" href="manifest.webmanifest?v=0148">
 <link rel="icon" href="icons/favicon.png?v=0141" type="image/png">
 <link rel="apple-touch-icon" href="icons/icon-192.png?v=0141">
 <link rel="preload" as="image" href="assets/sherpa-caddie-logo-fast.webp?v=0141" type="image/webp" fetchpriority="high">
-<title>Sherpa Caddie v0.12.15</title>
+<title>Sherpa Caddie v0.13.0</title>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
   crossorigin="">
 <link rel="stylesheet" href="arteziq-ui.css?v=0141">
@@ -1123,6 +1123,27 @@ body.immersive .brand-center{display:none!important}
   }
 }
 
+/* v0.13.0 — The Swing Path: interactive P1–P10 fundamentals */
+.swing-path{overflow:hidden;padding:0;background:linear-gradient(145deg,#fdfaf1,#eef4ea);border:1px solid #d8d0be}
+.swing-path-head{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:18px;align-items:end;padding:22px 22px 17px;background:linear-gradient(135deg,#17391f,#2f653b);color:#fff}
+.swing-path-head .eyebrow{color:#e6c88f}.swing-path-head h2{margin:2px 0 7px;font-family:Georgia,"Times New Roman",serif;font-size:clamp(1.8rem,4vw,3rem);line-height:1.02}
+.swing-path-head p:last-child{margin:0;max-width:750px;color:rgba(255,255,255,.88);line-height:1.5}
+.swing-path-mantra{min-width:220px;padding:11px 14px;border:1px solid rgba(255,255,255,.25);border-radius:14px;background:rgba(255,255,255,.1);font-weight:900;text-align:center;letter-spacing:.02em}
+.swing-stage{display:grid;grid-template-columns:minmax(300px,1.12fr) minmax(290px,.88fr);gap:16px;padding:18px 22px 14px}
+.swing-visual{position:relative;min-height:360px;border-radius:18px;overflow:hidden;background:radial-gradient(circle at 50% 40%,#fbfaf5 0 30%,#e6eee0 75%,#d4e0cf 100%);border:1px solid #cad5c3;box-shadow:inset 0 0 40px rgba(23,57,31,.06)}
+.swing-visual:before{content:"";position:absolute;inset:12% 12% 11%;border:1px solid rgba(36,79,43,.12);border-radius:50%;pointer-events:none}
+.swing-visual svg{display:block;width:100%;height:330px;overflow:visible}.swing-visual .ground{stroke:#a88a57;stroke-width:4;stroke-linecap:round}.swing-visual .swing-arc{fill:none;stroke:#bd995d;stroke-width:3;stroke-dasharray:8 11;opacity:.5}.swing-visual .body{stroke:#17391f;stroke-width:18;stroke-linecap:round;stroke-linejoin:round;fill:none}.swing-visual .limb{stroke:#214a29;stroke-width:13;stroke-linecap:round;stroke-linejoin:round;fill:none}.swing-visual .club{stroke:#a37331;stroke-width:7;stroke-linecap:round}.swing-visual .joint{fill:#f1d5a7;stroke:#17391f;stroke-width:4}.swing-visual .head{fill:#f1d5a7;stroke:#17391f;stroke-width:7}.swing-visual .shadow{fill:rgba(23,57,31,.12)}
+.pose-badge{position:absolute;left:15px;top:15px;display:flex;align-items:center;gap:9px;padding:8px 11px;border-radius:999px;background:#17391f;color:#fff;box-shadow:0 6px 18px rgba(23,57,31,.2)}.pose-badge strong{font-size:1.15rem}.pose-badge span{font-size:.76rem;color:#f3d79f;font-weight:850;text-transform:uppercase;letter-spacing:.08em}
+.flow-button{position:absolute;right:14px;top:14px;border:1px solid rgba(23,57,31,.18);border-radius:999px;background:rgba(255,255,255,.93);color:#17391f;padding:9px 13px;font-weight:900}.flow-button[aria-pressed="true"]{background:#bd995d;color:#102819}
+.pose-progress{position:absolute;left:18px;right:18px;bottom:16px;display:grid;grid-template-columns:repeat(10,1fr);gap:5px;align-items:center}.pose-dot{appearance:none;border:0;border-radius:999px;height:9px;min-width:0;background:rgba(23,57,31,.18);padding:0;transition:.2s}.pose-dot.active{height:15px;background:#bd995d;box-shadow:0 0 0 3px rgba(189,153,93,.2)}.pose-dot:focus-visible{outline:3px solid #17391f;outline-offset:3px}
+.swing-coach{display:flex;flex-direction:column;min-width:0;border:1px solid #d6d1c5;border-radius:18px;background:#fff;padding:18px}.swing-phase-line{display:flex;align-items:center;justify-content:space-between;gap:10px}.swing-phase{color:#9b7136;font-size:.76rem;font-weight:950;letter-spacing:.11em;text-transform:uppercase}.swing-count{color:#6d746d;font-size:.8rem;font-weight:850}.swing-coach h3{margin:7px 0 7px;color:#17391f;font-family:Georgia,"Times New Roman",serif;font-size:clamp(1.45rem,2.5vw,2rem)}.pose-purpose{margin:0;color:#5f665f;line-height:1.5;min-height:3em}
+.one-focus{margin:15px 0 13px;padding:13px 14px;border-radius:13px;background:#f5ead6;border-left:5px solid #bd995d}.one-focus span{display:block;margin-bottom:3px;color:#8a622e;font-size:.7rem;font-weight:950;letter-spacing:.1em;text-transform:uppercase}.one-focus strong{color:#17391f;line-height:1.35}
+.learning-lenses{display:grid;grid-template-columns:repeat(5,1fr);gap:5px}.lens-btn{border:1px solid #d6d1c5;border-radius:9px;background:#faf9f5;color:#38513d;padding:8px 4px;font-size:.72rem;font-weight:900}.lens-btn.active{background:#17391f;color:#fff;border-color:#17391f}.lens-output{margin-top:9px;padding:11px 12px;border-radius:11px;background:#edf3e9;color:#29432e;line-height:1.42;min-height:4.25em}.swing-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:auto;padding-top:13px}.swing-actions button{min-height:44px}
+.phase-rail{display:grid;grid-template-columns:1fr 3fr 3fr 3fr;gap:6px;padding:0 22px 18px}.phase-btn{border:1px solid #d1c8b8;border-radius:11px;background:#fff;color:#17391f;padding:10px 8px;font-weight:900}.phase-btn span{display:block;color:#85745c;font-size:.67rem;font-weight:800;margin-top:2px}.phase-btn.active{background:#214a29;color:#fff;border-color:#214a29}.phase-btn.active span{color:#f1d8a7}
+.swing-note{padding:0 22px 18px;color:#6b7069;font-size:.79rem;line-height:1.4}
+@media(max-width:820px){.swing-path-head{grid-template-columns:1fr}.swing-path-mantra{min-width:0;text-align:left}.swing-stage{grid-template-columns:1fr}.swing-visual{min-height:330px}.swing-visual svg{height:300px}.pose-purpose{min-height:0}.phase-rail{grid-template-columns:1fr 1fr}}
+@media(max-width:520px){.swing-path-head,.swing-stage{padding-left:14px;padding-right:14px}.swing-path-head{padding-top:18px}.swing-stage{padding-top:12px}.swing-visual{min-height:300px}.swing-visual svg{height:270px}.learning-lenses{grid-template-columns:repeat(3,1fr)}.swing-actions{grid-template-columns:1fr}.phase-rail{padding:0 14px 14px}.swing-note{padding:0 14px 16px}.flow-button{font-size:.78rem}.pose-badge{max-width:60%}}
+@media(prefers-reduced-motion:reduce){.pose-dot{transition:none}}
 </style>
 </head>
 <body>
@@ -1138,7 +1159,7 @@ body.immersive .brand-center{display:none!important}
     <div class="splash-path" aria-hidden="true"><span></span><i></i></div>
     <div class="splash-caption">Walking your game plan into place…</div>
   </div>
-  <div class="splash-footer">ARTEZIQ • Sherpa Caddie • v0.12.15</div>
+  <div class="splash-footer">ARTEZIQ • Sherpa Caddie • v0.13.0</div>
 </div>
 <div class="app">
 <header class="topbar mentor-topbar" data-mode="text">
@@ -1199,7 +1220,7 @@ body.immersive .brand-center{display:none!important}
     <div class="console-hint"><button type="button" id="sageLocalDemo" hidden>▶ Play ACA demo</button><span id="companionControlHint">Type a question above, then tap Ask.</span></div>
   </div>
 
-  <div class="version app-chrome">v0.12.15</div>
+  <div class="version app-chrome">v0.13.0</div>
 </header>
 
 <div class="tabs-wrap app-chrome">
@@ -1216,14 +1237,65 @@ body.immersive .brand-center{display:none!important}
 <main>
 <section id="guide" class="view active">
   <div class="home">
-    <article class="card hero">
-      <div>
-        <p class="eyebrow">Sherpa Caddie</p>
-        <h2>Ready for your next round?</h2>
-        <p class="hero-brandline">Your guide. Your game. Your best round.</p>
-        <p>Slow the game down, make a smart decision, and focus only on the shot in front of you.</p>
+    <article class="card swing-path" id="swingPath">
+      <div class="swing-path-head">
+        <div>
+          <p class="eyebrow">The Swing Path</p>
+          <h2>One swing. Ten checkpoints. One focus.</h2>
+          <p>See the golf swing as one fluid motion instead of a pile of disconnected instructions.</p>
+        </div>
+        <div class="swing-path-mantra">Ready. Load. Deliver. Finish.</div>
       </div>
-      <div class="status"><span class="status-dot"></span>One shot at a time</div>
+
+      <div class="swing-stage">
+        <div class="swing-visual" aria-label="Animated golfer showing P1 through P10 swing positions">
+          <div class="pose-badge"><strong id="swingPoseBadge">P1</strong><span id="swingPoseShort">Address</span></div>
+          <button class="flow-button" id="swingFlowBtn" type="button" aria-pressed="false">▶ Watch the flow</button>
+          <svg id="swingFigure" viewBox="0 0 420 320" role="img" aria-labelledby="swingFigureTitle swingFigureDesc">
+            <title id="swingFigureTitle">P1 address position</title>
+            <desc id="swingFigureDesc">A simplified golfer illustration used to visualize the ten swing checkpoints.</desc>
+            <ellipse class="shadow" cx="210" cy="283" rx="92" ry="12"></ellipse>
+            <path class="swing-arc" d="M78 260 C45 145 120 44 220 35 C330 25 390 132 350 245"></path>
+            <line class="ground" x1="82" y1="275" x2="350" y2="275"></line>
+            <line class="club" id="swingClub" x1="233" y1="151" x2="305" y2="272"></line>
+            <line class="body" id="swingTorso" x1="210" y1="102" x2="212" y2="190"></line>
+            <polyline class="limb" id="swingArmLeft" points="192,112 188,142 233,151"></polyline>
+            <polyline class="limb" id="swingArmRight" points="228,112 230,140 233,151"></polyline>
+            <polyline class="limb" id="swingLegLeft" points="212,190 183,230 167,274"></polyline>
+            <polyline class="limb" id="swingLegRight" points="212,190 239,229 255,274"></polyline>
+            <circle class="head" id="swingHead" cx="210" cy="76" r="22"></circle>
+            <circle class="joint" id="swingHands" cx="233" cy="151" r="8"></circle>
+          </svg>
+          <div class="pose-progress" id="swingPoseProgress" role="group" aria-label="Choose a swing position"></div>
+        </div>
+
+        <div class="swing-coach">
+          <div class="swing-phase-line"><span class="swing-phase" id="swingPhase">Ready</span><span class="swing-count" id="swingCount">1 of 10</span></div>
+          <h3 id="swingPoseTitle">P1 · Address</h3>
+          <p class="pose-purpose" id="swingPosePurpose">Build a balanced starting shape before anything moves.</p>
+          <div class="one-focus"><span>One focus</span><strong id="swingFocus">Feel athletic, relaxed, and ready to move.</strong></div>
+          <div class="learning-lenses" role="group" aria-label="Choose a coaching style">
+            <button class="lens-btn active" type="button" data-swing-lens="see">See it</button>
+            <button class="lens-btn" type="button" data-swing-lens="feel">Feel it</button>
+            <button class="lens-btn" type="button" data-swing-lens="hear">Hear it</button>
+            <button class="lens-btn" type="button" data-swing-lens="try">Try it</button>
+            <button class="lens-btn" type="button" data-swing-lens="mirror">Mirror it</button>
+          </div>
+          <div class="lens-output" id="swingLensOutput" aria-live="polite">Feet grounded, knees soft, spine tilted from the hips, and the club resting behind the ball.</div>
+          <div class="swing-actions">
+            <button class="btn primary" id="swingPracticeBtn" type="button">Practice this phase</button>
+            <button class="btn secondary" id="swingSageBtn" type="button">Ask Sage about P1</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="phase-rail" role="group" aria-label="Four simple swing phases">
+        <button class="phase-btn active" type="button" data-swing-position="0">Ready<span>P1</span></button>
+        <button class="phase-btn" type="button" data-swing-position="1">Load<span>P2–P4</span></button>
+        <button class="phase-btn" type="button" data-swing-position="4">Deliver<span>P5–P7</span></button>
+        <button class="phase-btn" type="button" data-swing-position="7">Finish<span>P8–P10</span></button>
+      </div>
+      <div class="swing-note">These are reference checkpoints—not ten positions to force. Use them to understand the motion, then blend them into one balanced swing.</div>
     </article>
 
     <article class="card ask">
@@ -1749,14 +1821,21 @@ body.immersive .brand-center{display:none!important}
   </article>
 </section>
 
-<div class="footer"><span>ARTEZIQ • Sherpa Caddie • v0.12.15</span><button id="aboutBtn">What’s in v0.12.15?</button></div>
+<div class="footer"><span>ARTEZIQ • Sherpa Caddie • v0.13.0</span><button id="aboutBtn">What’s in v0.13.0?</button></div>
 </main>
 </div>
 
 <div id="aboutModal" class="modal-backdrop hidden" role="dialog" aria-modal="true">
   <div class="modal" style="max-width:650px">
-    <div class="section-head"><div><p class="eyebrow">One-Shot Sherpa</p><h2>Version 0.12.15</h2></div><button class="btn ghost" id="closeAboutModal">Close</button></div>
+    <div class="section-head"><div><p class="eyebrow">Back to Basics</p><h2>Version 0.13.0</h2></div><button class="btn ghost" id="closeAboutModal">Close</button></div>
     <ul style="color:var(--stone);line-height:1.7">
+      <li>The new opening-screen Swing Path turns P1–P10 into one fluid, touch-friendly visual experience</li>
+      <li>Four memorable phases—Ready, Load, Deliver, and Finish—replace a long list of disconnected swing thoughts</li>
+      <li>Five coaching lenses let golfers see, feel, hear, try, or mirror the same checkpoint</li>
+      <li>Each checkpoint gives one focus, one drill, a spoken cue, and a direct path to Sage or LEARN practice</li>
+      <li>ACA lip sync now remains active on iPhone and iPad even when Safari advances the native audio clock in coarse steps</li>
+      <li>The portrait canvas paints a complete frame during every spoken pose, including when Reduce Motion is enabled</li>
+      <li>Head movement is smaller and the artificial whole-image breathing/zoom effect has been removed</li>
       <li>Compare ARTEZIQ and D-ID conversational avatars from Settings using the same practice question</li>
       <li>The six main navigation tabs remain visible and usable in full-screen mode</li>
       <li>Golf Technology Options now keeps every product image inside its media area so names, descriptions, and details stay fully visible</li>
@@ -1926,7 +2005,7 @@ window.anFeedbackContext=function(){
       screen=({guide:"Guide",learn:"Learn",play:"Plan",technology:"Technology",clubs:"Clubs",review:"Review"})[active]||"Guide";
     }
   }catch(_){ }
-  return{appVersion:"0.12.15",buildNumber:"0146",screen};
+  return{appVersion:"0.13.0",buildNumber:"0148",screen};
 };
 
 function sherpaSoundVolume(){
@@ -2024,6 +2103,48 @@ function show(view){
   window.anTrack("screen_view",{data:{screen:({guide:"guide",learn:"learn",play:"plan",clubs:"clubs",review:"review"})[view]||"other"}});
 }
 $$(".tab").forEach(b=>b.onclick=()=>show(b.dataset.view));$$("[data-go]").forEach(b=>b.onclick=()=>show(b.dataset.go));
+
+/* The Swing Path — one fluid motion, ten reference checkpoints */
+const SWING_POSES=[
+ {phase:"Ready",name:"Address",short:"Address",purpose:"Build a balanced starting shape before anything moves.",focus:"Feel athletic, relaxed, and ready to move.",cue:"Ready and balanced",see:"Feet grounded, knees soft, spine tilted from the hips, and the club resting behind the ball.",feel:"Feel your weight centered through both feet with relaxed arms hanging from your shoulders.",try:"Hold your setup for one calm breath, then step away. Repeat it five times without hitting a ball.",mirror:"Check that your shoulders, hips, knees, and feet look organized—not rigid.",p:{head:[210,76],neck:[210,102],hip:[212,190],sl:[192,112],sr:[228,112],el:[188,142],er:[230,140],hand:[233,151],kl:[183,230],kr:[239,229],fl:[167,274],fr:[255,274],club:[305,272]}},
+ {phase:"Load",name:"Club parallel back",short:"Takeaway",purpose:"Start the swing with the chest, arms, and club moving together.",focus:"Move the triangle—do not snatch the club away with your hands.",cue:"Together and wide",see:"The club is about parallel to the target line while the body has begun to turn.",feel:"Feel your chest carry your hands away while the clubhead stays quiet and wide.",try:"Make waist-high rehearsals and pause when the shaft reaches parallel. Keep the motion unhurried.",mirror:"Check that the hands have not raced behind you and the clubface has not rolled dramatically open.",p:{head:[208,75],neck:[207,101],hip:[210,190],sl:[187,113],sr:[225,110],el:[165,136],er:[190,139],hand:[169,154],kl:[181,230],kr:[238,229],fl:[166,274],fr:[255,274],club:[89,158]}},
+ {phase:"Load",name:"Lead arm parallel",short:"Halfway back",purpose:"Continue turning while the wrists begin to set the club upward.",focus:"Turn your chest; let the club rise without lifting your body.",cue:"Turn and set",see:"The lead arm is near parallel to the ground and the shaft is moving above the hands.",feel:"Feel the trail shoulder move behind you while your height stays steady.",try:"Rehearse from P1 to P3 slowly, stop, and return. Keep your feet rooted and your breathing easy.",mirror:"Look for a centered head and a lead arm crossing the chest rather than separating from it.",p:{head:[205,74],neck:[205,101],hip:[211,190],sl:[181,112],sr:[222,106],el:[160,107],er:[179,86],hand:[151,104],kl:[181,230],kr:[239,228],fl:[166,274],fr:[255,274],club:[92,48]}},
+ {phase:"Load",name:"Top of backswing",short:"Top",purpose:"Complete the turn in balance and prepare to change direction.",focus:"Finish the turn—do not keep lifting the arms.",cue:"Loaded, not loose",see:"The shoulders are fully turned, the hands are high, and the body remains inside a stable base.",feel:"Feel pressure in the inside of the trail foot and width across your chest.",try:"Make three slow backswings to the top and hold each one for two seconds without swaying.",mirror:"Check for balance and space between your hands and head; avoid collapsing the arms behind you.",p:{head:[204,73],neck:[203,100],hip:[211,190],sl:[178,110],sr:[220,104],el:[171,75],er:[205,72],hand:[218,72],kl:[181,231],kr:[241,226],fl:[166,274],fr:[256,274],club:[108,46]}},
+ {phase:"Deliver",name:"Lead arm parallel down",short:"Transition",purpose:"Change direction from the ground up while the arms fall into delivery.",focus:"Shift and unwind—do not throw the club from the top.",cue:"Ground, then arms",see:"The lower body has begun to open while the hands drop in front of the trail shoulder.",feel:"Feel pressure move toward the lead foot before your hands race toward the ball.",try:"Go to the top, pause, then make a small pressure shift and let the arms fall halfway down.",mirror:"Look for the belt beginning to turn toward the target while the upper body stays composed.",p:{head:[207,74],neck:[208,101],hip:[214,190],sl:[187,108],sr:[226,112],el:[166,110],er:[190,103],hand:[163,119],kl:[184,229],kr:[242,228],fl:[168,274],fr:[258,274],club:[86,69]}},
+ {phase:"Deliver",name:"Club parallel down",short:"Delivery",purpose:"Bring the club into the hitting zone with the body continuing to rotate.",focus:"Keep turning and let the hands lead the clubhead.",cue:"Turn through",see:"The shaft is near parallel and the hands are approaching the trail thigh.",feel:"Feel your chest opening and your trail elbow moving in front of your hip.",try:"Make slow pump rehearsals between P5 and P6, then swing through to a balanced finish.",mirror:"Check that the club approaches from behind the hands rather than cutting steeply across them.",p:{head:[211,75],neck:[214,102],hip:[220,190],sl:[194,109],sr:[232,117],el:[184,137],er:[208,142],hand:[202,157],kl:[188,228],kr:[246,229],fl:[172,274],fr:[262,274],club:[124,162]}},
+ {phase:"Deliver",name:"Impact",short:"Impact",purpose:"Meet the ball with a rotating body and a stable strike.",focus:"Keep moving through the ball—the swing does not stop at impact.",cue:"Through, not at",see:"The hips and chest are opening, the hands are slightly ahead, and pressure favors the lead side.",feel:"Feel tall through the lead leg while the club releases through the strike.",try:"Use half swings and brush the ground just after the ball position. Finish every one in balance.",mirror:"Look for a firm lead side and turning chest—not a frozen pose or a lunge at the ball.",p:{head:[214,77],neck:[218,104],hip:[226,188],sl:[198,114],sr:[238,114],el:[208,144],er:[229,144],hand:[224,164],kl:[191,224],kr:[250,232],fl:[173,274],fr:[266,274],club:[302,274]}},
+ {phase:"Finish",name:"Club parallel through",short:"Release",purpose:"Let speed and rotation carry the club beyond the ball.",focus:"Extend toward the target before folding the arms.",cue:"Long through",see:"The arms extend down the target line and the club is near parallel after impact.",feel:"Feel both arms lengthen as your chest keeps turning toward the target.",try:"Hit soft waist-to-waist shots and match the length on both sides of the ball.",mirror:"Check that your body has continued to turn and your arms have not collapsed immediately after impact.",p:{head:[217,77],neck:[222,103],hip:[230,187],sl:[204,113],sr:[243,111],el:[228,134],er:[246,130],hand:[263,145],kl:[195,222],kr:[254,231],fl:[176,274],fr:[271,274],club:[350,149]}},
+ {phase:"Finish",name:"Follow-through",short:"Follow-through",purpose:"Allow the club to rise as the body completes its rotation.",focus:"Turn all the way through with your eyes following the shot.",cue:"Around and up",see:"The arms fold naturally, the trail heel rises, and the torso faces the target.",feel:"Feel your chest finish left of the target while the motion stays smooth.",try:"Make three-quarter swings and hold the finish until an imaginary ball lands.",mirror:"Look for most of your weight on the lead side and the trail knee moving toward the target.",p:{head:[222,75],neck:[226,101],hip:[231,186],sl:[207,108],sr:[246,108],el:[239,86],er:[260,102],hand:[274,91],kl:[198,220],kr:[251,226],fl:[179,274],fr:[274,267],club:[347,43]}},
+ {phase:"Finish",name:"Balanced finish",short:"Finish",purpose:"Complete the swing in a position you can hold without effort.",focus:"Finish tall, turned, and balanced on the lead side.",cue:"Pose the finish",see:"The body faces the target, the club rests over the shoulder, and the trail foot is up on its toe.",feel:"Feel stacked over the lead leg with relaxed hands and a quiet head.",try:"Swing at seventy-percent speed and hold P10 for a full three-count after every shot.",mirror:"If you cannot hold the finish, reduce effort until balance returns. Balance is the checkpoint.",p:{head:[224,74],neck:[228,100],hip:[230,186],sl:[208,106],sr:[247,106],el:[230,75],er:[250,78],hand:[238,68],kl:[198,219],kr:[246,222],fl:[178,274],fr:[270,263],club:[302,31]}}
+];
+let swingPosition=0,swingLens="see",swingFlowTimer=null,swingRenderPose=structuredClone(SWING_POSES[0].p),swingFrame=0;
+function swingPoint(a,b,t){return[a[0]+(b[0]-a[0])*t,a[1]+(b[1]-a[1])*t]}
+function drawSwingPose(p){
+ const line=(id,a,b)=>{const e=$(id);if(!e)return;e.setAttribute("x1",a[0]);e.setAttribute("y1",a[1]);e.setAttribute("x2",b[0]);e.setAttribute("y2",b[1])},poly=(id,...pts)=>$(id)?.setAttribute("points",pts.map(x=>x.join(",")).join(" "));
+ $("#swingHead")?.setAttribute("cx",p.head[0]);$("#swingHead")?.setAttribute("cy",p.head[1]);$("#swingHands")?.setAttribute("cx",p.hand[0]);$("#swingHands")?.setAttribute("cy",p.hand[1]);
+ line("#swingTorso",p.neck,p.hip);poly("#swingArmLeft",p.sl,p.el,p.hand);poly("#swingArmRight",p.sr,p.er,p.hand);poly("#swingLegLeft",p.hip,p.kl,p.fl);poly("#swingLegRight",p.hip,p.kr,p.fr);line("#swingClub",p.hand,p.club)
+}
+function animateSwingPose(target){
+ cancelAnimationFrame(swingFrame);const from=structuredClone(swingRenderPose),start=performance.now(),reduce=matchMedia("(prefers-reduced-motion: reduce)").matches,duration=reduce?0:420;
+ const tick=now=>{const raw=duration?Math.min(1,(now-start)/duration):1,t=1-Math.pow(1-raw,3),next={};Object.keys(target).forEach(k=>next[k]=swingPoint(from[k],target[k],t));swingRenderPose=next;drawSwingPose(next);if(raw<1)swingFrame=requestAnimationFrame(tick)};swingFrame=requestAnimationFrame(tick)
+}
+function phaseStart(phase){return phase==="Ready"?0:phase==="Load"?1:phase==="Deliver"?4:7}
+function swingLensText(p){return swingLens==="feel"?p.feel:swingLens==="hear"?`Say it with the swing: “${p.cue}.”`:swingLens==="try"?p.try:swingLens==="mirror"?p.mirror:p.see}
+function selectSwingPosition(index){
+ swingPosition=(index+SWING_POSES.length)%SWING_POSES.length;const pose=SWING_POSES[swingPosition];animateSwingPose(pose.p);
+ $("#swingPoseBadge").textContent=`P${swingPosition+1}`;$("#swingPoseShort").textContent=pose.short;$("#swingPhase").textContent=pose.phase;$("#swingCount").textContent=`${swingPosition+1} of 10`;$("#swingPoseTitle").textContent=`P${swingPosition+1} · ${pose.name}`;$("#swingPosePurpose").textContent=pose.purpose;$("#swingFocus").textContent=pose.focus;$("#swingLensOutput").textContent=swingLensText(pose);$("#swingSageBtn").textContent=`Ask Sage about P${swingPosition+1}`;$("#swingFigureTitle").textContent=`P${swingPosition+1} ${pose.name} position`;
+ $$(".pose-dot").forEach((b,i)=>{b.classList.toggle("active",i===swingPosition);b.setAttribute("aria-current",i===swingPosition?"step":"false")});$$(".phase-btn").forEach(b=>b.classList.toggle("active",Number(b.dataset.swingPosition)===phaseStart(pose.phase)))
+}
+function stopSwingFlow(){if(swingFlowTimer){clearInterval(swingFlowTimer);swingFlowTimer=null}const b=$("#swingFlowBtn");if(b){b.setAttribute("aria-pressed","false");b.textContent="▶ Watch the flow"}}
+function initSwingPath(){
+ const progress=$("#swingPoseProgress");if(!progress)return;progress.innerHTML=SWING_POSES.map((p,i)=>`<button class="pose-dot${i===0?" active":""}" type="button" data-pose="${i}" aria-label="P${i+1}: ${p.name}"></button>`).join("");
+ progress.addEventListener("click",e=>{const b=e.target.closest("[data-pose]");if(!b)return;stopSwingFlow();selectSwingPosition(Number(b.dataset.pose))});$$(".phase-btn").forEach(b=>b.addEventListener("click",()=>{stopSwingFlow();selectSwingPosition(Number(b.dataset.swingPosition))}));
+ $$(".lens-btn").forEach(b=>b.addEventListener("click",()=>{swingLens=b.dataset.swingLens;$$(".lens-btn").forEach(x=>x.classList.toggle("active",x===b));$("#swingLensOutput").textContent=swingLensText(SWING_POSES[swingPosition]);if(swingLens==="hear"&&"speechSynthesis"in window){speechSynthesis.cancel();speechSynthesis.speak(new SpeechSynthesisUtterance(SWING_POSES[swingPosition].cue))}}));
+ $("#swingFlowBtn").addEventListener("click",()=>{if(swingFlowTimer){stopSwingFlow();return}const b=$("#swingFlowBtn");b.setAttribute("aria-pressed","true");b.textContent="❚❚ Pause flow";selectSwingPosition(swingPosition+1);swingFlowTimer=setInterval(()=>selectSwingPosition(swingPosition+1),900)});
+ $("#swingPracticeBtn").addEventListener("click",()=>{show("learn");requestAnimationFrame(()=>document.querySelector(".practice-coach")?.scrollIntoView({behavior:"smooth",block:"start"}));toast(`${SWING_POSES[swingPosition].phase} practice — keep one focus`)});
+ $("#swingSageBtn").addEventListener("click",()=>{const p=SWING_POSES[swingPosition],q=`Help me understand P${swingPosition+1}, ${p.name}. Give me one simple focus and one drill.`;const input=$("#companionQuestion");if(input)input.value=q;setQuickAnswer?.(`Sage: For P${swingPosition+1}, remember “${p.cue}.” ${p.try}`);document.querySelector(".mentor-topbar")?.scrollIntoView({behavior:"smooth",block:"start"});window.anTrack?.("swing_path_sage_prompt",{data:{position:swingPosition+1,phase:p.phase}})});
+ drawSwingPose(swingRenderPose);selectSwingPosition(0)
+}
 
 /* Club setup */
 function activeClubNames(){return state.bagMode==="sunday"?SUNDAY_CLUBS:Object.keys(CLUBS)}
@@ -2820,7 +2941,7 @@ function syncLocalSageFlag(){
     return;
   }
   if(localSage){button.hidden=false;return;}
-  import("./sage-local/index.mjs?v=0146").then(({createLocalSage})=>{
+  import("./sage-local/index.mjs?v=0148").then(({createLocalSage})=>{
     if(!localSageEnabled||localSage)return;
     localSage=createLocalSage({
       poster:$("#sherpaLivePoster"),canvas:$("#sageLocalFace"),volume:sherpaSoundVolume(),
@@ -3852,17 +3973,18 @@ function renderRounds(){
  })
 }
 $("#clearAllRoundsBtn").onclick=()=>{if(!state.rounds.length)return;if(!confirm(`Delete all ${state.rounds.length} saved game reviews? This cannot be undone.`))return;state.rounds=[];save();renderRounds();toast("All saved game reviews deleted")};
-$("#exportBtn").onclick=()=>{const b=new Blob([JSON.stringify({version:"0.12.15",bagMode:state.bagMode,clubs:state.clubs,rounds:state.rounds},null,2)],{type:"application/json"}),a=document.createElement("a");a.href=URL.createObjectURL(b);a.download=`sherpa-caddie-data-${new Date().toISOString().slice(0,10)}.json`;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),500)};
+$("#exportBtn").onclick=()=>{const b=new Blob([JSON.stringify({version:"0.13.0",bagMode:state.bagMode,clubs:state.clubs,rounds:state.rounds},null,2)],{type:"application/json"}),a=document.createElement("a");a.href=URL.createObjectURL(b);a.download=`sherpa-caddie-data-${new Date().toISOString().slice(0,10)}.json`;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),500)};
 $("#importBtn").onclick=()=>$("#importFile").click();$("#importFile").onchange=async e=>{const f=e.target.files[0];if(!f)return;try{const d=JSON.parse(await f.text());if(d.clubs)state.clubs=d.clubs;if(d.bagMode)state.bagMode=d.bagMode;if(d.rounds)state.rounds=d.rounds;save();renderClubs();renderRounds();toast("Data imported")}catch{toast("Could not import that file")}e.target.value=""};
 
 function hideSplash(){const el=$("#splashScreen");if(!el||el.classList.contains("is-hidden"))return;el.classList.add("is-hidden");setTimeout(()=>el.remove(),800);setTimeout(()=>window.UIKIT?.applyFSLock?.(),850)}
 window.addEventListener("load",()=>setTimeout(hideSplash,5000));
 setTimeout(hideSplash,5600);
-if("serviceWorker"in navigator)window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js?v=0146").catch(()=>{}));
+if("serviceWorker"in navigator)window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js?v=0148").catch(()=>{}));
 document.querySelectorAll("[data-tech-product]").forEach(link=>link.addEventListener("click",()=>window.anTrack("technology_product_opened",{data:{product:link.dataset.techProduct}})));
 initArteziqUiKit();
 renderClubs();
 renderRounds();
+initSwingPath();
 show("guide");updateCompanionUI();setMentorActivity("idle","Text ready • type below");
 syncLocalSageFlag();
 })();

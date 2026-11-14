@@ -1,3 +1,28 @@
+## Version 0.13.0 — The Swing Path
+
+Apply the changed-files ZIP over v0.12.16. Reopen Sherpa Caddie and confirm **v0.13.0** in the footer.
+
+- Replaces the generic opening hero with an interactive **P1–P10 Swing Path**.
+- Groups the swing into four memorable phases: **Ready, Load, Deliver, Finish**.
+- Animates a custom golfer illustration smoothly between all ten reference checkpoints.
+- Adds touch targets for every position, four phase shortcuts, and a continuous **Watch the flow** mode.
+- Gives every position one purpose, one focus, one drill, and five learning lenses: **See it, Feel it, Hear it, Try it, Mirror it**.
+- Connects each position to Sage and to the existing LEARN practice area without turning the checkpoints into ten poses to force.
+- Updates the PWA shell and cache to build **0148**.
+
+The Swing Path is an original Sherpa Caddie visualization inspired by the widely used P-position teaching framework. It does not copy a museum sculpture or imply endorsement by the USGA or Pinehurst.
+
+### Verification for v0.13.0
+
+Run `node --test tests/sage-local.test.mjs tests/sage-local.browser.mjs` from the source root. Then test the Swing Path on iPhone and iPad: tap P1–P10, start and pause the flow, switch all five coaching lenses, open LEARN practice, and send one position to Sage.
+
+## Version 0.12.16 — ACA animation reliability on iPhone and iPad
+
+- Keeps lip-sync animation moving when Safari advances the native audio clock in coarse steps.
+- Ensures every spoken pose paints a complete portrait frame, including with Reduce Motion enabled.
+- Removes the artificial whole-image breathing zoom and reduces head movement.
+- Updates the PWA shell and cache to build **0147**.
+
 ## Version 0.12.15 — ACA voice, pacing, and facial animation
 
 Apply the changed-files ZIP over v0.12.14. Reopen Sherpa Caddie and confirm **v0.12.15** in the footer.
