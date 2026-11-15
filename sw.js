@@ -1,7 +1,29 @@
-const CACHE="sherpa-caddie-v0.13.0";
+const CACHE="sherpa-caddie-v0.13.1";
 const APP_FILES=[
   "./",
-  "./index.html?v=0148",
+  "./index.html?v=0149",
+  "./swing-viewer.css?v=0149",
+  "./swing-viewer.js?v=0149",
+  "./assets/swing-positions/front/p1.webp?v=0149",
+  "./assets/swing-positions/front/p2.webp?v=0149",
+  "./assets/swing-positions/front/p3.webp?v=0149",
+  "./assets/swing-positions/front/p4.webp?v=0149",
+  "./assets/swing-positions/front/p5.webp?v=0149",
+  "./assets/swing-positions/front/p6.webp?v=0149",
+  "./assets/swing-positions/front/p7.webp?v=0149",
+  "./assets/swing-positions/front/p8.webp?v=0149",
+  "./assets/swing-positions/front/p9.webp?v=0149",
+  "./assets/swing-positions/front/p10.webp?v=0149",
+  "./assets/swing-positions/three-quarter/p1.webp?v=0149",
+  "./assets/swing-positions/three-quarter/p2.webp?v=0149",
+  "./assets/swing-positions/three-quarter/p3.webp?v=0149",
+  "./assets/swing-positions/three-quarter/p4.webp?v=0149",
+  "./assets/swing-positions/three-quarter/p5.webp?v=0149",
+  "./assets/swing-positions/three-quarter/p6.webp?v=0149",
+  "./assets/swing-positions/three-quarter/p7.webp?v=0149",
+  "./assets/swing-positions/three-quarter/p8.webp?v=0149",
+  "./assets/swing-positions/three-quarter/p9.webp?v=0149",
+  "./assets/swing-positions/three-quarter/p10.webp?v=0149",
   "./manifest.webmanifest?v=0148",
   "./sage-local/index.mjs?v=0148",
   "./sage-local/media-playback.mjs?v=0148",
@@ -106,7 +128,7 @@ self.addEventListener("fetch", event => {
   // Page navigation: network first, app shell only as true offline fallback.
   if(request.mode === "navigate"){
     event.respondWith(
-      fetch(request).catch(() => caches.match("./index.html?v=0148"))
+      fetch(request).catch(() => caches.match("./index.html?v=0149"))
     );
     return;
   }
@@ -120,3 +142,4 @@ self.addEventListener("fetch", event => {
     }))
   );
 });
+
