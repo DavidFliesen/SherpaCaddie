@@ -1,8 +1,8 @@
-const CACHE="sherpa-caddie-v0.13.2";
+const CACHE="sherpa-caddie-v0.13.3";
 const APP_FILES=[
   "./",
-  "./index.html?v=0150",
-  "./swing-viewer.css?v=0150",
+  "./index.html?v=0151",
+  "./swing-viewer.css?v=0151",
   "./swing-viewer.js?v=0150",
   "./assets/swing-positions/front/p1.webp?v=0150",
   "./assets/swing-positions/front/p2.webp?v=0150",
@@ -128,7 +128,7 @@ self.addEventListener("fetch", event => {
   // Page navigation: network first, app shell only as true offline fallback.
   if(request.mode === "navigate"){
     event.respondWith(
-      fetch(request).catch(() => caches.match("./index.html?v=0150"))
+      fetch(request).catch(() => caches.match("./index.html?v=0151"))
     );
     return;
   }
