@@ -54,8 +54,8 @@
       checks: ["Arms extend naturally", "Trail heel begins to rise", "Eyes follow the shot"]
     },
     {
-      title: "Follow-through",
-      description: "Allow the club to rise and move around you as the torso completes its turn. Most pressure is now on the lead side.",
+      title: "Trail Arm Parallel",
+      description: "Allow the club to rise as the torso completes its turn. The arms fold naturally, the chest faces the target, and most pressure is on the lead side.",
       thought: "Around and up.",
       checks: ["Chest faces the target", "Trail knee moves through", "Motion remains smooth"]
     },
@@ -91,7 +91,7 @@
   ["front", "three-quarter"].forEach(camera => {
     for (let index = 1; index <= 10; index += 1) {
       const preload = new Image();
-      preload.src = `assets/swing-positions/${camera}/p${index}.webp?v=0149`;
+      preload.src = `assets/swing-positions/${camera}/p${index}.webp?v=0150`;
     }
   });
 
@@ -115,7 +115,7 @@
     const position = positions[current];
     const cameraLabel = view === "front" ? "Front view" : "Three-quarter view";
 
-    image.src = `assets/swing-positions/${view}/p${current + 1}.webp?v=0149`;
+    image.src = `assets/swing-positions/${view}/p${current + 1}.webp?v=0150`;
     image.alt = `${cameraLabel} of golfer at P${current + 1}, ${position.title}`;
     badge.textContent = `P${current + 1}`;
     count.textContent = `Position ${current + 1} of 10`;

@@ -9,11 +9,11 @@
 <link rel="icon" href="icons/favicon.png?v=0141" type="image/png">
 <link rel="apple-touch-icon" href="icons/icon-192.png?v=0141">
 <link rel="preload" as="image" href="assets/sherpa-caddie-logo-fast.webp?v=0141" type="image/webp" fetchpriority="high">
-<title>Sherpa Caddie v0.13.1</title>
+<title>Sherpa Caddie v0.13.2</title>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
   crossorigin="">
 <link rel="stylesheet" href="arteziq-ui.css?v=0141">
-<link rel="stylesheet" href="swing-viewer.css?v=0149">
+<link rel="stylesheet" href="swing-viewer.css?v=0150">
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
   crossorigin=""></script>
 <style>
@@ -1160,7 +1160,7 @@ body.immersive .brand-center{display:none!important}
     <div class="splash-path" aria-hidden="true"><span></span><i></i></div>
     <div class="splash-caption">Walking your game plan into place…</div>
   </div>
-  <div class="splash-footer">ARTEZIQ • Sherpa Caddie • v0.13.1</div>
+  <div class="splash-footer">ARTEZIQ • Sherpa Caddie • v0.13.2</div>
 </div>
 <div class="app">
 <header class="topbar mentor-topbar" data-mode="text">
@@ -1221,7 +1221,7 @@ body.immersive .brand-center{display:none!important}
     <div class="console-hint"><button type="button" id="sageLocalDemo" hidden>▶ Play ACA demo</button><span id="companionControlHint">Type a question above, then tap Ask.</span></div>
   </div>
 
-  <div class="version app-chrome">v0.13.1</div>
+  <div class="version app-chrome">v0.13.2</div>
 </header>
 
 <div class="tabs-wrap app-chrome">
@@ -1387,7 +1387,8 @@ body.immersive .brand-center{display:none!important}
       <header class="sc-swing-header">
         <div>
           <p class="eyebrow">Sherpa Caddie · Swing Path</p>
-          <h2 id="scSwingHeading">See the swing as one motion.</h2>
+          <h2 id="scSwingHeading">The 10 Golf Swing Positions</h2>
+          <p class="sc-swing-subtitle">See the swing as one motion.</p>
         </div>
         <p>Play the full sequence, stop on any checkpoint, or step forward and backward one position at a time.</p>
       </header>
@@ -1401,7 +1402,7 @@ body.immersive .brand-center{display:none!important}
 
           <div class="sc-frame-stage">
             <span class="sc-position-badge" id="scPositionBadge">P1</span>
-            <img id="scSwingImage" src="assets/swing-positions/front/p1.webp?v=0149" alt="Front view of golfer at P1 address" width="620" height="620">
+            <img id="scSwingImage" src="assets/swing-positions/front/p1.webp?v=0150" alt="Front view of golfer at P1 address" width="620" height="620">
           </div>
 
           <div class="sc-playback-controls" role="group" aria-label="Swing animation controls">
@@ -1813,14 +1814,17 @@ body.immersive .brand-center{display:none!important}
   </article>
 </section>
 
-<div class="footer"><span>ARTEZIQ • Sherpa Caddie • v0.13.1</span><button id="aboutBtn">What’s in v0.13.1?</button></div>
+<div class="footer"><span>ARTEZIQ • Sherpa Caddie • v0.13.2</span><button id="aboutBtn">What’s in v0.13.2?</button></div>
 </main>
 </div>
 
 <div id="aboutModal" class="modal-backdrop hidden" role="dialog" aria-modal="true">
   <div class="modal" style="max-width:650px">
-    <div class="section-head"><div><p class="eyebrow">Back to Basics</p><h2>Version 0.13.1</h2></div><button class="btn ghost" id="closeAboutModal">Close</button></div>
+    <div class="section-head"><div><p class="eyebrow">Back to Basics</p><h2>Version 0.13.2</h2></div><button class="btn ghost" id="closeAboutModal">Close</button></div>
     <ul style="color:var(--stone);line-height:1.7">
+      <li>The 10 Golf Swing Positions now opens the GUIDE content immediately below the navigation, with “See the swing as one motion” directly beneath the title</li>
+      <li>The duplicate SHERPA AI card below the tabs is hidden; Text, Voice, and Video remain in Sage’s top companion area</li>
+      <li>Both camera views now use a technically revised right-handed sequence with corrected clubface, wrist, body-turn, pressure-shift, and footwork relationships</li>
       <li>The P1–P10 Swing Path now sits below Sage on the GUIDE tab instead of replacing or preceding the full Sherpa Caddie experience</li>
       <li>Front and 3/4 camera views use twenty isolated image files, eliminating neighboring golfer and club artifacts</li>
       <li>Every frame shares a fixed ground and stance anchor so the sequence feels steady instead of bouncing around the panel</li>
@@ -1997,7 +2001,7 @@ window.anFeedbackContext=function(){
       screen=({guide:"Guide",learn:"Learn",play:"Plan",technology:"Technology",clubs:"Clubs",review:"Review"})[active]||"Guide";
     }
   }catch(_){ }
-  return{appVersion:"0.13.1",buildNumber:"0149",screen};
+  return{appVersion:"0.13.2",buildNumber:"0150",screen};
 };
 
 function sherpaSoundVolume(){
@@ -3965,13 +3969,13 @@ function renderRounds(){
  })
 }
 $("#clearAllRoundsBtn").onclick=()=>{if(!state.rounds.length)return;if(!confirm(`Delete all ${state.rounds.length} saved game reviews? This cannot be undone.`))return;state.rounds=[];save();renderRounds();toast("All saved game reviews deleted")};
-$("#exportBtn").onclick=()=>{const b=new Blob([JSON.stringify({version:"0.13.1",bagMode:state.bagMode,clubs:state.clubs,rounds:state.rounds},null,2)],{type:"application/json"}),a=document.createElement("a");a.href=URL.createObjectURL(b);a.download=`sherpa-caddie-data-${new Date().toISOString().slice(0,10)}.json`;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),500)};
+$("#exportBtn").onclick=()=>{const b=new Blob([JSON.stringify({version:"0.13.2",bagMode:state.bagMode,clubs:state.clubs,rounds:state.rounds},null,2)],{type:"application/json"}),a=document.createElement("a");a.href=URL.createObjectURL(b);a.download=`sherpa-caddie-data-${new Date().toISOString().slice(0,10)}.json`;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),500)};
 $("#importBtn").onclick=()=>$("#importFile").click();$("#importFile").onchange=async e=>{const f=e.target.files[0];if(!f)return;try{const d=JSON.parse(await f.text());if(d.clubs)state.clubs=d.clubs;if(d.bagMode)state.bagMode=d.bagMode;if(d.rounds)state.rounds=d.rounds;save();renderClubs();renderRounds();toast("Data imported")}catch{toast("Could not import that file")}e.target.value=""};
 
 function hideSplash(){const el=$("#splashScreen");if(!el||el.classList.contains("is-hidden"))return;el.classList.add("is-hidden");setTimeout(()=>el.remove(),800);setTimeout(()=>window.UIKIT?.applyFSLock?.(),850)}
 window.addEventListener("load",()=>setTimeout(hideSplash,5000));
 setTimeout(hideSplash,5600);
-if("serviceWorker"in navigator)window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js?v=0149").catch(()=>{}));
+if("serviceWorker"in navigator)window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js?v=0150").catch(()=>{}));
 document.querySelectorAll("[data-tech-product]").forEach(link=>link.addEventListener("click",()=>window.anTrack("technology_product_opened",{data:{product:link.dataset.techProduct}})));
 initArteziqUiKit();
 renderClubs();
@@ -3981,7 +3985,7 @@ syncLocalSageFlag();
 })();
 </script>
 
-<script src="swing-viewer.js?v=0149" defer></script>
+<script src="swing-viewer.js?v=0150" defer></script>
 
 <!-- ARTEZIQ LADYBUG FEEDBACK. The connector remains dormant until the two
      browser-safe public values in ladybug/ladybug-config.js are configured. -->
