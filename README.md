@@ -1,26 +1,1208 @@
-# Sherpa Caddie P1–P10 Swing Viewer
+# Sherpa Caddie
 
-This is a self-contained interactive prototype built from the two approved golf-swing reference sheets.
+## Current version: 0.13.4 — Sage-Controlled Swing Positions
 
-## Included
+Sherpa Caddie is an ARTEZIQ progressive web app that helps golfers prepare, practice with purpose, understand their equipment, and reflect after a game. Its direction is intentionally different from a traditional shot-tracking app: golfers should not have to record every swing while people are waiting behind them. Sherpa Caddie emphasizes calm preparation before playing, simple coaching away from the course, and a post-game review that can be completed quickly.
 
-- Front and 3/4 camera views
-- Forward play and reverse play
-- Stop, Previous, and Next controls
-- P1–P10 direct-selection buttons
-- Position slider
-- Position-specific coaching descriptions and checkpoints
-- Responsive tablet and phone layout
-- Keyboard controls: Left Arrow, Right Arrow, and Space Bar
+The app is designed primarily for iPad and iPhone, remains usable on larger screens, and can be installed as a PWA. Core personal information—including club distances and saved reviews—is stored in the browser unless the golfer deliberately exports or submits it through a configured service.
+
+### Current product structure
+
+- **GUIDE** — Sage in Text, Voice, DCA Video, and experimental ACA modes, followed by The 10 Golf Swing Positions.
+- **LEARN** — Short Game coaching on the putting green, Long Game coaching on the driving range, and the How to Play Better lesson library.
+- **PLAN** — Course selection, weather, pre-game strategy, and hole-planning guidance without in-round shot logging.
+- **TECHNOLOGY** — Garmin golf-watch comparison, local post-game round import, and carefully explained golf-technology categories.
+- **CLUBS** — Full Bag and Sunday Bag setup, personal carry distances, terminology, capability explanations, shopping guidance, and fitting education.
+- **REVIEW** — Fast nine- or eighteen-hole post-game reflection with overall or hole-by-hole scoring, comments, saved-game management, and Sage coaching.
+
+### Sage architecture
+
+Sage is the coaching layer shared across the app:
+
+- **Text** provides written golf guidance.
+- **Voice** adds browser speech input and spoken replies.
+- **DCA — D-ID Conversational Avatar** supplies the current networked, lip-synced video-avatar experience when D-ID service and credits are available.
+- **ACA — ARTEZIQ Conversational Avatar** is the developing first-party path intended to reduce dependency on an outside avatar vendor. Its current local experiment is deliberately limited and does not yet replace DCA for unrestricted conversation.
+- Browser-side tools let Sage use app state and controls instead of guessing. Tools cover planning context, weather, saved club distances, strategy, the Hole Planner, and the P-position viewer.
+
+### The 10 Golf Swing Positions
+
+The GUIDE opening experience presents P1 through P10 in Front and 3/4 views. Golfers can play the sequence forward or backward, stop it, step one position at a time, drag the slider, or choose a numbered position directly. Each position includes a plain-language explanation, one simple thought, and a short body-and-club checklist.
+
+Version 0.13.4 adds a provider-neutral `SherpaSwingBridge`. The viewer exposes the same commands to DCA, ACA, Voice, and future Sage providers:
+
+- `showPosition(position)` displays a single checkpoint from P1 through P10.
+- `narrate(text)` identifies P-position references in a spoken explanation and advances the viewer at estimated speech points.
+- `queueNarration(text)` and `startQueuedNarration()` allow DCA to wait until avatar speech begins.
+- `getCurrentPosition()` and `listPositions()` give an AI provider structured viewer context.
+
+The D-ID browser integration registers a `show_swing_position` client tool with one required integer argument, `position`, from 1 through 10. The direct Sherpa browser bridge also recognizes natural requests such as “Show P4” or “Explain P7,” so a useful position change does not depend entirely on D-ID electing to call its configured tool.
+
+### Data, connectivity, and external services
+
+- The PWA shell and core local assets are cached for repeat use and limited offline operation.
+- Live weather, maps, D-ID video, remote AI models, product links, and other network services still require internet access.
+- Garmin Phase 1 accepts compatible local FIT, CSV, or JSON exports for post-game review. Future account sync depends on authorized Garmin access.
+- ARTEZIQ Ladybug feedback can capture tester reports and optional diagnostics when its public configuration is enabled.
+- Course, location, review comments, scores, and Sage conversation text are excluded from anonymous workflow telemetry.
+
+### Main source files
+
+- `index.html` — current application interface and primary Sherpa logic.
+- `swing-viewer.js` and `swing-viewer.css` — P1–P10 viewer, playback, coaching display, and provider-neutral swing bridge.
+- `arteziq-ui.js`, `arteziq-ui.css`, and `arteziq-audio.js` — shared ARTEZIQ controls and sound behavior.
+- `sage-local/` — experimental ACA session, portrait, local tool, timing, and playback modules.
+- `garmin-round-import.js` — local Phase 1 Garmin round adapter.
+- `ladybug/` — centralized tester feedback integration.
+- `rag/` — golf and mental-game knowledge supplied to Sage.
+- `sw.js` and `manifest.webmanifest` — installation, offline shell, cache versioning, and PWA metadata.
+
+## Version 0.13.4 — Sage-Controlled Swing Positions
+
+- Adds a provider-neutral swing bridge so DCA, ACA, Voice, and future Sage providers can use the same P1–P10 commands.
+- Registers the D-ID client handler `show_swing_position` and adds a direct natural-language fallback for requests such as “Show P5.”
+- Advances through multiple P positions when Sage’s spoken explanation references them in sequence.
+- Keeps manual viewer controls authoritative: tapping a position, slider, playback control, or camera view stops automated narration movement.
+- Removes the Music level slider because Sherpa Caddie has no background-music tracks.
+- Retains one functional Sound level control for Sage’s voice and interface sounds.
+- Restores this README as the full app-development record and places the current version at the top.
+- Updates the PWA cache to build **0152**.
+
+### Changed files in v0.13.4
+
+- `index.html`
+- `swing-viewer.js`
+- `arteziq-ui.js`
+- `sw.js`
+- `README.md`
+- `UPLOAD-INSTRUCTIONS.md`
+
+## Version 0.13.3 — iPad Full GUIDE Layout
+
+- Places Sage’s visual card and conversation interface in an even-height tablet row.
+- Reduces unused vertical space while retaining Text, Voice, Video, question, answer, and hands-free controls.
+- Compacts the golfer, coaching panel, playback controls, slider, and P1–P10 buttons so the complete Sage and swing experiences fit together more effectively on iPad.
+- Updates the PWA cache to build **0151**.
+
+## Version 0.13.2 — Swing Accuracy and GUIDE Layout
+
+- Places The 10 Golf Swing Positions directly below Sage on GUIDE instead of replacing the app.
+- Uses twenty isolated Front and 3/4 image frames to prevent neighboring clubs or golfers from leaking into a position.
+- Applies a shared ground and stance anchor to reduce frame-to-frame bouncing.
+- Hides the redundant lower Sherpa AI card while preserving Sage’s complete top companion interface.
+- Keeps all manual swing controls and both camera views.
+
+## Version 0.13.1 — Isolated P-Position Viewer
+
+- Replaces sprite-sheet cropping with individual P1–P10 image assets for each camera view.
+- Keeps the golfer smaller within the player panel and separates the teaching description into its own coaching column.
+- Adds forward, reverse, stop, previous, next, slider, and direct-position controls.
+
+## Version 0.13.0 — The Swing Path
+
+Apply the changed-files ZIP over v0.12.16. Reopen Sherpa Caddie and confirm **v0.13.0** in the footer.
+
+- Replaces the generic opening hero with an interactive **P1–P10 Swing Path**.
+- Groups the swing into four memorable phases: **Ready, Load, Deliver, Finish**.
+- Animates a custom golfer illustration smoothly between all ten reference checkpoints.
+- Adds touch targets for every position, four phase shortcuts, and a continuous **Watch the flow** mode.
+- Gives every position one purpose, one focus, one drill, and five learning lenses: **See it, Feel it, Hear it, Try it, Mirror it**.
+- Connects each position to Sage and to the existing LEARN practice area without turning the checkpoints into ten poses to force.
+- Updates the PWA shell and cache to build **0148**.
+
+The Swing Path is an original Sherpa Caddie visualization inspired by the widely used P-position teaching framework. It does not copy a museum sculpture or imply endorsement by the USGA or Pinehurst.
+
+### Verification for v0.13.0
+
+Run `node --test tests/sage-local.test.mjs tests/sage-local.browser.mjs` from the source root. Then test the Swing Path on iPhone and iPad: tap P1–P10, start and pause the flow, switch all five coaching lenses, open LEARN practice, and send one position to Sage.
+
+## Version 0.12.16 — ACA animation reliability on iPhone and iPad
+
+- Keeps lip-sync animation moving when Safari advances the native audio clock in coarse steps.
+- Ensures every spoken pose paints a complete portrait frame, including with Reduce Motion enabled.
+- Removes the artificial whole-image breathing zoom and reduces head movement.
+- Updates the PWA shell and cache to build **0147**.
+
+## Version 0.12.15 — ACA voice, pacing, and facial animation
+
+Apply the changed-files ZIP over v0.12.14. Reopen Sherpa Caddie and confirm **v0.12.15** in the footer.
+
+- Replaces the short practice-tip recording with a 16-second response rendered in the Kokoro `af_heart` test voice. The five sentences include short pauses.
+- Blends mouth shapes between phonemes and adds subtle head motion, phrase nods, and blinks. Reduced Motion keeps lip sync and suppresses the head motion and blinks.
+- Keeps the longer answer scrollable in phone landscape so the navigation tabs remain visible.
+- Packages the rendered speech and timing cues for offline playback. [Voice provenance and regeneration](docs/SAGE_LOCAL_VOICE_PROVENANCE.md)
+
+To compare on iPad, open **Settings → Local Sage experiment → ACA** and tap **Play ACA demo**. Then switch to **DCA** and use the prefilled practice-tip question. Compare the gaps between sentences, closed-mouth moments during pauses, and the scale of the head and eye movements. ACA plays one scripted demo.
+
+### Verification for v0.12.15
+
+All 25 unit tests and 10 Chromium browser scenarios passed. The checks covered continuous mouth-pose blending, Reduced Motion, portrait rendering, native media playback in the iPad code path, pause and resume, the phone landscape layout, and cached offline playback. The voice and facial movement still need comparison on the physical iPad.
+
+Serve the patched source with `python3 -m http.server 8765`. In another terminal with Playwright Chromium installed, run `node --test tests/sage-local.test.mjs tests/sage-local.browser.mjs`.
+
+## Version 0.12.14 — ACA audio and lip-sync demo
+
+Apply the changed-files ZIP over v0.12.12 or v0.12.13. Reopen the app and confirm **v0.12.14** in the footer.
+
+1. Open **Settings → Local Sage experiment → ACA**.
+2. Tap **Play ACA demo** below the answer area. The button plays the bundled practice tip and drives the Sage portrait from the audio clock. Keep **Spoken replies** and app sound on. On iPad or iPhone, use the device volume buttons to adjust playback if needed.
+3. If playback fails, ACA keeps the written tip visible and shows a retry message. Tap **Play ACA demo** again. Other typed questions may return text. Use DCA for a conversational avatar.
+
+iPad and iPhone use the native media player for the ACA demo. The service worker serves byte ranges from the cached clip so the native player can use it offline after the updated app has cached its assets.
+
+**Verification.** All 23 unit tests and 10 Chromium scenarios passed. The tests exercised native media playback and the portrait canvas with the iPad app branch enabled, pause and resume, the mute notice, retry after a missing audio asset, and offline playback with byte-range responses. Physical iPad Safari and AirPods verification is pending.
+
+Serve the patched source with `python3 -m http.server 8765`. In another terminal with Playwright Chromium installed, run `node --test tests/sage-local.test.mjs tests/sage-local.browser.mjs`.
+
+## Version 0.12.13 — iPad and iPhone Sage audio routing
+
+Apply the changed-files ZIP over v0.12.12. Refresh the Safari tab or reopen the installed app and confirm **v0.12.13** in the footer.
+
+- ACA requests a media playback session before starting or resuming its clip.
+- Voice and DCA release browser microphone capture before requesting media playback on iPad and iPhone. DCA also requests playback when its audio stream arrives. The device chooses the audio output.
+- The service worker refreshes the cached app to build 0144.
+
+### Automated verification for v0.12.13
+
+All 23 unit tests and 10 Chromium browser scenarios passed. The routing scenarios emulate the iPad audio-session API and check ACA playback, Voice microphone handoff, and a mocked DCA session. The Bluetooth output still needs the device check below.
+
+Run from the source root with Node and Playwright Chromium installed. Serve the files with `python3 -m http.server 8765`, then run `node --test tests/sage-local.test.mjs tests/sage-local.browser.mjs` in a second terminal.
+
+### Check with AirPods
+
+1. With AirPods connected, play a short clip in Music or Podcasts. Check the selected output in Control Center under **Now Playing → Playback Destination**. [Apple’s iPad playback guide](https://support.apple.com/guide/ipad/play-audio-ipad-a-bluetooth-accessory-ipad913af4df/ipados)
+2. In Sherpa Caddie, turn off **Hands-Free**, choose ACA, and tap **Ask Sage** with the prefilled question. Confirm the sound comes through AirPods. Repeat in DCA with a typed question.
+3. In Voice or DCA, tap **Talk**, ask a question, and check the audio after the microphone closes. Repeat in Safari and in the Home Screen app if you use both.
+4. If audio still comes from the speaker, check the output shown in Control Center and record the Sage mode and whether you used **Ask Sage** or **Talk**.
+
+## Version 0.12.12 — Sage Local Phase 1
+
+- Adds an opt-in **Local Sage (Experimental)** mode with one offline spoken practice tip, audio-clock lip sync, and Pause and Stop controls.
+- Adds **ACA · ARTEZIQ Conversational Avatar** and **DCA · D-ID Conversational Avatar** in Settings so both can be tried with the same prefilled question.
+- Adds one validated, read-only tool for the active app tab. Speech and portrait failures leave a readable reply or an audio-only fallback.
+- Stops outgoing playback, animation and legacy Video sessions when leaving a mode or hiding the app. Shows v0.12.12 in both footers.
+- Packages full replacement files and automated tests for this scripted milestone.
+
+Open **Settings → Local Sage experiment** to compare ACA and DCA. The normal app opens in Text mode. The experiment also accepts `?sageLocal=1` on a test URL. See the [integration map](docs/SAGE_LOCAL_INTEGRATION.md), [test instructions and results](docs/SAGE_LOCAL_TESTING.md), and [voice provenance](docs/SAGE_LOCAL_VOICE_PROVENANCE.md).
+
+## Version 0.12.11 — Complete, Readable Technology Options
+Cloudflare deployment refreshed for D-ID video support.
+Cloudflare Git connection restored.
+- Keeps each product image constrained to its media area so it cannot cover the brand, model, description, or detail list below it.
+- Restores the fully visible Rapsodo MLM2PRO name, description, and practice-data guidance.
+- Restores the fully visible Arccos Smart Sensors name, description, Best For guidance, and post-game information.
+- Enlarges all three option-card headings, descriptions, detail text, and pill-shaped labels for easier reading.
+- Preserves the v0.12.10 Technology page order, combined Garmin Watches and Round Review group, full-screen tabs, and existing asset filenames.
+
+### Changed files in v0.12.11
+
+- `index.html`
+- `manifest.webmanifest`
+- `sw.js`
+- `README.md`
+
+## Version 0.12.10 — Full-Screen Navigation and Technology Flow
+
+- Keeps all six main tabs visible when Sherpa Caddie enters full-screen or immersive mode.
+- Reorders TECHNOLOGY so the Golf Technology introduction appears first.
+- Places Garmin Golf Watches and Garmin Round Review together as one visually grouped window.
+- Moves the additional product categories below the Garmin window.
+- Renames “Sherpa Technology Picks” to the neutral “Golf Technology Options.”
+- Keeps the corrected `assets/technology/` folder and all existing product filenames unchanged.
+- Bumps the PWA cache so iPad, iPhone, Android, and installed copies receive the changes.
+
+### Changed files in v0.12.10
+
+- `index.html`
+- `manifest.webmanifest`
+- `sw.js`
+- `README.md`
+
+## Version 0.12.9 — Curated Golf Technology Picks
+
+- Adds three carefully limited technology categories beyond Garmin watches: Bushnell laser rangefinders, the Rapsodo MLM2PRO launch monitor, and Arccos Smart Sensors.
+- Recommends Bushnell Tour V7 Shift as the practical rangefinder pick, with Pro X3+LINK clearly labeled as the premium option.
+- Connects Rapsodo practice measurements to Driving Range coaching and saved club distances.
+- Connects automatic Arccos tracking to Sherpa’s post-game REVIEW direction without reintroducing manual shot logging.
+- Explains the best use, Sherpa fit, and ongoing membership considerations for every recommendation.
+- Adds official product imagery as optimized local WebP files for faster, more dependable PWA display.
+- Adds a visible affiliate disclosure while accurately stating that the current manufacturer links are not yet commission-tracked.
+- Records anonymous product-link selections through the existing Ladybug telemetry bridge when it is configured.
+
+### Changed files in v0.12.9
+
+- `index.html`
+- `manifest.webmanifest`
+- `sw.js`
+- `README.md`
+- `assets/technology/bushnell-tour-v7-shift.webp`
+- `assets/technology/bushnell-pro-x3-link.webp`
+- `assets/technology/rapsodo-mlm2pro.webp`
+- `assets/technology/arccos-smart-sensors.webp`
+
+## Version 0.12.8 — Technology Header Contrast Fix
+
+- Fixes the TECHNOLOGY introduction card so its dark-green background cannot be overridden by the shared light card style.
+- Gives the “Golf Technology” label, headline, and explanatory text explicit high-contrast colors across iPad, iPhone, Android, and desktop layouts.
+- Bumps the PWA cache so installed copies receive the corrected header styling.
+- Preserves all v0.12.7 Garmin watch images, comparison, purchase links, and round-import behavior.
+
+### Changed files in v0.12.8
+
+- `index.html`
+- `manifest.webmanifest`
+- `sw.js`
+- `README.md`
+
+## Version 0.12.7 — Garmin Technology Hub
+
+- Moves the Garmin watch comparison out of CLUBS and into a dedicated TECHNOLOGY tab between PLAN and CLUBS.
+- Moves Garmin Round Review import into the same TECHNOLOGY hub, then sends recognized round data to the short form in REVIEW.
+- Adds a dedicated image column with official Garmin product imagery for the Approach S44, S50, S70 42 mm, and S70 47 mm.
+- Keeps the official Garmin product links and transparent non-affiliate purchase notice.
+- Adds all four product images to the PWA cache so the comparison remains visual after the updated app has loaded once.
+- Preserves Garmin FIT/CSV/JSON import, Ladybug feedback, Sage Text/Voice/Video, planning, practice, club setup, and saved-review behavior.
+
+### Changed files in v0.12.7
+
+- `index.html`
+- `garmin-round-import.js` (included unchanged so the Garmin import package remains complete)
+- `manifest.webmanifest`
+- `sw.js`
+- `README.md`
+- `assets/garmin/approach-s44.webp` (new)
+- `assets/garmin/approach-s50.webp` (new)
+- `assets/garmin/approach-s70-42.webp` (new)
+- `assets/garmin/approach-s70-47.webp` (new)
+
+## Version 0.12.6 — Garmin Round Review Phase 1
+
+- Adds a post-game Garmin import workflow in REVIEW for FIT, CSV, and JSON files.
+- Keeps imported data on the golfer's device and previews the course, date, holes, score, and available detail before use.
+- Uses Garmin data to prefill the existing quick review; missing details remain editable instead of blocking the review.
+- Adds three short coaching prompts: what felt best, where the golfer struggled, and their headspace.
+- Stores Garmin source metadata with the saved review so Sage can distinguish imported rounds from manually entered reviews.
+- Adds a versioned Garmin data adapter so a future authorized Garmin Connect sync can feed the same review format.
+- Documents Phase 2 secure Garmin Connect synchronization and possible Phase 3 Garmin Golf API access without using unofficial credential scraping.
+- Adds a responsive comparison of the Approach S44, S50, S70 42 mm, and S70 47 mm under CLUBS.
+- Adds official Garmin purchase links plus an honest notice that they are not affiliate links until ARTEZIQ is approved and supplies its own tracking URLs.
+- Preserves Ladybug feedback, Sage Text/Voice/Video, planning, practice, club setup, and saved-review deletion/export behavior.
+
+### Changed files in v0.12.6
+
+- `index.html`
+- `garmin-round-import.js` (new)
+- `manifest.webmanifest`
+- `sw.js`
+- `README.md`
+
+## Version 0.12.5 — Ladybug Activated
+
+- Activates the Ladybug feedback launcher with Sherpa Caddie's public ingest key from the ARTEZIQ Feedback dashboard.
+- Uses the shared browser-safe Supabase publishable key already used by the other ARTEZIQ app integrations.
+- Retains slug `sherpa-caddie`, report prefix `SC`, privacy masks, screenshots, attachments, tester sign-in, and Tester Mode diagnostics from v0.12.4.
+- Refreshes the PWA cache so installed iPhone and iPad copies fetch the configured Ladybug module.
+
+### Changed files in v0.12.5
+
+- `index.html`
+- `manifest.webmanifest`
+- `sw.js`
+- `README.md`
+- `LADYBUG-SETUP-SHERPA.md`
+- `ladybug/ladybug-config.js`
+- the remaining `ladybug` folder files are included so the complete integration can be uploaded together.
+
+## Version 0.12.4 — ARTEZIQ Ladybug Feedback
+
+- Adds the same centralized ARTEZIQ Ladybug feedback experience used by Angler's Navigator.
+- Gives authorized testers an in-app sign-in, report form, type and severity choices, screenshot capture, attachment upload, optional Tester Mode diagnostics, and a clear sent confirmation.
+- Masks course/location details, post-game comments, and Sage conversation text from screenshots for privacy.
+- Reports the current Sherpa screen as GUIDE, LEARN, PLAN, CLUBS, REVIEW, Hole Planner, or About.
+- Records only non-identifying workflow diagnostics such as tab changes, Sage mode, practice completion, course-selection status, weather availability, plan creation, and review creation.
+- Keeps Ladybug dormant and non-disruptive until Sherpa Caddie's public Feedback keys are added.
+- Adds `LADYBUG-SETUP-SHERPA.md` with the exact one-time activation and test steps.
+- Preserves all Sage, D-ID, practice, planning, club, and review behavior from v0.12.3.
+
+### Changed files in v0.12.4
+
+- `index.html`
+- `manifest.webmanifest`
+- `sw.js`
+- `README.md`
+- `LADYBUG-SETUP-SHERPA.md`
+- `ladybug/ladybug-config.js`
+- `ladybug/ladybug-auth.js`
+- `ladybug/ladybug-feedback.js`
+- `ladybug/assets/ladybug-feedback-icon.png`
+- `ladybug/assets/ladybug-feedback-icon-256.png`
+- `ladybug/vendor/html2canvas.min.js`
+- `ladybug/vendor/html2canvas.LICENSE.txt`
+
+## Version 0.12.3 — Unified Sage Mode Cards
+
+- Removes the duplicate Sherpa Caddie logo from the upper-right of the persistent header.
+- Rebuilds Text as a branded Sherpa Caddie card with a clear message icon and TEXT label.
+- Rebuilds Voice as a matching branded card with a microphone, VOICE label, and animated speaking/listening dots.
+- Keeps Video connected to the existing Sage portrait and D-ID video stream.
+- Lets the conversation panel use the reclaimed header space on tablets and larger screens.
+- Combines the two former mobile left-column squares into one continuous mode card.
+- Preserves all GUIDE, LEARN, PLAN, CLUBS, and REVIEW behavior from v0.12.2.
+
+### Changed files in v0.12.3
+
+- `index.html`
+- `manifest.webmanifest`
+- `sw.js`
+- `README.md`
+
+## Version 0.12.2 — Clear Short Game and Long Game Coaching
+
+- Gives Short Game practice a putting-green color identity in both the selection card and expanded coaching session.
+- Gives Long Game practice a range-blue color identity in both the selection card and expanded coaching session.
+- Adds a persistent Short Game / Putting Green or Long Game / Driving Range badge inside the active session.
+- Adds a prominent **How to Play Better** heading between guided practice and the lesson library.
+- Preserves all GUIDE, PLAN, CLUBS, and REVIEW behavior from v0.12.1.
+
+### Changed files in v0.12.2
+
+- `index.html`
+- `manifest.webmanifest`
+- `sw.js`
+- `README.md`
+
+## Version 0.12.1 — Learn, Practice, Plan
+
+- Reorders navigation to GUIDE, LEARN, PLAN, CLUBS, and REVIEW.
+- Renames PLAY to PLAN and keeps it exclusively focused on preparing for a future golf game.
+- Moves LEARN to the second tab and adds guided Putting Green and Driving Range coaching sessions.
+- Adds Putting Green focus choices for distance control, start line, short-putt confidence, and routine.
+- Adds Driving Range focus choices for contact, direction, tempo, and club-distance gapping.
+- Gives each practice session a focused checklist with visible progress and a clear completion message.
+- Expands CLUBS with plain-English equipment lessons covering woods, hybrids, irons, club numbers, wedges, loft, shopping, and fitting.
+- Preserves the quick post-game REVIEW and all v0.12.0 removal of live shot tracking.
+
+### Changed files in v0.12.1
+
+- `index.html`
+- `manifest.webmanifest`
+- `sw.js`
+- `README.md`
+
+## Version 0.12.0 — Plan Before, Reflect After
+
+- Removes the live swing-by-swing and shot-result tracking workflow from PLAY.
+- Rebuilds PLAY around pre-game planning: course, weather, tees, goal, mental focus, strategy, and Hole Planner.
+- Places Dave’s Sunday Bag and Full Bag choices directly beneath the pre-game planning section.
+- Adds a post-game REVIEW designed to take less than one minute.
+- Supports a single overall score or optional hole-by-hole scores for 9 or 18 holes.
+- Accepts short typed or dictated takeaways about what felt good and what was difficult.
+- Gives a Sage coaching review that recognizes positives first and then recommends one practical improvement.
+- Keeps saved reviews on the device with individual delete, Delete All, import, and export controls.
+- Updates Sage and D-ID context toward preparation, practice, mental-game coaching, and post-game learning.
+
+### Changed files in v0.12.0
+
+- `index.html`
+- `manifest.webmanifest`
+- `sw.js`
+- `README.md`
+
+## Version 0.11.20 — Responsive Weather Control
+
+- Makes the PLAY weather control visibly respond while current conditions are loading.
+- Renames the control to **Refresh Weather** so its purpose is clear.
+- Adds direct confirmation for successful updates and useful messages for missing course coordinates, offline use, and request failures.
+- Extends the request timeout, validates the returned weather data, and prevents overlapping weather requests.
+- Shows the time of the latest successful weather update.
+
+### Changed files in v0.11.20
+
+- `index.html`
+- `manifest.webmanifest`
+- `sw.js`
+- `README.md`
+
+## Version 0.11.19 — Clear Shot Assessment and Review Management
+
+- Renames End Round to End Game.
+- Wraps every available club into visible rows without horizontal scrolling.
+- Separates shot assessment into Distance: Good, Short, Long and Aim: Center, Left, Right.
+- Removes the negative Poor choice from shot entry.
+- Preserves compatibility with the existing D-ID `record_shot` tool arguments.
+- Adds Delete to every saved game and Delete All to REVIEW, both with confirmation.
+
+### Changed files in v0.11.19
+
+- `index.html`
+- `manifest.webmanifest`
+- `sw.js`
+- `README.md`
+
+## Version 0.11.16 — Dave’s Eight-Club Sunday Bag
+
+- Updated the Sunday Bag preset to match Dave’s actual eight-club setup.
+- Added the 15° Adams Speedline FAST 10 as the 3 Wood.
+- Added the Adams IDEA a7 9 Iron to close the scoring-distance gap between the 7 Iron and Pitching Wedge.
+- Sunday Bag recommendations now use Driver, 3 Wood, 4 Hybrid, 7 Iron, 9 Iron, Pitching Wedge, Sand Wedge, and Putter.
+- Renamed the preset **Dave’s Sunday Bag** and updated its on-screen guidance.
+
+### Changed files in v0.11.16
+
+- `index.html`
+- `manifest.webmanifest`
+- `sw.js`
+- `README.md`
+
+## Version 0.11.15 — Summerville Country Club Field Test
+
+- Added the official 18-hole Summerville Country Club scorecard for accurate on-course testing.
+- Uses exact Blue (6,037), White (5,517), Gold (4,919), and Red (4,856) tee yardages instead of generic tee offsets.
+- Uses the official par sequence and par-71 total in Round and Hole Planner views.
+- Shows a visible verified-scorecard message and the selected tee’s total yardage before the round starts.
+- Keeps OpenGolf location, weather, and mapped-course features while giving the verified scorecard priority for hole distances.
+
+### Changed files in v0.11.15
+
+- `index.html`
+- `manifest.webmanifest`
+- `sw.js`
+- `README.md`
+
+## Version 0.11.14 — D-ID Session Recovery and Audible Video Fallback
+
+- Added automatic recovery when D-ID reports a missing, invalid, expired, or unavailable session ID.
+- Discards stale Agent Manager connections, creates a fresh D-ID session, and retries the golfer’s question once.
+- Primes Video audio from the user’s Ask, Talk, and diagnostic gestures to improve iPhone/iPad Safari playback reliability.
+- Connects D-ID’s complete media stream to the required video element while retaining a separate audio-priority track.
+- Detects a missing or blocked D-ID audio track and reads Sage’s completed answer using the device’s local system voice without consuming additional D-ID speech credits.
+
+### Changed files in v0.11.14
+
+- `index.html`
+- `manifest.webmanifest`
+- `sw.js`
+- `README.md`
+
+## Version 0.11.13 — Flowing iPhone Header and One-at-a-Time Tool Tests
+
+- Rebuilt the iPhone Sage header as a compact two-column identity area followed by full-width controls, answer, and instructions—eliminating the trapped blank space beneath the logo and Sage display.
+- Preserved the balanced Sherpa Caddie logo and Sage/Text/Voice tiles while making the rest of the header flow naturally at narrow widths.
+- Added a strict one-request-at-a-time lock for Video questions and D-ID diagnostics.
+- Disabled every other diagnostic button while a tool test is active, preventing overlapping requests, cancelled tests, and D-ID pending-request-limit errors.
+- Extended the diagnostic timeout and added clearer instructions to wait for a final result before starting the next test.
+
+### Changed files in v0.11.13
+
+- `index.html`
+- `manifest.webmanifest`
+- `sw.js`
+- `README.md`
+
+## Version 0.11.12 — Tool Repair, Credit Fallback, Balanced iPhone Sage
+
+- Reworked the iPhone’s left column into two balanced square areas: the Sherpa Caddie logo above and the Sage/Text/Voice display below.
+- Removed the long, heavily cropped iPhone portrait treatment while preserving the same left-column geometry across Text, Voice, and Video.
+- Added automatic D-ID credit detection. If a Video question fails because avatar credits are exhausted, Sage switches to Voice, announces what happened, and provides phone-safe guidance without using D-ID.
+- Strengthened every diagnostic prompt so Sage is explicitly instructed to invoke the exact named client tool rather than answer conversationally.
+- Updated the D-ID workflow to repair all nine tool definitions with `config.type: client`, valid schemas, and descriptions containing clear user triggers, then reattach and verify them.
+- Added clear diagnostic states distinguishing an Agent that skipped a tool from a test blocked by exhausted D-ID credits.
+
+### Changed files in v0.11.12
+
+- `index.html`
+- `manifest.webmanifest`
+- `sw.js`
+- `README.md`
+- `.github/workflows/attach-did-tools.yml`
+
+## Version 0.11.11 — Clearer Sage Layout on iPhone and iPad
+
+- Standardized the mentor’s visible name as **Sage** on every device.
+- Reordered the persistent Sage console into the natural sequence: choose mode, enter a question, choose how to ask, then read Sage’s answer.
+- Put the question field above the answer and moved **Ask Sage** below the question field.
+- Replaced the short input with a larger two-line question box; Shift+Enter can add a line and Enter submits.
+- Added clear **YOUR QUESTION** and **SAGE’S ANSWER** labels plus mode-specific instructions.
+- Enlarged the Sage avatar substantially on iPad and medium-size tablets.
+- Rebalanced the iPhone layout to remove trapped gaps while keeping the question, controls, answer, and status together.
+- Added `ARTEZIQ • Sherpa Caddie • v0.11.11` to the bottom of the splash screen.
+
+### Changed files in v0.11.11
+
+- `index.html`
+- `manifest.webmanifest`
+- `sw.js`
+- `README.md`
+
+## Version 0.11.10 — Sherpa Mentor: Text / Voice / Video
+
+- Made **Sherpa Mentor** the umbrella experience with three modes named exactly **Text**, **Voice**, and **Video**.
+- Consolidated the mode selector, Sage response, typed-question field, Ask button, Talk button, and Hands-Free wake-word switch into the persistent top panel.
+- Text has a clearly visible typing field and Ask button.
+- Voice and Video both have a one-tap Talk button; no wake phrase is required after tapping it.
+- Clarified Hands-Free as an optional wake-word mode using “Sherpa,” “Hey Sherpa,” “Sage,” or “Hey Sage.”
+- Removed the redundant lower Voice/Video controls and transcript so the golfer no longer has to scroll to operate the Mentor.
+- Kept the compact-phone stability path: Voice avoids WebGPU/Kokoro loading, and Video uses low-resolution D-ID streaming with inactivity pausing.
+
+### Changed files in v0.11.10
+
+- `index.html`
+- `manifest.webmanifest`
+- `sw.js`
+- `README.md`
+
+## Version 0.11.9 — Unified Text / Audio / Video Console
+
+- Rebuilt the persistent header as one larger Sherpa console with Text, Audio, and Video modes.
+- Added a visible typing field and Ask button to Text mode.
+- Added a one-tap Talk button to Audio and Video; a wake phrase is not required for a one-time question.
+- Kept Hands-Free as an optional mode for the shared “Sherpa,” “Hey Sherpa,” “Sage,” and “Hey Sage” wake phrases.
+- Moved Sage’s current text response into the same top panel so it remains visible beside the mode display.
+- Removed duplicate voice, video, and transcript controls lower on the page.
+- Stabilized iPhone Audio by using lightweight app guidance and the iOS system voice without loading WebGPU or Kokoro models.
+- Kept D-ID Video audio-first, low-resolution on compact phones, warmed on selection, and paused after inactivity.
+- Preserved strict nine-tool diagnostics and the persistent five-tab layout.
+
+### Changed files in v0.11.9
+
+- `index.html`
+- `manifest.webmanifest`
+- `sw.js`
+- `README.md`
+
+## Version 0.11.8 — iPhone Mentor Hands-Free Stability
+
+- Fixed the iPhone restart that could occur when Hands-Free was enabled in Mentor mode.
+- Mentor no longer downloads, initializes, or warms the local Kokoro voice model because D-ID supplies Mentor’s speech.
+- Compact phones no longer automatically initialize the local WebGPU language model merely from entering Text or Voice mode; it loads only if the golfer actually asks the local AI a question.
+- Switching to Mentor now cancels pending local AI and voice loads, unloads completed local models, and releases local speech resources before D-ID continues.
+- Added cancellation guards so a local model that began loading before Mentor was selected cannot finish later and compete with D-ID for iPhone memory.
+- Preserved the v0.11.7 responsive header, shared wake phrases, low-resolution iPhone D-ID video, audio-first stream handling, warmed Mentor connection, inactivity pause, and strict tool diagnostics.
+
+### Changed files in v0.11.8
+
+- `index.html`
+- `manifest.webmanifest`
+- `sw.js`
+- `README.md`
+
+## Version 0.11.7 — Clear Sage Modes + Efficient Mentor + Verified Tools
+
+- The fixed top-left Sage area now has three genuinely distinct presentations while retaining exactly the same footprint on every app tab:
+  - **Text** shows a symbolic chat/typing display and animated dots while the user types or Sage thinks.
+  - **Voice** shows a symbolic microphone and waveform, with animation while listening or speaking.
+  - **Mentor** is the only mode that shows Sage’s photograph and streamed D-ID avatar.
+- Rebuilt the header as one responsive panel: Sage stays visible at left, her current text answer stays visible in the center, and the Sherpa Caddie logo remains visible at right in both normal and immersive/fullscreen layouts.
+- Added explicit top-left activity states for ready, listening, wake phrase heard, thinking, speaking, paused, microphone/connection error, and iPhone re-arm guidance.
+- Voice and Mentor now share the same device-side wake phrases: **Sherpa**, **Hey Sherpa**, **Sage**, and **Hey Sage**, with the existing Hi/Hello/Okay variants retained.
+- Selecting Voice or Mentor no longer automatically enables Hands-Free. The golfer can tap **Talk** for one question or deliberately enable Hands-Free.
+- Tapping the microphone while Hands-Free is already active now arms the next question without turning Hands-Free off.
+- iPhone/iPad speech recognition uses short recognition cycles with automatic restart instead of depending on unreliable continuous-browser recognition.
+- Selecting Mentor now pre-connects and warms the D-ID stream to reduce first-answer latency. It remains available during the conversation, then pauses after 90 seconds of inactivity or 15 seconds in the background to limit D-ID usage.
+- Device-side wake listening does not require an open D-ID session. No automatic Mentor greeting is generated when the mode is selected.
+- Tool diagnostics are now strict and event-backed. A test passes only after the requested tool emits **ToolCallStarted**, the matching Sherpa browser handler returns, and D-ID emits **ToolCallDone**.
+- Diagnostics distinguish **PASS**, **FAIL**, and **NO TOOL CALL**. Calling the wrong tool, returning a D-ID/tool error, timing out, or merely having Sage say “Done” cannot produce a pass.
+- State-changing diagnostic handlers remain dry runs and cannot alter a real round.
+
+### Changed files in v0.11.7
+
+- `index.html`
+- `manifest.webmanifest`
+- `sw.js`
+- `README.md`
+
+## Version 0.11.6 — Sage Wake Name + Large Mentor Header + ARTEZIQ Settings
+
+- Added **“Sage”** and **“Hey Sage”** as hands-free wake names in Voice and Mentor modes, alongside **“Sherpa”** and **“Hey Sherpa.”** “Hi” and “Okay” prefixes work with either name.
+- Doubled the persistent top header height. Sage’s Text/Voice/Mentor area and the centered Sherpa Caddie logo are approximately twice their previous height while preserving the same footprint across all three Sage modes.
+- Integrated the supplied **ARTEZIQ UI kit v1.0** and **ARTEZIQ Audio module v1.0** without modifying those supplied files.
+- Added the three supplied top-right controls: fullscreen, sound, and settings gear. Storage prefix is **`sc_`** so settings do not collide with other ARTEZIQ apps on the same GitHub Pages origin.
+- Added settings rows for Spoken Replies, Hands-Free listening, and Advanced GUIDE controls using the kit’s `extraSettingsHTML` hook.
+- The kit’s Sound level now also governs local Sage speech and D-ID Mentor audio. D-ID video remains muted because incoming speech is handled by the separate audio track.
+- Added the kit’s iOS immersive fullscreen fallback while keeping Sage visible; the centered brand/navigation/quickbar are treated as app chrome.
+- Fullscreen lock is re-applied after the splash and when a round starts.
+- Service-worker cache now includes the three ARTEZIQ kit files.
+
+## Version 0.11.5 — Persistent Mentor Header + D-ID Recovery + Tool Diagnostics
+
+- Sage now occupies a fixed, moderately sized top-left mentor area on GUIDE, PLAY, CLUBS, LEARN, and REVIEW.
+- The top-left area keeps the same footprint in all three modes: Text / Voice / Mentor.
+- The Sherpa Caddie logo is centered at the top. The GUIDE opening hero now carries “Sherpa Caddie — Your guide. Your game. Your best round.”
+- Replaced the large separate companion strip with a slim persistent Ask bar to reduce wasted space.
+- Text mode includes an animated three-dot typing indicator.
+- Voice mode includes an animated vocal waveform while listening/speaking.
+- Mentor keeps Sage’s static portrait visible while the V2 D-ID stream is idle and swaps to live D-ID video only when D-ID reports an active speaking state, avoiding the blank circular idle stream seen in v0.11.4.
+- Incoming D-ID audio/video tracks are separated when possible so audio can continue independently of video rendering.
+- Safari uses D-ID’s VP8 compatibility mode.
+- The local WebLLM engine is released whenever Mentor starts on any device, reducing GPU/memory competition.
+- Added a collapsible Test D-ID tools panel covering all nine attached client tools.
+- State-changing tool diagnostics run as dry tests, so they do not alter the golfer’s real round.
+- D-ID tool lifecycle callbacks mark each diagnostic PASS/FAIL.
+- Detailed local-AI controls on GUIDE are collapsed by default and can be reopened with the gear button.
+
+
+## Version 0.11.4 — Persistent Sherpa Companion + iPhone Live Safety
+
+- Added a compact **Sage companion bar that stays available on every tab**: GUIDE, PLAY, CLUBS, LEARN, and REVIEW.
+- The companion provides the intended **Text / Voice / Sherpa Live** choices everywhere.
+- Added a persistent Ask field and microphone button so Sage can advise, answer questions, and invoke app-aware functions without returning to GUIDE.
+- Sherpa Live stays connected while navigating between tabs.
+- On iPhone-class widths, D-ID video is reduced further to **240-class output** to reduce Safari memory pressure; small tablets use 360 and larger screens 720.
+- Added a crash guard: if iOS Safari kills/reloads the page during a D-ID session, Sherpa comes back safely in Text mode instead of immediately reconnecting Live and creating a restart loop.
+- Selecting a golf course now automatically scrolls the chosen-course panel into view.
+- GUIDE remains the opening tab; PLAY remains course selection unless the golfer explicitly chooses Resume Round.
+
+
+## Version 0.11.3 — iPhone Stability + Audio-First Sherpa Live
+
+- **Audio first:** Sherpa Live keeps audio enabled immediately while video may finish rendering a moment later.
+- **Adaptive avatar resolution:** 360p-class output on compact phones, 480p on tablets/smaller screens, and 720p on larger displays.
+- **iPhone memory protection:** Qwen/WebGPU no longer auto-loads at startup on compact phones. This prevents the local AI model and D-ID video stream from competing for Safari memory and triggering a page reload/splash restart.
+- When Sherpa Live starts on a compact phone, Sherpa releases the local WebLLM engine first. Text/Voice load it on demand if the user switches back.
+- The Sage poster remains visible until the streamed video reaches `loadeddata`/`playing`, avoiding the blank/spinner transition while the WebRTC video catches up.
+- PLAY now opens the **course-selection screen**, even when a previous round is stored. A **Resume Round** banner appears when there is an unfinished round, so the user chooses whether to resume it.
+- Phone layouts for Hands-Free Caddie, Spoken Replies, voice selection, badges, and status text now collapse into safe single-column layouts instead of running off the right edge.
+- Increased several small mobile labels/status lines for readability.
+- GUIDE remains the default launch tab.
+
+
+## Version 0.11.2 — Mobile Scaling + GUIDE Launch Fix
+
+- Sherpa Caddie now always opens on **GUIDE**, including when a round is already in progress. The active round remains preserved and appears when PLAY is selected.
+- Added stronger responsive viewport rules for iPhone, Android phones, compact Android tablets, iPad portrait/landscape, and desktop/tablet browsers.
+- Prevents wide grid/flex children from expanding the document beyond the viewport.
+- Adds explicit horizontal-overflow protection and `min-width:0` handling throughout the app shell.
+- Makes the five top navigation tabs fit the available phone width without requiring pinch-to-zoom.
+- Tightens the active-round layout on narrow phones and keeps club/choice rows locally scrollable instead of widening the whole page.
+- Increased splash-screen title, tagline, and loading caption size on phones while retaining the Sherpa Caddie logo.
+- Bumped cache/version identifiers so iOS Safari and installed PWAs fetch the corrected responsive layout.
+
+### Device targets checked in the responsive design
+The CSS now explicitly covers:
+- compact phones around 360–390 CSS px wide (common Android and iPhone mini/SE-class widths),
+- iPhone 13-class widths around 390 CSS px,
+- larger iPhones and Android phones,
+- small/large Android tablets,
+- iPad portrait and landscape,
+- desktop/tablet widths.
+
+Physical device testing is still recommended because Safari and Android browser UI can change the effective viewport height/width.
+
+## Version 0.11.1 — Sherpa Live Connection Fix
+
+- Restored the **canonical Sherpa Caddie logo** to the launch animation. Sage's realistic portrait remains limited to the Sherpa Live experience and transcript.
+- Removed the stale D-ID client key that belonged to the previous Sage Agent.
+- Added `did-config.json`, loaded network-first/no-store so the current Sage Agent key can be updated without another application-code release.
+- Added the manual GitHub Action **Provision D-ID client key**. It uses the existing private `DID_API_USERNAME` / `DID_API_PASSWORD` repository secrets to create a current, agent-scoped D-ID client key restricted to `https://davidfliesen.github.io`, then commits that frontend-safe key into `did-config.json`.
+- Sherpa Live now tries the current D-ID Client SDK from jsDelivr first, with esm.sh as a fallback, and reports a specific configuration/SDK/connection error instead of remaining indefinitely on Connecting.
+- `did-config.json` is intentionally excluded from service-worker caching.
+
+### One-time provisioning after installing v0.11.6
+1. Upload the v0.11.6 changed files.
+2. GitHub → Actions → **Provision D-ID client key** → Run workflow on `main`.
+3. Wait for the resulting GitHub Pages deployment.
+4. Fully close/reopen Sherpa Caddie and choose **Sherpa Live**.
+
+
+## Historical application overview — documented at v0.11.0
+
+The following retained overview records the earlier architecture and feature set at Version 0.11.0. Later changes are documented chronologically above it.
+
+**PWA:**  
+https://davidfliesen.github.io/SherpaCaddy
+
+## Purpose
+
+Sherpa Caddie combines the practical help of a caddie with the guidance and perspective of a Sherpa mentor. The core principle remains **one shot at a time**.
+
+## v0.11.6 — Sherpa Live Client SDK
+
+This release replaces the visible D-ID Embed with the D-ID Client SDK so Sage is integrated into Sherpa Caddie as part of the app rather than appearing as a third-party overlay.
+
+### Sherpa experiences
+
+- **Text** — quiet/local Sherpa guidance without D-ID streaming.
+- **Voice** — hands-free local Sherpa without avatar video.
+- **Sherpa Live** — Sage appears inside the native Sherpa dashboard, answers through D-ID streaming, and can use Sherpa Caddie client tools.
+
+### Sherpa Live SDK
+
+- Uses D-ID Agent `v2_agt_cPCRZyGW` through the Client SDK.
+- D-ID is connected only when the golfer explicitly selects Sherpa Live.
+- The app owns the video frame, transcript, connection indicators, controls, and golf dashboard.
+- Browser speech recognition remains the microphone input layer for the V2 photo avatar; D-ID automatically speaks/animates Sage's replies.
+- Hands-free listening pauses while Sage speaks and resumes afterward.
+
+### Client tools
+
+The nine attached D-ID client tools are registered inside the PWA: round context, shot recommendation, weather, club distances, record shot, finish hole, next hole, strategy, and Hole Planner. Deterministic golf data remains controlled by Sherpa Caddie rather than guessed by the Agent.
+
+### Sage visual synchronization
+
+- Added the redesigned modern golf-guide Sage portrait as an app asset.
+- The same Sage identity appears in Sherpa Live, transcript imagery, and the launch animation.
+- The formal/military-style presentation has been replaced with a cleaner forest-green golf quarter-zip look.
+
+### Changed files in v0.11.6
+
+- `index.html`
+- `manifest.webmanifest`
+- `sw.js`
+- `README.md`
+- `assets/sage-sherpa-live.webp` (new)
+
+## v0.9.0 — Five-Tab Navigation + Beginner Setup
+
+This release simplifies the app around five persistent top-level destinations and expands beginner guidance.
+
+### Navigation
+
+- **🏔️ Guide** — opening screen with Sherpa AI and hands-free voice guidance
+- **🏌️ Play** — find a course, choose tees, check conditions, plan, and start a round
+- **🏑 Clubs** — full bag or Sunday Bag setup with personal carry distances
+- **🧭 Learn** — expanded golf learning hub
+- **📒 Review** — saved rounds, summaries, import, and export
+
+The old second row of Home-screen action cards has been removed so navigation is no longer duplicated.
+
+### Tee guidance
+
+- Forward/shortest tees are the default beginner setting.
+- Common red, gold, white, and blue tee conventions are explained at the point where the player chooses tees.
+- The app explicitly notes that tee colors are not universal and that players should choose by distance and comfort.
+
+### Clubs
+
+- Clubs is now a full tab instead of a modal overlay.
+- Added **Full Bag** and **Sunday Bag** modes.
+- The Sunday Bag starter preset uses Driver, 4 Hybrid, 7 Iron, Pitching Wedge, Sand Wedge, and Putter.
+- Sherpa recommendations, planning strategy, AI context, and in-round club controls respect the selected bag.
+
+### Learn
+
+Learn now covers far more than the original six ideas, with expandable lessons for:
+
+- getting started and tee selection
+- club purposes and fundamentals
+- course management, safe misses, wind, hazards, and layups
+- chipping, pitching, bunkers, and putting
+- scoring, pace of play, safety, courtesy, and course care
+- mental-game resets and one-shot-at-a-time focus
+- par-3, par-4, and par-5 strategy
+
+### Changed files in v0.10.0
+
+- `index.html`
+- `manifest.webmanifest`
+- `sw.js`
+- `README.md`
+
+## v0.8.0 — Natural Hands-Free Sherpa
+
+This release fixes the splash-logo aspect ratio and substantially upgrades the hands-free conversation loop.
+
+### Voice and AI changes
+
+- Fixed the splash logo so its original aspect ratio is preserved; the circular Sherpa emblem is no longer intentionally stretched by the page layout.
+- Sherpa AI now initializes automatically in the background. **Load Sherpa AI** is replaced by **Restart AI** as a recovery control rather than a required setup step.
+- Uses **Qwen3 0.6B** as the preferred local WebLLM model when supported, with **Qwen2.5 0.5B** and the previous lightweight model as fallbacks.
+- Added local **Kokoro-82M** TTS for more natural spoken replies, with selectable Sherpa voices and a carefully selected system-voice fallback.
+- Hands-Free accepts **Sherpa**, **Hey Sherpa**, **Okay Sherpa**, and **Hi Sherpa**.
+- Added a short wake window so the browser can recognize the wake phrase and the question as separate transcripts without dropping the question.
+- When Spoken Replies is enabled, hands-free answers are spoken automatically and listening resumes after Sherpa finishes speaking.
+- Deterministic commands such as yardage, club recommendation, target guidance, shot recording, and hole navigation remain ordinary app logic outside the LLM.
+- Qwen thinking tags are stripped from visible/spoken answers and direct-answer prompting is strengthened.
+
+### PWA speech-input note
+
+The PWA continues to use the browser speech-recognition API for microphone transcription in this release. A full sherpa-onnx WebAssembly ASR package can add roughly hundreds of megabytes of speech-model data, which is not appropriate to force into the current GitHub Pages PWA without a separate model packaging/build step. The voice flow is now modular so sherpa-onnx ASR/KWS can replace browser recognition in the later native iOS/Android packages while keeping the same Hands-Free Sherpa interaction.
+
+### Changed files in v0.8.0
+
+- `index.html`
+- `manifest.webmanifest`
+- `sw.js`
+- `README.md`
+
+## Current retained features
+
+- Guide | Play | Clubs | Learn | Review layout
+- Branded splash and dark golf-app shell
+- Full Bag / Sunday Bag selection with personal club distances
+- One-Shot Sherpa shot guidance
+- Weather and course search
+- Hole Planner with map/schematic fallback
+- Front / center / back planning yardages
+- Play Smart / Attack / Lay Up strategies
+- Local round storage and import/export
+- Hands-Free Caddie controls on Guide and during a round
+
+## Changelog
+
+### v0.11.6 — Sherpa Live Client SDK
+- Replaced the D-ID embed UI with the D-ID Client SDK.
+- Added native Text / Voice / Sherpa Live experience modes.
+- Registered all nine Sherpa client-tool handlers in the browser.
+- Added native Sage video, golf-context, transcript, listening/speaking, and connection UI.
+- Added the redesigned Sage portrait to Sherpa Live and the launch animation.
+- D-ID connects only after Sherpa Live is explicitly selected.
+- Updated PWA/cache versioning to **v0.11.6**.
+
+### v0.10.0 — Sherpa Live D-ID Integration
+- Added Text / Sherpa Live mode switching on the Guide screen.
+- Integrated the supplied D-ID Agent using full mode with a dedicated in-app target container.
+- D-ID is loaded on demand only when Sherpa Live is selected.
+- Added clear internet/usage note and a Restart Live control.
+- Updated PWA/cache versioning to **v0.10.0**.
+
+
+### v0.9.0 — Five-Tab Navigation + Beginner Setup
+- Added Guide / Play / Clubs / Learn / Review persistent navigation.
+- Removed redundant home-screen action cards.
+- Promoted Clubs to its own full page.
+- Added Full Bag and Sunday Bag modes and made club recommendations bag-aware.
+- Made forward/shortest tees the beginner default and added tee-color guidance.
+- Expanded Learn into a multi-category golf learning hub.
+- Updated PWA/cache versioning to **v0.9.0**.
+
+
+### v0.8.0 — Natural Hands-Free Sherpa
+- Corrected splash-logo aspect handling.
+- Auto-started local AI in the background.
+- Added Qwen3/Qwen2.5 local AI choices.
+- Added local Kokoro natural TTS and voice selection.
+- Added broader wake phrase handling and split wake/question flow.
+- Made spoken hands-free replies automatic with listening resumed after speech.
+- Updated PWA/cache versioning to v0.8.0.
+
+## Version 0.6.4 — Course Search Repair
+
+This release repairs the course-search path and makes the golf-course database the primary source of truth. It keeps the v0.6.3 fast logo work, v0.6.1 header contrast treatment, and the v0.6 Hole Planner redesign.
+
+### Fixed in v0.6.4
+
+- Corrected the OpenGolf nearby-search parameter from `radius` to the documented **`radius_mi`**.
+- Made **OpenGolfAPI** the primary source for nearby and name-based course discovery.
+- Added an **OpenGolf state-index fallback** for ZIP/city searches, then filters courses by actual distance from the resolved search point.
+- Added alternate-name searching so older/common course names can resolve to current database names.
+- Kept OpenStreetMap/Overpass only as a fallback instead of making it a critical dependency.
+- Added a third Overpass endpoint for hole-geometry fallback.
+- Fixed contradictory result messaging that could report successful sources but display no courses.
+- Selected OpenGolf courses now load their full course detail/scorecard in the background.
+- Hole-map geometry now cycles through multiple Overpass endpoints before falling back to Sherpa's schematic planner.
+
+### Retained
+
+- Optimized fast-loading Sherpa logo and branded splash screen.
+- High-contrast logo plaque in the dark branded header.
+- Home | Play | Learn | My Rounds navigation.
+- Full Bag / Sunday Bag selection with personal club distances, weather, One-Shot Sherpa, local round storage, import/export, voice, and Sherpa AI.
+- Hole Planner with front/center/back yardages, strategy modes, hazards, target planning, and schematic fallback.
+
+### Changed files in v0.6.4
+
+- `index.html`
+- `manifest.webmanifest`
+- `sw.js`
+- `README.md`
+
+## Version 0.3.3
+
+This version corrects an earlier v0.3 update that used the wrong codebase. v0.3.2 keeps the simpler visual layout of the original PWA while preserving the complete One-Shot Sherpa feature set.
+
+### UI direction
+
+- Uses the project owner's exact approved Sherpa Caddie logo.
+- Uses the approved color palette:
+  - Forest Green `#18311C`
+  - Fairway Green `#436240`
+  - Meadow Green `#869250`
+  - Navy Blue `#0B2033`
+  - Sand Beige `#EBD9C1`
+  - Warm Tan `#BA915B`
+  - Stone Gray `#6C6C6A`
+- Returns to the earlier four-tab structure:
+  - Home
+  - Play
+  - Learn
+  - My Rounds
+- Club Setup opens as a focused modal instead of becoming another permanent navigation tab.
+- About/version information is kept out of the main playing navigation.
+- Main screens are designed to fit on a tablet with minimal scrolling.
+- No hamburger menu.
+- No disappearing pill navigation.
+
+## Complete One-Shot Sherpa feature set
+
+- Personal club-distance setup
+- Simplified in-round screen
+- Shot-quality buttons: Good / Okay / Poor
+- Optional miss direction: Left / Center / Right / Short / Long
+- Club recommendation based on the golfer's stored distances
+- Safe-target recommendation
+- One mental cue
+- New-shot reset message
+- Automatic scoring from recorded shots
+- Three-item post-round summary
+
+### Post-round guidance
+
+**What cost strokes**  
+Most poor shots happened when you selected too little club.
+
+**Next-round focus**  
+Pick the target, take one practice swing, and commit.
+
+## Other retained features
+
+- OpenGolfAPI course search
+- Browser geolocation for nearby-course attempts
+- Open-Meteo current weather
+- Ask Sherpa text questions
+- Push-to-talk voice input where supported by the browser
+- Beginner golf guidance
+- Local-only storage
+- Round export/import
+- Installable PWA
+- Offline application shell
+
+## Philosophy
+
+- Every shot is a new start.
+- Bad holes happen.
+- Focus on the shot you are on.
+- When your mind speeds up, return to the fundamentals.
+- The last thought before the swing should describe what you want to do.
+- Read the course for the safest useful target rather than automatically attacking the flag.
+- Take enough club to make a comfortable, committed swing.
 
 ## Files
 
-- `index.html` — complete viewer, styling, descriptions, and playback behavior
-- `assets/swing-front.jpeg` — approved front-view reference sheet
-- `assets/swing-three-quarter.jpeg` — approved 3/4-view reference sheet
+- `index.html` — complete UI, styles, and JavaScript
+- `manifest.webmanifest`
+- `sw.js`
+- `assets/sherpa-caddie-logo.png`
+- `assets/sherpa-caddie-palette-reference.jpeg`
+- `icons/`
+- `README.md`
 
-## Use
+## Changelog
 
-Keep the folder structure intact and open `index.html` in a browser. The viewer requires no framework, server, API, or Internet connection.
+### v0.8.0 — Natural Hands-Free Sherpa
+- Corrected splash-logo aspect ratio.
+- Auto-started the local AI in the background.
+- Added Qwen3 0.6B / Qwen2.5 0.5B model selection.
+- Added local Kokoro natural speech synthesis.
+- Added broader wake-phrase support and split wake/question handling.
+- Made spoken hands-free replies automatic with listening resumed after speech.
+- Updated PWA/cache versioning to **v0.8.0**.
 
-For Sherpa Caddie integration, the viewer can be placed inside the LEARN practice area and styled further using the existing app shell.
+
+### v0.7.0 — Hands-Free Sherpa AI
+- Added Hands-Free Caddie mode with the “Sherpa” wake phrase.
+- Added independent Spoken Replies toggle.
+- Added local voice commands for common round actions so scoring and navigation can require fewer screen taps.
+- Added AI echo detection, automatic retry, and deterministic fallback responses.
+- Made the 1B model the recommended default while preserving the lightweight fallback.
+- Prevented Sherpa speech output from feeding back into speech recognition.
+- Added the voice-mode controls to the active-round screen.
+- Updated PWA/cache versioning to **v0.7.0**.
+
+
+### v0.6.4 — Course Search Repair
+- Corrected the OpenGolf location parameter from `radius` to `radius_mi`.
+- Made OpenGolf the primary course discovery source.
+- Added OpenGolf state-index fallback for ZIP/city searches.
+- Added alternate-name matching for renamed courses such as older country-club names.
+- Kept OpenStreetMap/Overpass as fallback instead of a required dependency.
+- Added full OpenGolf course-detail hydration after course selection.
+- Updated PWA/cache versioning to **v0.6.4**.
+
+### v0.6.3 — Fast Logo Loading Fix
+- Replaced the large header/splash logo PNG requests with one 37 KB optimized WebP asset.
+- Preloaded the logo so it is available immediately for the splash screen and header.
+- Fixed the stale splash-logo `v060` URL that remained in later releases.
+- Removed the two 535 KB logo PNGs from service-worker pre-caching.
+- Changed the splash intro so the logo is visible from the first animation frame.
+- Preserved the v0.6.2 course-search fixes and v0.6.1 header contrast improvements.
+- Updated PWA/cache versioning to **v0.6.3**.
+
+### v0.6.2 — Course Search Reliability Fix
+- Fixed the regression that could return zero golf courses when OpenGolfAPI and the primary Overpass service were unavailable.
+- Added OpenStreetMap/Nominatim bounded golf-course search as an independent primary fallback.
+- Added ZIP-code area resolution and nearby course search.
+- Added a second Overpass endpoint fallback.
+- Added search-source diagnostics and clearer failure messages.
+- Preserved the v0.6.1 logo/header improvement.
+- Updated PWA/cache versioning to **v0.6.2**.
+
+### v0.6.1 — Header Logo Contrast Fix
+- Added a dedicated light plaque behind the Sherpa Caddie logo in the header.
+- Increased contrast and separation so the logo no longer gets lost against the dark green branded top area.
+- Slightly adjusted header sizing and responsive behavior to preserve the stronger brand presence on tablet and smaller screens.
+- Updated PWA/cache versioning to **v0.6.1**.
+
+### v0.6.0 — Visual Redesign + Course Location Fix
+- Reworked the app shell to look substantially more like a dedicated golf app and less like white web cards.
+- Added deep forest branded header and gold active navigation.
+- Added richer course, AI, action-card, round, and learning-panel treatments.
+- Rebuilt nearby course discovery around OpenStreetMap/Overpass plus OpenGolfAPI.
+- Nearby results are sorted by actual distance from device GPS.
+- Separated device location from selected-course location.
+- Fixed typed-course handling so stale coordinates can no longer be reused.
+- Typed course names are resolved against multiple sources before map planning is enabled.
+- Added a labeled Sherpa schematic hole visual when exact numbered hole geometry is unavailable.
+- Updated PWA/cache versioning to **v0.6.0**.
+
+### v0.5.1 — Extended Animated Splash Screen
+- Extended the Sherpa splash screen to stay on screen for about 5 seconds.
+- Added a more deliberate logo-stage animation to better reinforce the Sherpa Caddie brand and app feel.
+- Added a moving ball/path accent and staggered title/subtitle reveal.
+- Updated versioning and service-worker cache values to **v0.5.1**.
+
+### v0.5.0 — Hole Planner + Splash Screen
+- Added a branded Sherpa splash/loading screen on app launch.
+- Rebuilt the course planning modal into a full **Hole Planner** experience.
+- Added a Garmin-inspired vertical hole visualization for mapped holes.
+- Added front / center / back hole target yardages in the planner.
+- Added strategy modes: **Play Smart**, **Attack**, and **Lay Up**.
+- Added dynamic recommendation cards for target, club, carry, wind, and plays-like distance.
+- Added mapped hazard callouts for bunkers and water when available from course geometry.
+- Added previous / next hole navigation inside the planner.
+- Added manual target selection from map taps with updated carry and leave distance.
+- Updated app-shell versioning and PWA cache version to **v0.5.0**.
+
+
+### v0.3.2
+- Restored the preferred original app-layout style.
+- Restored all v0.3 One-Shot Sherpa additions.
+- Replaced branding with the exact newly supplied logo.
+- Rebuilt the interface around the newly supplied palette.
+- Reduced top whitespace.
+- Removed the hamburger menu and extra permanent tabs.
+- Kept Club Setup accessible without cluttering primary navigation.
+- Added versioned cache assets to reduce stale GitHub Pages updates.
+
+**Created by David Fliesen**  
+© 2026
+
+
+### v0.3.3 — Ask Sherpa Fix
+- Rebuilt Ask Sherpa interaction around a proper form submit handler.
+- Ask button now responds reliably.
+- Enter key submits the question.
+- Microphone input submits recognized speech automatically where browser speech recognition is supported.
+- Added a dedicated visible Sherpa reply panel.
+- Added optional spoken answers using browser text-to-speech.
+- Expanded the local Sherpa knowledge engine for club selection, safe targets, mental reset, wind, hazards, putting, scoring, etiquette, and beginner questions.
+- During an active round, Ask Sherpa now uses the current hole, remaining distance, personal club distances, current recommendation, safe target, and mental cue.
+- Ask Sherpa remains local and does not require a backend or API key. It is rule-based rather than a generative AI model.
+
+
+### v0.3.4 — Course Planning Maps
+
+Added an interactive course-planning map to the **Play** screen.
+
+#### Planning map features
+
+- New **Plan Course Map** button after a course is selected.
+- Interactive mobile/tablet-friendly map using Leaflet.
+- OpenStreetMap base map with required attribution.
+- OpenStreetMap/Overpass golf overlays where community mapping is available:
+  - course boundary
+  - hole paths
+  - fairways
+  - greens
+  - tees
+  - bunkers
+  - water
+  - pins
+- Course Overview control.
+- Hole 1–18 selector that zooms to numbered hole paths when available.
+- Tap anywhere on the map to place a temporary **planning target**.
+- Clear Target control.
+- Sherpa planning reminder to favor the widest useful landing area and avoid the trouble that can create a big number.
+- Graceful fallback to the base course map when detailed golf features are not mapped.
+- Course map remains a planning tool and is kept separate from the simplified in-round One-Shot Sherpa screen.
+
+#### Data and connectivity
+
+Course location/scorecard data continues to come from OpenGolfAPI when available. Current weather continues to use Open-Meteo. Detailed course geometry comes from OpenStreetMap through the Overpass API.
+
+Map tiles and detailed map data require an internet connection. They are intentionally not bulk-downloaded or prefetched into the PWA cache.
+
+
+### v0.4.0 — Sherpa AI
+
+This release replaces the old helper with a **real on-device generative AI assistant** and a cleaner voice workflow.
+
+#### New Sherpa AI features
+
+- **WebLLM** integration for local generative answers running in the browser
+- Model selector with:
+  - **Fast 1B** model
+  - **Smarter 3B** model
+- Permanent Sherpa system prompt focused on:
+  - club choice
+  - safe targets
+  - course reading
+  - beginner-friendly explanation
+  - mental reset and focus
+- Sherpa AI automatically receives live app context:
+  - selected course
+  - current weather
+  - current hole and remaining distance
+  - lie
+  - current recommended club
+  - safe target and reasoning
+  - golfer's stored club distances
+  - planning-map context
+- **Improved voice flow**
+  - local Whisper speech-to-text through Transformers.js
+  - tap **Talk**, speak, tap again to stop, Sherpa transcribes and answers
+  - automatic spoken answer using browser speech synthesis
+- **On-device only** design:
+  - no backend
+  - no API key
+  - no per-message cost
+
+#### Important notes
+
+- First use downloads model files and caches them in the browser.
+- WebLLM requires a browser with **WebGPU** support.
+- The smaller 1B model is faster and lighter; the 3B model can give richer answers but takes more memory and time.
+- Deterministic app data such as scoring, yardages, saved club distances, and course/map facts remain ordinary app logic. The model interprets those facts rather than inventing them.
+
+#### Changed files in v0.4.0
+
+- `index.html`
+- `README.md`
+- `manifest.webmanifest`
+- `sw.js`
+
+
+### v0.4.1 — Sherpa AI Loading Fix
+
+This release fixes the first Sherpa AI implementation.
+
+#### Fixes
+
+- Replaced the non-official `esm.sh` WebLLM import with WebLLM's documented direct CDN import:
+  `https://esm.run/@mlc-ai/web-llm`
+- Switched engine creation to the documented `CreateMLCEngine()` factory.
+- Added a real WebGPU adapter test before model loading.
+- Changed the default AI to **SmolLM2 360M Instruct**, which is much lighter for iPad-class devices.
+- Added **Llama 3.2 1B Instruct** as the higher-quality option.
+- Sherpa automatically chooses an `f16` model variant when `shader-f16` is supported, otherwise it uses the compatible `f32` variant.
+- Added actual error details to the interface instead of only showing a generic "could not load" message.
+- Simplified voice input to one-tap live speech recognition where the browser supports it.
+- Voice now stops automatically after the golfer finishes speaking and submits the question.
+- Fixed the service worker so it never intercepts or replaces cross-origin AI/model/map requests with the app's `index.html`.
+- External AI model files remain online/download-on-first-use and are managed by the AI library/browser cache.
+
+#### Changed files in v0.4.1
+
+- `index.html`
+- `README.md`
+- `manifest.webmanifest`
+- `sw.js`

@@ -97,10 +97,6 @@
         '<h2 class="ui-h2">Sound &amp; Display</h2>' +
         (A ?
         '<div class="ui-row">' +
-          '<label for="uiMusicVol">Music level <span class="ui-val" id="uiMusicVolVal">55%</span></label>' +
-          '<input type="range" id="uiMusicVol" min="0" max="100" step="5" value="55" tabindex="-1" inputmode="none" />' +
-        '</div>' +
-        '<div class="ui-row">' +
           '<label for="uiSfxVol">Sound level <span class="ui-val" id="uiSfxVolVal">50%</span></label>' +
           '<input type="range" id="uiSfxVol" min="0" max="100" step="5" value="50" tabindex="-1" inputmode="none" />' +
         '</div>' : '') +
@@ -119,8 +115,7 @@
   function openSettings() {
     blurActive(); sfx("open");
     if (A) {
-      var mv = el("uiMusicVol"), sv = el("uiSfxVol");
-      mv.value = Math.round(A.getMusicVol() * 100); el("uiMusicVolVal").textContent = mv.value + "%"; paintRange(mv);
+      var sv = el("uiSfxVol");
       sv.value = Math.round(A.getSfxVol() * 100);   el("uiSfxVolVal").textContent   = sv.value + "%"; paintRange(sv);
     }
     var lk = el("uiFsLock");
@@ -151,16 +146,12 @@
       };
 
       if (A) {
-        var mv = el("uiMusicVol"), sv = el("uiSfxVol");
-        mv.addEventListener("input", function () { A.unlock();
-          var v = +mv.value; el("uiMusicVolVal").textContent = v + "%"; paintRange(mv);
-          A.setMusicVol(v / 100); paintSnd(); });
+        var sv = el("uiSfxVol");
         sv.addEventListener("input", function () { A.unlock();
           var v = +sv.value; el("uiSfxVolVal").textContent = v + "%"; paintRange(sv);
           A.setSfxVol(v / 100); paintSnd(); });
         sv.addEventListener("change", function () { A.sfx("tap"); blurActive(); });
-        mv.addEventListener("change", blurActive);
-        [mv, sv].forEach(function (r) {
+        [sv].forEach(function (r) {
           r.addEventListener("pointerup", function () { setTimeout(blurActive, 0); });
         });
       }

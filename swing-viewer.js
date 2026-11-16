@@ -83,6 +83,8 @@
   let view = "front";
   let timer = null;
   let direction = 1;
+  let narrationTimers = [];
+  let queuedNarration = null;
 
   positionButtons.innerHTML = positions.map((position, index) =>
     `<button type="button" data-sc-position="${index}" aria-label="P${index + 1}: ${position.title}">P${index + 1}</button>`
@@ -133,6 +135,89 @@
     });
   }
 
+  function normalizePosition(value) {
+    const match = String(value ?? "").match(/(?:position\s*)?p?\s*(10|[1-9])/i);
+    const number = match ? Number(match[1]) : Number(value);
+    return Number.isInteger(number) && number >= 1 && number <= positions.length ? number : null;
+  }
+
+  function clearNarration() {
+    narrationTimers.forEach(id => window.clearTimeout(id));
+    narrationTimers = [];
+  }
+
+  function revealViewer() {
+    const guideTab = document.querySelector('.tab[data-view="guide"]');
+    if (guideTab && !guideTab.classList.contains("active")) guideTab.click();
+    window.requestAnimationFrame(() => root.scrollIntoView({ behavior: "smooth", block: "nearest" }));
+  }
+
+  function showPosition(value, options = {}) {
+    const number = normalizePosition(value);
+    if (!number) return { success: false, message: "Position must be P1 through P10." };
+    stop();
+    render(number - 1);
+    if (options.reveal !== false) revealViewer();
+    const detail = {
+      success: true,
+      position: number,
+      label: `P${number}`,
+      title: positions[number - 1].title,
+      description: positions[number - 1].description,
+      thought: positions[number - 1].thought,
+      checks: [...positions[number - 1].checks],
+      view,
+      source: options.source || "app"
+    };
+    root.dispatchEvent(new CustomEvent("sherpa:swing-position-changed", { detail }));
+    return detail;
+  }
+
+  function narrationPositions(text) {
+    const source = String(text || "");
+    const matches = [...source.matchAll(/\b(?:P|position)\s*(10|[1-9])\b/gi)];
+    const seen = new Set();
+    return matches.reduce((items, match) => {
+      const position = Number(match[1]);
+      if (seen.has(position)) return items;
+      seen.add(position);
+      const wordsBefore = source.slice(0, match.index).trim().split(/\s+/).filter(Boolean).length;
+      items.push({ position, wordsBefore });
+      return items;
+    }, []);
+  }
+
+  function narrate(text, options = {}) {
+    clearNarration();
+    const sequence = narrationPositions(text);
+    if (!sequence.length) return { success: false, positions: [] };
+    const startDelay = Math.max(0, Number(options.startDelayMs) || 0);
+    const wordsPerSecond = Math.max(1.8, Number(options.wordsPerSecond) || 2.45);
+    sequence.forEach((item, index) => {
+      const estimatedSpeechOffset = Math.round((item.wordsBefore / wordsPerSecond) * 1000);
+      const delay = startDelay + (index === 0 ? 0 : Math.max(1800, estimatedSpeechOffset));
+      narrationTimers.push(window.setTimeout(() => {
+        showPosition(item.position, {
+          reveal: options.reveal !== false,
+          source: options.source || "sage-narration"
+        });
+      }, delay));
+    });
+    return { success: true, positions: sequence.map(item => item.position) };
+  }
+
+  function queueNarration(text, options = {}) {
+    queuedNarration = { text: String(text || ""), options };
+    return { success: narrationPositions(text).length > 0 };
+  }
+
+  function startQueuedNarration(options = {}) {
+    if (!queuedNarration) return { success: false, positions: [] };
+    const queued = queuedNarration;
+    queuedNarration = null;
+    return narrate(queued.text, { ...queued.options, ...options });
+  }
+
   function step(amount, stopFirst = true) {
     if (stopFirst) stop();
     render(current + amount);
@@ -158,6 +243,7 @@
 
   root.querySelectorAll("[data-sc-swing-view]").forEach(button => {
     button.addEventListener("click", () => {
+      clearNarration();
       stop();
       view = button.dataset.scSwingView;
       root.querySelectorAll("[data-sc-swing-view]").forEach(other => {
@@ -172,23 +258,39 @@
   positionButtons.addEventListener("click", event => {
     const button = event.target.closest("[data-sc-position]");
     if (!button) return;
+    clearNarration();
     stop();
     render(Number(button.dataset.scPosition));
   });
-  range.addEventListener("input", () => { stop(); render(Number(range.value) - 1); });
-  playButton.addEventListener("click", () => timer && direction === 1 ? stop() : play(1));
-  reverseButton.addEventListener("click", () => timer && direction === -1 ? stop() : play(-1));
-  root.querySelector("#scStop").addEventListener("click", stop);
-  root.querySelector("#scPrevious").addEventListener("click", () => step(-1));
-  root.querySelector("#scNext").addEventListener("click", () => step(1));
+  range.addEventListener("input", () => { clearNarration(); stop(); render(Number(range.value) - 1); });
+  playButton.addEventListener("click", () => { clearNarration(); timer && direction === 1 ? stop() : play(1); });
+  reverseButton.addEventListener("click", () => { clearNarration(); timer && direction === -1 ? stop() : play(-1); });
+  root.querySelector("#scStop").addEventListener("click", () => { clearNarration(); queuedNarration = null; stop(); });
+  root.querySelector("#scPrevious").addEventListener("click", () => { clearNarration(); step(-1); });
+  root.querySelector("#scNext").addEventListener("click", () => { clearNarration(); step(1); });
 
   root.addEventListener("keydown", event => {
     if (event.target.matches("button,input")) return;
-    if (event.key === "ArrowLeft") { event.preventDefault(); step(-1); }
-    if (event.key === "ArrowRight") { event.preventDefault(); step(1); }
-    if (event.key === " ") { event.preventDefault(); timer ? stop() : play(1); }
+    if (event.key === "ArrowLeft") { event.preventDefault(); clearNarration(); step(-1); }
+    if (event.key === "ArrowRight") { event.preventDefault(); clearNarration(); step(1); }
+    if (event.key === " ") { event.preventDefault(); clearNarration(); timer ? stop() : play(1); }
   });
 
-  document.addEventListener("visibilitychange", () => { if (document.hidden) stop(); });
+  window.SherpaSwingBridge = {
+    showPosition,
+    narrate,
+    queueNarration,
+    startQueuedNarration,
+    cancelNarration() { clearNarration(); queuedNarration = null; },
+    getCurrentPosition() {
+      return { position: current + 1, label: `P${current + 1}`, title: positions[current].title, view };
+    },
+    listPositions() {
+      return positions.map((position, index) => ({ position: index + 1, label: `P${index + 1}`, title: position.title }));
+    }
+  };
+  document.dispatchEvent(new CustomEvent("sherpa:swing-bridge-ready", { detail: window.SherpaSwingBridge }));
+
+  document.addEventListener("visibilitychange", () => { if (document.hidden) { clearNarration(); stop(); } });
   render(0);
 })();

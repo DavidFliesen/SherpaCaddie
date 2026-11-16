@@ -9,7 +9,7 @@
 <link rel="icon" href="icons/favicon.png?v=0141" type="image/png">
 <link rel="apple-touch-icon" href="icons/icon-192.png?v=0141">
 <link rel="preload" as="image" href="assets/sherpa-caddie-logo-fast.webp?v=0141" type="image/webp" fetchpriority="high">
-<title>Sherpa Caddie v0.13.3</title>
+<title>Sherpa Caddie v0.13.4</title>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
   crossorigin="">
 <link rel="stylesheet" href="arteziq-ui.css?v=0141">
@@ -1160,7 +1160,7 @@ body.immersive .brand-center{display:none!important}
     <div class="splash-path" aria-hidden="true"><span></span><i></i></div>
     <div class="splash-caption">Walking your game plan into place…</div>
   </div>
-  <div class="splash-footer">ARTEZIQ • Sherpa Caddie • v0.13.3</div>
+  <div class="splash-footer">ARTEZIQ • Sherpa Caddie • v0.13.4</div>
 </div>
 <div class="app">
 <header class="topbar mentor-topbar" data-mode="text">
@@ -1221,7 +1221,7 @@ body.immersive .brand-center{display:none!important}
     <div class="console-hint"><button type="button" id="sageLocalDemo" hidden>▶ Play ACA demo</button><span id="companionControlHint">Type a question above, then tap Ask.</span></div>
   </div>
 
-  <div class="version app-chrome">v0.13.3</div>
+  <div class="version app-chrome">v0.13.4</div>
 </header>
 
 <div class="tabs-wrap app-chrome">
@@ -1814,14 +1814,17 @@ body.immersive .brand-center{display:none!important}
   </article>
 </section>
 
-<div class="footer"><span>ARTEZIQ • Sherpa Caddie • v0.13.3</span><button id="aboutBtn">What’s in v0.13.3?</button></div>
+<div class="footer"><span>ARTEZIQ • Sherpa Caddie • v0.13.4</span><button id="aboutBtn">What’s in v0.13.4?</button></div>
 </main>
 </div>
 
 <div id="aboutModal" class="modal-backdrop hidden" role="dialog" aria-modal="true">
   <div class="modal" style="max-width:650px">
-    <div class="section-head"><div><p class="eyebrow">Back to Basics</p><h2>Version 0.13.3</h2></div><button class="btn ghost" id="closeAboutModal">Close</button></div>
+    <div class="section-head"><div><p class="eyebrow">Back to Basics</p><h2>Version 0.13.4</h2></div><button class="btn ghost" id="closeAboutModal">Close</button></div>
     <ul style="color:var(--stone);line-height:1.7">
+      <li>Sage can now display P1 through P10 while explaining the swing, including moving through several referenced positions during a spoken answer</li>
+      <li>A provider-neutral Sherpa Swing Bridge works with D-ID today and is ready for the future ARTEZIQ Conversational Avatar</li>
+      <li>The unused Music level control has been removed; Sherpa Caddie now shows only its functional Sage and interface sound control</li>
       <li>The iPad GUIDE layout now shows Sage and the complete P1–P10 swing viewer together with substantially less scrolling</li>
       <li>Sage’s portrait and conversation interface share one even-height row, so neither side looks clipped or oversized</li>
       <li>The swing image, coaching details, playback buttons, slider, and all ten position buttons remain visible in the compact viewer</li>
@@ -1980,7 +1983,7 @@ body.immersive .brand-center{display:none!important}
 <div class="toast" id="toast"></div>
 
 <script src="arteziq-audio.js?v=0141"></script>
-<script src="arteziq-ui.js?v=0141"></script>
+<script src="arteziq-ui.js?v=0152"></script>
 <script src="garmin-round-import.js?v=0141"></script>
 <script>
 (()=>{"use strict";
@@ -2004,7 +2007,7 @@ window.anFeedbackContext=function(){
       screen=({guide:"Guide",learn:"Learn",play:"Plan",technology:"Technology",clubs:"Clubs",review:"Review"})[active]||"Guide";
     }
   }catch(_){ }
-  return{appVersion:"0.13.3",buildNumber:"0151",screen};
+  return{appVersion:"0.13.4",buildNumber:"0152",screen};
 };
 
 function sherpaSoundVolume(){
@@ -2022,12 +2025,11 @@ function syncSherpaAudioVolume(){
 function initArteziqUiKit(){
   if(!window.AUDIO||!window.UIKIT)return;
   try{
-    if(localStorage.getItem("sc_musicvol")===null)localStorage.setItem("sc_musicvol","0");
     if(localStorage.getItem("sc_sfxvol")===null)localStorage.setItem("sc_sfxvol","0.8");
   }catch(_){ }
   AUDIO.init({dir:"assets/audio/",prefix:"sc_",music:{},sfx:{}});
   UIKIT.init({prefix:"sc_",extraSettingsHTML:
-    '<div id="scAudioNote">Sound level also controls Sage’s spoken replies. Sherpa Caddie does not currently use background music.</div>'+
+    '<div id="scAudioNote">Sound level controls Sage’s spoken replies and interface sounds.</div>'+
     '<div class="ui-switchrow"><div class="ui-txt"><h4>Spoken replies</h4><p>Let Sage answer aloud in Voice, Video, and Local Sage.</p></div><button class="ui-switch" id="scSpokenReplies" type="button" role="switch" aria-checked="true"></button></div>'+
     '<div class="ui-switchrow"><div class="ui-txt"><h4>Hands-Free listening</h4><p>Listen for Sherpa, Hey Sherpa, Sage, or Hey Sage.</p></div><button class="ui-switch" id="scHandsFree" type="button" role="switch" aria-checked="false"></button></div>'+
     '<div class="ui-switchrow"><div class="ui-txt"><h4>Local Sage experiment</h4><p>Show the scripted portrait demo in Sage’s mode selector.</p></div><button class="ui-switch" id="scLocalSage" type="button" role="switch" aria-label="Local Sage experiment" aria-checked="false"></button></div>'+
@@ -2390,6 +2392,13 @@ function showLiveStream(active=true){
   if(typeof video.requestVideoFrameCallback==="function")video.requestVideoFrameCallback(reveal);else setTimeout(reveal,140);
 }
 function liveToolResult(data){return JSON.stringify(data)}
+function sageSwingBridge(){return window.SherpaSwingBridge||null}
+function syncSageSwingNarration(text,source="sage"){
+  const bridge=sageSwingBridge();if(!bridge||!text)return false;
+  const options={source,reveal:true};
+  if(source==="dca"&&liveState.mode!=="speaking")return bridge.queueNarration(text,options).success;
+  return bridge.narrate(text,options).success;
+}
 const sherpaToolHandlers={};
 function registerSherpaLiveTools(manager,generation){
   const add=(name,handler)=>{
@@ -2410,6 +2419,13 @@ function registerSherpaLiveTools(manager,generation){
   });
   add("get_weather_context",async()=>toolTestActive("get_weather_context")?diagnosticResult("get_weather_context",{weather_loaded:!!state.weather}):liveToolResult({temperature_f:state.weather?.temperature_2m??null,wind_mph:state.weather?.wind_speed_10m??null,gust_mph:state.weather?.wind_gusts_10m??null,wind_direction_degrees:state.weather?.wind_direction_10m??null,weather_loaded:!!state.weather}));
   add("get_club_distances",async()=>toolTestActive("get_club_distances")?diagnosticResult("get_club_distances",{bag_mode:state.bagMode,club_count:activeClubEntries().length}):liveToolResult({bag_mode:state.bagMode,clubs:Object.fromEntries(activeClubEntries())}));
+  add("show_swing_position",async(args={})=>{
+    const bridge=sageSwingBridge();
+    if(!bridge)throw new Error("The P-position viewer is not ready yet.");
+    const result=bridge.showPosition(args.position??args.p_position??args.checkpoint,{source:"dca-tool",reveal:true});
+    if(!result.success)throw new Error(result.message||"Choose a position from P1 through P10.");
+    return liveToolResult(result);
+  });
   add("record_shot",async(args={})=>{
     if(toolTestActive("record_shot"))return diagnosticResult("record_shot",{dry_run:true,received_args:args});
     return liveToolResult({success:false,live_tracking:false,message:"Per-shot recording has been removed to protect pace of play. Add the score and comments in REVIEW after the game."});
@@ -2434,6 +2450,8 @@ function registerSherpaLiveTools(manager,generation){
 }
 function detectSherpaToolIntent(question){
   const q=String(question||"").toLowerCase();
+  const swing=q.match(/\b(?:show|display|open|explain|describe|teach|talk about|go to|move to)\s+(?:me\s+)?(?:the\s+)?(?:swing\s+)?(?:p\s*(10|[1-9])|position\s*(10|[1-9]))\b/i);
+  if(swing)return{name:"show_swing_position",args:{position:Number(swing[1]||swing[2])}};
   if(/\b(open|show)\b.*\b(hole )?planner\b/.test(q))return{name:"open_hole_planner",args:{}};
   if(/\b(play smart|safer strategy|safe strategy)\b/.test(q))return{name:"set_strategy",args:{strategy:"smart"}};
   if(/\b(attack|aggressive strategy|play aggressive)\b/.test(q))return{name:"set_strategy",args:{strategy:"attack"}};
@@ -2449,6 +2467,7 @@ function bridgedToolAnswer(name,data){
   if(name==="get_shot_recommendation")return`For pre-game planning, favor the largest safe landing area and choose enough club for a comfortable swing. Give me a specific distance if you want a club recommendation.`;
   if(name==="get_weather_context")return data.weather_loaded?`It is ${Math.round(data.temperature_f)} degrees with wind around ${Math.round(data.wind_mph)} miles per hour and gusts near ${Math.round(data.gust_mph)}.`:"Course weather is not loaded yet. Select the course and tap Weather before relying on a wind adjustment.";
   if(name==="get_club_distances"){const clubs=Object.entries(data.clubs||{});return clubs.length?`Your ${data.bag_mode==="sunday"?"Sunday Bag":"bag"} carries are ${clubs.map(([club,yards])=>`${club}, ${yards} yards`).join("; ")}.`:"No club carry distances are saved yet."}
+  if(name==="show_swing_position")return`Showing ${data.label}, ${data.title}. ${data.description} One simple thought: ${data.thought}`;
   if(name==="record_shot"||name==="finish_hole"||name==="next_hole")return data.message||"Live game tracking has been removed. Enter your results in REVIEW after playing.";
   if(name==="set_strategy")return`Strategy changed to ${data.label}.`;
   if(name==="open_hole_planner")return`Opening the Hole Planner${data.hole?` for Hole ${data.hole}`:""}.`;
@@ -2634,14 +2653,14 @@ async function connectDidAttempt(force,recoveryAttempt){
         const s=String(value||"").toUpperCase();
         const talking=s!=="STOP"&&s!=="IDLE"&&s!=="";
         liveState.mode=talking?"speaking":"idle";aiState.speaking=talking;
-        if(talking){applySagePlayback();liveState.didSpeechStarted=true;clearBridgedSpeakFallback();const video=$("#sherpaLiveVideo");if(video){video.muted=!aiState.speakReplies||sherpaSoundVolume()<=0;video.volume=sherpaSoundVolume();video.play().then(()=>{if(isCurrentDid(generation)){liveState.audioPlayFailed=false;showLiveStream(true)}}).catch(()=>{if(isCurrentDid(generation)){liveState.audioPlayFailed=true;showLiveStream(false)}})}}else showLiveStream(false);
+        if(talking){applySagePlayback();liveState.didSpeechStarted=true;clearBridgedSpeakFallback();sageSwingBridge()?.startQueuedNarration({source:"dca",reveal:true});const video=$("#sherpaLiveVideo");if(video){video.muted=!aiState.speakReplies||sherpaSoundVolume()<=0;video.volume=sherpaSoundVolume();video.play().then(()=>{if(isCurrentDid(generation)){liveState.audioPlayFailed=false;showLiveStream(true)}}).catch(()=>{if(isCurrentDid(generation)){liveState.audioPlayFailed=true;showLiveStream(false)}})}}else showLiveStream(false);
         setMentorActivity(talking?"speaking":aiState.handsFree?"listening":"idle",talking?"Sage is speaking":aiState.handsFree?`Listening for ${WAKE_PHRASES}…`:"Video connected • ready");
         setLiveVisual(talking?"Sage is speaking":"Sage is ready");
         touchMentorSession();
         if(talking)stopSageCapture();
         if(!talking&&aiState.handsFree&&sherpaExperience==="live")scheduleHandsFreeRestart()
       },
-      onNewMessage(messages,type){if(!isCurrentDid(generation))return;if(!Array.isArray(messages)||!messages.length)return;const last=messages[messages.length-1];if(last?.role==="user")setLiveTranscript("user",last.content);if(last?.role==="assistant"&&(type==="answer"||type==="partial")){setLiveTranscript("assistant",last.content);if(liveState.requestStartedAt&&!liveState.toolTest){const seconds=((Date.now()-liveState.requestStartedAt)/1000).toFixed(1);setLiveToolStatus(`Sage started responding in ${seconds}s.`);liveState.requestStartedAt=0}if(type==="answer"){setLiveVisual("Sage is speaking");if(aiState.speakReplies){clearBridgedSpeakFallback();liveState.speakFallbackTimer=setTimeout(()=>{if(!isCurrentDid(generation))return;if(!liveState.didSpeechStarted){setLiveToolStatus("D-ID did not start audio, so Sage is using the local voice.");showLiveStream(false);speakSherpa(last.content,false)}clearBridgedSpeakFallback()},8000)}const test=liveState.toolTest;if(test&&!test.started)setTimeout(()=>{if(liveState.toolTest===test&&!test.started)runBridgedToolDiagnostic(test)},500)}}touchMentorSession()},
+      onNewMessage(messages,type){if(!isCurrentDid(generation))return;if(!Array.isArray(messages)||!messages.length)return;const last=messages[messages.length-1];if(last?.role==="user")setLiveTranscript("user",last.content);if(last?.role==="assistant"&&(type==="answer"||type==="partial")){setLiveTranscript("assistant",last.content);if(liveState.requestStartedAt&&!liveState.toolTest){const seconds=((Date.now()-liveState.requestStartedAt)/1000).toFixed(1);setLiveToolStatus(`Sage started responding in ${seconds}s.`);liveState.requestStartedAt=0}if(type==="answer"){syncSageSwingNarration(last.content,"dca");setLiveVisual("Sage is speaking");if(aiState.speakReplies){clearBridgedSpeakFallback();liveState.speakFallbackTimer=setTimeout(()=>{if(!isCurrentDid(generation))return;if(!liveState.didSpeechStarted){setLiveToolStatus("D-ID did not start audio, so Sage is using the local voice.");showLiveStream(false);speakSherpa(last.content,false)}clearBridgedSpeakFallback()},8000)}const test=liveState.toolTest;if(test&&!test.started)setTimeout(()=>{if(liveState.toolTest===test&&!test.started)runBridgedToolDiagnostic(test)},500)}}touchMentorSession()},
       onToolEvent(event){if(!isCurrentDid(generation))return;
         const p=event?.payload||{},name=p.name||"Sherpa tool";
         const test=liveState.toolTest;
@@ -2760,6 +2779,7 @@ async function sendSherpaLive(text){
 async function setSherpaMode(mode){
   if(!["text","voice","live"].includes(mode)&&!(mode==="local"&&localSageEnabled&&localSage))mode="text";
   const revision=++sherpaModeRevision,previous=sherpaExperience;
+  sageSwingBridge()?.cancelNarration();
   if(previous==="local")localSage.cancel();
   sherpaExperience=mode;
   stopActiveVoice();
@@ -2856,6 +2876,8 @@ async function submitCompanionQuestion(){
   const revision=sherpaModeRevision;
   const q=(companionInput?.value||"").trim();if(!q)return;
   if(companionInput)companionInput.value="";
+  const swingIntent=detectSherpaToolIntent(q);
+  if(swingIntent?.name==="show_swing_position")sageSwingBridge()?.showPosition(swingIntent.args.position,{source:`${sherpaExperience}-request`,reveal:true});
   if(sherpaExperience==="local"){
     await submitLocalSageQuestion(q);
     return;
@@ -2951,7 +2973,7 @@ function syncLocalSageFlag(){
       isAllowed:()=>sherpaExperience==="local"&&!document.hidden,
       getRoute:()=>$(".tab.active")?.dataset.view,
       onState:setLocalSageActivity,
-      onAnswer:text=>setQuickAnswer(`Sage: ${text}`),
+      onAnswer:text=>{setQuickAnswer(`Sage: ${text}`);syncSageSwingNarration(text,"aca")},
       onFallback:()=>{
         localAudioOnly=true;
         setMentorActivity("speaking","Local Sage • audio only");
@@ -3360,6 +3382,7 @@ async function speakSherpa(text,resumeHandsFree=true){
   const modeRevision=sherpaModeRevision;
   if(!aiState.speakReplies){if(resumeHandsFree&&aiState.handsFree)scheduleHandsFreeRestart();return}
   aiState.speaking=true;setMentorActivity("speaking","Speaking…");
+  syncSageSwingNarration(text,sherpaExperience==="live"?"dca-fallback":"voice");
   stopActiveVoice();aiState.speaking=true;
   const revision=voiceRevision;
   const playbackReady=prepareSagePlayback();
@@ -3972,13 +3995,13 @@ function renderRounds(){
  })
 }
 $("#clearAllRoundsBtn").onclick=()=>{if(!state.rounds.length)return;if(!confirm(`Delete all ${state.rounds.length} saved game reviews? This cannot be undone.`))return;state.rounds=[];save();renderRounds();toast("All saved game reviews deleted")};
-$("#exportBtn").onclick=()=>{const b=new Blob([JSON.stringify({version:"0.13.3",bagMode:state.bagMode,clubs:state.clubs,rounds:state.rounds},null,2)],{type:"application/json"}),a=document.createElement("a");a.href=URL.createObjectURL(b);a.download=`sherpa-caddie-data-${new Date().toISOString().slice(0,10)}.json`;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),500)};
+$("#exportBtn").onclick=()=>{const b=new Blob([JSON.stringify({version:"0.13.4",bagMode:state.bagMode,clubs:state.clubs,rounds:state.rounds},null,2)],{type:"application/json"}),a=document.createElement("a");a.href=URL.createObjectURL(b);a.download=`sherpa-caddie-data-${new Date().toISOString().slice(0,10)}.json`;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),500)};
 $("#importBtn").onclick=()=>$("#importFile").click();$("#importFile").onchange=async e=>{const f=e.target.files[0];if(!f)return;try{const d=JSON.parse(await f.text());if(d.clubs)state.clubs=d.clubs;if(d.bagMode)state.bagMode=d.bagMode;if(d.rounds)state.rounds=d.rounds;save();renderClubs();renderRounds();toast("Data imported")}catch{toast("Could not import that file")}e.target.value=""};
 
 function hideSplash(){const el=$("#splashScreen");if(!el||el.classList.contains("is-hidden"))return;el.classList.add("is-hidden");setTimeout(()=>el.remove(),800);setTimeout(()=>window.UIKIT?.applyFSLock?.(),850)}
 window.addEventListener("load",()=>setTimeout(hideSplash,5000));
 setTimeout(hideSplash,5600);
-if("serviceWorker"in navigator)window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js?v=0151").catch(()=>{}));
+if("serviceWorker"in navigator)window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js?v=0152").catch(()=>{}));
 document.querySelectorAll("[data-tech-product]").forEach(link=>link.addEventListener("click",()=>window.anTrack("technology_product_opened",{data:{product:link.dataset.techProduct}})));
 initArteziqUiKit();
 renderClubs();
@@ -3988,7 +4011,7 @@ syncLocalSageFlag();
 })();
 </script>
 
-<script src="swing-viewer.js?v=0150" defer></script>
+<script src="swing-viewer.js?v=0152" defer></script>
 
 <!-- ARTEZIQ LADYBUG FEEDBACK. The connector remains dormant until the two
      browser-safe public values in ladybug/ladybug-config.js are configured. -->

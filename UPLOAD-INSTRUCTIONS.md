@@ -1,4 +1,4 @@
-# Sherpa Caddie v0.13.3 — iPad Full GUIDE Layout Fix
+# Sherpa Caddie v0.13.4 — Sage-Controlled Swing Positions
 
 Upload the contents of this changed-files package to the root of the `DavidFliesen/SherpaCaddie` repository.
 
@@ -6,15 +6,21 @@ Upload the contents of this changed-files package to the root of the `DavidFlies
 
 - `index.html`
 - `sw.js`
-- `swing-viewer.css`
+- `swing-viewer.js`
+- `arteziq-ui.js`
+- `README.md`
+- `UPLOAD-INSTRUCTIONS.md`
 
-The existing `swing-viewer.js` and all twenty swing-position images remain unchanged from v0.13.2.
+The existing `swing-viewer.css` and all twenty swing-position images remain unchanged from v0.13.3.
 
 ## What this fixes
 
-- Makes Sage's portrait and the full question-and-answer interface an even-height two-column row on iPad and larger screens.
-- Reduces unused vertical space without removing Text, Voice, Video, question, answer, or hands-free controls.
-- Compacts the P1–P10 viewer so the golfer, coaching panel, playback controls, slider, and every position button fit beneath Sage in the same screen view.
+- Lets Sage show an individual P position through the native app bridge.
+- Advances the viewer through P-position references during spoken explanations.
+- Uses the same bridge for D-ID now and the future ARTEZIQ Conversational Avatar.
+- Recognizes direct requests such as “Show P4” even if D-ID does not dispatch its configured tool.
+- Removes the unused Music level setting while retaining Sage and interface sound volume.
+- Restores the full README development record and places the current version at the top.
 - Restores the complete Sherpa Caddie PWA instead of using a standalone swing-viewer page.
 - Places the P1–P10 viewer below Sage on the GUIDE tab.
 - Makes “The 10 Golf Swing Positions” the first GUIDE content beneath the navigation.
@@ -28,4 +34,4 @@ The existing `swing-viewer.js` and all twenty swing-position images remain uncha
 
 ## After uploading
 
-Wait for GitHub Pages and Cloudflare Pages to finish deploying. Because this release changes the service-worker cache to `sherpa-caddie-v0.13.3`, reopen or refresh the installed PWA after deployment so the new cache can activate.
+Wait for GitHub Pages and Cloudflare Pages to finish deploying. Because this release changes the service-worker cache to `sherpa-caddie-v0.13.4`, reopen or refresh the installed PWA after deployment so the new cache can activate.

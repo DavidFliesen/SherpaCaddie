@@ -1,9 +1,9 @@
-const CACHE="sherpa-caddie-v0.13.3";
+const CACHE="sherpa-caddie-v0.13.4";
 const APP_FILES=[
   "./",
-  "./index.html?v=0151",
+  "./index.html?v=0152",
   "./swing-viewer.css?v=0151",
-  "./swing-viewer.js?v=0150",
+  "./swing-viewer.js?v=0152",
   "./assets/swing-positions/front/p1.webp?v=0150",
   "./assets/swing-positions/front/p2.webp?v=0150",
   "./assets/swing-positions/front/p3.webp?v=0150",
@@ -34,7 +34,7 @@ const APP_FILES=[
   "./assets/sage-local/practice.mp3?v=0148",
   "./arteziq-ui.css?v=0141",
   "./arteziq-audio.js?v=0141",
-  "./arteziq-ui.js?v=0141",
+  "./arteziq-ui.js?v=0152",
   "./garmin-round-import.js?v=0141",
   "./assets/sherpa-caddie-logo-fast.webp?v=0141",
   "./assets/sage-sherpa-live.webp?v=0141",
@@ -128,7 +128,7 @@ self.addEventListener("fetch", event => {
   // Page navigation: network first, app shell only as true offline fallback.
   if(request.mode === "navigate"){
     event.respondWith(
-      fetch(request).catch(() => caches.match("./index.html?v=0151"))
+      fetch(request).catch(() => caches.match("./index.html?v=0152"))
     );
     return;
   }
