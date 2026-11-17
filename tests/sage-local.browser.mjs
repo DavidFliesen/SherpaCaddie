@@ -35,8 +35,8 @@ async function ask(page, question = sample) {
 
 async function load(page, url = flagUrl) {
   await page.goto(url);
-  assert.match(await page.locator(".splash-footer").textContent(), /v0\.13\.0/);
-  assert.match(await page.locator(".footer").textContent(), /v0\.13\.0/);
+  assert.match(await page.locator(".splash-footer").textContent(), /v0\.13\.5/);
+  assert.match(await page.locator(".footer").textContent(), /v0\.13\.5/);
   await page.locator("#splashScreen").waitFor({ state: "hidden" });
 }
 
@@ -127,15 +127,14 @@ async function probeIPadAudio(page) {
 }
 
 test("Sherpa Caddie Phase 1 in Chromium", async t => {
-  const browser = await chromium.launch({
-    executablePath: process.env.SAGE_CHROMIUM || undefined,
-    args: process.env.SAGE_HEADLESS_SHELL ? ["--single-process", "--no-zygote", "--disable-gpu"] : [],
-  });
-  t.after(() => browser.close());
   if (resultDir) await mkdir(resultDir, { recursive: true });
 
   async function run(name, options, callback) {
     await t.test(name, async subtest => {
+      const browser = await chromium.launch({
+        executablePath: process.env.SAGE_CHROMIUM || undefined,
+        args: process.env.SAGE_HEADLESS_SHELL ? ["--single-process", "--no-zygote", "--disable-gpu"] : [],
+      });
       const context = await browser.newContext({ serviceWorkers: "block", ...options });
       try {
         const page = await context.newPage();
@@ -147,7 +146,7 @@ test("Sherpa Caddie Phase 1 in Chromium", async t => {
         await callback(page, context, requests, subtest);
         assert.deepEqual(errors, []);
       } finally {
-        await context.close();
+        await browser.close();
       }
     });
   }
