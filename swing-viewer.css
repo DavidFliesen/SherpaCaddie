@@ -245,3 +245,6 @@
   .sc-swing-coach li:before{width:18px;height:18px;font-size:.66rem}
   .sc-swing-tip{padding-top:12px;font-size:.67rem;line-height:1.35}
 }
+
+.sc-tour-controls{display:flex;align-items:center;gap:10px;margin-top:8px}
+.sc-tour-controls [role="status"]{font-size:.78rem}

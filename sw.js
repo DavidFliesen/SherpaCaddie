@@ -1,9 +1,9 @@
-const CACHE="sherpa-caddie-v0.13.4";
+const CACHE="sherpa-caddie-v0.13.5";
 const APP_FILES=[
   "./",
-  "./index.html?v=0152",
-  "./swing-viewer.css?v=0151",
-  "./swing-viewer.js?v=0152",
+  "./index.html?v=0153",
+  "./swing-viewer.css?v=0153",
+  "./swing-viewer.js?v=0153",
   "./assets/swing-positions/front/p1.webp?v=0150",
   "./assets/swing-positions/front/p2.webp?v=0150",
   "./assets/swing-positions/front/p3.webp?v=0150",
@@ -24,14 +24,25 @@ const APP_FILES=[
   "./assets/swing-positions/three-quarter/p8.webp?v=0150",
   "./assets/swing-positions/three-quarter/p9.webp?v=0150",
   "./assets/swing-positions/three-quarter/p10.webp?v=0150",
-  "./manifest.webmanifest?v=0148",
-  "./sage-local/index.mjs?v=0148",
-  "./sage-local/media-playback.mjs?v=0148",
+  "./manifest.webmanifest?v=0153",
+  "./sage-local/index.mjs?v=0153",
+  "./sage-local/media-playback.mjs?v=0153",
   "./sage-local/session-controller.mjs?v=0148",
   "./sage-local/tool-registry.mjs?v=0148",
-  "./sage-local/portrait.mjs?v=0148",
+  "./sage-local/portrait.mjs?v=0153",
   "./sage-local/demo.mjs?v=0148",
   "./assets/sage-local/practice.mp3?v=0148",
+  "./sage-local/swing-tour-cues.mjs?v=0153",
+  "./assets/sage-local/swing-tour/p1.mp3?v=0153",
+  "./assets/sage-local/swing-tour/p2.mp3?v=0153",
+  "./assets/sage-local/swing-tour/p3.mp3?v=0153",
+  "./assets/sage-local/swing-tour/p4.mp3?v=0153",
+  "./assets/sage-local/swing-tour/p5.mp3?v=0153",
+  "./assets/sage-local/swing-tour/p6.mp3?v=0153",
+  "./assets/sage-local/swing-tour/p7.mp3?v=0153",
+  "./assets/sage-local/swing-tour/p8.mp3?v=0153",
+  "./assets/sage-local/swing-tour/p9.mp3?v=0153",
+  "./assets/sage-local/swing-tour/p10.mp3?v=0153",
   "./arteziq-ui.css?v=0141",
   "./arteziq-audio.js?v=0141",
   "./arteziq-ui.js?v=0152",
@@ -68,8 +79,8 @@ self.addEventListener("activate", event => {
   self.clients.claim();
 });
 
-// Safari's media player can probe a cached MP3 with Range: bytes=0-1.
-async function servePracticeAudioRange(request, range) {
+// Safari's media player can probe cached MP3 files with Range: bytes=0-1.
+async function serveCachedAudioRange(request, range) {
   const cache = await caches.open(CACHE);
   const cached = await cache.match(request.url);
   if (!cached || cached.status !== 200) return fetch(request);
@@ -105,8 +116,8 @@ self.addEventListener("fetch", event => {
   }
 
   const range = request.headers.get("range");
-  if(range && url.pathname.endsWith("/assets/sage-local/practice.mp3")){
-    event.respondWith(servePracticeAudioRange(request, range));
+  if(range && /\/assets\/sage-local\/(?:practice|swing-tour\/p(?:10|[1-9]))\.mp3$/.test(url.pathname)){
+    event.respondWith(serveCachedAudioRange(request, range));
     return;
   }
 
@@ -128,7 +139,7 @@ self.addEventListener("fetch", event => {
   // Page navigation: network first, app shell only as true offline fallback.
   if(request.mode === "navigate"){
     event.respondWith(
-      fetch(request).catch(() => caches.match("./index.html?v=0152"))
+      fetch(request).catch(() => caches.match("./index.html?v=0153"))
     );
     return;
   }

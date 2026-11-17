@@ -1,6 +1,6 @@
 # Sherpa Caddie
 
-## Current version: 0.13.4 — Sage-Controlled Swing Positions
+## Current version: 0.13.5 — Playback-Synchronized Swing Tour
 
 Sherpa Caddie is an ARTEZIQ progressive web app that helps golfers prepare, practice with purpose, understand their equipment, and reflect after a game. Its direction is intentionally different from a traditional shot-tracking app: golfers should not have to record every swing while people are waiting behind them. Sherpa Caddie emphasizes calm preparation before playing, simple coaching away from the course, and a post-game review that can be completed quickly.
 
@@ -29,14 +29,15 @@ Sage is the coaching layer shared across the app:
 
 The GUIDE opening experience presents P1 through P10 in Front and 3/4 views. Golfers can play the sequence forward or backward, stop it, step one position at a time, drag the slider, or choose a numbered position directly. Each position includes a plain-language explanation, one simple thought, and a short body-and-club checklist.
 
-Version 0.13.4 adds a provider-neutral `SherpaSwingBridge`. The viewer exposes the same commands to DCA, ACA, Voice, and future Sage providers:
+Choose **Tour with Sage** in GUIDE or ask Sage to “Walk me through all ten golf swing positions.” The tour uses one conversational script that begins each segment with “Position One” through “Position Ten.” The viewer changes the frame when the provider reports playback starting. The next segment is requested after the current one finishes.
 
-- `showPosition(position)` displays a single checkpoint from P1 through P10.
-- `narrate(text)` identifies P-position references in a spoken explanation and advances the viewer at estimated speech points.
-- `queueNarration(text)` and `startQueuedNarration()` allow DCA to wait until avatar speech begins.
-- `getCurrentPosition()` and `listPositions()` give an AI provider structured viewer context.
+- **DCA (Video)** sends each segment to D-ID and uses the SDK’s `START` and `STOP` video-state callbacks. DCA requires a connected, provisioned agent with available credits.
+- **ACA (experimental)** plays ten bundled Kokoro clips with portrait cues tied to the media clock. It uses the browser’s `playing` and `ended` events. Once the PWA has cached the release, ACA can play the tour offline. Enable ACA in Settings or open the app with `?sageLocal=1`.
+- **Voice** and the explicit tour request in **Text** use the browser’s speech start and end callbacks. Turn on Spoken Replies and app sound before starting.
 
-The D-ID browser integration registers a `show_swing_position` client tool with one required integer argument, `position`, from 1 through 10. The direct Sherpa browser bridge also recognizes natural requests such as “Show P4” or “Explain P7,” so a useful position change does not depend entirely on D-ID electing to call its configured tool.
+Select **Front View** or **3/4 View** to stop the tour and display P1 in the selected view, including when reselecting the current view. **Stop** and the other manual swing controls also cancel narration. A new tour starts from Position One.
+
+Sage can still show an individual checkpoint on requests such as “Show P4.” D-ID registers a `show_swing_position` client tool with one integer argument, `position`, from 1 through 10. `SherpaSwingBridge` exposes `showPosition`, `getCurrentPosition`, and `listPositions` for direct viewer control. For the guided tour, `runTour` accepts a playback adapter that reports the start of each segment and resolves when playback ends.
 
 ### Data, connectivity, and external services
 
@@ -56,6 +57,28 @@ The D-ID browser integration registers a `show_swing_position` client tool with 
 - `ladybug/` — centralized tester feedback integration.
 - `rag/` — golf and mental-game knowledge supplied to Sage.
 - `sw.js` and `manifest.webmanifest` — installation, offline shell, cache versioning, and PWA metadata.
+
+## Version 0.13.5 — Playback-Synchronized Swing Tour
+
+Apply the changed-files ZIP at the repository root over v0.13.4, retaining the existing project tree. Reopen the PWA and confirm **v0.13.5** in the footer. The service worker uses build **0153**.
+
+The scripted narration lives in `swing-viewer.js`. After editing it, regenerate the matching ACA speech clips and portrait cues using:
+
+```sh
+python3 sage-local/generate-demo.py /path/to/kokoro-model-files --swing-tour
+```
+
+The generator uses the same Kokoro `af_heart` voice as the practice demo. It expects `model.onnx`, `tokenizer.json`, and `af_heart.bin`, plus Python NumPy and ONNX, Node phonemizer and onnxruntime-web, and FFmpeg.
+
+### Verification for v0.13.5
+
+Serve the app locally with `python3 -m http.server 8765`. With Playwright Chromium installed, run:
+
+```sh
+node --test tests/sage-local.test.mjs tests/sage-local.browser.mjs tests/swing-tour.browser.mjs
+```
+
+The swing-tour browser tests exercise SDK callbacks with a mocked DCA connection and native playback of cached ACA media. Check live D-ID playback and physical iPhone or iPad Safari separately if those are target devices.
 
 ## Version 0.13.4 — Sage-Controlled Swing Positions
 
