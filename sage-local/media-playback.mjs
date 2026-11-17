@@ -1,6 +1,6 @@
 // iPhone and iPad use native media playback for the bundled ACA clip.
 // Start play() within the tap and drive the portrait from the media clock.
-export function createMediaPlayback(portrait, { url, volume, preparePlayback, releasePlayback, onFallback }) {
+export function createMediaPlayback(portrait, { url, volume, preparePlayback, releasePlayback, onFallback, reusablePlayer }) {
   let current;
 
   function updateVolume(player) {
@@ -47,7 +47,7 @@ export function createMediaPlayback(portrait, { url, volume, preparePlayback, re
       const drawFrame = () => {
         if (!animate || player.paused || player.ended) return;
         try {
-          portrait.draw(output.visemes, elapsedAt(performance.now()));
+          portrait.draw(output.visemes, elapsedAt(performance.now()), output.timing);
         } catch (_) {
           portrait.showNeutral();
           onFallback("AVATAR_UNAVAILABLE");
@@ -114,15 +114,20 @@ export function createMediaPlayback(portrait, { url, volume, preparePlayback, re
 
   return {
     ...portrait,
-    unlock(signal) {
+    unlock(signal, clipUrl = url, onPlaying) {
       signal.throwIfAborted();
-      const player = new Audio();
+      const player = reusablePlayer || new Audio();
       player.crossOrigin = "anonymous";
       updateVolume(player);
-      player.src = url;
+      player.src = clipUrl;
       const run = { player, signal, paused: false };
       current = run;
       const routeReady = preparePlayback(signal);
+      if (onPlaying) {
+        player.addEventListener("playing", () => {
+          if (current === run && !signal.aborted) onPlaying();
+        }, { once: true, signal });
+      }
       run.ready = Promise.all([player.play(), routeReady]);
       run.ready.catch(() => {});
     },

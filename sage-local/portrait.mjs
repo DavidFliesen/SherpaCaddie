@@ -137,8 +137,8 @@ export function createPortrait(poster, canvas, timing) {
       ctx = canvas.getContext("2d");
       if (!ctx) throw new Error("Portrait rendering unavailable.");
     },
-    draw(cues, elapsedMs) {
-      if (elapsedMs < 0 || elapsedMs >= timing.durationMs) {
+    draw(cues, elapsedMs, clipTiming = timing) {
+      if (elapsedMs < 0 || elapsedMs >= clipTiming.durationMs) {
         if (!canvas.hidden) showNeutral();
         return;
       }
@@ -147,7 +147,7 @@ export function createPortrait(poster, canvas, timing) {
       if (frame === lastFrame) return;
       lastFrame = frame;
       const shape = mouthShapeAt(cues, elapsedMs);
-      const { x, y, tilt, scale, blink } = portraitMotionAt(timing, elapsedMs, reduce);
+      const { x, y, tilt, scale, blink } = portraitMotionAt(clipTiming, elapsedMs, reduce);
       ctx.setTransform(1, 0, 0, 1, 0, 0);
       ctx.clearRect(0, 0, 720, 900);
       if (!reduce) {

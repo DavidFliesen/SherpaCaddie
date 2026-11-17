@@ -1,8 +1,10 @@
-import { createMediaPlayback } from "./media-playback.mjs?v=0148";
+import { createMediaPlayback } from "./media-playback.mjs?v=0153";
 import { DEMO } from "./demo.mjs?v=0148";
-import { createPortrait } from "./portrait.mjs?v=0148";
+import { createPortrait } from "./portrait.mjs?v=0153";
 import { SageSessionController } from "./session-controller.mjs?v=0148";
 import { createAppTools } from "./tool-registry.mjs?v=0148";
+
+import { SWING_CUES } from "./swing-tour-cues.mjs?v=0153";
 
 const AUDIO_URL = new URL("../assets/sage-local/practice.mp3?v=0148", import.meta.url);
 const TAB_PROMPT = "What tab am I on";
@@ -197,14 +199,46 @@ export function createLocalSage(options) {
     },
     avatar, onState, onAnswer, onFallback, onError,
   });
+  let tourPlayback;
   return {
+    createSwingTour(volume) {
+      controller.cancel();
+      const playback = createMediaPlayback(portrait, {
+        reusablePlayer: new Audio(), volume, preparePlayback, releasePlayback, onFallback,
+      });
+      tourPlayback = playback;
+      return {
+        async playSegment(text, position, signal, onStart) {
+          const timing = SWING_CUES[position - 1];
+          const url = new URL(`../assets/sage-local/swing-tour/p${position}.mp3?v=0153`, import.meta.url);
+          playback.unlock(signal, url.href, onStart);
+          let animate = true;
+          try {
+            await portrait.prepare(signal);
+          } catch (_) {
+            signal.throwIfAborted();
+            animate = false;
+            onFallback("AVATAR_UNAVAILABLE");
+          }
+          await (animate ? playback.play : playback.playVoice)({ ...timing, timing }, signal, () => {});
+        },
+        stop() {
+          if (tourPlayback !== playback) return;
+          tourPlayback = undefined;
+          playback.stop();
+        },
+      };
+    },
     isPracticeQuestion,
     ask(question, speak) {
       const animate = speak && isPracticeQuestion(question);
       return controller.ask(question, animate ? "video" : "text");
     },
     cancel: () => controller.cancel(),
-    setPaused: paused => avatar.setPaused(paused),
-    setVolume: value => avatar.setVolume(value),
+    setPaused: paused => (tourPlayback || avatar).setPaused(paused),
+    setVolume(value) {
+      avatar.setVolume(value);
+      tourPlayback?.setVolume(value);
+    },
   };
 }
